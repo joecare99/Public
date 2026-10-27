@@ -111,6 +111,10 @@ does not currently bundle these historical catalog files; if the asset is
 absent, or cannot be parsed, the sidecar reports `not_found` or
 `load_failed` respectively and exports continue without RTL names. A loaded
 but unsupported pattern size or compiler mask is also reported explicitly.
+Delphi 7 is detected from its `$2F8` VMT instance-size marker (Delphi 6 uses
+`$2F0`); if no VMT marker is found, `VCL70.bpl`/`.dpl` imports provide a
+fallback. `analysis.json` records whether the compiler version came from
+`vmt_marker` or `import_fallback`, and D7 selects `DSF\vcl7.dsf`.
 The complete output list is validated, including case-insensitive filename
 collisions, before a new output directory is created. Files are generated in a
 staging directory and installed only after their generation succeeds;

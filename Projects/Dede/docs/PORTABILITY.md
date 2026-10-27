@@ -34,6 +34,17 @@ silently substituting data.
   reader test.
 - `DeDeBinaryReader.pas` supplies bounded little-endian reads and preserves
   the stream position.
+- Delphi VMT compiler-version detection and the Delphi-2 Boolean marker now
+  use the bounded reader. Section/file bounds and truncated markers are
+  rejected without overrunning the PE32 stream.
+- `TDeDeCoreContext.GetByte`, `GetWord` and `GetDWord` now use checked
+  PE32 VA-to-RVA/file-offset conversion and bounded little-endian reads;
+  accesses crossing the code section or file are rejected.
+- `TDeDeBinaryReader.ReadBytesAt` now handles XRef signature reads, preserving
+  stream position and enforcing file bounds instead of manual seek/read/restore.
+- `TPEImportData.CollectInfo` now reads descriptors, thunks and bounded
+  null-terminated names through the same reader; malformed/truncated import
+  tables fail explicitly.
 - `LoadPEBinary` and `TPEHeader.Dump` parse through their explicit file/header
   objects and no longer bind the global `PEFile`/`PEHeader` while loading.
   `TClassesDumper`/`TClassDumper` also hold an explicit image pair supplied by
@@ -43,6 +54,19 @@ silently substituting data.
   GUI-attached sessions borrow the host context. PE file/header/stream globals
   are also scoped and restored per call. Regression coverage verifies separate
   reports/warnings and image-state restoration for attached sessions.
+- Compiler version, reduced version, C++Builder mode and Delphi-2 mode are
+  now stored in each core context. The DSF first-byte filter, BSS mode and
+  user-procedure mode are also session-owned, along with import lookup,
+  custom-emulation initialization and disassembler string/import options.
+  Activation binds these values for legacy routines and restores the
+  previously active state afterward. The unused `FirstCodeRVA` global was
+  removed. The `DeDeSym` decoder is now local to each `UnlinkCalls`
+  invocation; current routine and instruction RVAs are stored in the core
+  context. Signature-normalization counters, the call-CRC toggle and
+  disassembler error accumulation are also per-context. SEH/END stacks,
+  jump/push state, try depth and per-instruction formatting flags are now
+  context-owned. Remaining shared switches are legacy UI preferences;
+  concurrent analyses are still unsupported.
 - `TPE32DWordList` stores 32-bit target values in a dynamic array of typed
   records, with an explicit undefined sentinel. It replaces integer-in-
   `TList` storage in BSS/DATA snapshots, class-to-instance mappings,

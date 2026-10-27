@@ -54,6 +54,7 @@ var
   Stream: TMemoryStream;
   Reader: TDeDeBinaryReader;
   Buffer: array[0..7] of Byte;
+  ReadBuffer: array[0..3] of Byte;
 begin
   Buffer[0] := $78;
   Buffer[1] := $56;
@@ -73,6 +74,10 @@ begin
       Check(Reader.ReadUInt16LEAt(0) = $5678, '16-bit LE read failed');
       Check(Reader.ReadUInt32LEAt(0) = $12345678, '32-bit LE read failed');
       Check(Reader.ReadUInt16LEAt(4) = $CDAB, 'High-byte 16-bit read failed');
+      Reader.ReadBytesAt(4, ReadBuffer[0], SizeOf(ReadBuffer));
+      Check((ReadBuffer[0] = $AB) and (ReadBuffer[1] = $CD) and
+        (ReadBuffer[2] = $EF) and (ReadBuffer[3] = $90),
+        'Bounded byte-buffer read failed');
       Check(Stream.Position = 3, 'Reader did not preserve stream position');
     finally
       Reader.Free;
@@ -121,6 +126,15 @@ begin
           Raised := True;
       end;
       Check(Raised, 'Maximum PE32 offset was not rejected');
+
+      Raised := False;
+      try
+        Reader.ReadBytesAt($FFFFFFFE, Buffer[0], SizeOf(Buffer));
+      except
+        on EDeDeBinaryBounds do
+          Raised := True;
+      end;
+      Check(Raised, 'Out-of-range byte-buffer read was not rejected');
     finally
       Reader.Free;
     end;

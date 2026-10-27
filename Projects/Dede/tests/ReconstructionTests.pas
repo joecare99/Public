@@ -11,6 +11,7 @@ type
     procedure TestParserWarningBoundaries;
     procedure TestDCUEndMarkerBoundaries;
     procedure TestDelphiVersionMarkers;
+    procedure TestD7CompilerVersionDetection;
     procedure TestProjectUsesWrapping;
     procedure TestDPJCommentSerialization;
     procedure TestMainUnitCallbackFailure;
@@ -36,8 +37,10 @@ type
     procedure TestCoreExportCaseInsensitiveUnitCollision;
     procedure TestX86CrossReferenceCollection;
     procedure TestDSFSymbolMatching;
+    procedure TestUnlinkCallsUsesLocalDecoder;
     procedure TestXRefDSFSymbolResolution;
     procedure TestCoreVersionConfiguration;
+    procedure TestCoreContextBoundedImageReads;
     procedure TestVMTMethodOffsetMapping;
     procedure TestZipFormatConsumers;
   end;
@@ -51,7 +54,7 @@ uses
   MainUnit, DeDeClasses, Emulator, DeDeClassEmulator, DeDeDisAsm,
   DeDeZAUnit, DeDeBSS, DeDeExpressions, MemLocUnit, DeDeCoreServices,
   DeDeCore, DeDeClassHandle, DeDeBPL, DeDeDUF, DeDeOffsInf,
-  DeDeBinaryTypes, DeDeXRef, DeDeSym, DeDeZip;
+  DeDeBinaryTypes, DeDeBinaryReader, DeDeXRef, DeDeSym, DeDeZip;
 
 type
   TParserCallbackRecorder = class
@@ -83,6 +86,30 @@ type
     Position: Integer;
     Maximum: Integer;
     FailOnDetail: string;
+    CaptureCompilerState: Boolean;
+    CompilerVersion: string;
+    ReducedCompilerVersion: TRedusedDelphiVersion;
+    CompilerCompatibility: Byte;
+    IsCBuilder: Boolean;
+    IsDelphi2: Boolean;
+    SymbolFirstByteSet: TDeDeByteSet;
+    IncludeUserProcedures: Boolean;
+    UseBSSData: Boolean;
+    GetImports: Boolean;
+    CustomEmulationInit: Boolean;
+    DisassemblerOptions: TDeDeDisassemblerOptions;
+    CurrentRoutineRVA: DWORD;
+    CurrentInstructionRVA: DWORD;
+    CurrentInstructionSize: Integer;
+    LastPush: DWORD;
+    LastJump: DWORD;
+    TryExceptDepth: Integer;
+    CommentNext: Boolean;
+    TryBlockFound: Boolean;
+    ControlReferenceFound: Boolean;
+    SEHCount: Integer;
+    ENDEventCount: Integer;
+    DisassemblerErrors: string;
     procedure OnProgress(const APhase, ADetail: string;
       APosition, AMaximum: Integer);
   end;
@@ -100,6 +127,32 @@ begin
   Detail := ADetail;
   Position := APosition;
   Maximum := AMaximum;
+  if CaptureCompilerState then
+  begin
+    CompilerVersion := DeDeClasses.DelphiVersion;
+    ReducedCompilerVersion := ReducedDelphiVersion;
+    CompilerCompatibility := DeDeCoreContext.DelphiVersionCompatibility;
+    IsCBuilder := DeDeClasses.GlobCBuilder;
+    IsDelphi2 := DeDeClasses.GlobDelphi2;
+    SymbolFirstByteSet := DeDeSym.FirstByteSet;
+    IncludeUserProcedures := DeDeClasses.bUserProcs;
+    UseBSSData := DeDeClasses.bBSS;
+    GetImports := DeDeDisAsm.GlobGetImports;
+    CustomEmulationInit := DeDeDisAsm.GlobCustomEmulInit;
+    DisassemblerOptions := DeDeDisAsm.DisassemblerOptions;
+    CurrentRoutineRVA := DeDeCoreContext.CurrentRoutineRVA;
+    CurrentInstructionRVA := DeDeCoreContext.CurrentInstructionRVA;
+    CurrentInstructionSize := DeDeCoreContext.CurrentInstructionSize;
+    LastPush := DeDeCoreContext.LastPush;
+    LastJump := DeDeCoreContext.LastJump;
+    TryExceptDepth := DeDeCoreContext.TryExceptDepth;
+    CommentNext := DeDeCoreContext.CommentNext;
+    TryBlockFound := DeDeCoreContext.TryBlockFound;
+    ControlReferenceFound := DeDeCoreContext.ControlReferenceFound;
+    SEHCount := DeDeCoreContext.SEHPtrList.Count;
+    ENDEventCount := DeDeCoreContext.ENDPtrList.Count;
+    DisassemblerErrors := DeDeCoreContext.DisassemblerErrors;
+  end;
   if (FailOnDetail <> '') and SameText(ADetail, FailOnDetail) then
     raise EAbort.Create('Injected export progress failure');
 end;
@@ -307,6 +360,11 @@ end;
 procedure TReconstructionTests.TestDelphiVersionMarkers;
 var
   Stream: TMemoryStream;
+  MarkerStream: TMemoryStream;
+  MarkerFile: string;
+  MarkerBytes: array[0..7] of Byte;
+  Input: ThePEFile;
+  Header: TPEHeader;
 begin
   CheckEquals(2, MapDelphiVersionMarker($FFF0), 'Delphi 2 marker');
   CheckEquals(3, MapDelphiVersionMarker(0), 'Delphi 3 marker');
@@ -325,6 +383,329 @@ begin
   finally
     Stream.Free;
   end;
+
+  MarkerFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-d2-boolean-marker.exe';
+  MarkerStream := TMemoryStream.Create;
+  try
+    MarkerStream.SetSize($80);
+    FillChar(MarkerStream.Memory^, MarkerStream.Size, 0);
+    MarkerBytes[0] := $07;
+    MarkerBytes[1] := $42;
+    MarkerBytes[2] := $6F;
+    MarkerBytes[3] := $6F;
+    MarkerBytes[4] := $6C;
+    MarkerBytes[5] := $65;
+    MarkerBytes[6] := $61;
+    MarkerBytes[7] := $6E;
+    MarkerStream.Position := $41;
+    MarkerStream.WriteBuffer(MarkerBytes[0], SizeOf(MarkerBytes));
+    MarkerStream.SaveToFile(MarkerFile);
+  finally
+    MarkerStream.Free;
+  end;
+  Input := ThePEFile.Create(MarkerFile);
+  Header := TPEHeader.Create;
+  try
+    Header.ObjectNum := 1;
+    Header.Objects[1].PHYSICAL_OFFSET := $40;
+    Header.Objects[1].PHYSICAL_SIZE := $100;
+    Input.PEStream.Position := $10;
+    CheckTrue(HasDelphi2BooleanMarker(Input, Header, 1),
+      'The bounded PE32 reader missed the Delphi 2 Boolean marker');
+    CheckEquals($10, Integer(Input.PEStream.Position),
+      'Delphi 2 marker detection changed the stream position');
+    CheckFalse(HasDelphi2BooleanMarker(Input, Header, $39),
+      'A marker range beyond the file was accepted');
+  finally
+    Header.Free;
+    Input.Free;
+    if FileExists(MarkerFile) then
+      SysUtils.DeleteFile(MarkerFile);
+  end;
+end;
+
+procedure TReconstructionTests.TestD7CompilerVersionDetection;
+  var
+    FixtureFile: string;
+    Stream: TMemoryStream;
+    PEFile: ThePEFile;
+    PEHeader: TPEHeader;
+    MarkerVA, VMTAddress, InstanceSize: DWORD;
+    MarkerBytes: AnsiString;
+    ImportNames: TStringList;
+    Symbol: TDeDeSymbol;
+    SymbolPath: string;
+    Pattern: TSymBuffer;
+    Matches: TStringList;
+    Raised: Boolean;
+
+    procedure WriteVersionFixture(const AClassName: string;
+      AInstanceSize: DWORD);
+    var
+      Fixture: TMemoryStream;
+      MarkerLength: Byte;
+    begin
+      Fixture := TMemoryStream.Create;
+      try
+        Fixture.SetSize($240);
+        FillChar(Fixture.Memory^, Fixture.Size, 0);
+        MarkerVA := $401004;
+        Fixture.Position := $40;
+        Fixture.WriteBuffer(MarkerVA, SizeOf(MarkerVA));
+        Fixture.Position := $44;
+        MarkerLength := 0;
+        Fixture.WriteBuffer(MarkerLength, SizeOf(MarkerLength));
+        MarkerBytes := AnsiString(AClassName);
+        MarkerLength := Length(MarkerBytes);
+        Fixture.WriteBuffer(MarkerLength, SizeOf(MarkerLength));
+        Fixture.WriteBuffer(MarkerBytes[1], Length(MarkerBytes));
+        VMTAddress := $401080;
+        Fixture.WriteBuffer(VMTAddress, SizeOf(VMTAddress));
+        InstanceSize := AInstanceSize;
+        Fixture.Position := $98;
+        Fixture.WriteBuffer(InstanceSize, SizeOf(InstanceSize));
+        Fixture.SaveToFile(FixtureFile);
+      finally
+        Fixture.Free;
+      end;
+    end;
+
+    procedure WriteImportFixture;
+    var
+      Fixture: TMemoryStream;
+      Value: DWORD;
+      ImportDll, ImportName: AnsiString;
+    begin
+      Fixture := TMemoryStream.Create;
+      try
+        Fixture.SetSize($180);
+        FillChar(Fixture.Memory^, Fixture.Size, 0);
+        Fixture.Position := $45;
+        ImportDll := 'Del';
+        Fixture.WriteBuffer(ImportDll[1], Length(ImportDll));
+
+        Value := $2040;
+        Fixture.Position := $8C;
+        Fixture.WriteBuffer(Value, SizeOf(Value));
+        Value := $2050;
+        Fixture.WriteBuffer(Value, SizeOf(Value));
+
+        ImportDll := 'VCL70.dpl'#0;
+        Fixture.Position := $C0;
+        Fixture.WriteBuffer(ImportDll[1], Length(ImportDll));
+        Value := $2060;
+        Fixture.Position := $D0;
+        Fixture.WriteBuffer(Value, SizeOf(Value));
+        Fixture.Position := $D4;
+        Value := 0;
+        Fixture.WriteBuffer(Value, SizeOf(Value));
+        Fixture.Position := $E0;
+        Fixture.WriteBuffer(Value, 2);
+        ImportName := 'ImportByName'#0;
+        Fixture.WriteBuffer(ImportName[1], Length(ImportName));
+        Fixture.SaveToFile(FixtureFile);
+      finally
+        Fixture.Free;
+      end;
+    end;
+
+    procedure WriteTruncatedVersionFixture;
+    var
+      Fixture: TMemoryStream;
+    begin
+      Fixture := TMemoryStream.Create;
+      try
+        Fixture.SetSize($42);
+        FillChar(Fixture.Memory^, Fixture.Size, 0);
+        Fixture.SaveToFile(FixtureFile);
+      finally
+        Fixture.Free;
+      end;
+    end;
+
+    function DetectFixture(AInstanceSize: DWORD): string;
+    begin
+      WriteVersionFixture('TControl', AInstanceSize);
+      PEFile := ThePEFile.Create(FixtureFile);
+      PEHeader := TPEHeader.Create;
+      try
+        PEHeader.ObjectNum := 1;
+        PEHeader.IMAGE_BASE := $400000;
+        PEHeader.Objects[1].RVA := $1000;
+        PEHeader.Objects[1].PHYSICAL_OFFSET := $40;
+        PEHeader.Objects[1].PHYSICAL_SIZE := $200;
+        PEFile.PEStream.Position := $10;
+        Result := GetDelphiVersion(PEFile, PEHeader, False, False, False);
+        CheckEquals($10, Integer(PEFile.PEStream.Position),
+          'Version detection changed the input stream position');
+      finally
+        PEHeader.Free;
+        PEFile.Free;
+        if FileExists(FixtureFile) then
+          SysUtils.DeleteFile(FixtureFile);
+      end;
+    end;
+
+  function DetectTruncatedFixture: string;
+  begin
+    WriteTruncatedVersionFixture;
+    PEFile := ThePEFile.Create(FixtureFile);
+    PEHeader := TPEHeader.Create;
+    try
+      PEHeader.ObjectNum := 1;
+      PEHeader.IMAGE_BASE := $400000;
+      PEHeader.Objects[1].RVA := $1000;
+      PEHeader.Objects[1].PHYSICAL_OFFSET := $40;
+      PEHeader.Objects[1].PHYSICAL_SIZE := $200;
+      Result := GetDelphiVersion(PEFile, PEHeader, False, False, False);
+    finally
+      PEHeader.Free;
+      PEFile.Free;
+      if FileExists(FixtureFile) then
+        SysUtils.DeleteFile(FixtureFile);
+    end;
+  end;
+
+    function DetectImportFixture: string;
+    begin
+      WriteImportFixture;
+      PEFile := ThePEFile.Create(FixtureFile);
+      PEHeader := TPEHeader.Create;
+      try
+        PEHeader.ObjectNum := 2;
+        PEHeader.BaseOfCode := $1000;
+        PEHeader.IMPORT_TABLE_RVA := $2000;
+        PEHeader.Objects[1].RVA := $1000;
+        PEHeader.Objects[1].PHYSICAL_OFFSET := $40;
+        PEHeader.Objects[1].PHYSICAL_SIZE := $40;
+        PEHeader.Objects[2].RVA := $2000;
+        PEHeader.Objects[2].PHYSICAL_OFFSET := $80;
+        PEHeader.Objects[2].PHYSICAL_SIZE := $100;
+        try
+          Result := GetDelphiVersionFromImports(PEFile, PEHeader, FixtureFile);
+        except
+          on E: Exception do
+            raise Exception.CreateFmt(
+              'Import parser failed at offset %s: %s: %s',
+              [IntToHex(PEFile.PEStream.Position, 8), E.ClassName,
+               E.Message]);
+        end;
+      finally
+        PEHeader.Free;
+        PEFile.Free;
+        if FileExists(FixtureFile) then
+          SysUtils.DeleteFile(FixtureFile);
+      end;
+    end;
+
+  begin
+    FixtureFile := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) +
+      'compiler-version-marker-fixture.exe';
+    try
+      CheckEquals('D6', DetectFixture($2F0),
+        'The Delphi 6 TControl marker was misidentified');
+    except
+      on E: Exception do
+        raise Exception.Create('D6 VMT fixture: ' + E.ClassName + ': ' +
+          E.Message);
+    end;
+    try
+      CheckEquals('D7', DetectFixture($2F8),
+        'The Delphi 7 TControl marker was not identified');
+    except
+      on E: Exception do
+        raise Exception.Create('D7 VMT fixture: ' + E.ClassName + ': ' +
+          E.Message);
+    end;
+    try
+      CheckEquals('D7', DetectImportFixture,
+        'The PE import fallback did not identify Delphi 7 without a BSS section');
+    except
+      on E: Exception do
+        raise Exception.Create('D7 import fixture: ' + E.ClassName + ': ' +
+          E.Message);
+    end;
+    Stream := TMemoryStream.Create;
+    try
+      Stream.SetSize($85);
+      FillChar(Stream.Memory^, Stream.Size, 0);
+      Stream.SaveToFile(FixtureFile);
+    finally
+      Stream.Free;
+    end;
+    PEFile := ThePEFile.Create(FixtureFile);
+    PEHeader := TPEHeader.Create;
+    try
+      PEHeader.ObjectNum := 2;
+      PEHeader.BaseOfCode := $1000;
+      PEHeader.IMPORT_TABLE_RVA := $2000;
+      PEHeader.Objects[1].RVA := $1000;
+      PEHeader.Objects[1].PHYSICAL_OFFSET := $40;
+      PEHeader.Objects[1].PHYSICAL_SIZE := $40;
+      PEHeader.Objects[2].RVA := $2000;
+      PEHeader.Objects[2].PHYSICAL_OFFSET := $80;
+      PEHeader.Objects[2].PHYSICAL_SIZE := 5;
+      Raised := False;
+      try
+        GetDelphiVersionFromImports(PEFile, PEHeader, FixtureFile);
+      except
+        on E: EReadError do
+          Raised := True;
+      end;
+      CheckTrue(Raised,
+        'A truncated PE32 import descriptor was not rejected');
+    finally
+      PEHeader.Free;
+      PEFile.Free;
+      if FileExists(FixtureFile) then
+        SysUtils.DeleteFile(FixtureFile);
+    end;
+    CheckEquals('<check failed>', DetectTruncatedFixture,
+      'A truncated code section produced a compiler-version match');
+
+    ImportNames := TStringList.Create;
+    try
+      ImportNames.Add('vcl70.dpl');
+      CheckEquals('D7', GetDelphiVersionFromImportNames(ImportNames, False),
+        'The case-insensitive VCL70 import fallback did not identify Delphi 7');
+      CheckEquals('BCB7', GetDelphiVersionFromImportNames(ImportNames, True),
+        'The VCL70 import fallback did not preserve C++Builder classification');
+    finally
+      ImportNames.Free;
+    end;
+
+    CheckEquals('vcl7.dsf', GetVersionedDSFName('D7'),
+      'Delphi 7 selected the wrong symbol catalog');
+
+    SymbolPath := ExpandFileName(IncludeTrailingPathDelimiter(
+      ExtractFilePath(ParamStr(0))) + '..\DeDe\DSF\VCL7.dsf');
+    if FileExists(SymbolPath) then
+    begin
+      Symbol := TDeDeSymbol.Create;
+      try
+        CheckTrue(Symbol.LoadSymbol(SymbolPath),
+          'The real VCL7 DSF catalog failed to load');
+        CheckEquals(42904, Symbol.Count,
+          'The real VCL7 DSF catalog record count changed');
+        CheckTrue((Symbol.Mode and $20) <> 0,
+          'The real VCL7 DSF catalog does not enable the D7 mask');
+        Symbol.Sym.Position := 0;
+        Symbol.Sym.ReadBuffer(Pattern[1], Symbol.PatternSize);
+        Matches := TStringList.Create;
+        try
+          CheckTrue(Symbol.FindMatches(Pattern, $20, Matches) > 0,
+            'A VCL7 signature did not match with the D7 compatibility mask');
+          Matches.Clear;
+          CheckEquals(0, Symbol.FindMatches(Pattern, $10, Matches),
+            'A VCL7 signature matched with the D6 compatibility mask');
+        finally
+          Matches.Free;
+        end;
+      finally
+        Symbol.Free;
+      end;
+    end;
 end;
 
 procedure TReconstructionTests.TestProjectUsesWrapping;
@@ -1148,8 +1529,17 @@ var
   PreviousHeader: TPEHeader;
   PreviousStream: TPEStream;
   PreviousELF: Boolean;
+  PreviousVersion: string;
+  PreviousReducedVersion: TRedusedDelphiVersion;
+  PreviousCompatibility: Byte;
+  PreviousCBuilder, PreviousDelphi2: Boolean;
+  PreviousFirstByteSet: TDeDeByteSet;
+  PreviousUserProcedures, PreviousBSSData: Boolean;
+  PreviousGetImports, PreviousCustomEmulationInit: Boolean;
+  PreviousDisassemblerOptions: TDeDeDisassemblerOptions;
   PreviousPASNameList, PreviousDFMNameList: TStringList;
   PreviousUnitList: TStringList;
+  VersionRecorder: TCoreProgressRecorder;
 begin
   OutputDirectory := IncludeTrailingPathDelimiter(FsTEMPDir) +
     'dede-session-context-' + IntToStr(GetTickCount);
@@ -1163,6 +1553,17 @@ begin
   PreviousHeader := DeDeClasses.PEHeader;
   PreviousStream := DeDeDisAsm.PEStream;
   PreviousELF := DeDeClasses.bELF;
+  PreviousVersion := DeDeClasses.DelphiVersion;
+  PreviousReducedVersion := ReducedDelphiVersion;
+  PreviousCompatibility := PreviousContext.DelphiVersionCompatibility;
+  PreviousCBuilder := DeDeClasses.GlobCBuilder;
+  PreviousDelphi2 := DeDeClasses.GlobDelphi2;
+  PreviousFirstByteSet := DeDeSym.FirstByteSet;
+  PreviousUserProcedures := DeDeClasses.bUserProcs;
+  PreviousBSSData := DeDeClasses.bBSS;
+  PreviousGetImports := DeDeDisAsm.GlobGetImports;
+  PreviousCustomEmulationInit := DeDeDisAsm.GlobCustomEmulInit;
+  PreviousDisassemblerOptions := DeDeDisAsm.DisassemblerOptions;
   PreviousPASNameList := DeDeDisAsm.PASNameList;
   PreviousDFMNameList := DeDeDisAsm.DFMNameList;
   PreviousUnitList := TStringList.Create;
@@ -1173,9 +1574,11 @@ begin
   ContextOne.FileName := 'first.exe';
   ContextOne.ProjectName := 'First';
   ContextOne.Warnings.Add('warning-from-first-session');
+  ContextOne.DisassemblerErrors := 'first-session-disasm-error';
   ContextTwo.FileName := 'second.exe';
   ContextTwo.ProjectName := 'Second';
   ContextTwo.Warnings.Add('warning-from-second-session');
+  ContextTwo.DisassemblerErrors := 'second-session-disasm-error';
   MissingFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
     'dede-session-invalid-' + IntToStr(GetTickCount) + '.exe';
   while FileExists(MissingFile) do
@@ -1188,11 +1591,57 @@ begin
   SessionTwo := TDeDeAnalysisSession.Create;
   Generated := nil;
   Report := TStringList.Create;
+  VersionRecorder := TCoreProgressRecorder.Create;
   try
     DeDeCoreContext := ContextOne;
     SessionOne.AttachAnalysis(Input, Header, Dumper, 'D5');
     DeDeCoreContext := ContextTwo;
-    SessionTwo.AttachAnalysis(Input, Header, Dumper, 'D5');
+    SessionTwo.AttachAnalysis(Input, Header, Dumper, 'D7');
+    ContextOne.CurrentRoutineRVA := $11111111;
+    ContextTwo.CurrentRoutineRVA := $22222222;
+    ContextOne.CurrentInstructionRVA := $10101010;
+    ContextTwo.CurrentInstructionRVA := $20202020;
+    ContextOne.CurrentInstructionSize := 5;
+    ContextTwo.CurrentInstructionSize := 12;
+    ContextOne.LastPush := $11112222;
+    ContextTwo.LastPush := $33334444;
+    ContextOne.LastJump := $11113333;
+    ContextTwo.LastJump := $33335555;
+    ContextOne.TryExceptDepth := 2;
+    ContextTwo.TryExceptDepth := 3;
+    ContextOne.CommentNext := True;
+    ContextTwo.CommentNext := False;
+    ContextOne.TryBlockFound := True;
+    ContextTwo.TryBlockFound := False;
+    ContextOne.ControlReferenceFound := False;
+    ContextTwo.ControlReferenceFound := True;
+    ContextOne.SEHPtrList.Add('first-seh');
+    ContextTwo.SEHPtrList.Add('second-seh');
+    ContextTwo.ENDPtrList.Add('second-end');
+    ContextOne.SymbolFirstByteSet := [$55];
+    ContextTwo.SymbolFirstByteSet := [$AA];
+    ContextOne.IncludeUserProcedures := False;
+    ContextOne.UseBSSData := True;
+    ContextTwo.IncludeUserProcedures := True;
+    ContextTwo.UseBSSData := False;
+    ContextOne.GetImports := False;
+    ContextOne.CustomEmulationInit := True;
+    ContextOne.DisassemblerOptions.Imports := False;
+    ContextOne.DisassemblerOptions.EnglishStrings := True;
+    ContextOne.DisassemblerOptions.NonEnglishStrings := False;
+    ContextTwo.GetImports := True;
+    ContextTwo.CustomEmulationInit := False;
+    ContextTwo.DisassemblerOptions.Imports := True;
+    ContextTwo.DisassemblerOptions.EnglishStrings := True;
+    ContextTwo.DisassemblerOptions.NonEnglishStrings := True;
+    DeDeSym.FirstByteSet := ContextTwo.SymbolFirstByteSet;
+    DeDeClasses.bUserProcs := ContextTwo.IncludeUserProcedures;
+    DeDeClasses.bBSS := ContextTwo.UseBSSData;
+    DeDeDisAsm.GlobGetImports := ContextTwo.GetImports;
+    DeDeDisAsm.GlobCustomEmulInit := ContextTwo.CustomEmulationInit;
+    DeDeDisAsm.DisassemblerOptions := ContextTwo.DisassemblerOptions;
+    VersionRecorder.CaptureCompilerState := True;
+    SessionOne.OnProgress := VersionRecorder.OnProgress;
     CheckTrue(SessionOne.Context = ContextOne,
       'First session did not retain its attached context');
     CheckTrue(SessionTwo.Context = ContextTwo,
@@ -1203,12 +1652,70 @@ begin
       'First context did not retain its explicit PE header');
     CheckTrue(ContextTwo.PEFile = Input,
       'Second context did not retain its explicit PE file');
+    CheckEquals('D5', ContextOne.CompilerVersion,
+      'First context did not retain its own compiler version');
+    CheckEquals('D7', ContextTwo.CompilerVersion,
+      'Second context did not retain its own compiler version');
+    CheckEquals($20, ContextTwo.DelphiVersionCompatibility,
+      'Second context did not retain its own compiler compatibility');
 
     FillChar(Options, SizeOf(Options), 0);
     Options.IncludeAnalysisReport := True;
     Generated := SessionOne.ExportProject(OutputDirectory, Options, False);
     CheckEquals(1, Generated.Count,
       'Analysis-report-only export returned the wrong file count');
+    CheckEquals('D5', VersionRecorder.CompilerVersion,
+      'First session did not bind its compiler version during export');
+    CheckEquals(Ord(dvD5), Ord(VersionRecorder.ReducedCompilerVersion),
+      'First session did not bind its reduced compiler version during export');
+    CheckEquals($04, VersionRecorder.CompilerCompatibility,
+      'First session did not bind its symbol compatibility during export');
+    CheckTrue($55 in VersionRecorder.SymbolFirstByteSet,
+      'First session did not bind its DSF first-byte index during export');
+    CheckFalse($AA in VersionRecorder.SymbolFirstByteSet,
+      'First session inherited another session''s DSF first-byte index');
+    CheckFalse(VersionRecorder.IncludeUserProcedures,
+      'First session inherited the other session''s user-procedure mode');
+    CheckTrue(VersionRecorder.UseBSSData,
+      'First session did not bind its own BSS-data mode');
+    CheckFalse(VersionRecorder.GetImports,
+      'First session inherited the other session''s import mode');
+    CheckTrue(VersionRecorder.CustomEmulationInit,
+      'First session did not bind its custom-emulation mode');
+    CheckFalse(VersionRecorder.DisassemblerOptions.Imports,
+      'First session did not bind its disassembler import option');
+    CheckTrue(VersionRecorder.DisassemblerOptions.EnglishStrings,
+      'First session lost its English-string option');
+    CheckFalse(VersionRecorder.DisassemblerOptions.NonEnglishStrings,
+      'First session inherited the other session''s string option');
+    CheckEquals($11111111, VersionRecorder.CurrentRoutineRVA,
+      'First session inherited the other session''s current routine RVA');
+    CheckEquals($10101010, VersionRecorder.CurrentInstructionRVA,
+      'First session inherited the other session''s instruction RVA');
+    CheckEquals(5, VersionRecorder.CurrentInstructionSize,
+      'First session inherited the other session''s instruction size');
+    CheckEquals($11112222, VersionRecorder.LastPush,
+      'First session inherited the other session''s last push');
+    CheckEquals($11113333, VersionRecorder.LastJump,
+      'First session inherited the other session''s last jump');
+    CheckEquals(2, VersionRecorder.TryExceptDepth,
+      'First session inherited the other session''s exception depth');
+    CheckTrue(VersionRecorder.CommentNext,
+      'First session inherited the other session''s comment state');
+    CheckTrue(VersionRecorder.TryBlockFound,
+      'First session inherited the other session''s try-block state');
+    CheckFalse(VersionRecorder.ControlReferenceFound,
+      'First session inherited the other session''s control-reference state');
+    CheckEquals(1, VersionRecorder.SEHCount,
+      'First session did not retain its own SEH stack');
+    CheckEquals(0, VersionRecorder.ENDEventCount,
+      'First session inherited the other session''s end-event stack');
+    CheckFalse(VersionRecorder.IsCBuilder,
+      'First Delphi session activated C++Builder mode');
+    CheckFalse(VersionRecorder.IsDelphi2,
+      'First session retained Delphi 2 mode');
+    CheckEquals('', VersionRecorder.DisassemblerErrors,
+      'Export did not clear the session disassembler error accumulator');
     CheckTrue(DeDeCoreContext = ContextTwo,
       'Export did not restore the previously active context');
     CheckTrue(DeDeClasses.PEFile = PreviousFile,
@@ -1219,6 +1726,52 @@ begin
       'Export did not restore the previous disassembly stream');
     CheckTrue(DeDeClasses.bELF = PreviousELF,
       'Export did not restore the previous target format');
+    CheckEquals('D7', DeDeClasses.DelphiVersion,
+      'Export did not restore the previous compiler version');
+    CheckEquals(Ord(dvD7), Ord(ReducedDelphiVersion),
+      'Export did not restore the previous reduced compiler version');
+    CheckEquals($20, ContextTwo.DelphiVersionCompatibility,
+      'Export changed the other session''s compiler compatibility');
+    CheckTrue($AA in DeDeSym.FirstByteSet,
+      'Export did not restore the other session''s DSF first-byte index');
+    CheckFalse($55 in DeDeSym.FirstByteSet,
+      'Export leaked the first session''s DSF first-byte index');
+    CheckTrue(DeDeClasses.bUserProcs,
+      'Export did not restore the other session''s user-procedure mode');
+    CheckFalse(DeDeClasses.bBSS,
+      'Export did not restore the other session''s BSS-data mode');
+    CheckTrue(DeDeDisAsm.GlobGetImports,
+      'Export did not restore the other session''s import mode');
+    CheckFalse(DeDeDisAsm.GlobCustomEmulInit,
+      'Export did not restore the other session''s emulation mode');
+    CheckTrue(DeDeDisAsm.DisassemblerOptions.Imports,
+      'Export did not restore the other session''s disassembler options');
+    CheckEquals($22222222, DeDeCoreContext.CurrentRoutineRVA,
+      'Export changed the other session''s current routine RVA');
+    CheckEquals($20202020, DeDeCoreContext.CurrentInstructionRVA,
+      'Export changed the other session''s instruction RVA');
+    CheckEquals(12, DeDeCoreContext.CurrentInstructionSize,
+      'Export changed the other session''s instruction size');
+    CheckEquals($33334444, DeDeCoreContext.LastPush,
+      'Export changed the other session''s last push');
+    CheckEquals($33335555, DeDeCoreContext.LastJump,
+      'Export changed the other session''s last jump');
+    CheckEquals(3, DeDeCoreContext.TryExceptDepth,
+      'Export changed the other session''s exception depth');
+    CheckFalse(DeDeCoreContext.CommentNext,
+      'Export changed the other session''s comment state');
+    CheckTrue(DeDeCoreContext.ControlReferenceFound,
+      'Export changed the other session''s control-reference state');
+    CheckEquals('second-seh', ContextTwo.SEHPtrList[0],
+      'Export changed the other session''s SEH stack');
+    CheckEquals('second-end', ContextTwo.ENDPtrList[0],
+      'Export changed the other session''s end-event stack');
+    CheckEquals('first-session-disasm-error',
+      ContextOne.DisassemblerErrors,
+      'Export did not restore the first session''s disassembler errors');
+    CheckEquals('second-session-disasm-error',
+      ContextTwo.DisassemblerErrors,
+      'Export changed the other session''s disassembler errors');
 
     Report.LoadFromFile(ReportFile);
     CheckTrue(Pos('"project": "First"', Report.Text) > 0,
@@ -1244,6 +1797,50 @@ begin
     DeDeCoreContext := ContextOne;
     SessionOne.AttachAnalysis(Input, Header, Dumper, 'D5');
     DeDeCoreContext := ContextTwo;
+    TDeDeAnalysisSession.ConfigureVersion('D7');
+    ContextOne.SymbolFirstByteSet := [$55];
+    ContextTwo.SymbolFirstByteSet := [$AA];
+    ContextOne.CurrentRoutineRVA := $11111111;
+    ContextTwo.CurrentRoutineRVA := $22222222;
+    ContextOne.CurrentInstructionRVA := $10101010;
+    ContextTwo.CurrentInstructionRVA := $20202020;
+    ContextOne.CurrentInstructionSize := 5;
+    ContextTwo.CurrentInstructionSize := 12;
+    ContextOne.LastPush := $11112222;
+    ContextTwo.LastPush := $33334444;
+    ContextOne.LastJump := $11113333;
+    ContextTwo.LastJump := $33335555;
+    ContextOne.TryExceptDepth := 2;
+    ContextTwo.TryExceptDepth := 3;
+    ContextOne.CommentNext := True;
+    ContextTwo.CommentNext := False;
+    ContextOne.TryBlockFound := True;
+    ContextTwo.TryBlockFound := False;
+    ContextOne.ControlReferenceFound := False;
+    ContextTwo.ControlReferenceFound := True;
+    ContextOne.SEHPtrList.Add('first-seh');
+    ContextTwo.SEHPtrList.Add('second-seh');
+    ContextTwo.ENDPtrList.Add('second-end');
+    ContextOne.IncludeUserProcedures := False;
+    ContextOne.UseBSSData := True;
+    ContextTwo.IncludeUserProcedures := True;
+    ContextTwo.UseBSSData := False;
+    ContextOne.GetImports := False;
+    ContextOne.CustomEmulationInit := True;
+    ContextOne.DisassemblerOptions.Imports := False;
+    ContextOne.DisassemblerOptions.EnglishStrings := True;
+    ContextOne.DisassemblerOptions.NonEnglishStrings := False;
+    ContextTwo.GetImports := True;
+    ContextTwo.CustomEmulationInit := False;
+    ContextTwo.DisassemblerOptions.Imports := True;
+    ContextTwo.DisassemblerOptions.EnglishStrings := True;
+    ContextTwo.DisassemblerOptions.NonEnglishStrings := True;
+    DeDeSym.FirstByteSet := ContextTwo.SymbolFirstByteSet;
+    DeDeClasses.bUserProcs := ContextTwo.IncludeUserProcedures;
+    DeDeClasses.bBSS := ContextTwo.UseBSSData;
+    DeDeDisAsm.GlobGetImports := ContextTwo.GetImports;
+    DeDeDisAsm.GlobCustomEmulInit := ContextTwo.CustomEmulationInit;
+    DeDeDisAsm.DisassemblerOptions := ContextTwo.DisassemblerOptions;
     Generated.Free;
     Generated := SessionOne.ExportProject(OutputDirectory, Options, True);
     CheckEquals(1, Generated.Count,
@@ -1257,6 +1854,7 @@ begin
       'Recovered session reused warnings from the active host context');
   finally
     Generated.Free;
+    VersionRecorder.Free;
     SessionOne.Free;
     SessionTwo.Free;
     DeDeCoreContext := PreviousContext;
@@ -1267,6 +1865,17 @@ begin
     DeDeDisAsm.PASNameList := PreviousPASNameList;
     DeDeDisAsm.DFMNameList := PreviousDFMNameList;
     DeDeDisAsm.UnitList.Assign(PreviousUnitList);
+    DeDeClasses.DelphiVersion := PreviousVersion;
+    ReducedDelphiVersion := PreviousReducedVersion;
+    DeDeClasses.GlobCBuilder := PreviousCBuilder;
+    DeDeClasses.GlobDelphi2 := PreviousDelphi2;
+    DeDeSym.FirstByteSet := PreviousFirstByteSet;
+    DeDeClasses.bUserProcs := PreviousUserProcedures;
+    DeDeClasses.bBSS := PreviousBSSData;
+    DeDeDisAsm.GlobGetImports := PreviousGetImports;
+    DeDeDisAsm.GlobCustomEmulInit := PreviousCustomEmulationInit;
+    DeDeDisAsm.DisassemblerOptions := PreviousDisassemblerOptions;
+    PreviousContext.DelphiVersionCompatibility := PreviousCompatibility;
     PreviousUnitList.Free;
     Report.Free;
     Dumper.Free;
@@ -1793,6 +2402,46 @@ begin
   end;
 end;
 
+procedure TReconstructionTests.TestUnlinkCallsUsesLocalDecoder;
+var
+  Buffer: TSymBuffer;
+  I: Integer;
+  PreviousBuildCRC: Boolean;
+  PreviousB5, PreviousB6, PreviousB7, PreviousB10: Cardinal;
+begin
+  FillChar(Buffer, SizeOf(Buffer), $90);
+  Buffer[1] := $B8;
+  for I := 2 to 5 do
+    Buffer[I] := $A0 + I;
+  PreviousBuildCRC := DeDeCoreContext.BuildCallCRC;
+  PreviousB5 := DeDeCoreContext.Normalized5ByteInstructions;
+  PreviousB6 := DeDeCoreContext.Normalized6ByteInstructions;
+  PreviousB7 := DeDeCoreContext.Normalized7ByteInstructions;
+  PreviousB10 := DeDeCoreContext.Normalized10ByteInstructions;
+  DeDeCoreContext.BuildCallCRC := False;
+  DeDeCoreContext.Normalized5ByteInstructions := 0;
+  DeDeCoreContext.Normalized6ByteInstructions := 0;
+  DeDeCoreContext.Normalized7ByteInstructions := 0;
+  DeDeCoreContext.Normalized10ByteInstructions := 0;
+  try
+    CheckTrue(UnlinkCalls(Buffer),
+      'UnlinkCalls did not decode a valid x86 pattern');
+    for I := 2 to 5 do
+      CheckEquals(0, Buffer[I],
+        'UnlinkCalls did not normalize the immediate operand');
+    CheckEquals(1, DeDeCoreContext.Normalized5ByteInstructions,
+      'The session-owned five-byte normalization counter was not updated');
+    CheckEquals(0, DeDeCoreContext.Normalized6ByteInstructions,
+      'The session-owned six-byte normalization counter was changed');
+  finally
+    DeDeCoreContext.BuildCallCRC := PreviousBuildCRC;
+    DeDeCoreContext.Normalized5ByteInstructions := PreviousB5;
+    DeDeCoreContext.Normalized6ByteInstructions := PreviousB6;
+    DeDeCoreContext.Normalized7ByteInstructions := PreviousB7;
+    DeDeCoreContext.Normalized10ByteInstructions := PreviousB10;
+  end;
+end;
+
 procedure TReconstructionTests.TestXRefDSFSymbolResolution;
 var
   References: TDeDeXRefList;
@@ -2105,11 +2754,18 @@ end;
 procedure TReconstructionTests.TestCoreVersionConfiguration;
 var
   PreviousCompatibility: Byte;
+  PreviousContextVersion: string;
+  PreviousContextReducedVersion: TRedusedDelphiVersion;
+  PreviousContextCBuilder, PreviousContextDelphi2: Boolean;
   PreviousVersion: string;
   PreviousReducedVersion: TRedusedDelphiVersion;
   PreviousDelphi2, PreviousCBuilder: Boolean;
 begin
   PreviousCompatibility := DeDeCoreContext.DelphiVersionCompatibility;
+  PreviousContextVersion := DeDeCoreContext.CompilerVersion;
+  PreviousContextReducedVersion := DeDeCoreContext.ReducedCompilerVersion;
+  PreviousContextCBuilder := DeDeCoreContext.IsCBuilder;
+  PreviousContextDelphi2 := DeDeCoreContext.IsDelphi2;
   PreviousVersion := DelphiVersion;
   PreviousReducedVersion := ReducedDelphiVersion;
   PreviousDelphi2 := GlobDelphi2;
@@ -2128,14 +2784,104 @@ begin
       'C++Builder 4 reduced version changed');
     CheckTrue(GlobCBuilder, 'C++Builder mode was not selected');
     CheckFalse(GlobDelphi2, 'C++Builder mode retained Delphi 2 state');
+
+    TDeDeAnalysisSession.ConfigureVersion('D7');
+    CheckEquals($20, DeDeCoreContext.DelphiVersionCompatibility,
+      'Delphi 7 symbol compatibility mask changed');
+    CheckEquals(Ord(dvD7), Ord(ReducedDelphiVersion),
+      'Delphi 7 reduced version changed');
+    CheckEquals('D7', DeDeCoreContext.CompilerVersion,
+      'Delphi 7 compiler version was not stored in its core context');
+    CheckEquals(Ord(dvD7), Ord(DeDeCoreContext.ReducedCompilerVersion),
+      'Delphi 7 reduced version was not stored in its core context');
   finally
     DeDeCoreContext.DelphiVersionCompatibility := PreviousCompatibility;
+    DeDeCoreContext.CompilerVersion := PreviousContextVersion;
+    DeDeCoreContext.ReducedCompilerVersion := PreviousContextReducedVersion;
+    DeDeCoreContext.IsCBuilder := PreviousContextCBuilder;
+    DeDeCoreContext.IsDelphi2 := PreviousContextDelphi2;
     DelphiVersion := PreviousVersion;
     ReducedDelphiVersion := PreviousReducedVersion;
     GlobDelphi2 := PreviousDelphi2;
     GlobCBuilder := PreviousCBuilder;
   end;
 end;
+
+  procedure TReconstructionTests.TestCoreContextBoundedImageReads;
+  var
+    FixtureFile: string;
+    Stream: TMemoryStream;
+    PEFile: ThePEFile;
+    PEHeader: TPEHeader;
+    Context: TDeDeCoreContext;
+    Bytes: array[0..3] of Byte;
+    Raised: Boolean;
+  begin
+    FixtureFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
+      'dede-core-image-reader.exe';
+    Bytes[0] := $78;
+    Bytes[1] := $56;
+    Bytes[2] := $34;
+    Bytes[3] := $12;
+    Stream := TMemoryStream.Create;
+    try
+      Stream.SetSize($80);
+      FillChar(Stream.Memory^, Stream.Size, 0);
+      Stream.Position := $40;
+      Stream.WriteBuffer(Bytes[0], SizeOf(Bytes));
+      Stream.SaveToFile(FixtureFile);
+    finally
+      Stream.Free;
+    end;
+    PEFile := ThePEFile.Create(FixtureFile);
+    PEHeader := TPEHeader.Create;
+    Context := TDeDeCoreContext.Create;
+    try
+      PEHeader.ObjectNum := 1;
+      PEHeader.IMAGE_BASE := $400000;
+      PEHeader.Objects[1].RVA := $1000;
+      PEHeader.Objects[1].PHYSICAL_OFFSET := $40;
+      PEHeader.Objects[1].PHYSICAL_SIZE := SizeOf(Bytes);
+      Context.PEFile := PEFile;
+      Context.PEHeader := PEHeader;
+      PEFile.PEStream.Position := $10;
+
+      CheckEquals($78, Context.GetByte($401000),
+        'Bounded PE32 byte read changed');
+      CheckEquals($5678, Context.GetWord($401000),
+        'Bounded PE32 little-endian word read changed');
+      CheckEquals($12345678, Context.GetDWord($401000),
+        'Bounded PE32 little-endian dword read changed');
+      CheckEquals($1234, Context.GetWord($401002),
+        'A word ending exactly at the section boundary was rejected');
+      CheckEquals($10, Integer(PEFile.PEStream.Position),
+        'Core image reads changed the input stream position');
+
+      Raised := False;
+      try
+        Context.GetDWord($401002);
+      except
+        on EDeDeBinaryBounds do
+          Raised := True;
+      end;
+      CheckTrue(Raised, 'A read crossing the code section was accepted');
+
+      Raised := False;
+      try
+        Context.GetByte($400FFF);
+      except
+        on EDeDeBinaryBounds do
+          Raised := True;
+      end;
+      CheckTrue(Raised, 'An RVA before the code section was accepted');
+    finally
+      Context.Free;
+      PEHeader.Free;
+      PEFile.Free;
+      if FileExists(FixtureFile) then
+        SysUtils.DeleteFile(FixtureFile);
+    end;
+  end;
 
 procedure TReconstructionTests.TestVMTMethodOffsetMapping;
 var

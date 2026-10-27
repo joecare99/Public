@@ -251,7 +251,8 @@ Const
  var FsTEMPDir : String;
 
  type TRedusedDelphiVersion = (dvD2, dvD3, dvD4, dvD5, dvBCB3, dvBCB4,
-   dvBCB5, dvD6, dvConsole, dvKylix, dvNone);
+   dvBCB5, dvD6, dvD7, dvConsole, dvKylix, dvNone);
+  type TDeDeByteSet = set of Byte;
 
 
 var

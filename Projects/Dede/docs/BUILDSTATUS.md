@@ -39,12 +39,14 @@ python DeDe\tools\run_tests_xe.py
 Das Werkzeug baut den Konsolenrunner nach `..\bin\D_XE\Tests`, legt
 Compiler- und Testausgabe unter `build\D_XE\Tests` als `compile.log` bzw. `test.log` ab und
 liefert bei Testfehlern einen Fehler-Exitcode. Der aktuelle Satz enthaelt
-30 `TTestCase`-Tests: DSF-/Klassenparsergrenzen, DCU-Endmarker,
-Compiler-Versionsmarker, Uses-Listenformatierung, DPJ-ANSI- und
+35 `TTestCase`-Tests: DSF-/Klassenparsergrenzen, DCU-Endmarker,
+Compiler-Versionsmarker, D6/D7-PE32-VMT-Marker sowie D7-Import-,
+Konfigurations- und Katalogzuordnung, bounded PE32-Codezugriffe, Uses-
+Listenformatierung, DPJ-ANSI- und
 Kommentarrecords, den negativen MainUnit-Callback, EditProp-Validierung und
 Listen-Tabellen, synthetischen FileDrop, verschachtelte Collections,
 alle IDR-Text-DFMs, den PE-Header des Testprogramms und RVA-Offsetgrenzen.
-Der aktuelle DUnit-Lauf besteht mit `OK: 30 tests`; dazu gehoeren SHA-1-
+Der aktuelle DUnit-Lauf besteht mit `OK: 35 tests`; dazu gehoeren SHA-1-
 Known-Vectors, BSS-/Expression-RVAs, Prozesspointer oberhalb der
 signed-32-bit-Grenze, die MemLoc-Auflistung des aktuellen Prozesses, der
 UI-freie Progress-Host und Session-Callbacks waehrend des initialen Ladens,
@@ -510,6 +512,31 @@ zusaetzliche `// DSF: <Symbolname>`-Kommentare in den PAS-Assemblerzeilen.
 Der 3.11-Parser ohne diese Erweiterung wurde separat gegen denselben Katalog
 getestet und endet mit `EReadError`.
 
-Die aktuelle Versionsdetektion ist fuer D7 noch unvollstaendig: Der 3.5-
-Decompilatpfad kennt VCL70-Imports und den Marker `$2F8`, der Core/CLI dagegen
-keinen D7-Kompatibilitaetswert und keine Auswahl von `vcl7.dsf`.
+Delphi 7 ist jetzt in der Core-Versionsdetektion enthalten: Der
+TControl-Marker `$2F8` wird von D6 `$2F0` unterschieden; falls kein direkter
+Marker gefunden wird, werden `VCL70.bpl`/`.dpl` als Fallback ausgewertet.
+Die Konfiguration setzt die D7-Kompatibilitaetsmaske `$20`, waehlt
+`vcl7.dsf` und schreibt den Nachweisweg nach `analysis.json`. Neue
+synthetische PE32-Fixtures und Import-/Konfigurationstests bestehen. Ein
+End-to-End-Lauf mit realer D7-EXE und VCL7-Katalog ist noch nicht belegt.
+VMT-Versionsmarker und der Delphi-2-Booleanmarker werden nun mit dem
+bounded `DeDeBinaryReader` gelesen; abgeschnittene Sections werden im
+Regressionstest abgewiesen, ohne die Streamposition zu veraendern.
+Auch die zentralen `GetByte`-/`GetWord`-/`GetDWord`-Zugriffe pruefen jetzt
+PE32-Code- und Dateigrenzen ueber denselben Reader.
+XRef-Signaturpuffer werden ebenfalls mit `ReadBytesAt` innerhalb der
+Dateigrenzen gelesen und lassen die PE-Streamposition unveraendert.
+Importdeskriptoren und Thunks werden ueber den bounded Reader geparst;
+abgeschnittene Tabellen und Namen werden mit einem `EReadError` abgewiesen.
+Compiler-Version, reduzierte Version, C++Builder-/Delphi-2-Modus,
+DSF-First-Byte-Filter, BSS-/User-Procedure-Modus, Importauflösung,
+Custom-Emulation und Disassembler-Stringoptionen liegen jetzt im jeweiligen
+`TDeDeCoreContext` und werden bei Legacy-Aufrufen gebunden/restauriert. Das
+ungenutzte globale `FirstCodeRVA` ist entfernt, der `DeDeSym`-Decoder
+arbeitet pro `UnlinkCalls`-Aufruf lokal und aktuelle Routine-/Instruktions-
+RVAs und Signaturnormalisierungszaehler liegen im Core-Kontext. Das
+CRC-Flag und Disassembler-Fehlerakkumulator liegen nun ebenfalls im
+Core-Kontext. SEH-/END-Stacks, Jump-/Push-Zustand, Try-Tiefe und
+Instruktionsformatierungsflags sind ebenfalls kontextgebunden. Geteilte
+Legacy-UI-Schalter bleiben bestehen; parallele Analyse ist weiterhin nicht
+freigegeben.

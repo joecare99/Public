@@ -3,7 +3,8 @@ unit DeDeCore;
 interface
 
 uses
-  Classes, SysUtils, DeDeClasses, DeDeClassHandle, DeDeCoreServices;
+  Classes, SysUtils, DeDeConstants, DeDeClasses, DeDeClassHandle,
+  DeDeCoreServices;
 
 type
   EDeDeOutputExists = class(EInOutError);
@@ -21,6 +22,7 @@ type
     InputFile: string;
     ProjectName: string;
     CompilerVersion: string;
+    CompilerVersionSource: string;
     ClassCount: Integer;
     FormCount: Integer;
     UnitCount: Integer;
@@ -29,6 +31,16 @@ type
   TDeDeSessionActivation = record
     CoreContext: TDeDeCoreContext;
     IsELF: Boolean;
+    CompilerVersion: string;
+    ReducedCompilerVersion: TRedusedDelphiVersion;
+    IsCBuilder: Boolean;
+    IsDelphi2: Boolean;
+    SymbolFirstByteSet: TDeDeByteSet;
+    IncludeUserProcedures: Boolean;
+    UseBSSData: Boolean;
+    GetImports: Boolean;
+    CustomEmulationInit: Boolean;
+    DisassemblerOptions: TDeDeDisassemblerOptions;
   end;
 
   TDeDeAnalysisSession = class
@@ -83,9 +95,9 @@ function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
 implementation
 
 uses
-  DeDeConstants, DeDeDisAsm, DisASM,
+  DeDeDisAsm, DisASM,
   DeDeClassEmulator, DeDeSym, DeDeELFClasses, DeDePAS, DeDeRes,
-  DeDeAnsiStream, DeDeXRef;
+  DeDeAnsiStream, DeDeXRef, DeDeBinaryReader, DeDeBinaryTypes;
 
 procedure WriteAnsiText(AStream: TStream; const AText: string);
 var
@@ -168,8 +180,28 @@ begin
     raise EInvalidOp.Create('Analysis session has no core context');
   APreviousState.CoreContext := DeDeCoreContext;
   APreviousState.IsELF := bELF;
+  APreviousState.CompilerVersion := DelphiVersion;
+  APreviousState.ReducedCompilerVersion := ReducedDelphiVersion;
+  APreviousState.IsCBuilder := GlobCBuilder;
+  APreviousState.IsDelphi2 := GlobDelphi2;
+  APreviousState.SymbolFirstByteSet := DeDeSym.FirstByteSet;
+  APreviousState.IncludeUserProcedures := bUserProcs;
+  APreviousState.UseBSSData := bBSS;
+  APreviousState.GetImports := DeDeDisAsm.GlobGetImports;
+  APreviousState.CustomEmulationInit := DeDeDisAsm.GlobCustomEmulInit;
+  APreviousState.DisassemblerOptions := DeDeDisAsm.DisassemblerOptions;
   DeDeCoreContext := FContext;
   bELF := FIsELF;
+  DelphiVersion := FContext.CompilerVersion;
+  ReducedDelphiVersion := FContext.ReducedCompilerVersion;
+  GlobCBuilder := FContext.IsCBuilder;
+  GlobDelphi2 := FContext.IsDelphi2;
+  DeDeSym.FirstByteSet := FContext.SymbolFirstByteSet;
+  bUserProcs := FContext.IncludeUserProcedures;
+  bBSS := FContext.UseBSSData;
+  DeDeDisAsm.GlobGetImports := FContext.GetImports;
+  DeDeDisAsm.GlobCustomEmulInit := FContext.CustomEmulationInit;
+  DeDeDisAsm.DisassemblerOptions := FContext.DisassemblerOptions;
 end;
 
 procedure TDeDeAnalysisSession.RestoreLegacyState(
@@ -177,6 +209,22 @@ procedure TDeDeAnalysisSession.RestoreLegacyState(
 begin
   DeDeCoreContext := APreviousState.CoreContext;
   bELF := APreviousState.IsELF;
+  DelphiVersion := APreviousState.CompilerVersion;
+  ReducedDelphiVersion := APreviousState.ReducedCompilerVersion;
+  GlobCBuilder := APreviousState.IsCBuilder;
+  GlobDelphi2 := APreviousState.IsDelphi2;
+  FContext.SymbolFirstByteSet := DeDeSym.FirstByteSet;
+  FContext.IncludeUserProcedures := bUserProcs;
+  FContext.UseBSSData := bBSS;
+  DeDeSym.FirstByteSet := APreviousState.SymbolFirstByteSet;
+  bUserProcs := APreviousState.IncludeUserProcedures;
+  bBSS := APreviousState.UseBSSData;
+  FContext.GetImports := DeDeDisAsm.GlobGetImports;
+  FContext.CustomEmulationInit := DeDeDisAsm.GlobCustomEmulInit;
+  FContext.DisassemblerOptions := DeDeDisAsm.DisassemblerOptions;
+  DeDeDisAsm.GlobGetImports := APreviousState.GetImports;
+  DeDeDisAsm.GlobCustomEmulInit := APreviousState.CustomEmulationInit;
+  DeDeDisAsm.DisassemblerOptions := APreviousState.DisassemblerOptions;
 end;
 
 procedure TDeDeAnalysisSession.ReleaseAnalysis;
@@ -275,6 +323,7 @@ begin
     '4': DeDeCoreContext.DelphiVersionCompatibility := $02;
     '5': DeDeCoreContext.DelphiVersionCompatibility := $04;
     '6': DeDeCoreContext.DelphiVersionCompatibility := $10;
+    '7': DeDeCoreContext.DelphiVersionCompatibility := $20;
     'C':
       case VersionText[4] of
         '3': DeDeCoreContext.DelphiVersionCompatibility := $01;
@@ -293,6 +342,7 @@ begin
     '4': ReducedDelphiVersion := dvD4;
     '5': ReducedDelphiVersion := dvD5;
     '6': ReducedDelphiVersion := dvD6;
+    '7': ReducedDelphiVersion := dvD7;
     'C':
       case VersionText[4] of
         '3': ReducedDelphiVersion := dvBCB3;
@@ -309,6 +359,10 @@ begin
   GlobDelphi2 := SameText(AVersion, 'D2');
   GlobCBuilder := (Length(AVersion) >= 3) and
     SameText(Copy(AVersion, 1, 3), 'BCB');
+  DeDeCoreContext.CompilerVersion := AVersion;
+  DeDeCoreContext.ReducedCompilerVersion := ReducedDelphiVersion;
+  DeDeCoreContext.IsCBuilder := GlobCBuilder;
+  DeDeCoreContext.IsDelphi2 := GlobDelphi2;
 end;
 
 procedure TDeDeAnalysisSession.ConfigureDisassembler;
@@ -321,7 +375,11 @@ begin
   DeDeDisAsm.ControlNames.Clear;
   DeDeDisAsm.ControlIDs.Clear;
   DeDeDisAsm.GlobBEmulation := bBSS;
-  DeDeDisAsm.GlobCustomEmulInit := False;
+  DeDeDisAsm.GlobGetImports := DeDeCoreContext.GetImports;
+  DeDeDisAsm.GlobCustomEmulInit :=
+    DeDeCoreContext.CustomEmulationInit;
+  DeDeDisAsm.DisassemblerOptions :=
+    DeDeCoreContext.DisassemblerOptions;
 
   if FIsELF then
     CodeIndex := FPEHeader.GetSectionIndexEx('.text')
@@ -351,8 +409,8 @@ begin
     DeDeCoreContext.ClassesDumper := FClassesDumper;
     bUserProcs := AUserProcs;
     bBSS := ABSS;
-    DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
-    DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
+    DeDeCoreContext.IncludeUserProcedures := AUserProcs;
+    DeDeCoreContext.UseBSSData := ABSS;
     ConfigureDisassembler;
     FClassesDumper.ClearClasses;
     DeDeCoreContext.ReportProgress('Analyzing ', DelphiVersion, 1, 100);
@@ -407,7 +465,10 @@ const
     ($07, $42, $6F, $6F, $6C, $65, $61, $6E);
 var
   Bytes: array[0..7] of Byte;
-  SectionOffset: DWORD;
+  SectionOffset: Int64;
+  ImageOffset: Int64;
+  Reader: TDeDeBinaryReader;
+  I: Integer;
 begin
   Result := False;
   if AHeader.ObjectNum = 0 then
@@ -416,9 +477,18 @@ begin
   if (AOffset > AHeader.Objects[1].PHYSICAL_SIZE) or
     (AHeader.Objects[1].PHYSICAL_SIZE - AOffset < SizeOf(Bytes)) then
     Exit;
-  AFile.PEStream.Seek(SectionOffset + AOffset, soFromBeginning);
-  if AFile.PEStream.Read(Bytes[0], SizeOf(Bytes)) <> SizeOf(Bytes) then
+  ImageOffset := SectionOffset + AOffset;
+  if (ImageOffset > High(LongWord)) or
+    (ImageOffset + SizeOf(Bytes) > AFile.PEStream.Size) then
     Exit;
+  Reader := TDeDeBinaryReader.Create(AFile.PEStream);
+  try
+    for I := Low(Bytes) to High(Bytes) do
+      Bytes[I] := Reader.ReadUInt8At(
+        TPE32FileOffset(ImageOffset + I));
+  finally
+    Reader.Free;
+  end;
   Result := CompareMem(@Bytes[0], @Marker[0], SizeOf(Marker));
 end;
 
@@ -426,6 +496,8 @@ function TDeDeAnalysisSession.Analyze(
   const AFileName: string): TDeDeAnalysisResult;
 var
   Version: string;
+  ImportVersion: string;
+  VersionSource: string;
   RecFile: string;
   IsD2: Boolean;
   PreviousState: TDeDeSessionActivation;
@@ -466,12 +538,23 @@ begin
 
       Version := GetDelphiVersion(
         FPEFile, FPEHeader, FIsELF, GlobCBuilder, GlobDelphi2);
+      VersionSource := 'vmt_marker';
+      if Version = '<check failed>' then
+      begin
+        ImportVersion := GetDelphiVersionFromImports(FPEFile, FPEHeader,
+          AFileName);
+        if SameText(ImportVersion, 'D7') then
+        begin
+          Version := ImportVersion;
+          VersionSource := 'import_fallback';
+        end;
+      end;
       if (Version = '') or (Version = '<unknown version>') or
         (Version = '<check failed>') then
         raise EConvertError.CreateFmt(
           'Unable to identify a supported Delphi target: %s', [AFileName]);
       ConfigureVersion(Version);
-      DeDeDisAsm.GlobGetImports := True;
+      DeDeCoreContext.GetImports := True;
       FClassesDumper := TClassesDumper.Create;
       DeDeCoreContext.ClassesDumper := FClassesDumper;
       DumpClasses(False, False);
@@ -481,6 +564,7 @@ begin
       Result.InputFile := AFileName;
       Result.ProjectName := DeDeCoreContext.ProjectName;
       Result.CompilerVersion := Version;
+      Result.CompilerVersionSource := VersionSource;
       Result.ClassCount := FClassesDumper.Classes.Count;
       Result.FormCount := DeDeCoreContext.DFMNameList.Count;
       Result.UnitCount := DeDeCoreContext.UnitList.Count;
@@ -515,10 +599,17 @@ begin
   FIsELF := bELF;
   FContext.PEFile := APEFile;
   FContext.PEHeader := APEHeader;
+  FContext.SymbolFirstByteSet := DeDeSym.FirstByteSet;
+  FContext.IncludeUserProcedures := bUserProcs;
+  FContext.UseBSSData := bBSS;
+  FContext.GetImports := DeDeDisAsm.GlobGetImports;
+  FContext.CustomEmulationInit := DeDeDisAsm.GlobCustomEmulInit;
+  FContext.DisassemblerOptions := DeDeDisAsm.DisassemblerOptions;
   FClassesDumper := AClassesDumper;
   FAnalysisResult.InputFile := DeDeCoreContext.FileName;
   FAnalysisResult.ProjectName := DeDeCoreContext.ProjectName;
   FAnalysisResult.CompilerVersion := ACompilerVersion;
+  FAnalysisResult.CompilerVersionSource := 'attached_analysis';
   FAnalysisResult.ClassCount := AClassesDumper.Classes.Count;
   FAnalysisResult.FormCount := DeDeCoreContext.DFMNameList.Count;
   FAnalysisResult.UnitCount := DeDeCoreContext.UnitList.Count;
@@ -709,7 +800,8 @@ var
     Matches: TStringList;
     Buffer: TSymBuffer;
     TargetRVA, SectionOffset, PhysicalOffset: DWORD;
-    StreamPosition: Int64;
+    CheckedFileOffset: TPE32FileOffset;
+    Reader: TDeDeBinaryReader;
     PreviousMakeCRC: Boolean;
     PreviousB5, PreviousB6, PreviousB7, PreviousB10: Cardinal;
     IsPatternValid: Boolean;
@@ -723,12 +815,15 @@ var
       Exit;
     Matches := TStringList.Create;
     try
-      PreviousMakeCRC := DeDeSym.bMakeCRC;
-      PreviousB5 := DeDeSym.Glob_B5;
-      PreviousB6 := DeDeSym.Glob_B6;
-      PreviousB7 := DeDeSym.Glob_B7;
-      PreviousB10 := DeDeSym.Glob_B10;
-      DeDeSym.bMakeCRC := False;
+      Reader := TDeDeBinaryReader.Create(
+        DeDeCoreContext.PEFile.PEStream);
+      try
+      PreviousMakeCRC := DeDeCoreContext.BuildCallCRC;
+      PreviousB5 := DeDeCoreContext.Normalized5ByteInstructions;
+      PreviousB6 := DeDeCoreContext.Normalized6ByteInstructions;
+      PreviousB7 := DeDeCoreContext.Normalized7ByteInstructions;
+      PreviousB10 := DeDeCoreContext.Normalized10ByteInstructions;
+      DeDeCoreContext.BuildCallCRC := False;
       try
         for K := 0 to DeDeCoreContext.CrossReferences.RoutineCount - 1 do
         begin
@@ -745,22 +840,19 @@ var
           if SectionOffset > FPEHeader.Objects[CodeSectionIndex].PHYSICAL_SIZE -
             _PatternSize then
             Continue;
-          PhysicalOffset := FPEHeader.Objects[CodeSectionIndex].PHYSICAL_OFFSET +
-            SectionOffset;
+          if not TryAddPE32FileOffset(
+            TPE32FileOffset(
+              FPEHeader.Objects[CodeSectionIndex].PHYSICAL_OFFSET),
+            TPE32FileOffset(SectionOffset),
+            CheckedFileOffset) then
+            Continue;
+          PhysicalOffset := LongWord(CheckedFileOffset);
           if Int64(PhysicalOffset) + _PatternSize >
             DeDeCoreContext.PEFile.PEStream.Size then
             Continue;
 
-          StreamPosition := DeDeCoreContext.PEFile.PEStream.Position;
-          try
-            DeDeCoreContext.PEFile.PEStream.Seek(
-              PhysicalOffset, soFromBeginning);
-            DeDeCoreContext.PEFile.PEStream.ReadBuffer(
-              Buffer[1], _PatternSize);
-          finally
-            DeDeCoreContext.PEFile.PEStream.Seek(
-              StreamPosition, soFromBeginning);
-          end;
+          Reader.ReadBytesAt(TPE32FileOffset(PhysicalOffset),
+            Buffer[1], _PatternSize);
 
           try
             IsPatternValid := DeDeSym.UnlinkCalls(Buffer, 0,
@@ -791,11 +883,14 @@ var
               Routine.RoutineVA);
         end;
       finally
-        DeDeSym.bMakeCRC := PreviousMakeCRC;
-        DeDeSym.Glob_B5 := PreviousB5;
-        DeDeSym.Glob_B6 := PreviousB6;
-        DeDeSym.Glob_B7 := PreviousB7;
-        DeDeSym.Glob_B10 := PreviousB10;
+        DeDeCoreContext.BuildCallCRC := PreviousMakeCRC;
+        DeDeCoreContext.Normalized5ByteInstructions := PreviousB5;
+        DeDeCoreContext.Normalized6ByteInstructions := PreviousB6;
+        DeDeCoreContext.Normalized7ByteInstructions := PreviousB7;
+        DeDeCoreContext.Normalized10ByteInstructions := PreviousB10;
+      end;
+      finally
+        Reader.Free;
       end;
     finally
       Matches.Free;
@@ -1100,7 +1195,7 @@ begin
   PlannedFiles := TStringList.Create;
   Backups := TStringList.Create;
   EventLines := TStringList.Create;
-  PreviousDisasmErrors := DeDeDisAsm.sDisAsmErrors;
+  PreviousDisasmErrors := FContext.DisassemblerErrors;
   ActivateLegacyState(PreviousState);
   ExportSymbolList := nil;
   PreviousSymbolsList := DeDeDisAsm.SymbolsList;
@@ -1112,7 +1207,7 @@ begin
     DeDeCoreContext.StrictXRefSymbolMatches;
   DeDeCoreContext.StrictXRefSymbolMatches :=
     AOptions.IncludeCrossReferenceReport;
-  DeDeDisAsm.sDisAsmErrors := '';
+  DeDeCoreContext.DisassemblerErrors := '';
   try
     try
       if FClassesDumper = nil then
@@ -1146,9 +1241,10 @@ begin
       AddPlannedFile(SafeFileName(DeDeCoreContext.ProjectName) + '.dpr');
     if AOptions.IncludeEventRVA then
       AddPlannedFile('events.txt');
-    if DeDeDisAsm.sDisAsmErrors <> '' then
+    if DeDeCoreContext.DisassemblerErrors <> '' then
       DeDeCoreContext.Warnings.Add(
-        'Disassembler errors:' + #13#10 + DeDeDisAsm.sDisAsmErrors);
+        'Disassembler errors:' + #13#10 +
+        DeDeCoreContext.DisassemblerErrors);
 
     if AOptions.IncludeAnalysisReport then
       AddPlannedFile('analysis.json');
@@ -1385,6 +1481,8 @@ begin
           #13#10 +
           '  "compilerVersion": ' +
             JSONString(FAnalysisResult.CompilerVersion) + ',' + #13#10 +
+          '  "compilerVersionSource": ' +
+            JSONString(FAnalysisResult.CompilerVersionSource) + ',' + #13#10 +
           '  "classCount": ' + IntToStr(FAnalysisResult.ClassCount) + ',' +
           #13#10 +
           '  "formCount": ' + IntToStr(FAnalysisResult.FormCount) + ',' +
@@ -1447,6 +1545,8 @@ begin
           '    "status": ' + JSONString(SymbolCatalogStatus) + ',' + #13#10 +
           '    "compilerVersion": ' +
             JSONString(FAnalysisResult.CompilerVersion) + ',' + #13#10 +
+          '    "compilerVersionSource": ' +
+            JSONString(FAnalysisResult.CompilerVersionSource) + ',' + #13#10 +
           '    "symbolCount": ' + SymbolCatalogJSONCount + #13#10 +
           '  },' + #13#10 +
           '  "references": ' +
@@ -1454,7 +1554,7 @@ begin
           '  "routines": ' +
             DeDeCoreContext.CrossReferences.RoutinesToJSON + ',' + #13#10 +
           '  "disassemblyErrors": ' +
-            JSONString(DeDeDisAsm.sDisAsmErrors) + #13#10 +
+            JSONString(DeDeCoreContext.DisassemblerErrors) + #13#10 +
           '}' + #13#10;
         SaveUTF8Text(IncludeTrailingPathDelimiter(StageDirectory) +
           'cross-references.json', Text);
@@ -1535,8 +1635,7 @@ begin
       raise;
     end;
   finally
-    DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
-    DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
+    FContext.DisassemblerErrors := PreviousDisasmErrors;
     DeDeDisAsm.SymbolsList := PreviousSymbolsList;
     DeDeCoreContext.StrictXRefSymbolMatches :=
       PreviousStrictXRefSymbolMatches;

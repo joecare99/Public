@@ -15,17 +15,50 @@ type
   TDeDeCoreDebugEvent = procedure(const AMessage: string) of object;
   TDeDeCoreConfirmEvent = function(const ATitle, AMessage: string): Boolean of object;
 
+  TDeDeDisassemblerOptions = record
+    Imports: Boolean;
+    EnglishStrings: Boolean;
+    NonEnglishStrings: Boolean;
+  end;
+
   TDeDeCoreContext = class
   private
     FPEFile: ThePEFile;
     FPEHeader: TPEHeader;
     function GetPEFile: ThePEFile;
     function GetPEHeader: TPEHeader;
+    function GetCodeFileOffset(AVirtualAddress: DWORD;
+      AReadSize: LongWord): TPE32FileOffset;
   public
     ProjectName: string;
     FileName: string;
     ExecutableName: string;
     ClassCount: Integer;
+    CurrentRoutineRVA: DWORD;
+    CurrentInstructionRVA: DWORD;
+    CurrentInstructionSize: Integer;
+    LastPush: DWORD;
+    LastJump: DWORD;
+    TryExceptDepth: Integer;
+    CommentNext: Boolean;
+    TryBlockFound: Boolean;
+    ControlReferenceFound: Boolean;
+    Normalized5ByteInstructions: Cardinal;
+    Normalized6ByteInstructions: Cardinal;
+    Normalized7ByteInstructions: Cardinal;
+    Normalized10ByteInstructions: Cardinal;
+    BuildCallCRC: Boolean;
+    DisassemblerErrors: string;
+    CompilerVersion: string;
+    ReducedCompilerVersion: TRedusedDelphiVersion;
+    IsCBuilder: Boolean;
+    IsDelphi2: Boolean;
+    SymbolFirstByteSet: TDeDeByteSet;
+    IncludeUserProcedures: Boolean;
+    UseBSSData: Boolean;
+    GetImports: Boolean;
+    CustomEmulationInit: Boolean;
+    DisassemblerOptions: TDeDeDisassemblerOptions;
     DelphiVersionCompatibility: Byte;
     StrictXRefSymbolMatches: Boolean;
     ClassesDumper: TObject;
@@ -36,6 +69,8 @@ type
     UnitList: TStringList;
     Warnings: TStringList;
     CrossReferences: TDeDeXRefList;
+    SEHPtrList: TStringList;
+    ENDPtrList: TStringList;
     OnProgress: TDeDeCoreProgressEvent;
     OnWarning: TDeDeCoreWarningEvent;
     OnDebug: TDeDeCoreDebugEvent;
@@ -76,6 +111,7 @@ implementation
 
 uses
   DeDeELFClasses
+  , DeDeBinaryReader
 {$IFDEF MSWINDOWS}
   , Windows
 {$ENDIF}
@@ -166,6 +202,13 @@ begin
   ClassInfoList := TStringList.Create;
   Warnings := TStringList.Create;
   CrossReferences := TDeDeXRefList.Create;
+  SEHPtrList := TStringList.Create;
+  ENDPtrList := TStringList.Create;
+  ReducedCompilerVersion := dvNone;
+  SymbolFirstByteSet := [];
+  DisassemblerOptions.Imports := True;
+  DisassemblerOptions.EnglishStrings := True;
+  DisassemblerOptions.NonEnglishStrings := True;
 end;
 
 destructor TDeDeCoreContext.Destroy;
@@ -173,6 +216,8 @@ begin
   ClearDFMForms;
   UnitList.Free;
   Warnings.Free;
+  ENDPtrList.Free;
+  SEHPtrList.Free;
   PASNameList.Free;
   DFMNameList.Free;
   ClassInfoList.Free;
@@ -492,48 +537,92 @@ begin
   end;
 end;
 
-function TDeDeCoreContext.GetByte(VirtualAddress: DWORD): Byte;
+function TDeDeCoreContext.GetCodeFileOffset(AVirtualAddress: DWORD;
+  AReadSize: LongWord): TPE32FileOffset;
+var
+  ImageHeader: TPEHeader;
+  TargetRVA: TPE32RVA;
+  SectionRVA, SectionOffset, SectionSize: LongWord;
+  FileOffset: TPE32FileOffset;
 begin
   if (PEFile = nil) or (PEHeader = nil) then
-    raise Exception.Create('No binary is loaded');
-  PEFile.PEStream.BeginSearch;
+    raise EInvalidOp.Create('No binary is loaded');
+  ImageHeader := PEHeader;
+  if ImageHeader.ObjectNum = 0 then
+    raise EDeDeBinaryBounds.Create('PE image has no code section');
+  if not TryGetPE32RVA(TPE32VA(ImageHeader.IMAGE_BASE),
+    TPE32VA(AVirtualAddress), TargetRVA) then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Virtual address %.8x is below the PE image base',
+      [AVirtualAddress]);
+
+  SectionRVA := ImageHeader.Objects[1].RVA;
+  SectionSize := ImageHeader.Objects[1].PHYSICAL_SIZE;
+  if LongWord(TargetRVA) < SectionRVA then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Virtual address %.8x precedes the code section',
+      [AVirtualAddress]);
+  SectionOffset := LongWord(TargetRVA) - SectionRVA;
+  if SectionOffset > SectionSize then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Virtual address %.8x exceeds the code section',
+      [AVirtualAddress]);
+  if AReadSize > SectionSize - SectionOffset then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Read at virtual address %.8x with size %u exceeds the code section',
+      [AVirtualAddress, AReadSize]);
+  if not TryAddPE32FileOffset(
+    TPE32FileOffset(ImageHeader.Objects[1].PHYSICAL_OFFSET),
+    TPE32FileOffset(SectionOffset), FileOffset) then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Virtual address %.8x overflows the PE32 file offset',
+      [AVirtualAddress]);
+  if Int64(LongWord(FileOffset)) + AReadSize > PEFile.PEStream.Size then
+    raise EDeDeBinaryBounds.CreateFmt(
+      'Read at virtual address %.8x exceeds the PE file size',
+      [AVirtualAddress]);
+  Result := FileOffset;
+end;
+
+function TDeDeCoreContext.GetByte(VirtualAddress: DWORD): Byte;
+var
+  Reader: TDeDeBinaryReader;
+  FileOffset: TPE32FileOffset;
+begin
+  FileOffset := GetCodeFileOffset(VirtualAddress, 1);
+  Reader := TDeDeBinaryReader.Create(PEFile.PEStream);
   try
-    PEFile.PEStream.Seek(VirtualAddress - PEHeader.IMAGE_BASE -
-      PEHeader.Objects[1].RVA + PEHeader.Objects[1].PHYSICAL_OFFSET,
-      soFromBeginning);
-    PEFile.PEStream.ReadBuffer(Result, SizeOf(Result));
+    Result := Reader.ReadUInt8At(FileOffset);
   finally
-    PEFile.PEStream.EndSearch;
+    Reader.Free;
   end;
 end;
 
 function TDeDeCoreContext.GetWord(VirtualAddress: DWORD): Word;
+var
+  Reader: TDeDeBinaryReader;
+  FileOffset: TPE32FileOffset;
 begin
-  if (PEFile = nil) or (PEHeader = nil) then
-    raise Exception.Create('No binary is loaded');
-  PEFile.PEStream.BeginSearch;
+  FileOffset := GetCodeFileOffset(VirtualAddress, 2);
+  Reader := TDeDeBinaryReader.Create(PEFile.PEStream);
   try
-    PEFile.PEStream.Seek(VirtualAddress - PEHeader.IMAGE_BASE -
-      PEHeader.Objects[1].RVA + PEHeader.Objects[1].PHYSICAL_OFFSET,
-      soFromBeginning);
-    PEFile.PEStream.ReadBuffer(Result, SizeOf(Result));
+    Result := Reader.ReadUInt16LEAt(FileOffset);
   finally
-    PEFile.PEStream.EndSearch;
+    Reader.Free;
   end;
 end;
 
 function TDeDeCoreContext.GetDWord(VirtualAddress: DWORD): DWORD;
+var
+  Reader: TDeDeBinaryReader;
+  FileOffset: TPE32FileOffset;
 begin
-  if (PEFile = nil) or (PEHeader = nil) then
-    raise Exception.Create('No binary is loaded');
-  PEFile.PEStream.BeginSearch;
+  FileOffset := GetCodeFileOffset(VirtualAddress, 4);
+  Reader := TDeDeBinaryReader.Create(PEFile.PEStream);
   try
-    PEFile.PEStream.Seek(VirtualAddress - PEHeader.IMAGE_BASE -
-      PEHeader.Objects[1].RVA + PEHeader.Objects[1].PHYSICAL_OFFSET,
-      soFromBeginning);
-    PEFile.PEStream.ReadBuffer(Result, SizeOf(Result));
+    Result := Reader.ReadUInt32LEAt(FileOffset);
   finally
-    PEFile.PEStream.EndSearch;
+    Reader.Free;
   end;
 end;
 

@@ -1349,7 +1349,8 @@ begin
           Case ReducedDelphiVersion of
             dvD2 : j:=InitContextOffset2;
             dvD3, dvBCB3 : j:=InitContextOffset3;
-            dvD4, dvBCB4, dvD5, dvBCB5, dvD6 : j:=InitContextOffset4;
+            dvD4, dvBCB4, dvD5, dvBCB5, dvD6, dvD7 :
+              j:=InitContextOffset4;
             else j:=InitContextOffset4;
           end;
           //Goes there and reads the InitContext.PackageInfo member

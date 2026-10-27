@@ -48,19 +48,14 @@ Type
   function DCUExculdeParamNames(s : String) : String;
 
 var BPLPEHeader : TPEHeader;
-    Glob_B5, Glob_B6, Glob_B7, Glob_B10 : Cardinal;
-    bMakeCRC : Boolean;
 
-    FirstByteSet : Set of Byte;
-    FirstCodeRVA : Cardinal;
+    FirstByteSet : TDeDeByteSet;
 
 implementation
 
 Uses
   DeDeDisASM, DisASM, HexTools, DeDeBPL, SysUtils,
   crc32, DeDeRes, DeDeCoreServices, DeDeClassHandle;
-
-var DASM : TDisAsm;
 
 function InCodeSegment(s : String) : Boolean; overload;
 var rva,i : dword;
@@ -159,10 +154,11 @@ End;
 Function UnlinkCalls(Var buff : TSymBuffer; Level : byte = 0; RVA : DWORD = 0) : Boolean;
 var s{,ins}   : String;
     j,k,i{,ps} : Integer;
-//    w  : Word;
-    dw : DWORD;
     CRC : DWORD;
+    DASM: TDisAsm;
 Begin
+   DASM := TDisAsm.Create;
+   try
    j:=1;
    if Level=0 then CRC:=0;
    Repeat
@@ -181,7 +177,8 @@ Begin
          ////////////////////////////////////////////////////
          //// FOR NEW DSF ENGINE - CRC CHECK INCLUDED
          ////////////////////////////////////////////////////
-         if (Level=0) and (bMakeCRC) then
+         if (Level=0) and (DeDeCoreContext <> nil) and
+           DeDeCoreContext.BuildCallCRC then
             if (buff[j] in [$E8,$9A])
                  then MakeCallCRC(CRC, buff, j+1, RVA);
          ////////////////////////////////////////////////////
@@ -189,21 +186,18 @@ Begin
          if buff[j] in [$E8,$E9,$9A,$A0..$A3,$A9]
             then begin
               for i:=1 to 4 do buff[j+i]:=0;
-              Inc(Glob_B5);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized5ByteInstructions);
             end;
 
          /////////////////////////////////////////////////////////
-         // Unlink only if the value is > IMAGE_BASE+BASE_OF_CODE
-         // DO IT ALWAYS !!! (Many Idents build from DCU not found)
+         // Normalize absolute operands in the signature.
          /////////////////////////////////////////////////////////
          if buff[j] in [$68,$B8..$BF]
            then begin
-             //dw:=buff[j+1]+buff[j+2]*256+buff[j+3]*256*256+buff[j+4]*256*256*256;
-             //if dw>=FirstCodeRVA then
-             //  begin
                   for i:=1 to 4 do buff[j+i]:=0;
-                  Inc(Glob_B5);
-             //  end;
+                  if DeDeCoreContext <> nil then
+                    Inc(DeDeCoreContext.Normalized5ByteInstructions);
            end;
        end;
 
@@ -247,7 +241,8 @@ Begin
 
             then begin
               for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B6);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized6ByteInstructions);
             end;
        end;
 
@@ -275,7 +270,8 @@ Begin
               if (buff[j+0] in [$C7])
                 then for i:=3 to 6 do buff[j+i]:=0
                 else for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B7);
+                if DeDeCoreContext <> nil then
+                  Inc(DeDeCoreContext.Normalized7ByteInstructions);
             end;
        end;
 
@@ -296,7 +292,8 @@ Begin
              or ((buff[j]=$69) and (buff[j+1] in [$05,$0D,$15,$1D,$25,$2D,$35,$3D]))
             then begin
               for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B10);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized10ByteInstructions);
             end;
        end;
      j:=j+k;
@@ -317,6 +314,9 @@ Begin
       buff[_PatternSize-2]:=CRC shr 16;
       buff[_PatternSize-3]:=CRC shr 24;
     end;
+   finally
+     DASM.Free;
+   end;
 End;
 
 
@@ -458,6 +458,8 @@ begin
   else if SameText(ACompilerVersion, 'D6') or
     SameText(ACompilerVersion, 'D6 CLX') then
     Result := 'vcl6.dsf'
+  else if SameText(ACompilerVersion, 'D7') then
+    Result := 'vcl7.dsf'
   else
     Result := '';
 end;
@@ -785,10 +787,6 @@ begin
 end;
 
 initialization
-  DASM:=TDisAsm.Create;
   FirstByteSet:=[];
-
-finalization
-  DASM.Free;
 
 end.

@@ -18,6 +18,8 @@ type
     function ReadUInt8At(const AOffset: TPE32FileOffset): Byte;
     function ReadUInt16LEAt(const AOffset: TPE32FileOffset): Word;
     function ReadUInt32LEAt(const AOffset: TPE32FileOffset): LongWord;
+    procedure ReadBytesAt(const AOffset: TPE32FileOffset;
+      var ABuffer; ACount: LongWord);
     property Stream: TStream read FStream;
   end;
 
@@ -95,6 +97,23 @@ begin
     (LongWord(Buffer[1]) shl 8) or
     (LongWord(Buffer[2]) shl 16) or
     (LongWord(Buffer[3]) shl 24);
+end;
+
+procedure TDeDeBinaryReader.ReadBytesAt(const AOffset: TPE32FileOffset;
+  var ABuffer; ACount: LongWord);
+var
+  SavedPosition: Int64;
+begin
+  CheckRange(AOffset, ACount);
+  if ACount = 0 then
+    Exit;
+  SavedPosition := FStream.Position;
+  try
+    FStream.Position := LongWord(AOffset);
+    FStream.ReadBuffer(ABuffer, ACount);
+  finally
+    FStream.Position := SavedPosition;
+  end;
 end;
 
 end.

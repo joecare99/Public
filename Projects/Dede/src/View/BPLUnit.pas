@@ -92,7 +92,8 @@ implementation
 
 {$R *.DFM}
 Uses DeDeClasses, DisASM, HEXTools, DeDeBPL, DeDeDCUDumper,
-     DeDePFiles, DeDeRES, DeDeSym, MainUnit, DeDeAnsiStream;
+     DeDePFiles, DeDeRES, DeDeSym, MainUnit, DeDeAnsiStream,
+     DeDeCoreServices;
 
 // Used with DCU DSF file generation because of parsing OnNewProcEvent()     
 var DataB, DataS : TMemoryStream;
@@ -214,7 +215,10 @@ begin
    iRecNum:=0;
    iCount:=SymbolList.Count-1;
 
-   Glob_B5:=0;Glob_B6:=0;Glob_B7:=0;Glob_B10:=0;
+   DeDeCoreContext.Normalized5ByteInstructions := 0;
+   DeDeCoreContext.Normalized6ByteInstructions := 0;
+   DeDeCoreContext.Normalized7ByteInstructions := 0;
+   DeDeCoreContext.Normalized10ByteInstructions := 0;
    // Tova beshe bozata !!!
    i:=-1;
    Repeat
@@ -375,7 +379,11 @@ procedure TBPL.Panel2MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   If (ssAlt in Shift) and (ssShift in Shift) and (ssCtrl in Shift)
-    Then ShowMessageFmt(' 5 bytes: %d %s  6 bytes: %d %s  7 bytes: %d %s 10 bytes: %d',[Glob_B5,#13,Glob_B6,#13,Glob_B7,#13,Glob_B10]);
+    Then ShowMessageFmt(' 5 bytes: %d %s  6 bytes: %d %s  7 bytes: %d %s 10 bytes: %d',
+      [DeDeCoreContext.Normalized5ByteInstructions, #13,
+       DeDeCoreContext.Normalized6ByteInstructions, #13,
+       DeDeCoreContext.Normalized7ByteInstructions, #13,
+       DeDeCoreContext.Normalized10ByteInstructions]);
 end;
 
 procedure TBPL.DCUFileEditChange(Sender: TObject);

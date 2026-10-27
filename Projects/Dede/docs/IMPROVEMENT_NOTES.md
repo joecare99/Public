@@ -192,14 +192,15 @@ Formatkorrekturen gehoeren in eine separate Folgephase mit eigener Testsuite.
   bereitgestellten DCC32 weiterhin separat an einem unguarded Lazarus-
   `Interfaces`-Verweis und der Delphi-Kompatibilitaet der alten VCLZip-Units;
   der Parser selbst wurde isoliert kompiliert und getestet.
-- Delphi-7-Erkennung ist davon getrennt noch offen. Das 3.5-Decompilat
-  ordnet in `IDR\_Unit78.pas` den Marker `$2F8` D7 und `$2F0` D6 zu; die
-  Importerkennung erkennt `VCL70.bpl`/`.dpl`, und der damalige DSF-Pfad bildet
-  `D7` generisch auf `vcl7.dsf` ab. Der aktuelle CLI-Pfad ruft die
-  Importerkennung nicht auf, der direkte Markerpfad unterscheidet `$2F8`
-  nicht, `ConfigureVersion` setzt keine D7-Maske `$20`, und
-  `GetVersionedDSFName` kennt D7 nicht. Daher ist das geladene VCL7-DSF noch
-  nicht korrekt an D7-Analysen gebunden.
+- Delphi 7 ist jetzt getrennt von D6 erkennbar: Der direkte TControl-
+  Instanzgroessenmarker `$2F8` waehlt D7, `$2F0` bleibt D6. Wenn der direkte
+  Marker fehlt, kann `VCL70.bpl`/`.dpl` als D7-Import-Fallback dienen.
+  `ConfigureVersion` setzt die Kompatibilitaetsmaske `$20`; der DSF-Pfad
+  waehlt `vcl7.dsf`, und `analysis.json` dokumentiert den Nachweisweg.
+  Synthetische PE32-Markerfixtures sowie Versions-/Importtests decken die
+  D6/D7-Trennung ab. Ein vollstaendiger CLI-Lauf mit einer realen D7-EXE und
+  dem originalen VCL7-Katalog bleibt ein Integrationstest, fuer den eine
+  reproduzierbare D7-Eingabedatei benoetigt wird.
 - `E8 rel32` wird als PE32-VA-Kante gespeichert; `FF /2` und `FF /3` sind
   indirekte Calls ohne geratenes Ziel. Der Graph enthaelt Routine-/Instruktion-
   VAs und bleibt bei wiederholter Disassemblierung dedupliziert. Beim Export

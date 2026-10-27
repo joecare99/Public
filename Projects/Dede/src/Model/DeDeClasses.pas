@@ -187,7 +187,10 @@ Type TPEFixupTable = Object
 Type TPEImportData = Object
        FileName : String;
        DLLCount, ProcCount : Integer;
-       Procedure CollectInfo(APhysOffset,RVA : DWord; AList : TStrings);
+       Procedure CollectInfo(APhysOffset,RVA : DWord;
+         AList : TStrings); overload;
+       Procedure CollectInfo(AFile: ThePEFile; APhysOffset,RVA : DWord;
+         AList : TStrings); overload;
      End;
 
 
@@ -315,7 +318,12 @@ Type TMethodData = Class
 Function GetDelphiVersion(PEFile : ThePEFile) : String; overload;
 Function GetDelphiVersion(APEFile: ThePEFile; APEHeader: TPEHeader;
   AIsELF, ACBuilder, ADelphi2: Boolean): String; overload;
-Function GetDelphiVersionFromImports(sFileName : String; lImpOffset,lImpRVA : DWORD) : String;
+Function GetDelphiVersionFromImports(sFileName : String;
+  lImpOffset,lImpRVA : DWORD) : String; overload;
+Function GetDelphiVersionFromImports(APEFile: ThePEFile;
+  APEHeader: TPEHeader; const AFileName: string): String; overload;
+Function GetDelphiVersionFromImportNames(AImportNames: TStrings;
+  AIsCBuilder: Boolean): String;
 
 var    GlobAbort : Boolean;
        GlobError : String;
@@ -343,7 +351,8 @@ function SoftIceIsActive : Boolean;
 implementation
 
 Uses
-  SysUtils, HEXTools, IniFiles, DeDeRes, DeDeELFClasses, DeDeAnsiStream
+  SysUtils, HEXTools, IniFiles, DeDeRes, DeDeELFClasses, DeDeAnsiStream,
+  DeDeBinaryReader, DeDeBinaryTypes
 {$IFDEF MSWINDOWS}
   , Windows, Registry
 {$ENDIF}
@@ -687,53 +696,83 @@ Function GetDelphiVersion(APEFile: ThePEFile; APEHeader: TPEHeader;
   AIsELF, ACBuilder, ADelphi2: Boolean) : String;
 const
   IDS = 'TControl';
-  VER_ARR : Array [0..1,0..2] of String =
-       (('0','114','120'),('D3','D4','D5'));
 var
   PEFile: ThePEFile;
   PEHeader: TPEHeader;
-  delta, dw, dw1, bkup : DWord;
+  Reader: TDeDeBinaryReader;
+  Delta, DW, DW1: DWORD;
+  Cursor, SectionStart, SectionEnd, StringOffset, VMTFieldOffset: Int64;
+  I: Integer;
   b1,b2 : Byte;
   s : String;
 
   function InCODE(DW : DWORD) : boolean;
+  var
+    CodeStart, CodeEnd: UInt64;
   begin
-    result:=(dw > PEHeader.IMAGE_BASE + (PEHeader.Objects[1].RVA)) and
-      (dw<PEHeader.IMAGE_BASE + (PEHeader.Objects[1].RVA) +
-        PEHeader.Objects[1].PHYSICAL_SIZE)
+    CodeStart := UInt64(PEHeader.IMAGE_BASE) +
+      PEHeader.Objects[1].RVA;
+    CodeEnd := CodeStart + PEHeader.Objects[1].PHYSICAL_SIZE;
+    Result := (UInt64(DW) > CodeStart) and (UInt64(DW) < CodeEnd);
   end;
 
 Begin
   PEFile := APEFile;
   PEHeader := APEHeader;
   Result:='<check failed>';
+  if (PEFile = nil) or (PEHeader = nil) then
+    raise EArgumentNilException.Create('PE image');
+  if PEHeader.ObjectNum = 0 then
+    Exit;
 
-  delta:=PEHeader.IMAGE_BASE + (PEHeader.Objects[1].RVA) -
+  Delta:=PEHeader.IMAGE_BASE + (PEHeader.Objects[1].RVA) -
     PEHeader.Objects[1].PHYSICAL_OFFSET;
+  SectionStart := PEHeader.Objects[1].PHYSICAL_OFFSET;
+  SectionEnd := SectionStart + PEHeader.Objects[1].PHYSICAL_SIZE;
+  if SectionEnd > PEFile.PEStream.Size then
+    SectionEnd := PEFile.PEStream.Size;
+  if SectionEnd > Int64(High(DWORD)) + 1 then
+    SectionEnd := Int64(High(DWORD)) + 1;
+  if SectionEnd - SectionStart < 4 then
+    Exit;
 
-  PEFile.PEStream.Seek(PEHeader.Objects[1].PHYSICAL_OFFSET,soFromBeginning);
-
-  Repeat
-    PEFile.PEStream.ReadBuffer(dw,4);
-    bkup:=PEFile.PEStream.Position;
-    If dw - delta = PEFile.PEStream.Position Then
-    Begin
-      PEFile.PEStream.ReadBuffer(b1,1);
-      if b1<=16 Then
+  Reader := TDeDeBinaryReader.Create(PEFile.PEStream);
+  try
+    Cursor := SectionStart;
+    while Cursor <= SectionEnd - 4 do
+    begin
+      DW := Reader.ReadUInt32LEAt(TPE32FileOffset(Cursor));
+      if (DW - Delta) = DWORD(Cursor + 4) then
       begin
-        PEFile.PEStream.ReadBuffer(b2,1);
-        s := PEFile.PEStream.ReadStringA(b2);
-        PEFile.PEStream.ReadBuffer(dw,4);
-        If InCODE(dw) then
+        if Cursor + 6 <= SectionEnd then
         begin
-          dw1:= dw - PEHeader.IMAGE_BASE - (PEHeader.Objects[1].RVA) +
-           PEHeader.Objects[1].PHYSICAL_OFFSET;
-
-          PEFile.PEStream.Seek(dw1-40,soFromBeginning);
-          PEFile.PEStream.ReadBuffer(dw,4);
-          If s=IDS then
+          b1 := Reader.ReadUInt8At(TPE32FileOffset(Cursor + 4));
+          if b1 <= 16 then
           begin
-            case dw of
+            b2 := Reader.ReadUInt8At(TPE32FileOffset(Cursor + 5));
+            StringOffset := Cursor + 6;
+            if StringOffset + b2 + 4 <= SectionEnd then
+            begin
+              s := '';
+              for I := 0 to b2 - 1 do
+                s := s + Chr(Reader.ReadUInt8At(
+                  TPE32FileOffset(StringOffset + I)));
+              DW := Reader.ReadUInt32LEAt(
+                TPE32FileOffset(StringOffset + b2));
+              if InCODE(DW) then
+              begin
+                DW1 := DW - PEHeader.IMAGE_BASE -
+                  PEHeader.Objects[1].RVA +
+                  PEHeader.Objects[1].PHYSICAL_OFFSET;
+                VMTFieldOffset := Int64(DW1) - 40;
+                if (VMTFieldOffset >= SectionStart) and
+                  (VMTFieldOffset + 4 <= SectionEnd) then
+                begin
+                  DW := Reader.ReadUInt32LEAt(
+                    TPE32FileOffset(VMTFieldOffset));
+                  if s=IDS then
+                  begin
+                    case DW of
               $0:
               begin
                 Result:='D3';
@@ -772,74 +811,113 @@ Begin
                 else
                   Result:='D6';
               end;
+              $2F0:
+              begin
+                if ACBuilder then
+                  Result:='BCB6?'
+                else
+                  Result:='D6';
+              end;
+              $2F8:
+              begin
+                if ACBuilder then
+                  Result:='BCB7'
+                else
+                  Result:='D7';
+              end
               else
                 Result:='<unknown version>';
+                    end;
+                    Exit;
+                  end;
+                end;
+              end;
             end;
-            Exit;
           end;
         end;
       end;
+      Inc(Cursor, 4);
     end;
-    PEFile.PEStream.seek(bkup,soFromBeginning);
-  Until
-    (PEFile.PEStream.Position >=
-      PEHeader.Objects[1].PHYSICAL_OFFSET+PEHeader.Objects[1].PHYSICAL_SIZE);
+  finally
+    Reader.Free;
+  end;
 
   If ADelphi2 Then Result:='D2';
 
 End;
 
-Function GetDelphiVersionFromImports(sFileName : String; lImpOffset,lImpRVA : DWORD) : String;
+Function GetDelphiVersionFromImportNames(AImportNames: TStrings;
+  AIsCBuilder: Boolean): String;
+var
+  I: Integer;
+  VersionNumber: string;
+  ImportName: string;
+
+  function Matches(const AExpectedName: string): Boolean;
+  begin
+    ImportName := AImportNames[I];
+    while (ImportName <> '') and
+      (ImportName[Length(ImportName)] = #0) do
+      Delete(ImportName, Length(ImportName), 1);
+    Result := SameText(ImportName, AExpectedName);
+  end;
+
+begin
+  Result := '';
+  if AImportNames = nil then
+    Exit;
+  VersionNumber := '';
+  for I := 0 to AImportNames.Count - 1 do
+  begin
+    if Matches('VCL30.bpl') or Matches('VCL30.dpl') then
+      VersionNumber := '3'
+    else if Matches('VCL40.bpl') or Matches('VCL40.dpl') then
+      VersionNumber := '4'
+    else if Matches('VCL50.bpl') or Matches('VCL50.dpl') then
+      VersionNumber := '5'
+    else if Matches('VCL60.bpl') or Matches('VCL60.dpl') then
+      VersionNumber := '6'
+    else if Matches('VCL70.bpl') or Matches('VCL70.dpl') then
+      VersionNumber := '7'
+    else if Matches('VCL80.bpl') or Matches('VCL80.dpl') then
+      VersionNumber := '8'
+    else if Matches('VCL90.bpl') or Matches('VCL90.dpl') then
+      VersionNumber := '2005'
+    else if Matches('VCL100.bpl') or Matches('VCL100.dpl') then
+      VersionNumber := '2006'
+    else if Matches('VCL110.bpl') or Matches('VCL110.dpl') then
+      VersionNumber := '2007'
+    else if Matches('VCL120.bpl') or Matches('VCL120.dpl') then
+      VersionNumber := '2009';
+    if VersionNumber <> '' then
+      Break;
+  end;
+  if VersionNumber = '' then
+    Exit;
+  if AIsCBuilder then
+    Result := 'BCB' + VersionNumber
+  else
+    Result := 'D' + VersionNumber;
+end;
+
+Function GetDelphiVersionFromImports(sFileName : String;
+  lImpOffset,lImpRVA : DWORD) : String;
 var PEImportData : TPEImportData;
     TmpList : TStringList;
     idx : Integer;
     s : String;
+    IsCBuilder: Boolean;
 Begin
   Result:='<unknown>';
-  if PEHeader.GetSectionIndexEx('BSS')=-1 then Exit;
-
-  Result:='Console';
   PEImportData.FileName:=sFileName;
 
   TmpList:=TStringList.Create;
   Try
-    Try
-      PEImportData.CollectInfo(lImpOffset, lImpRVA, TmpList);
-    Except
-    End;
-
-    If TmpList.IndexOf('VCL30.bpl')<>-1 Then Result:='3';
-    If TmpList.IndexOf('VCL30.dpl')<>-1 Then Result:='3';
-
-    If TmpList.IndexOf('VCL40.bpl')<>-1 Then Result:='4';
-    If TmpList.IndexOf('VCL40.dpl')<>-1 Then Result:='4';
-
-    If TmpList.IndexOf('VCL50.bpl')<>-1 Then Result:='5';
-    If TmpList.IndexOf('VCL50.dpl')<>-1 Then Result:='5';
-
-    If TmpList.IndexOf('VCL60.bpl')<>-1 Then Result:='6';
-    If TmpList.IndexOf('VCL60.dpl')<>-1 Then Result:='6';
-
-    If TmpList.IndexOf('VCL70.bpl')<>-1 Then Result:='7';
-    If TmpList.IndexOf('VCL70.dpl')<>-1 Then Result:='7';
-
-    If TmpList.IndexOf('VCL80.bpl')<>-1 Then Result:='8';
-    If TmpList.IndexOf('VCL80.dpl')<>-1 Then Result:='8';
-
-    If TmpList.IndexOf('VCL90.bpl')<>-1 Then Result:='2005';
-    If TmpList.IndexOf('VCL90.dpl')<>-1 Then Result:='2005';
-
-    If TmpList.IndexOf('VCL100.bpl')<>-1 Then Result:='2006';
-    If TmpList.IndexOf('VCL100.dpl')<>-1 Then Result:='2006';
-
-    If TmpList.IndexOf('VCL110.bpl')<>-1 Then Result:='2007';
-    If TmpList.IndexOf('VCL110.dpl')<>-1 Then Result:='2007';
-
-    If TmpList.IndexOf('VCL120.bpl')<>-1 Then Result:='2009';
-    If TmpList.IndexOf('VCL120.dpl')<>-1 Then Result:='2009';
-
+    PEImportData.CollectInfo(lImpOffset, lImpRVA, TmpList);
 
     idx:=PEHeader.GetSectionIndexEx('CODE');
+    if (idx < 1) or (idx > PEHeader.ObjectNum) then
+      Exit;
     PEFile.PEStream.BeginSearch;
     Try
       PEFile.PEStream.Seek(PEHeader.Objects[idx].PHYSICAL_OFFSET+5,soFromBeginning);
@@ -848,15 +926,60 @@ Begin
       PEFile.PEStream.EndSearch;
     End;
 
-    if s='C++' then
-      Result:='BCB'+Result
-    else
-      Result:='D'  +Result;
+    IsCBuilder := s = 'C++';
+    Result := GetDelphiVersionFromImportNames(TmpList, IsCBuilder);
+    if Result = '' then
+      Result := 'Console';
       
   Finally
     TmpList.Free;
   End;
 End;
+
+Function GetDelphiVersionFromImports(APEFile: ThePEFile;
+  APEHeader: TPEHeader; const AFileName: string): String;
+var
+  I, ImportSectionIndex: Integer;
+  ImportOffset, ImportRVA, SectionRVA, SectionSize: DWORD;
+  PreviousPEFile: ThePEFile;
+  PreviousPEHeader: TPEHeader;
+begin
+  Result := '<unknown>';
+  if (APEFile = nil) or (APEHeader = nil) then
+    raise EArgumentNilException.Create('PE image');
+  if APEHeader.IMPORT_TABLE_RVA = 0 then
+    Exit;
+
+  ImportRVA := APEHeader.IMPORT_TABLE_RVA;
+  ImportSectionIndex := -1;
+  for I := 1 to APEHeader.ObjectNum do
+  begin
+    SectionRVA := APEHeader.Objects[I].RVA;
+    SectionSize := APEHeader.Objects[I].PHYSICAL_SIZE;
+    if (ImportRVA >= SectionRVA) and
+      (ImportRVA - SectionRVA < SectionSize) then
+    begin
+      ImportSectionIndex := I;
+      Break;
+    end;
+  end;
+  if ImportSectionIndex < 1 then
+    Exit;
+  ImportOffset := APEHeader.Objects[ImportSectionIndex].PHYSICAL_OFFSET +
+    (ImportRVA - APEHeader.Objects[ImportSectionIndex].RVA);
+
+  PreviousPEFile := PEFile;
+  PreviousPEHeader := PEHeader;
+  PEFile := APEFile;
+  PEHeader := APEHeader;
+  try
+    Result := GetDelphiVersionFromImports(AFileName, ImportOffset,
+      ImportRVA);
+  finally
+    PEFile := PreviousPEFile;
+    PEHeader := PreviousPEHeader;
+  end;
+end;
 
 
 { TFieldData }
@@ -1615,69 +1738,121 @@ end;
 
 { TPEImportData }
 
-procedure TPEImportData.CollectInfo(APhysOffset, RVA: DWord; AList : TStrings);
-var b1,b2,b3,b4 : Byte;
-    Delta : DWORD;
-    CurrDirPos : DWORD;
-    LookOffset : DWORD;
-    HintOffset : DWORD;
-    ProcOffset : DWord;
-    DLLName, ProcName, ProcAddress, ProcHint : String;
+procedure TPEImportData.CollectInfo(APhysOffset, RVA: DWord;
+  AList: TStrings);
 begin
-  If PEFile=nil Then
-     Raise Exception.Create(err_no_pefile_assigned);
-  DLLCount:=0;
-  ProcCount:=0;
-  DELTA:=APhysOffset-RVA;
+  if PEFile = nil then
+    raise Exception.Create(err_no_pefile_assigned);
+  CollectInfo(PEFile, APhysOffset, RVA, AList);
+end;
+
+procedure TPEImportData.CollectInfo(AFile: ThePEFile;
+  APhysOffset, RVA: DWord; AList: TStrings);
+var
+  Delta: Int64;
+  DescriptorOffset, NameOffset, ThunkOffset, ProcNameOffset: Int64;
+  NameRVA, ThunkRVA, ProcRVA: DWORD;
+  ProcAddress, ProcHint, ProcName, DLLName: string;
+  Reader: TDeDeBinaryReader;
+
+  function FileOffset(const AOffset: Int64): TPE32FileOffset;
+  begin
+    if (AOffset < 0) or (AOffset > High(LongWord)) then
+      raise EDeDeBinaryBounds.CreateFmt(
+        'PE import data offset is outside PE32 range: %s',
+        [IntToHex(AOffset, 16)]);
+    Result := TPE32FileOffset(AOffset);
+  end;
+
+  function RVAOffset(ARVA: DWORD): TPE32FileOffset;
+  begin
+    Result := FileOffset(Int64(ARVA) + Delta);
+  end;
+
+  function ReadNullTerminatedString(AOffset: TPE32FileOffset): string;
+  var
+    Position: Int64;
+    Value: Byte;
+  begin
+    Result := '';
+    Position := LongWord(AOffset);
+    repeat
+      Value := Reader.ReadUInt8At(FileOffset(Position));
+      if Value = 0 then
+        Exit;
+      Result := Result + Chr(Value);
+      Inc(Position);
+    until False;
+  end;
+
+begin
+  if AFile = nil then
+    raise Exception.Create(err_no_pefile_assigned);
+  if AList = nil then
+    raise EArgumentNilException.Create('AList');
+  DLLCount := 0;
+  ProcCount := 0;
+  Delta := Int64(APhysOffset) - RVA;
+  DescriptorOffset := APhysOffset;
   AList.Clear;
-  CurrDirPos:=APhysOffset;
-  Repeat
-    PEFile.Seek(CurrDirPos+12);
-    PEFile.Read(b1,b2,b3,b4);
-    HintOffset:=(b1+256*b2)+(b3+256*b4)*65536;
-    HintOffset:=HintOffset+Delta;
-    PEFile.Read(b1,b2,b3,b4);
-    LookOffset:=(b1+256*b2)+(b3+256*b4)*65536+Delta;
-    If (HintOffset=LookOffset) and (HintOffset=Delta) Then Break;
-    PEFile.Seek(HintOffset);
-    DLLName:='';
-    Repeat
-      PEFile.Read(b1);
-      DLLName:=DLLName+Chr(b1);
-    Until b1=0;
-    AList.Add(DLLName);
-    Inc(DLLCount);
-    ProcName:='';
-     Repeat
-       PEFile.Seek(LookOffset);
-       PEFile.Read(b1,b2,b3,b4);
-       ProcOffset:=(b1+256*b2)+(b3+256*b4)*65536;
-       If ProcOffset=0 Then Break;
-       ProcHint:=DWord2Hex(ProcOffset and $80000000);
-       ProcAddress:=DWord2Hex(ProcOffset and $7fffffff);
-       If ProcHint<>'80000000' Then
-        Begin
-          // Import is by name, so read the name !!!
-          ProcOffset:={ProcOffset}HEX2DWord(ProcAddress)+Delta;
-          PEFile.Seek(ProcOffset+2);
-          ProcName:='';
-          Repeat
-            PEFile.Read(b1);
-            ProcName:=ProcName+Chr(b1);
-          Until b1=0;
-         End
-         Else Begin
-           //Import is by ordinal.
-           ProcName:='Ordinal:'+ProcAddress;
-           ProcAddress:='00000000';
-         End;
-       ProcName:=Copy(ProcName,1,Length(ProcName)-1);
-       AList.Add(' '+ProcName+Format(',%sh,%s',[ProcAddress,ProcHint]));
-       Inc(ProcCount);
-       LookOffset:=LookOffset+4;
-     Until False;
-    CurrDirPos:=CurrDirPos+20;
-  Until False;
+  Reader := TDeDeBinaryReader.Create(AFile.PEStream);
+  try
+    try
+    while True do
+    begin
+      NameRVA := Reader.ReadUInt32LEAt(
+        FileOffset(DescriptorOffset + 12));
+      ThunkRVA := Reader.ReadUInt32LEAt(
+        FileOffset(DescriptorOffset + 16));
+      if (NameRVA = 0) and (ThunkRVA = 0) then
+        Break;
+      if (NameRVA = 0) or (ThunkRVA = 0) then
+        raise EReadError.CreateFmt(
+          'Invalid import descriptor at file offset %s',
+          [IntToHex(DescriptorOffset, 8)]);
+
+      NameOffset := LongWord(RVAOffset(NameRVA));
+      ThunkOffset := LongWord(RVAOffset(ThunkRVA));
+      DLLName := ReadNullTerminatedString(
+        TPE32FileOffset(NameOffset));
+      AList.Add(DLLName + #0);
+      Inc(DLLCount);
+
+      while True do
+      begin
+        ProcRVA := Reader.ReadUInt32LEAt(
+          FileOffset(ThunkOffset));
+        if ProcRVA = 0 then
+          Break;
+        ProcHint := DWord2HEX(ProcRVA and $80000000);
+        ProcAddress := DWord2HEX(ProcRVA and $7FFFFFFF);
+        if ProcHint <> '80000000' then
+        begin
+          ProcNameOffset := Int64(LongWord(RVAOffset(ProcRVA))) + 2;
+          ProcName := ReadNullTerminatedString(
+            FileOffset(ProcNameOffset));
+        end
+        else
+        begin
+          ProcName := 'Ordinal:' + ProcAddress;
+          ProcAddress := '00000000';
+        end;
+        AList.Add(' ' + ProcName +
+          Format(',%sh,%s', [ProcAddress, ProcHint]));
+        Inc(ProcCount);
+        Inc(ThunkOffset, 4);
+      end;
+      Inc(DescriptorOffset, 20);
+    end;
+  except
+    on E: Exception do
+      raise EReadError.CreateFmt(
+        'Import table parse failed at descriptor %s (delta %s): %s',
+        [IntToHex(DescriptorOffset, 8), IntToHex(Delta, 16), E.Message]);
+  end;
+  finally
+    Reader.Free;
+  end;
 end;
 
 { TPETLSTable }
