@@ -30,8 +30,9 @@ SKIP_DIRS = {'tests', '_core'}
 
 # Projekte in FPC/, die von Hand gepflegt werden und nicht aus dem
 # Quellbaum erzeugt werden koennen (demo_smoke verweist auf FPC/meta/units,
-# Bartest1 ist ein Altbestand mit abweichendem Aufbau).
-SKIP_PROJECTS = {'demo_smoke', 'Bartest1'}
+# Bartest1 ist ein Altbestand mit abweichendem Aufbau, TelnameTest nutzt den
+# Konsolen-Test-Runner statt des GUI-Test-Runners).
+SKIP_PROJECTS = {'demo_smoke', 'Bartest1', 'TelnameTest'}
 
 # Scope-Unterordner innerhalb einer Demo (MVVM-Aufteilung)
 SCOPE_DIRS = ('view', 'viewmodel', 'model', 'services', 'support')

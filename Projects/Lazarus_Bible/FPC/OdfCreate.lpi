@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/OdfCreate"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-            <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
+            <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
+            <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/OdfCreate"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-            <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
+            <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
+            <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -118,8 +118,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/OdfCreate"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-      <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
+      <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
+      <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;../../../../Projekte/Lazarus/fpOdf"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>

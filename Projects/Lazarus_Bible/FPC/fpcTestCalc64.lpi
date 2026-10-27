@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestCalc64"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestCalc64"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -122,9 +122,12 @@
         <UnitName Value="tst_Calc64"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/Strings/StrUtilsExt.pas"/>
+        <Filename Value="../source/Calc32/Frm_CALC64.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="StrUtilsExt"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CALC64"/>
       </Unit2>
       <Unit3>
         <Filename Value="../source/Calc32/Frm_CalcABOUT.pas"/>
@@ -135,12 +138,9 @@
         <UnitName Value="Frm_CalcABOUT"/>
       </Unit3>
       <Unit4>
-        <Filename Value="../source/Calc32/Frm_CALC64.pas"/>
+        <Filename Value="../source/Strings/StrUtilsExt.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_CALC64"/>
+        <UnitName Value="StrUtilsExt"/>
       </Unit4>
     </Units>
   </ProjectOptions>
@@ -151,8 +151,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestCalc64"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
-      <IncludeFiles Value="../source/tests;../source/Strings;../source/Calc32;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/Calc32;../source/Strings;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>

@@ -464,9 +464,10 @@
       "learning": "Zeichen nach Ziffern umwandeln wie am Telefon.",
       "folder": "TELNAME",
       "project": "Telname",
-      "units": ["Frm_TelnameMAIN.pas"],
+      "units": ["Frm_TelnameMAIN.pas", "viewmodel/TelnameViewModel.pas", "model/TelnameModel.pas"],
       "markers": [
-        {"file": "Frm_TelnameMAIN.pas", "text": "function TfrmTelnameMain.TelNameToNum", "title": "Die Umwandlung"}
+        {"file": "model/TelnameModel.pas", "text": "function TTelnameModel.NameToNumber", "title": "Die Modellumwandlung"},
+        {"file": "viewmodel/TelnameViewModel.pas", "text": "procedure TTelnameViewModel.DoGenerateNames", "title": "Das ViewModel-Kommando"}
       ],
       "showcase": true
     },

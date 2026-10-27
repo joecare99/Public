@@ -4,12 +4,21 @@ Kurzfassung des aktuellen Stands der Delphi-Bible auf Linux (FPC/Lazarus).
 
 ## Build-Stand (Ubuntu 26.04, FPC 3.2.2, Lazarus 4.8.0)
 
-`FPC/tools/build_all.sh` baut **123 von 129** Projekten. Noch offen (echte
-Windows-Abhaengigkeiten):
+`FPC/tools/build_all.sh` baut **alle 129** Projekte unter Linux (FPC 3.2.2,
+Lazarus 4.8); mit der Windows-Lazarus 4.8 ebenfalls alle.
 
-* `Animator`, `CoolDemo` (Win32-Animationssteuerelement -> LCL-Neuimplementierung)
-* `Report1` (QuickReport -> LazReport)
-* `Testdll` (+ `Colorlib`: DLL -> Shared Library)
+Neu interpretierte, zuvor Windows-spezifische Demos:
+
+* `Animator` - `cmpAnimator` ist jetzt ein reines LCL-Steuerelement
+  (prozedural gezeichnete Animation statt Win32-ANIMATE); `Animate1` wird zur
+  Laufzeit erzeugt (steht nicht in der `.lfm`).
+* `CoolDemo` - `SpriteAnim.TSpriteAnimation` ersetzt `BGRASpriteAnimation`.
+* `Report1` - der Bericht wird direkt auf die Canvas gezeichnet (Vorschau +
+  Druck), Daten aus der Wines-Paradox-Tabelle.
+* `Testdll`/`Colorlib` - `Colorlib` ist eine plattformuebergreifende Shared
+  Library; `Testdll` laedt sie zur Laufzeit (`DynLibs`).
+* `OdfCreate` - absoluter Linux-Pfad zu `fpOdf` durch einen relativen ersetzt
+  (`../../../../Projekte/Lazarus/fpOdf`), damit auch unter Windows baubar.
 
 `WinesEntry` und `Sqlplay` nutzen jetzt die BDE-freie Paradox-Engine
 `DBParadox` (Komponente unter `C:\Projekte\Delphi\Components`). Dafuer wurde
