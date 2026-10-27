@@ -159,6 +159,47 @@ Formatkorrekturen gehoeren in eine separate Folgephase mit eigener Testsuite.
   optionale `--xref`-Ausgabe ergaenzt jetzt einen strukturierten Call-Graph
   aus den beim Export disassemblierten Routinen und den transitiv erreichbaren
   direkten Callzielen.
+- Fuer `--xref` wird der zum erkannten Compiler passende `vcl*.dsf`-Katalog
+  neben der CLI geladen. Die DSF-Signaturen werden nach derselben
+  `UnlinkCalls`-Normalisierung wie im Disassembler exakt verglichen; eine
+  versionsinkompatible Signatur oder mehrere unterschiedliche Namensmatches
+  erzeugen keinen geratenen Namen. XRef-Eintraege fuehren Quelle und
+  Vertrauensstufe (`built_in_dsf`, `exact_pattern`); eindeutige Treffer
+  erscheinen auch im Assembly-Kommentar. Klassenmethoden-Metadaten haben
+  Vorrang. Das DSF-Laden meldet Fehlerklasse und -text in den Analysewarnungen.
+  Die Repository-Quelle enthaelt keine `.dsf`-Assets; der Sidecar weist
+  fehlende oder inkompatible Kataloge explizit aus. Die Decompilate (`IDR`
+  `_Unit82`/`_Unit85`) zeigen den fehlenden Formatunterschied: bei Mode-Bit
+  `$40` folgt auf das Flag ein zusaetzliches DWORD, danach erst Recordcount,
+  Patternlaenge und Offsets. Mode-Bit `$80` kennzeichnet die aktuelle
+  Formatgeneration; das Decompilat meldet fehlendes `$40` als zu alt und
+  fehlendes `$80` als altes Format, das aktualisiert werden soll.
+- `DeDeBPL` liest und schreibt dieses optionale DWORD nun. Der 3.11-Parser
+  aus `trunk` tut dies nicht; ein isolierter DCC32-Probeaufbau mit dem
+  unveraenderten `DeDeBPL.pas` erhielt beim Originaleintrag `Vcl6.dsf`
+  `EReadError: Stream-Lesefehler`. Die ZIP-Datei `DSF\VCL7.dsf` enthaelt
+  genau einen gleichnamigen Roh-DSF-Eintrag, den der Loader nach einer
+  Entpackstufe liest. Dessen Felder sind mit dem erweiterten Layout gueltig:
+  Mode `$E0`, Extension-DWORD `0`, 42.904 Records, Patternlaenge 50,
+  Patternoffset `$29`, Namensoffset `$20BBD9` und Kommentarlaenge 20.
+- Der echte VCL6-Katalog aus der Referenzdistribution laedt jetzt 41.907
+  Symbole. Auf der Referenz-EXE werden 240 Routinen und 3.830 Callkanten
+  eindeutig benannt, z. B. `System.@LStrAddRef` und
+  `Controls.TControl.SetText`. Die geladenen Windows-/Linux-XRef-Sidecars
+  sind byteidentisch. 1.682 DSF-benannte Callstellen werden zusaetzlich als
+  `// DSF: <Symbolname>` direkt an den jeweiligen PAS-Assemblerzeilen
+  ausgegeben. Der volle 3.11-GUI-Build scheitert unter dem
+  bereitgestellten DCC32 weiterhin separat an einem unguarded Lazarus-
+  `Interfaces`-Verweis und der Delphi-Kompatibilitaet der alten VCLZip-Units;
+  der Parser selbst wurde isoliert kompiliert und getestet.
+- Delphi-7-Erkennung ist davon getrennt noch offen. Das 3.5-Decompilat
+  ordnet in `IDR\_Unit78.pas` den Marker `$2F8` D7 und `$2F0` D6 zu; die
+  Importerkennung erkennt `VCL70.bpl`/`.dpl`, und der damalige DSF-Pfad bildet
+  `D7` generisch auf `vcl7.dsf` ab. Der aktuelle CLI-Pfad ruft die
+  Importerkennung nicht auf, der direkte Markerpfad unterscheidet `$2F8`
+  nicht, `ConfigureVersion` setzt keine D7-Maske `$20`, und
+  `GetVersionedDSFName` kennt D7 nicht. Daher ist das geladene VCL7-DSF noch
+  nicht korrekt an D7-Analysen gebunden.
 - `E8 rel32` wird als PE32-VA-Kante gespeichert; `FF /2` und `FF /3` sind
   indirekte Calls ohne geratenes Ziel. Der Graph enthaelt Routine-/Instruktion-
   VAs und bleibt bei wiederholter Disassemblierung dedupliziert. Beim Export
@@ -184,7 +225,8 @@ Formatkorrekturen gehoeren in eine separate Folgephase mit eigener Testsuite.
   Klassenmethoden-Kanten. 912 Bodies haben den kanonischen Frame-Prolog;
   118 zeigen positive Stackzugriffe (174 Offset-/Breitenkombinationen, 167
   ausgerichtete Stack-Word-Slots). 35 Routinen haben passende Cleanup-/
-  Offsetevidenz, 37 widerspruechliche Evidenz. FPC/Win32, Win64 und Linux
+  Offsetevidenz, 37 widerspruechliche Evidenz; 48 Routinen haben einen
+  Cleanup-Word-Count-Kandidaten. FPC/Win32, Win64 und Linux
   erzeugen identische Sidecars und PAS-Evidenzkommentare.
 - 8.045 Callstellen enthalten erkannte Registerdefinitionen (EAX 7.730,
   EDX 5.948, ECX 2.494; Mehrfachbelegung moeglich). Die 407 waehrend der
@@ -193,7 +235,8 @@ Formatkorrekturen gehoeren in eine separate Folgephase mit eigener Testsuite.
   Sidecar sichtbar. 48 Routinen erhalten ausserdem einen
   Stack-Word-Count-Kandidaten aus ausgerichteten Cleanupbytes.
 - Die bestehende Importnamen-Aufloesung ist an den Graphen angebunden, traf
-  auf der Referenz-EXE aber keine Kante. Weitere Inferenzschritte bleiben:
+  auf der Referenz-EXE 14 absolute IAT-Slots, aber keinen Importnamen. Weitere
+  Inferenzschritte bleiben:
   vollstaendige Import-/VMT-/Datenzielaufloesung, semantischer Register-
   Datenfluss, vom exportierten Code unerreichbare globale Routinen und die aggregierte
   Parameterbelegung an Aufruferstellen. Typ- und Namensinferenz benoetigt

@@ -27,6 +27,7 @@ type
     ExecutableName: string;
     ClassCount: Integer;
     DelphiVersionCompatibility: Byte;
+    StrictXRefSymbolMatches: Boolean;
     ClassesDumper: TObject;
     ClassInfoList: TStringList;
     DFMFormList: TStringList;

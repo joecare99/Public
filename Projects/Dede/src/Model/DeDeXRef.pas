@@ -14,9 +14,13 @@ type
     SourceInstructionVA: LongWord;
     TargetVA: LongWord;
     HasTarget: Boolean;
+    IndirectOperandVA: LongWord;
+    HasIndirectOperandVA: Boolean;
     Kind: TDeDeXRefKind;
     TargetName: string;
     TargetResolution: string;
+    TargetNameSource: string;
+    TargetNameConfidence: string;
     HasCallerCleanup: Boolean;
     CallerCleanupBytes: LongWord;
     CallerCleanupConflict: Boolean;
@@ -35,6 +39,9 @@ type
     RoutineVA: LongWord;
     RoutineName: string;
     RoutineNameConflict: Boolean;
+    RoutineNameResolution: string;
+    RoutineNameSource: string;
+    RoutineNameConfidence: string;
     HasDisassemblyBody: Boolean;
     IsDirectCallTarget: Boolean;
     FrameProloguePending: Boolean;
@@ -74,6 +81,8 @@ type
     FRoutines: TList;
     function GetCount: Integer;
     function GetItem(Index: Integer): TDeDeXRef;
+    function GetRoutineCount: Integer;
+    function GetRoutine(Index: Integer): TDeDeRoutineEvidence;
     function FindRoutine(ARoutineVA: LongWord): Integer;
     function EnsureRoutine(ARoutineVA: LongWord): Integer;
   public
@@ -96,12 +105,20 @@ type
       AInstructionVA: LongWord);
     procedure ResolveKnownMethod(ARoutineVA: LongWord;
       const AQualifiedName: string);
+    procedure ResolveDSFSymbol(ARoutineVA: LongWord;
+      const ASymbolName: string);
+    procedure MarkDSFSymbolAmbiguous(ARoutineVA: LongWord);
     procedure ResolveImportCall(ARoutineVA, AInstructionVA: LongWord;
       const AImportName: string);
+    procedure ResolveImportIATCall(ARoutineVA, AInstructionVA,
+      AIATVA: LongWord; const AImportName: string);
     function ToJSON: string;
     function RoutinesToJSON: string;
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TDeDeXRef read GetItem; default;
+    property RoutineCount: Integer read GetRoutineCount;
+    property Routines[Index: Integer]: TDeDeRoutineEvidence
+      read GetRoutine;
   end;
 
 implementation
@@ -169,6 +186,16 @@ end;
 function TDeDeXRefList.GetItem(Index: Integer): TDeDeXRef;
 begin
   Result := TDeDeXRef(FItems[Index]);
+end;
+
+function TDeDeXRefList.GetRoutineCount: Integer;
+begin
+  Result := FRoutines.Count;
+end;
+
+function TDeDeXRefList.GetRoutine(Index: Integer): TDeDeRoutineEvidence;
+begin
+  Result := TDeDeRoutineEvidence(FRoutines[Index]);
 end;
 
 function TDeDeXRefList.FindRoutine(ARoutineVA: LongWord): Integer;
@@ -459,12 +486,16 @@ var
   Kind: TDeDeXRefKind;
   HasTarget: Boolean;
   TargetVA: LongWord;
+  HasIndirectOperandVA: Boolean;
+  IndirectOperandVA: LongWord;
 begin
   if (ABytes = nil) or (ASize <= 0) then
     Exit(-1);
 
   HasTarget := False;
   TargetVA := 0;
+  HasIndirectOperandVA := False;
+  IndirectOperandVA := 0;
   if (ABytes^ = $E8) and (ASize >= 5) then
   begin
     UnsignedDisplacement :=
@@ -487,6 +518,15 @@ begin
     if (I <> 2) and (I <> 3) then
       Exit(-1);
     Kind := dxkIndirectCall;
+    if (((ABytes[1] shr 6) and $03) = 0) and
+      ((ABytes[1] and $07) = 5) and (ASize >= 6) then
+    begin
+      HasIndirectOperandVA := True;
+      IndirectOperandVA := LongWord(ABytes[2]) or
+        (LongWord(ABytes[3]) shl 8) or
+        (LongWord(ABytes[4]) shl 16) or
+        (LongWord(ABytes[5]) shl 24);
+    end;
   end
   else
     Exit(-1);
@@ -506,6 +546,8 @@ begin
   Reference.TargetVA := TargetVA;
   Reference.HasTarget := HasTarget;
   Reference.Kind := Kind;
+  Reference.IndirectOperandVA := IndirectOperandVA;
+  Reference.HasIndirectOperandVA := HasIndirectOperandVA;
   Reference.HasCallerCleanup := False;
   Reference.CallerCleanupBytes := 0;
   Reference.CallerCleanupConflict := False;
@@ -595,14 +637,31 @@ begin
   begin
     Routine := TDeDeRoutineEvidence(FRoutines[I]);
     if Routine.RoutineVA = ARoutineVA then
-      if not Routine.RoutineNameConflict then
+      if (Routine.RoutineNameSource = 'built_in_dsf') or
+        (Routine.RoutineNameResolution = 'ambiguous_dsf_symbol') then
+      begin
+        Routine.RoutineName := AQualifiedName;
+        Routine.RoutineNameConflict := False;
+        Routine.RoutineNameResolution := 'known_class_method';
+        Routine.RoutineNameSource := 'class_metadata';
+        Routine.RoutineNameConfidence := 'exact_address';
+      end
+      else if not Routine.RoutineNameConflict then
       begin
         if Routine.RoutineName = '' then
-          Routine.RoutineName := AQualifiedName
+        begin
+          Routine.RoutineName := AQualifiedName;
+          Routine.RoutineNameResolution := 'known_class_method';
+          Routine.RoutineNameSource := 'class_metadata';
+          Routine.RoutineNameConfidence := 'exact_address';
+        end
         else if Routine.RoutineName <> AQualifiedName then
         begin
           Routine.RoutineName := '';
           Routine.RoutineNameConflict := True;
+          Routine.RoutineNameResolution := 'ambiguous_class_method';
+          Routine.RoutineNameSource := '';
+          Routine.RoutineNameConfidence := '';
         end;
       end;
   end;
@@ -610,7 +669,15 @@ begin
   begin
     Reference := TDeDeXRef(FItems[I]);
     if Reference.HasTarget and (Reference.TargetVA = ARoutineVA) then
-      if (Reference.TargetResolution <> 'ambiguous_class_method') and
+      if (Reference.TargetResolution = 'known_dsf_symbol') or
+        (Reference.TargetResolution = 'ambiguous_dsf_symbol') then
+      begin
+        Reference.TargetName := AQualifiedName;
+        Reference.TargetResolution := 'known_class_method';
+        Reference.TargetNameSource := 'class_metadata';
+        Reference.TargetNameConfidence := 'exact_address';
+      end
+      else if (Reference.TargetResolution <> 'ambiguous_class_method') and
         (Reference.TargetResolution <> 'known_import') and
         (Reference.TargetResolution <> 'ambiguous_target') then
       begin
@@ -618,13 +685,109 @@ begin
         begin
           Reference.TargetName := AQualifiedName;
           Reference.TargetResolution := 'known_class_method';
+          Reference.TargetNameSource := 'class_metadata';
+          Reference.TargetNameConfidence := 'exact_address';
         end
         else if Reference.TargetName <> AQualifiedName then
         begin
           Reference.TargetName := '';
           Reference.TargetResolution := 'ambiguous_class_method';
+          Reference.TargetNameSource := '';
+          Reference.TargetNameConfidence := '';
         end;
       end;
+  end;
+end;
+
+procedure TDeDeXRefList.ResolveDSFSymbol(ARoutineVA: LongWord;
+  const ASymbolName: string);
+var
+  I: Integer;
+  Routine: TDeDeRoutineEvidence;
+  Reference: TDeDeXRef;
+begin
+  if ASymbolName = '' then
+    Exit;
+  Routine := TDeDeRoutineEvidence(FRoutines[EnsureRoutine(ARoutineVA)]);
+  if not Routine.RoutineNameConflict and
+    (Routine.RoutineNameSource <> 'class_metadata') then
+  begin
+    if Routine.RoutineName = '' then
+    begin
+      Routine.RoutineName := ASymbolName;
+      Routine.RoutineNameResolution := 'known_dsf_symbol';
+      Routine.RoutineNameSource := 'built_in_dsf';
+      Routine.RoutineNameConfidence := 'exact_pattern';
+    end
+    else if (Routine.RoutineNameSource = 'built_in_dsf') and
+      (Routine.RoutineName <> ASymbolName) then
+    begin
+      Routine.RoutineName := '';
+      Routine.RoutineNameConflict := True;
+      Routine.RoutineNameResolution := 'ambiguous_dsf_symbol';
+      Routine.RoutineNameSource := '';
+      Routine.RoutineNameConfidence := '';
+    end;
+  end;
+
+  for I := 0 to FItems.Count - 1 do
+  begin
+    Reference := TDeDeXRef(FItems[I]);
+    if not Reference.HasTarget or (Reference.TargetVA <> ARoutineVA) then
+      Continue;
+    if (Reference.TargetResolution = 'known_class_method') or
+      (Reference.TargetResolution = 'known_import') or
+      (Reference.TargetResolution = 'ambiguous_class_method') or
+      (Reference.TargetResolution = 'ambiguous_target') or
+      (Reference.TargetResolution = 'ambiguous_dsf_symbol') then
+      Continue;
+    if Reference.TargetName = '' then
+    begin
+      Reference.TargetName := ASymbolName;
+      Reference.TargetResolution := 'known_dsf_symbol';
+      Reference.TargetNameSource := 'built_in_dsf';
+      Reference.TargetNameConfidence := 'exact_pattern';
+    end
+    else if (Reference.TargetNameSource = 'built_in_dsf') and
+      (Reference.TargetName <> ASymbolName) then
+    begin
+      Reference.TargetName := '';
+      Reference.TargetResolution := 'ambiguous_dsf_symbol';
+      Reference.TargetNameSource := '';
+      Reference.TargetNameConfidence := '';
+    end;
+  end;
+end;
+
+procedure TDeDeXRefList.MarkDSFSymbolAmbiguous(ARoutineVA: LongWord);
+var
+  I: Integer;
+  Routine: TDeDeRoutineEvidence;
+  Reference: TDeDeXRef;
+begin
+  Routine := TDeDeRoutineEvidence(FRoutines[EnsureRoutine(ARoutineVA)]);
+  if (Routine.RoutineNameSource = 'class_metadata') or
+    (Routine.RoutineNameResolution = 'ambiguous_class_method') then
+    Exit;
+  Routine.RoutineName := '';
+  Routine.RoutineNameConflict := True;
+  Routine.RoutineNameResolution := 'ambiguous_dsf_symbol';
+  Routine.RoutineNameSource := '';
+  Routine.RoutineNameConfidence := '';
+  for I := 0 to FItems.Count - 1 do
+  begin
+    Reference := TDeDeXRef(FItems[I]);
+    if not Reference.HasTarget or (Reference.TargetVA <> ARoutineVA) then
+      Continue;
+    if (Reference.TargetResolution = 'known_class_method') or
+      (Reference.TargetResolution = 'known_import') or
+      (Reference.TargetResolution = 'ambiguous_class_method') or
+      (Reference.TargetResolution = 'ambiguous_target') then
+      Continue;
+    Reference.TargetName := '';
+    Reference.TargetResolution := 'ambiguous_dsf_symbol';
+    Reference.TargetNameSource := '';
+    Reference.TargetNameConfidence := '';
   end;
 end;
 
@@ -648,11 +811,51 @@ begin
       begin
         Reference.TargetName := '';
         Reference.TargetResolution := 'ambiguous_target';
+        Reference.TargetNameSource := '';
+        Reference.TargetNameConfidence := '';
       end
       else
       begin
         Reference.TargetName := AImportName;
         Reference.TargetResolution := 'known_import';
+        Reference.TargetNameSource := 'pe_import_table';
+        Reference.TargetNameConfidence := 'exact_import';
+      end;
+    end;
+  end;
+end;
+
+procedure TDeDeXRefList.ResolveImportIATCall(ARoutineVA,
+  AInstructionVA, AIATVA: LongWord; const AImportName: string);
+var
+  I: Integer;
+  Reference: TDeDeXRef;
+begin
+  if AImportName = '' then
+    Exit;
+  for I := 0 to FItems.Count - 1 do
+  begin
+    Reference := TDeDeXRef(FItems[I]);
+    if (Reference.SourceRoutineVA = ARoutineVA) and
+      (Reference.SourceInstructionVA = AInstructionVA) and
+      (Reference.Kind = dxkIndirectCall) and
+      Reference.HasIndirectOperandVA and
+      (Reference.IndirectOperandVA = AIATVA) then
+    begin
+      if (Reference.TargetName <> '') and
+        (Reference.TargetName <> AImportName) then
+      begin
+        Reference.TargetName := '';
+        Reference.TargetResolution := 'ambiguous_target';
+        Reference.TargetNameSource := '';
+        Reference.TargetNameConfidence := '';
+      end
+      else
+      begin
+        Reference.TargetName := AImportName;
+        Reference.TargetResolution := 'known_import';
+        Reference.TargetNameSource := 'pe_import_table';
+        Reference.TargetNameConfidence := 'exact_import';
       end;
     end;
   end;
@@ -684,6 +887,11 @@ begin
       Result := Result + JSONHex(Reference.TargetVA)
     else
       Result := Result + 'null';
+    Result := Result + ',"importIatVa":';
+    if Reference.HasIndirectOperandVA then
+      Result := Result + JSONHex(Reference.IndirectOperandVA)
+    else
+      Result := Result + 'null';
     Result := Result + ',"callerCleanupBytes":';
     if Reference.HasCallerCleanup then
       Result := Result + IntToStr(Reference.CallerCleanupBytes)
@@ -699,6 +907,16 @@ begin
     Result := Result + ',"targetName":';
     if Reference.TargetName <> '' then
       Result := Result + JSONString(Reference.TargetName)
+    else
+      Result := Result + 'null';
+    Result := Result + ',"targetNameSource":';
+    if Reference.TargetNameSource <> '' then
+      Result := Result + JSONString(Reference.TargetNameSource)
+    else
+      Result := Result + 'null';
+    Result := Result + ',"targetNameConfidence":';
+    if Reference.TargetNameConfidence <> '' then
+      Result := Result + JSONString(Reference.TargetNameConfidence)
     else
       Result := Result + 'null';
     Result := Result + ',"registerWritesBeforeCall":[';
@@ -767,15 +985,23 @@ begin
     else
       Result := Result + 'null';
     Result := Result + ',"nameResolution":';
-    if Routine.RoutineNameConflict then
-      Result := Result + '"ambiguous_class_method"'
-    else if Routine.RoutineName <> '' then
-      Result := Result + '"known_class_method"'
+    if Routine.RoutineNameResolution <> '' then
+      Result := Result + JSONString(Routine.RoutineNameResolution)
     else
       Result := Result + '"unresolved"';
     Result := Result + ',"name":';
     if Routine.RoutineName <> '' then
       Result := Result + JSONString(Routine.RoutineName)
+    else
+      Result := Result + 'null';
+    Result := Result + ',"nameSource":';
+    if Routine.RoutineNameSource <> '' then
+      Result := Result + JSONString(Routine.RoutineNameSource)
+    else
+      Result := Result + 'null';
+    Result := Result + ',"nameConfidence":';
+    if Routine.RoutineNameConfidence <> '' then
+      Result := Result + JSONString(Routine.RoutineNameConfidence)
     else
       Result := Result + 'null';
     Result := Result + ',"hasFramePointerPrologue":' +

@@ -35,6 +35,8 @@ type
     procedure TestCoreReportExportAndOverwriteGuard;
     procedure TestCoreExportCaseInsensitiveUnitCollision;
     procedure TestX86CrossReferenceCollection;
+    procedure TestDSFSymbolMatching;
+    procedure TestXRefDSFSymbolResolution;
     procedure TestCoreVersionConfiguration;
     procedure TestVMTMethodOffsetMapping;
     procedure TestZipFormatConsumers;
@@ -49,7 +51,7 @@ uses
   MainUnit, DeDeClasses, Emulator, DeDeClassEmulator, DeDeDisAsm,
   DeDeZAUnit, DeDeBSS, DeDeExpressions, MemLocUnit, DeDeCoreServices,
   DeDeCore, DeDeClassHandle, DeDeBPL, DeDeDUF, DeDeOffsInf,
-  DeDeBinaryTypes, DeDeXRef;
+  DeDeBinaryTypes, DeDeXRef, DeDeSym, DeDeZip;
 
 type
   TParserCallbackRecorder = class
@@ -1562,6 +1564,7 @@ var
   BackwardCall: array[0..4] of Byte;
   ImportCall: array[0..4] of Byte;
   IndirectCall: array[0..1] of Byte;
+  IndirectIATCall: array[0..5] of Byte;
   NonCall: array[0..1] of Byte;
   CalleeRet: array[0..2] of Byte;
   PlainRet: array[0..0] of Byte;
@@ -1588,6 +1591,12 @@ begin
   ImportCall[4] := 0;
   IndirectCall[0] := $FF;
   IndirectCall[1] := $D0;
+  IndirectIATCall[0] := $FF;
+  IndirectIATCall[1] := $15;
+  IndirectIATCall[2] := $00;
+  IndirectIATCall[3] := $10;
+  IndirectIATCall[4] := $40;
+  IndirectIATCall[5] := $00;
   NonCall[0] := $FF;
   NonCall[1] := $E0;
   CalleeRet[0] := $C2;
@@ -1622,6 +1631,10 @@ begin
       SizeOf(NonCall));
     References.AddX86Instruction($3000, $3000, @ImportCall[0],
       SizeOf(ImportCall));
+    ReferenceIndex := References.AddX86Instruction($5000, $5000,
+      @IndirectIATCall[0], SizeOf(IndirectIATCall));
+    References.ResolveImportIATCall($5000, $5000, $00401000,
+      'KERNEL32.Sleep');
     References.BeginRoutine($3000);
     References.RecordRoutineInstruction($3000, $3000, @CalleeRet[0],
       SizeOf(CalleeRet));
@@ -1645,7 +1658,7 @@ begin
     References.ResolveKnownMethod($1FE5, 'TBackward.Target');
     References.ResolveImportCall($3000, $3000, 'KERNEL32.GetTickCount');
 
-    CheckEquals(4, References.Count,
+    CheckEquals(5, References.Count,
       'Call references were duplicated or non-call instructions were added');
     CheckEquals(LongInt($1015), LongInt(References[0].TargetVA),
       'Forward relative call target was decoded incorrectly');
@@ -1672,6 +1685,10 @@ begin
       'Known import call was not resolved in the cross-reference graph');
     CheckTrue(Pos('"targetName":"KERNEL32.GetTickCount"', JSON) > 0,
       'Resolved import name was not serialized');
+    CheckTrue(Pos('"importIatVa":"0x00401000"', JSON) > 0,
+      'Absolute indirect import slot was not decoded');
+    CheckTrue(Pos('"targetName":"KERNEL32.Sleep"', JSON) > 0,
+      'Indirect import name was not recorded');
     CheckTrue(Pos('"registerWritesBeforeCall":[{"register":"eax","instructionRva":"0x00000FF0"},{"register":"edx","instructionRva":"0x00000FF4"},{"register":"ecx","instructionRva":"0x00000FF8"}]',
       JSON) > 0, 'Register definitions before the call were not retained');
     CheckTrue(Pos('"targetName":null', JSON) > 0,
@@ -1703,6 +1720,132 @@ begin
       'Matching frame offsets and callee cleanup were not corroborated');
     CheckTrue(Pos('"stackArgumentEvidence":"cleanup_only"', JSON) > 0,
       'Cleanup-only evidence was not represented conservatively');
+  finally
+    References.Free;
+  end;
+end;
+
+procedure TReconstructionTests.TestDSFSymbolMatching;
+var
+  Symbol: TDeDeSymbol;
+  Matches: TStringList;
+  Pattern, DifferentPattern, Candidate: TSymBuffer;
+  NameBytes: AnsiString;
+  NameLength: Byte;
+  I: Integer;
+  NameOffset: Int64;
+
+  procedure AddPattern(const APattern: TSymBuffer; const AName: string);
+  begin
+    Symbol.Sym.WriteBuffer(APattern[1], _PatternSize);
+    NameOffset := Symbol.Str.Position;
+    Symbol.Index[I] := NameOffset;
+    NameBytes := AnsiString(AName);
+    NameLength := Length(NameBytes);
+    Symbol.Str.WriteBuffer(NameLength, SizeOf(NameLength));
+    if NameLength > 0 then
+      Symbol.Str.WriteBuffer(NameBytes[1], NameLength);
+    Inc(I);
+  end;
+
+begin
+  CheckEquals('vcl2.dsf', GetVersionedDSFName('D2'));
+  CheckEquals('vcl3.dsf', GetVersionedDSFName('BCB3'));
+  CheckEquals('vcl6.dsf', GetVersionedDSFName('D6 CLX'));
+  CheckEquals('', GetVersionedDSFName('unknown'));
+  FillChar(Pattern, SizeOf(Pattern), 0);
+  Pattern[1] := $55;
+  Pattern[2] := $8B;
+  FillChar(DifferentPattern, SizeOf(DifferentPattern), 0);
+  DifferentPattern[1] := $56;
+  DifferentPattern[2] := $8B;
+  Candidate := Pattern;
+  Symbol := TDeDeSymbol.Create;
+  Matches := TStringList.Create;
+  try
+    Symbol.PatternSize := _PatternSize;
+    Symbol.Mode := $10;
+    Symbol.Count := 3;
+    SetLength(Symbol.Index, Symbol.Count);
+    I := 0;
+    AddPattern(Pattern, 'System.First');
+    AddPattern(Pattern, 'System.Second');
+    AddPattern(DifferentPattern, 'System.Other');
+
+    CheckEquals(2, Symbol.FindMatches(Candidate, $10, Matches),
+      'Matching signatures with distinct names must be ambiguous');
+    CheckEquals('System.First', Matches[0]);
+    CheckEquals('System.Second', Matches[1]);
+    Matches.Clear;
+    CheckEquals(1, Symbol.FindMatches(DifferentPattern, $10, Matches),
+      'A unique signature should resolve to one name');
+    CheckEquals('System.Other', Matches[0]);
+    Matches.Clear;
+    CheckEquals(0, Symbol.FindMatches(Candidate, $01, Matches),
+      'A DSF outside its compiler-version mask must not match');
+    Candidate[2] := $90;
+    Matches.Clear;
+    CheckEquals(0, Symbol.FindMatches(Candidate, $10, Matches),
+      'A byte mismatch must not be treated as a wildcard');
+  finally
+    Matches.Free;
+    Symbol.Free;
+  end;
+end;
+
+procedure TReconstructionTests.TestXRefDSFSymbolResolution;
+var
+  References: TDeDeXRefList;
+  CallToFirst, CallToSecond: array[0..4] of Byte;
+  JSON: string;
+
+  procedure SetDirectCall(var ACall: array of Byte; ASourceVA,
+    ATargetVA: LongWord);
+  var
+    Displacement: LongInt;
+  begin
+    Displacement := LongInt(ATargetVA - (ASourceVA + 5));
+    ACall[0] := $E8;
+    Move(Displacement, ACall[1], SizeOf(Displacement));
+  end;
+
+begin
+  References := TDeDeXRefList.Create;
+  try
+    SetDirectCall(CallToFirst, $5000, $6000);
+    SetDirectCall(CallToSecond, $5005, $7000);
+    References.BeginRoutine($5000);
+    References.AddX86Instruction($5000, $5000, @CallToFirst[0],
+      SizeOf(CallToFirst));
+    References.AddX86Instruction($5000, $5005, @CallToSecond[0],
+      SizeOf(CallToSecond));
+    References.ResolveDSFSymbol($6000, 'System.UniqueRoutine');
+    JSON := References.ToJSON;
+    CheckTrue(Pos('"targetResolution":"known_dsf_symbol"', JSON) > 0,
+      'An exact unique DSF match was not applied to its call edge');
+    CheckTrue(Pos('"targetNameSource":"built_in_dsf"', JSON) > 0,
+      'DSF name provenance was not serialized');
+    CheckTrue(Pos('"targetNameConfidence":"exact_pattern"', JSON) > 0,
+      'DSF pattern confidence was not serialized');
+    References.ResolveKnownMethod($6000, 'TKnownClass.Method');
+    References.ResolveDSFSymbol($7000, 'System.FirstCandidate');
+    References.ResolveDSFSymbol($7000, 'System.SecondCandidate');
+    JSON := References.ToJSON;
+    CheckTrue(Pos('"targetResolution":"known_class_method"', JSON) > 0,
+      'Class metadata must override a lower-priority DSF label');
+    CheckTrue(Pos('"targetName":"TKnownClass.Method"', JSON) > 0,
+      'Class-method name did not take priority over the DSF name');
+    CheckTrue(Pos('"targetResolution":"ambiguous_dsf_symbol"', JSON) > 0,
+      'Multiple matching DSF names were not left ambiguous');
+    CheckTrue(Pos('"targetNameSource":"class_metadata"', JSON) > 0,
+      'Resolved symbol provenance was not serialized');
+    JSON := References.RoutinesToJSON;
+    CheckTrue(Pos('"nameResolution":"known_class_method"', JSON) > 0,
+      'Routine metadata resolution was not serialized');
+    CheckTrue(Pos('"nameResolution":"ambiguous_dsf_symbol"', JSON) > 0,
+      'Ambiguous routine symbol resolution was not serialized');
+    CheckTrue(Pos('"nameConfidence":"exact_address"', JSON) > 0,
+      'Routine name confidence was not serialized');
   finally
     References.Free;
   end;
@@ -1795,10 +1938,14 @@ end;
 
 procedure TReconstructionTests.TestZipFormatConsumers;
 var
-  OutputDirectory, BPLFileName, DUFFileName, DOIFileName: string;
-  Bytes, Names, LoadedBytes, LoadedNames: TMemoryStream;
+  OutputDirectory, BPLFileName, ExtendedBPLFileName, DUFFileName,
+    DOIFileName: string;
+  Bytes, Names, LoadedBytes, LoadedNames, RawBPL: TMemoryStream;
   Pattern: LongWord;
   NameLength, Mode, PatternSize: Byte;
+  HeaderMode, HeaderPatternSize: Byte;
+  HeaderCount: Word;
+  HeaderExtension, HeaderPatternOffset, HeaderNamesOffset: LongWord;
   RecordCount: LongInt;
   Comment: string;
   Indexes: TBoundArray;
@@ -1820,12 +1967,15 @@ begin
     'Unable to create ZIP consumer test directory');
 
   BPLFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.dsf';
+  ExtendedBPLFileName := IncludeTrailingPathDelimiter(OutputDirectory) +
+    'roundtrip-extended.dsf';
   DUFFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.duf';
   DOIFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.doi';
   Bytes := TMemoryStream.Create;
   Names := TMemoryStream.Create;
   LoadedBytes := TMemoryStream.Create;
   LoadedNames := TMemoryStream.Create;
+  RawBPL := TMemoryStream.Create;
   DUFFile := TDUFFile.Create;
   LoadedDUF := TDUFFile.Create;
   DOIFile := TOffsInfArchive.Create;
@@ -1861,6 +2011,53 @@ begin
     CheckEquals(1, Length(Indexes), 'BPL name index count changed');
     CheckEquals(0, Indexes[0], 'BPL name index offset changed');
 
+    SaveBPLSymbolFile(Bytes, Names, ExtendedBPLFileName, $D0, 4, 1,
+      'extended header');
+    ExtractZipEntryToStream(ExtendedBPLFileName,
+      ExtractFileName(ExtendedBPLFileName), RawBPL);
+    RawBPL.Seek(4, soFromBeginning);
+    RawBPL.ReadBuffer(HeaderMode, SizeOf(HeaderMode));
+    RawBPL.ReadBuffer(HeaderExtension, SizeOf(HeaderExtension));
+    RawBPL.ReadBuffer(HeaderCount, SizeOf(HeaderCount));
+    RawBPL.ReadBuffer(HeaderPatternSize, SizeOf(HeaderPatternSize));
+    RawBPL.ReadBuffer(HeaderPatternOffset, SizeOf(HeaderPatternOffset));
+    RawBPL.ReadBuffer(HeaderNamesOffset, SizeOf(HeaderNamesOffset));
+    CheckEquals($D0, HeaderMode,
+      'Extended DSF header mode was not retained');
+    CheckEquals(0, HeaderExtension,
+      'Extended DSF header DWORD was not written after the mode');
+    CheckEquals(1, HeaderCount,
+      'Extended DSF record count was written at the wrong offset');
+    CheckEquals(4, HeaderPatternSize,
+      'Extended DSF pattern length was written at the wrong offset');
+    CheckEquals(36, LongInt(HeaderPatternOffset),
+      'Extended DSF pattern offset did not account for its header DWORD');
+    CheckEquals(40, LongInt(HeaderNamesOffset),
+      'Extended DSF names offset did not account for its header DWORD');
+
+    Mode := 0;
+    PatternSize := 0;
+    RecordCount := 0;
+    Comment := '';
+    CheckTrue(LoadBPLSymbolFile(LoadedBytes, LoadedNames,
+      ExtendedBPLFileName, Mode, PatternSize, RecordCount, Comment, Indexes),
+      'BPL consumer could not read the extended DSF header');
+    CheckEquals($D0, Mode, 'Extended BPL mode changed after round-trip');
+    CheckEquals(4, PatternSize,
+      'Extended BPL pattern size changed after round-trip');
+    CheckEquals(1, RecordCount,
+      'Extended BPL record count changed after round-trip');
+    CheckEquals('extended header', Comment,
+      'Extended BPL comment changed after round-trip');
+    CheckEquals(Bytes.Size, LoadedBytes.Size,
+      'Extended BPL pattern bytes changed after round-trip');
+    CheckTrue(CompareMem(Bytes.Memory, LoadedBytes.Memory, Bytes.Size),
+      'Extended BPL pattern contents changed after round-trip');
+    CheckEquals(Names.Size, LoadedNames.Size,
+      'Extended BPL name bytes changed after round-trip');
+    CheckTrue(CompareMem(Names.Memory, LoadedNames.Memory, Names.Size),
+      'Extended BPL name contents changed after round-trip');
+
     DUFFile.DUFVersion := CURR_DUFF_VERSION;
     DUFFile.SaveToFile(DUFFileName);
     LoadedDUF.LoadFromFile(DUFFileName);
@@ -1890,10 +2087,13 @@ begin
     DUFFile.Free;
     LoadedNames.Free;
     LoadedBytes.Free;
+    RawBPL.Free;
     Names.Free;
     Bytes.Free;
     if FileExists(BPLFileName) then
       SysUtils.DeleteFile(BPLFileName);
+    if FileExists(ExtendedBPLFileName) then
+      SysUtils.DeleteFile(ExtendedBPLFileName);
     if FileExists(DUFFileName) then
       SysUtils.DeleteFile(DUFFileName);
     if FileExists(DOIFileName) then

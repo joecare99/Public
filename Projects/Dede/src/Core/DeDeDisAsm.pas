@@ -51,7 +51,8 @@ var DFMNameList : TStringList;
     ProcRva : DWORD;
 
 Function GetSymbolReference(AwdOffset : DWORD) : String;
-function GetImportReference(AsOffset : String) : String;
+function GetImportReference(AsOffset: string;
+  AIgnoreUserOptions: Boolean = False): string;
 Function GetControlClassEx(sClassName, sControlName : String) : String;
 Function GetEventPrototype(sClassName, sHandlerName : String) : String;
 
@@ -438,7 +439,8 @@ end;
 //
 // Last Modified : N/A
 //
-function GetImportReference(AsOffset : String) : String;
+function GetImportReference(AsOffset: string;
+  AIgnoreUserOptions: Boolean): string;
 var iRVA, iPhys, ProcOffset, DLLOffset : DWORD;
     Delta1, Delta2: LongInt;
     iIDX : Byte;
@@ -458,11 +460,14 @@ begin
   ProcName:='';
 
   if ImageHeader.ELFDumped then Exit;
+  if ImageHeader.IMPORT_TABLE_RVA = 0 then Exit;
 
   // Skip import references if set
-  if not DisassemblerOptions.Imports then exit;
-
-  if not bImportReferences then Exit;
+  if not AIgnoreUserOptions then
+  begin
+    if not DisassemblerOptions.Imports then Exit;
+    if not bImportReferences then Exit;
+  end;
 
   // Get the '.idata' section characteristics
   if ImageHeader.ELFDumped then iIDX:=ImageHeader.GetSectionIndexEx('.idata')
@@ -471,6 +476,9 @@ begin
     if iIDX=255 then
       iIDX:=ImageHeader.GetSectionIndexByRVA(ImageHeader.IMPORT_TABLE_RVA);
   end;
+  if (iIDX = 0) or (iIDX = 255) or
+    (iIDX > ImageHeader.ObjectNum) then
+    Exit;
 
   iRVA:=ImageHeader.Objects[iIDX].RVA;
   iPhys:=ImageHeader.Objects[iIDX].PHYSICAL_OFFSET;
@@ -680,51 +688,76 @@ Begin
 
     // if the first read byte is not found in the
     // First byte set then skip searching fo that reference
-    if FirstByteSet*[buff[1]]=[] then Exit;
+    if not DeDeCoreContext.StrictXRefSymbolMatches and
+      (FirstByteSet*[buff[1]]=[]) then
+      Exit;
 
     // removes all absolute offsets
-    UnlinkCalls(buff,0,rva);
+    if DeDeCoreContext.StrictXRefSymbolMatches then
+    begin
+      try
+        if not UnlinkCalls(buff, 0, rva) then
+          Exit;
+      except
+        on E: EDisAsmError do
+          Exit;
+      end;
+    end
+    else
+      UnlinkCalls(buff, 0, rva);
 
-    // Loops among the all loaded symbols
-    For i:=0 To SymbolsList.Count-1 Do
-      Begin
-        // Gets a symbol
-        Sym:=TDeDeSymbol(SymbolsList[i]);
+    if DeDeCoreContext.StrictXRefSymbolMatches then
+    begin
+      for i := 0 to SymbolsList.Count - 1 do
+      begin
+        Sym := TDeDeSymbol(SymbolsList[i]);
+        Sym.FindMatches(buff,
+          DeDeCoreContext.DelphiVersionCompatibility, RefLst);
+      end;
+    end
+    else
+    begin
+      // Loops among the all loaded symbols
+      For i:=0 To SymbolsList.Count-1 Do
+        Begin
+          // Gets a symbol
+          Sym:=TDeDeSymbol(SymbolsList[i]);
 
-        // the current symbol file is not for the current Delphi version
-        // so process next DSF
-        if (Sym.Mode and DeDeCoreContext.DelphiVersionCompatibility)=0 then Continue;
+          // the current symbol file is not for the current Delphi version
+          // so process next DSF
+          if (Sym.Mode and DeDeCoreContext.DelphiVersionCompatibility)=0 then Continue;
 
-        // initializes the streams
-        Sym.Sym.Seek(0,soFromBeginning);
-        Sym.Str.Seek(0,soFromBeginning);
-        // Loops among the entries
-        For j:=0 To Sym.Count-1 Do
-          Begin
-            // Reads the pattern
-            Sym.Sym.ReadBuffer(buff1[1],_PatternSize);
-            // and compare it to buff1
-            If CompareMem(@buff[1],@buff1[1],_PatternSize) Then
-               Begin
-                 // If equal, then a reference is found
-                 // goes to the offset of the procedure name
-                 // in the DeDeSymbol object
-                 Sym.Str.Seek(Sym.Index[j],soFromBeginning);
-                 Sym.Str.ReadBuffer(b,1);
-                 // Reads the procedure name
-                 s := ReadAnsiString(Sym.Str,b);
-                 // And add it to the reference list
-                 RefLst.Add(s);
-               End;
-          End;
-      End;
+          // initializes the streams
+          Sym.Sym.Seek(0,soFromBeginning);
+          Sym.Str.Seek(0,soFromBeginning);
+          // Loops among the entries
+          For j:=0 To Sym.Count-1 Do
+            Begin
+              // Reads the pattern
+              Sym.Sym.ReadBuffer(buff1[1],_PatternSize);
+              // and compare it to buff1
+              If CompareMem(@buff[1],@buff1[1],_PatternSize) Then
+                 Begin
+                   // If equal, then a reference is found
+                   // goes to the offset of the procedure name
+                   // in the DeDeSymbol object
+                   Sym.Str.Seek(Sym.Index[j],soFromBeginning);
+                   Sym.Str.ReadBuffer(b,1);
+                   // Reads the procedure name
+                   s := ReadAnsiString(Sym.Str,b);
+                   RefLst.Add(s);
+                 End;
+            End;
+        End;
+    end;
   Finally
     // restores the PEStream position
     CurrentPEStream.Seek(bk,soFromBeginning);
 
     // Gets only those DSF references in which names
     // the EAX class name or it's parents is included
-    if (bSMARTMODE) and (sc<>'') then
+    if (bSMARTMODE) and (sc<>'') and
+      not DeDeCoreContext.StrictXRefSymbolMatches then
       begin
         bFound:=False;
         For i:=0 to RefLst.Count-1 Do
@@ -751,6 +784,10 @@ Begin
 
          if bFound then RefLst.Assign(SmartLst);
       end;
+
+    if DeDeCoreContext.StrictXRefSymbolMatches and
+      (RefLst.Count <> 1) then
+      RefLst.Clear;
 
     // Max 6 references
     While RefLst.Count>MAX_DSF_REFERENCES_COUNT do RefLst.Delete(RefLst.Count-1);
@@ -822,9 +859,28 @@ Begin
      CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 
-  // If no other call reference is found then
-  // searches for a SymbolReference
-  If Result='' Then Result:=GetSymbolReference(AwdOffset);
+      if (Result = '') and DeDeCoreContext.StrictXRefSymbolMatches and
+        (ClsDmp <> nil) and (DeDeCoreContext.ClassesDumper <> nil) then
+        for j := 0 to TClassesDumper(DeDeCoreContext.ClassesDumper).Classes.Count - 1 do
+        begin
+          cd := TClassDumper(
+            TClassesDumper(DeDeCoreContext.ClassesDumper).Classes[j]);
+          for i := 0 to cd.MethodData.Count - 1 do
+            if TMethodRec(cd.MethodData.Methods[i]).dwRVA = AwdOffset then
+            begin
+              Result := #13#10 + sREF_TEXT_PUBLISHED + ' ' +
+                cd.FsClassName + '.' +
+                TMethodRec(cd.MethodData.Methods[i]).sName + '()' +
+                #13#10 + '|' + #13#10;
+              Break;
+            end;
+          if Result <> '' then
+            Break;
+        end;
+
+      // If no other call reference is found then
+      // searches for a SymbolReference
+      If Result='' Then Result:=GetSymbolReference(AwdOffset);
 
 
   // This should find published/VIRT/USER

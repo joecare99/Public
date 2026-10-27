@@ -96,8 +96,21 @@ candidates, not inferred types or complete signatures. Corresponding stack
 access comments are added after affected PAS method declarations; routines
 with callee-cleanup evidence also receive a cleanup-evidence comment.
 Targets matching known class methods or imports resolved by DeDe's existing
-import resolver are named; other direct and unresolved indirect targets
-retain their VAs without guessed names.
+import resolver are named. Direct targets can also be named when the
+compiler-version-specific DSF catalog beside the CLI contains one exact
+normalized 50-byte signature match. The selected catalog and load status are
+recorded in the sidecar; multiple matching names, incompatible versions,
+and mismatched bytes remain unresolved. With `--xref`, assembly call comments
+use the same unique-match rule and prefer exact class-method metadata over
+DSF names. No Pascal signature is inferred from a DSF label.
+
+The DSF asset is loaded from `DSF\<versioned-vcl-file>` beside the CLI
+executable (for example `DSF\vcl6.dsf` for Delphi 6); filename case is
+matched without regard to case for Windows/Linux parity. The source repository
+does not currently bundle these historical catalog files; if the asset is
+absent, or cannot be parsed, the sidecar reports `not_found` or
+`load_failed` respectively and exports continue without RTL names. A loaded
+but unsupported pattern size or compiler mask is also reported explicitly.
 The complete output list is validated, including case-insensitive filename
 collisions, before a new output directory is created. Files are generated in a
 staging directory and installed only after their generation succeeds;

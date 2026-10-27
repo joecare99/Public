@@ -83,7 +83,7 @@ function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
 implementation
 
 uses
-  DeDeConstants, DeDeDisAsm,
+  DeDeConstants, DeDeDisAsm, DisASM,
   DeDeClassEmulator, DeDeSym, DeDeELFClasses, DeDePAS, DeDeRes,
   DeDeAnsiStream, DeDeXRef;
 
@@ -558,6 +558,15 @@ var
   PreserveStage: Boolean;
   PreviousDisasmErrors: string;
   PreviousState: TDeDeSessionActivation;
+  ExportSymbolList: TList;
+  PreviousSymbolsList: TList;
+  BuiltInSymbol: TDeDeSymbol;
+  SymbolCatalogName: string;
+  SymbolCatalogStatus: string;
+  SymbolCatalogJSONFile: string;
+  SymbolCatalogJSONCount: string;
+  SymbolCatalogCount: Integer;
+  PreviousStrictXRefSymbolMatches: Boolean;
 
   procedure AddPlannedFile(const AName: string);
   begin
@@ -604,6 +613,250 @@ var
           MethodRecord.dwRVA,
           MethodClass.FsClassName + '.' + MethodRecord.sName);
       end;
+    end;
+  end;
+
+  procedure LoadBuiltInDSFCatalog;
+  var
+    SymbolDirectory, SymbolFileName: string;
+    Symbol: TDeDeSymbol;
+    Search: TSearchRec;
+    CandidateCount: Integer;
+  begin
+    SymbolCatalogName := GetVersionedDSFName(FAnalysisResult.CompilerVersion);
+    SymbolCatalogStatus := 'unsupported_compiler_version';
+    SymbolCatalogCount := 0;
+    if SymbolCatalogName = '' then
+      Exit;
+    if FIsELF then
+    begin
+      SymbolCatalogStatus := 'unsupported_image';
+      Exit;
+    end;
+
+    SymbolDirectory := IncludeTrailingPathDelimiter(
+      ExtractFilePath(ParamStr(0))) + 'DSF';
+    SymbolFileName := IncludeTrailingPathDelimiter(SymbolDirectory) +
+      SymbolCatalogName;
+    if not FileExists(SymbolFileName) then
+    begin
+      CandidateCount := 0;
+      if FindFirst(IncludeTrailingPathDelimiter(SymbolDirectory) + '*',
+        faAnyFile, Search) = 0 then
+      begin
+        try
+          repeat
+            if ((Search.Attr and faDirectory) = 0) and
+              SameText(Search.Name, SymbolCatalogName) then
+            begin
+              Inc(CandidateCount);
+              SymbolFileName := IncludeTrailingPathDelimiter(SymbolDirectory) +
+                Search.Name;
+            end;
+          until FindNext(Search) <> 0;
+        finally
+          FindClose(Search);
+        end;
+      end;
+      if CandidateCount = 0 then
+      begin
+        SymbolCatalogStatus := 'not_found';
+        Exit;
+      end;
+      if CandidateCount > 1 then
+      begin
+        SymbolCatalogStatus := 'ambiguous_catalog_file';
+        Exit;
+      end;
+    end;
+
+    Symbol := TDeDeSymbol.Create;
+    try
+      if not Symbol.LoadSymbol(SymbolFileName) then
+      begin
+        SymbolCatalogStatus := 'load_failed';
+        Exit;
+      end;
+      if Symbol.PatternSize <> _PatternSize then
+      begin
+        SymbolCatalogStatus := 'unsupported_pattern_size';
+        DeDeCoreContext.ReportWarning(Format(
+          'DSF symbol catalog %s has pattern size %d; expected %d',
+          [SymbolCatalogName, Symbol.PatternSize, _PatternSize]));
+        Exit;
+      end;
+      SymbolCatalogCount := Symbol.Count;
+      if (Symbol.Mode and
+        DeDeCoreContext.DelphiVersionCompatibility) = 0 then
+      begin
+        SymbolCatalogStatus := 'version_incompatible';
+        Exit;
+      end;
+      ExportSymbolList.Add(Symbol);
+      BuiltInSymbol := Symbol;
+      Symbol := nil;
+      SymbolCatalogStatus := 'loaded';
+    finally
+      Symbol.Free;
+    end;
+  end;
+
+  procedure ResolveDSFSymbols;
+  var
+    K, L, CodeSectionIndex: Integer;
+    Routine: TDeDeRoutineEvidence;
+    Symbol: TDeDeSymbol;
+    Matches: TStringList;
+    Buffer: TSymBuffer;
+    TargetRVA, SectionOffset, PhysicalOffset: DWORD;
+    StreamPosition: Int64;
+    PreviousMakeCRC: Boolean;
+    PreviousB5, PreviousB6, PreviousB7, PreviousB10: Cardinal;
+    IsPatternValid: Boolean;
+  begin
+    if (ExportSymbolList = nil) or (ExportSymbolList.Count = 0) then
+      Exit;
+    CodeSectionIndex := 1;
+    if (CodeSectionIndex < 1) or
+      (CodeSectionIndex > FPEHeader.ObjectNum) or
+      (FPEHeader.Objects[CodeSectionIndex].PHYSICAL_SIZE < _PatternSize) then
+      Exit;
+    Matches := TStringList.Create;
+    try
+      PreviousMakeCRC := DeDeSym.bMakeCRC;
+      PreviousB5 := DeDeSym.Glob_B5;
+      PreviousB6 := DeDeSym.Glob_B6;
+      PreviousB7 := DeDeSym.Glob_B7;
+      PreviousB10 := DeDeSym.Glob_B10;
+      DeDeSym.bMakeCRC := False;
+      try
+        for K := 0 to DeDeCoreContext.CrossReferences.RoutineCount - 1 do
+        begin
+          Routine := DeDeCoreContext.CrossReferences.Routines[K];
+          if not (Routine.HasDisassemblyBody or Routine.IsDirectCallTarget) then
+            Continue;
+          if Routine.RoutineVA < FPEHeader.IMAGE_BASE then
+            Continue;
+          TargetRVA := Routine.RoutineVA - FPEHeader.IMAGE_BASE;
+          if TargetRVA < FPEHeader.Objects[CodeSectionIndex].RVA then
+            Continue;
+          SectionOffset := TargetRVA -
+            FPEHeader.Objects[CodeSectionIndex].RVA;
+          if SectionOffset > FPEHeader.Objects[CodeSectionIndex].PHYSICAL_SIZE -
+            _PatternSize then
+            Continue;
+          PhysicalOffset := FPEHeader.Objects[CodeSectionIndex].PHYSICAL_OFFSET +
+            SectionOffset;
+          if Int64(PhysicalOffset) + _PatternSize >
+            DeDeCoreContext.PEFile.PEStream.Size then
+            Continue;
+
+          StreamPosition := DeDeCoreContext.PEFile.PEStream.Position;
+          try
+            DeDeCoreContext.PEFile.PEStream.Seek(
+              PhysicalOffset, soFromBeginning);
+            DeDeCoreContext.PEFile.PEStream.ReadBuffer(
+              Buffer[1], _PatternSize);
+          finally
+            DeDeCoreContext.PEFile.PEStream.Seek(
+              StreamPosition, soFromBeginning);
+          end;
+
+          try
+            IsPatternValid := DeDeSym.UnlinkCalls(Buffer, 0,
+              Routine.RoutineVA);
+          except
+            on E: EDisAsmError do
+            begin
+              DeDeCoreContext.ReportWarning(Format(
+                'Unable to normalize DSF pattern at VA %s: %s',
+                [IntToHex(Routine.RoutineVA, 8), E.Message]));
+              Continue;
+            end;
+          end;
+          if not IsPatternValid then
+            Continue;
+          Matches.Clear;
+          for L := 0 to ExportSymbolList.Count - 1 do
+          begin
+            Symbol := TDeDeSymbol(ExportSymbolList[L]);
+            Symbol.FindMatches(Buffer,
+              DeDeCoreContext.DelphiVersionCompatibility, Matches);
+          end;
+          if Matches.Count = 1 then
+            DeDeCoreContext.CrossReferences.ResolveDSFSymbol(
+              Routine.RoutineVA, Matches[0])
+          else if Matches.Count > 1 then
+            DeDeCoreContext.CrossReferences.MarkDSFSymbolAmbiguous(
+              Routine.RoutineVA);
+        end;
+      finally
+        DeDeSym.bMakeCRC := PreviousMakeCRC;
+        DeDeSym.Glob_B5 := PreviousB5;
+        DeDeSym.Glob_B6 := PreviousB6;
+        DeDeSym.Glob_B7 := PreviousB7;
+        DeDeSym.Glob_B10 := PreviousB10;
+      end;
+    finally
+      Matches.Free;
+    end;
+  end;
+
+  procedure ResolveIndirectImportNames;
+  var
+    K: Integer;
+    Reference: TDeDeXRef;
+    ImportName: string;
+    StreamPosition: Int64;
+    ImportSectionIndex: Integer;
+    IATRVA, SectionOffset, IATOffset: DWORD;
+  begin
+    if (FPEHeader.IAT_RVA = 0) or (FPEHeader.IAT_Size < 4) then
+      Exit;
+    if FPEHeader.IMPORT_TABLE_RVA = 0 then
+      Exit;
+    ImportSectionIndex := FPEHeader.GetSectionIndexEx('.idata');
+    if (ImportSectionIndex < 1) or
+      (ImportSectionIndex > FPEHeader.ObjectNum) then
+      ImportSectionIndex :=
+        FPEHeader.GetSectionIndexByRVA(FPEHeader.IMPORT_TABLE_RVA);
+    if (ImportSectionIndex < 1) or
+      (ImportSectionIndex > FPEHeader.ObjectNum) or
+      (FPEHeader.Objects[ImportSectionIndex].PHYSICAL_SIZE < 4) then
+      Exit;
+    for K := 0 to DeDeCoreContext.CrossReferences.Count - 1 do
+    begin
+      Reference := DeDeCoreContext.CrossReferences[K];
+      if (Reference.Kind <> dxkIndirectCall) or
+        not Reference.HasIndirectOperandVA then
+        Continue;
+      if Reference.IndirectOperandVA < FPEHeader.IMAGE_BASE then
+        Continue;
+      IATRVA := Reference.IndirectOperandVA - FPEHeader.IMAGE_BASE;
+      if IATRVA < FPEHeader.IAT_RVA then
+        Continue;
+      IATOffset := IATRVA - FPEHeader.IAT_RVA;
+      if (IATOffset > FPEHeader.IAT_Size - 4) or
+        ((IATOffset mod 4) <> 0) then
+        Continue;
+      if IATRVA < FPEHeader.Objects[ImportSectionIndex].RVA then
+        Continue;
+      SectionOffset := IATRVA -
+        FPEHeader.Objects[ImportSectionIndex].RVA;
+      if SectionOffset >
+        FPEHeader.Objects[ImportSectionIndex].PHYSICAL_SIZE - 4 then
+        Continue;
+      StreamPosition := FPEFile.PEStream.Position;
+      try
+        ImportName := DeDeDisAsm.GetImportReference(
+          IntToHex(Reference.IndirectOperandVA, 8), True);
+      finally
+        FPEFile.PEStream.Seek(StreamPosition, soFromBeginning);
+      end;
+      if ImportName <> '' then
+        DeDeCoreContext.CrossReferences.ResolveImportIATCall(
+          Reference.SourceRoutineVA, Reference.SourceInstructionVA,
+          Reference.IndirectOperandVA, ImportName);
     end;
   end;
 
@@ -713,6 +966,115 @@ var
     end;
   end;
 
+  procedure AnnotatePASWithDSFSymbolNames;
+  var
+    I, LineStart, LineEnd, LineBreakLength: Integer;
+    Reference: TDeDeXRef;
+    NameByInstruction: TStringList;
+    PASFileName, AddressKey, TargetName: string;
+    Stream: TFileStream;
+    UpdatedStream: TMemoryStream;
+    Content, Line, AnnotatedLine, CommentBytes: AnsiString;
+    Changed: Boolean;
+
+    procedure WriteAnsi(const AValue: AnsiString);
+    begin
+      if AValue <> '' then
+        UpdatedStream.WriteBuffer(AValue[1], Length(AValue));
+    end;
+
+  begin
+    NameByInstruction := TStringList.Create;
+    try
+      NameByInstruction.CaseSensitive := False;
+      for I := 0 to DeDeCoreContext.CrossReferences.Count - 1 do
+      begin
+        Reference := DeDeCoreContext.CrossReferences[I];
+        if (Reference.Kind = dxkDirectCall) and
+          (Reference.TargetResolution = 'known_dsf_symbol') and
+          (Reference.TargetName <> '') then
+          NameByInstruction.Values[IntToHex(
+            Reference.SourceInstructionVA, 8)] := Reference.TargetName;
+      end;
+
+      if NameByInstruction.Count = 0 then
+        Exit;
+      for I := 0 to PlannedFiles.Count - 1 do
+      begin
+        if not SameText(ExtractFileExt(PlannedFiles[I]), '.pas') then
+          Continue;
+        PASFileName := IncludeTrailingPathDelimiter(StageDirectory) +
+          PlannedFiles[I];
+        if not FileExists(PASFileName) then
+          Continue;
+
+        Stream := TFileStream.Create(PASFileName,
+          fmOpenReadWrite or fmShareExclusive);
+        UpdatedStream := TMemoryStream.Create;
+        try
+          if Stream.Size > MaxInt then
+            raise EStreamError.CreateFmt(
+              'PAS output is too large to annotate: %s', [PASFileName]);
+          SetLength(Content, Integer(Stream.Size));
+          if Content <> '' then
+          begin
+            Stream.ReadBuffer(Content[1], Length(Content));
+            LineStart := 1;
+            Changed := False;
+            while LineStart <= Length(Content) do
+            begin
+              LineEnd := LineStart;
+              while (LineEnd <= Length(Content)) and
+                not (Content[LineEnd] in [#10, #13]) do
+                Inc(LineEnd);
+              Line := Copy(Content, LineStart, LineEnd - LineStart);
+              AnnotatedLine := Line;
+              if Length(Line) >= 8 then
+              begin
+                AddressKey := Copy(string(Line), 1, 8);
+                TargetName := NameByInstruction.Values[AddressKey];
+                if (TargetName <> '') and
+                  (Pos('call', LowerCase(string(Line))) > 0) and
+                  (Pos(TargetName, string(Line)) = 0) then
+                begin
+                  CommentBytes := AnsiString(' // DSF: ' + TargetName);
+                  AnnotatedLine := Line + CommentBytes;
+                  Changed := True;
+                end;
+              end;
+              WriteAnsi(AnnotatedLine);
+              LineBreakLength := 0;
+              if LineEnd <= Length(Content) then
+              begin
+                if (Content[LineEnd] = #13) and
+                  (LineEnd < Length(Content)) and
+                  (Content[LineEnd + 1] = #10) then
+                  LineBreakLength := 2
+                else
+                  LineBreakLength := 1;
+                UpdatedStream.WriteBuffer(Content[LineEnd],
+                  LineBreakLength);
+              end;
+              LineStart := LineEnd + LineBreakLength;
+            end;
+            if Changed then
+            begin
+              Stream.Size := 0;
+              Stream.Position := 0;
+              UpdatedStream.Position := 0;
+              Stream.CopyFrom(UpdatedStream, 0);
+            end;
+          end;
+        finally
+          UpdatedStream.Free;
+          Stream.Free;
+        end;
+      end;
+    finally
+      NameByInstruction.Free;
+    end;
+  end;
+
   procedure CleanupStage;
   var
     K: Integer;
@@ -740,6 +1102,16 @@ begin
   EventLines := TStringList.Create;
   PreviousDisasmErrors := DeDeDisAsm.sDisAsmErrors;
   ActivateLegacyState(PreviousState);
+  ExportSymbolList := nil;
+  PreviousSymbolsList := DeDeDisAsm.SymbolsList;
+  BuiltInSymbol := nil;
+  SymbolCatalogName := '';
+  SymbolCatalogStatus := 'not_requested';
+  SymbolCatalogCount := 0;
+  PreviousStrictXRefSymbolMatches :=
+    DeDeCoreContext.StrictXRefSymbolMatches;
+  DeDeCoreContext.StrictXRefSymbolMatches :=
+    AOptions.IncludeCrossReferenceReport;
   DeDeDisAsm.sDisAsmErrors := '';
   try
     try
@@ -832,7 +1204,12 @@ begin
 
     try
       if AOptions.IncludeCrossReferenceReport then
+      begin
         DeDeCoreContext.CrossReferences.Clear;
+        ExportSymbolList := TList.Create;
+        DeDeDisAsm.SymbolsList := ExportSymbolList;
+        LoadBuiltInDSFCatalog;
+      end;
       if AOptions.IncludeEventRVA then
       begin
         EventLines.Add(txt_copyright);
@@ -1046,13 +1423,32 @@ begin
       if AOptions.IncludeCrossReferenceReport then
       begin
         CollectDirectCallees;
+        ResolveIndirectImportNames;
         ResolveKnownMethodReferences;
+        ResolveDSFSymbols;
+        AnnotatePASWithDSFSymbolNames;
+        if SymbolCatalogName <> '' then
+          SymbolCatalogJSONFile := JSONString('DSF/' + SymbolCatalogName)
+        else
+          SymbolCatalogJSONFile := 'null';
+        if SymbolCatalogStatus = 'loaded' then
+          SymbolCatalogJSONCount := IntToStr(SymbolCatalogCount)
+        else
+          SymbolCatalogJSONCount := 'null';
         Text := '{' + #13#10 +
           '  "format": "dede-xref-v1",' + #13#10 +
           '  "architecture": "x86-pe32",' + #13#10 +
           '  "routineDiscovery": ' +
             JSONString('exported_disassembly_plus_reachable_direct_call_targets') +
             ',' + #13#10 +
+          '  "symbolCatalog": {' + #13#10 +
+          '    "source": "application_dsf",' + #13#10 +
+          '    "file": ' + SymbolCatalogJSONFile + ',' + #13#10 +
+          '    "status": ' + JSONString(SymbolCatalogStatus) + ',' + #13#10 +
+          '    "compilerVersion": ' +
+            JSONString(FAnalysisResult.CompilerVersion) + ',' + #13#10 +
+          '    "symbolCount": ' + SymbolCatalogJSONCount + #13#10 +
+          '  },' + #13#10 +
           '  "references": ' +
             DeDeCoreContext.CrossReferences.ToJSON + ',' + #13#10 +
           '  "routines": ' +
@@ -1141,6 +1537,12 @@ begin
   finally
     DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
     DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
+    DeDeDisAsm.SymbolsList := PreviousSymbolsList;
+    DeDeCoreContext.StrictXRefSymbolMatches :=
+      PreviousStrictXRefSymbolMatches;
+    if BuiltInSymbol <> nil then
+      BuiltInSymbol.Free;
+    ExportSymbolList.Free;
     RestoreLegacyState(PreviousState);
     EventLines.Free;
     Backups.Free;

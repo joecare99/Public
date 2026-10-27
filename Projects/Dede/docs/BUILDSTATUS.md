@@ -473,7 +473,8 @@ Die Referenz-EXE liefert unter allen drei FPC-Zielhosts 9.008 Callkanten,
 Frame-Prolog; 118 zeigen positive Stackzugriffe (174 Offset-/Breiten-
 kombinationen, davon 167 mit einem ausgerichteten Stack-Word-Slot-Kandidaten).
 35 Routinen haben passende Cleanup-/Zugriffsevidenz, 37 widerspruechliche
-Evidenz. Alle Sidecars und alle 87 PAS-Evidenzkommentare (51 Stackzugriff-,
+Evidenz; 48 Routinen erhalten einen Stack-Word-Count-Kandidaten. Alle
+Sidecars und alle 87 PAS-Evidenzkommentare (51 Stackzugriff-,
 36 Cleanup-Kommentare) sind auf FPC Win32/Win64/Linux identisch. Bei
 aktiviertem Sidecar bleiben Dateiliste und `analysis.json` unveraendert;
 genau 14 PAS-Dateien erhalten die opt-in Kommentare, sonstige Dateiinhalte
@@ -484,11 +485,31 @@ Cleanupbytes abgeleiteten Stack-Word-Count-Kandidaten. Der Sidecar fuehrt
 ausserdem 407 Disassemblerdiagnosen auf, vor allem
 `Unknown register`-Fehler der bestehenden Emulationsauswertung.
 
-Die vorhandene Importnamen-Aufloesung ist an den Graphen angebunden, ergab
-auf der Referenz-EXE aber keinen Importtreffer. Eine vollstaendige
+Die vorhandene Importnamen-Aufloesung ist an den Graphen angebunden: 14
+absolute IAT-Slots wurden erkannt, aber kein Importname aufgeloest. Eine vollstaendige
 Import-/VMT-/Datenreferenz-Aufloesung, vom exportierten Code unerreichbare
 globale Routinen,
 semantische Registerargument-/Aufruferzuordnung und eine Signaturinferenz
 fuer Pascal-Deklarationen fehlen noch. Der Sidecar ist damit
 eine verifizierte stackbezogene Evidenzstufe, nicht bereits ein vollstaendiger
 Decompiler fuer Parameternamen und Typen.
+
+Die XRef-Erweiterung nutzt jetzt versionsgebundene DSF-Signaturen, wenn ein
+kompatibler Katalog neben der CLI liegt. Namen werden nur bei einem
+eindeutigen Bytevergleich nach `UnlinkCalls` ausgegeben; Quelle und
+`exact_pattern`-Vertrauen stehen im JSON. Ein Test prueft Versionsmaske,
+Byteabweichung, Mehrdeutigkeit und den Vorrang von Klassensymbolen. Der
+Decompilatbefund hat das DSF-Headerformat geklaert: Mode-Bit `$40` fuegt nach
+dem Flag ein DWORD ein; `$80` markiert die aktuelle Formatgeneration.
+`DeDeBPL` unterstuetzt das optionale DWORD nun beim Lesen und Schreiben. XE
+DUnit besteht mit 32 Tests; FPC Win32/Win64 und Linux CLI bauen. Mit dem
+Original-VCL6-Katalog werden 41.907 Symbole geladen; auf der Referenz-EXE
+werden 240 Routinen und 3.830 Callkanten benannt. Die Windows- und Linux-
+Sidecars bleiben byteidentisch. 1.682 DSF-benannte Callstellen erhalten
+zusaetzliche `// DSF: <Symbolname>`-Kommentare in den PAS-Assemblerzeilen.
+Der 3.11-Parser ohne diese Erweiterung wurde separat gegen denselben Katalog
+getestet und endet mit `EReadError`.
+
+Die aktuelle Versionsdetektion ist fuer D7 noch unvollstaendig: Der 3.5-
+Decompilatpfad kennt VCL70-Imports und den Marker `$2F8`, der Core/CLI dagegen
+keinen D7-Kompatibilitaetswert und keine Auswahl von `vcl7.dsf`.

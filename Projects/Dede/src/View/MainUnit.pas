@@ -4232,11 +4232,8 @@ var sf,s  : String;
     DeDeSym, Sym : TDeDeSymbol;
     i : Integer;
 begin
-  sf:='vcl'+(sDelphiVersion+'00')[2]+'.dsf';
-  if sDelphiVersion='BCB3' then sf:='vcl3.dsf';
-  if sDelphiVersion='BCB4' then sf:='vcl4.dsf';
-  if sDelphiVersion='BCB5' then sf:='vcl5.dsf';
-  if sDelphiVersion='D6 CLX' then sf:='vcl6.dsf';
+  sf:=GetVersionedDSFName(sDelphiVersion);
+  if sf='' then Exit;
   sf:=ExtractFileDir(Application.ExeName)+'\DSF\'+sf;
 
 
