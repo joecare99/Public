@@ -80,7 +80,16 @@ begin
   RadioGroup1.Items.Clear;
   for I := low(TcommonAvi) to high(TcommonAvi) do
     RadioGroup1.Items.Add(avistrings[i]);
-  RadioGroup1.ItemIndex:=0; 
+  RadioGroup1.ItemIndex:=0;
+  { Unter der LCL steht Animate1 nicht in der .lfm (das Win32-Steuerelement
+    gibt es dort nicht); es wird hier zur Laufzeit erzeugt. }
+  if Animate1 = nil then
+  begin
+    Animate1 := TAnimate.Create(Self);
+    Animate1.Parent := Self;
+    Animate1.SetBounds(240, 24, 120, 90);
+    Animate1.CommonAVI := aviNone;
+  end;
 end;
 
 Procedure TfrmAnimatorMain.GoBitBtnClick(Sender: TObject);

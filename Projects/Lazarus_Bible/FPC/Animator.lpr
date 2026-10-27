@@ -17,12 +17,12 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Animator';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmAnimatorMain, frmAnimatorMain);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmAnimatorMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmAnimatorMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;
