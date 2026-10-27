@@ -69,7 +69,12 @@ uses
 
 const
   pxfAlpha = $01;
+  pxfDate = $02;    { Date: 4-Byte-Tagesnummer seit dem 1.1.1 }
   pxfLong = $04;
+  pxfNumber = $06;  { Number: 8-Byte IEEE-Gleitkommazahl }
+  { Differenz der Epochen: Paradox zaehlt Tage ab 1.1.0001, Delphi (TDateTime)
+    ab 30.12.1899. }
+  ParadoxDateOffset = 693594;
 
 type
   TDBParadoxCommitOutcome = (
@@ -86,6 +91,7 @@ type
     FieldType: Byte;
     IsNull: Boolean;
     IntegerValue: Int64;
+    DoubleValue: Double;   { fuer pxfNumber }
     StringValue: AnsiString;
   end;
 
@@ -249,6 +255,8 @@ begin
         Result[RowIndex][FieldIndex] := ''
       else if Value.FieldType = pxfAlpha then
         Result[RowIndex][FieldIndex] := UnicodeString(Value.StringValue)
+      else if (Value.FieldType = pxfNumber) or (Value.FieldType = pxfDate) then
+        Result[RowIndex][FieldIndex] := UnicodeString(FloatToStr(Value.DoubleValue))
       else
         Result[RowIndex][FieldIndex] := IntToStr(Value.IntegerValue);
     end;
@@ -276,14 +284,27 @@ begin
       RowValue.FieldType := pxfAlpha;
       RowValue.IsNull := ARows[RowIndex][APrimaryKeyFieldIndex] = '';
       RowValue.IntegerValue := 0;
+      RowValue.DoubleValue := 0;
       RowValue.StringValue :=
         AnsiString(ARows[RowIndex][APrimaryKeyFieldIndex]);
+    end
+    else if AFields[APrimaryKeyFieldIndex].FieldType = pxfNumber then
+    begin
+      RowValue.FieldType := pxfNumber;
+      RowValue.IsNull := ARows[RowIndex][APrimaryKeyFieldIndex] = '';
+      RowValue.IntegerValue := 0;
+      RowValue.DoubleValue := 0;
+      if not RowValue.IsNull then
+        RowValue.DoubleValue := StrToFloat(
+          ARows[RowIndex][APrimaryKeyFieldIndex]);
+      RowValue.StringValue := '';
     end
     else
     begin
       RowValue.FieldType := pxfLong;
       RowValue.IsNull := ARows[RowIndex][APrimaryKeyFieldIndex] = '';
       RowValue.IntegerValue := 0;
+      RowValue.DoubleValue := 0;
       if not RowValue.IsNull then
         RowValue.IntegerValue := StrToInt64(
           ARows[RowIndex][APrimaryKeyFieldIndex]);
@@ -315,10 +336,12 @@ var
   ValueLength: SizeInt;
   Index: SizeInt;
   RawValue: LongInt;
+  Bits: QWord;
 begin
   Result.FieldType := Field.FieldType;
   Result.IsNull := True;
   Result.IntegerValue := 0;
+  Result.DoubleValue := 0;
   Result.StringValue := '';
 
   if (Field.Offset < 0) or (Field.FieldLength <= 0) or
@@ -350,6 +373,24 @@ begin
             AnsiChar(RecordData[Field.Offset + Index]);
         Result.IsNull := False;
       end;
+    pxfDate:
+      begin
+        if Field.FieldLength <> 4 then
+          raise EDBParadoxProviderError.CreateFmt(
+            'Date field "%s" does not have its required four-byte width.',
+            [Field.Name]);
+        { Big-endian mit gekipptem Vorzeichenbit (wie die Long-Felder). }
+        RawValue := (LongInt(RecordData[Field.Offset]) shl 24) or
+          (LongInt(RecordData[Field.Offset + 1]) shl 16) or
+          (LongInt(RecordData[Field.Offset + 2]) shl 8) or
+          LongInt(RecordData[Field.Offset + 3]);
+        if RawValue = 0 then
+          Exit;
+        RawValue := LongInt(Cardinal(RawValue) xor $80000000);
+        { TDateTime als Double speichern. }
+        Result.DoubleValue := RawValue - ParadoxDateOffset;
+        Result.IsNull := False;
+      end;
     pxfLong:
       begin
         if Field.FieldLength <> 4 then
@@ -369,6 +410,31 @@ begin
         if (RecordData[Field.Offset] and $80) = 0 then
           RawValue := RawValue or LongInt($80000000);
         Result.IntegerValue := RawValue;
+        Result.IsNull := False;
+      end;
+    pxfNumber:
+      begin
+        if Field.FieldLength <> 8 then
+          raise EDBParadoxProviderError.CreateFmt(
+            'Number field "%s" does not have its required eight-byte width.',
+            [Field.Name]);
+        { Alle acht Bytes null bedeutet "leer"; sonst IEEE-Double. }
+        if (RecordData[Field.Offset] = 0) and
+          (RecordData[Field.Offset + 1] = 0) and
+          (RecordData[Field.Offset + 2] = 0) and
+          (RecordData[Field.Offset + 3] = 0) and
+          (RecordData[Field.Offset + 4] = 0) and
+          (RecordData[Field.Offset + 5] = 0) and
+          (RecordData[Field.Offset + 6] = 0) and
+          (RecordData[Field.Offset + 7] = 0) then
+          Exit;
+        { Paradox speichert das Double big-endian mit gekipptem
+          Vorzeichenbit (wie die Long-Felder). }
+        Bits := 0;
+        for Index := 0 to 7 do
+          Bits := (Bits shl 8) or RecordData[Field.Offset + Index];
+        Bits := Bits xor QWord($8000000000000000);
+        Move(Bits, Result.DoubleValue, SizeOf(Double));
         Result.IsNull := False;
       end;
   else
@@ -405,6 +471,7 @@ begin
   Result.FieldType := Field.FieldType;
   Result.IsNull := AParam.IsNull;
   Result.IntegerValue := 0;
+  Result.DoubleValue := 0;
   Result.StringValue := '';
   if Result.IsNull then
     Exit;
@@ -422,6 +489,14 @@ begin
             RaiseUnsupported(
               'non-ASCII parameter text until code-page behavior is verified');
       end;
+    pxfDate:
+      begin
+        if not (AParam.DataType in [ftDate, ftDateTime]) then
+          raise EDBParadoxProviderError.CreateFmt(
+            'Parameter "%s" must be a date for field "%s".',
+            [ParameterName, Field.Name]);
+        Result.DoubleValue := AParam.AsFloat;
+      end;
     pxfLong:
       begin
         if not (AParam.DataType in
@@ -435,6 +510,15 @@ begin
             'Parameter "%s" is outside the supported Paradox long range.',
             [ParameterName]);
         Result.IntegerValue := IntValue;
+      end;
+    pxfNumber:
+      begin
+        if not (AParam.DataType in
+          [ftFloat, ftBCD, ftCurrency, ftFMTBcd]) then
+          raise EDBParadoxProviderError.CreateFmt(
+            'Parameter "%s" must be a number for field "%s".',
+            [ParameterName, Field.Name]);
+        Result.DoubleValue := AParam.AsFloat;
       end;
   else
     RaiseUnsupported(Format('parameter comparison for field "%s"',
@@ -469,6 +553,13 @@ begin
       if LeftValue.IntegerValue < RightValue.IntegerValue then
         Result := -1
       else if LeftValue.IntegerValue > RightValue.IntegerValue then
+        Result := 1
+      else
+        Result := 0;
+    pxfDate, pxfNumber:
+      if LeftValue.DoubleValue < RightValue.DoubleValue then
+        Result := -1
+      else if LeftValue.DoubleValue > RightValue.DoubleValue then
         Result := 1
       else
         Result := 0;
@@ -758,6 +849,7 @@ var
   ParadoxCursor: TDBParadoxCursor;
   Index: Integer;
   FieldType: TFieldType;
+  Size: Integer;
 begin
   ParadoxCursor := RequireCursor(Cursor);
   for Index := 0 to High(ParadoxCursor.FResultFields) do
@@ -765,18 +857,26 @@ begin
     case ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].FieldType of
       pxfAlpha:
         FieldType := ftString;
+      pxfDate:
+        FieldType := ftDate;
       pxfLong:
         FieldType := ftInteger;
+      pxfNumber:
+        FieldType := ftFloat;
     else
       RaiseUnsupported(Format('Paradox field type %d in field "%s"',
         [ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].FieldType,
          ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].Name]));
     end;
+    { ftString nutzt die physische Breite; bei Datum/Fliesskomma/Integer
+      bestimmt SQLDB die Groesse selbst (Breite 0). }
+    if FieldType = ftString then
+      Size := ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].FieldLength
+    else
+      Size := 0;
     AddFieldDef(FieldDefs, Index + 1,
       ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].Name,
-      FieldType,
-      ParadoxCursor.FFields[ParadoxCursor.FResultFields[Index]].FieldLength,
-      0, False, False, True);
+      FieldType, Size, 0, False, False, True);
   end;
 end;
 
@@ -822,6 +922,11 @@ begin
       pxfLong:
         begin
           PLongInt(Buffer)^ := Value.IntegerValue;
+          Result := True;
+        end;
+      pxfDate, pxfNumber:
+        begin
+          PDouble(Buffer)^ := Value.DoubleValue;
           Result := True;
         end;
   else

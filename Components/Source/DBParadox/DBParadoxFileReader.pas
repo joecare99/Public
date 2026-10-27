@@ -99,7 +99,10 @@ begin
       'Paradox file type %d is not a supported .DB table.', [Data[4]]);
 
   Result.Version := Data[$39];
-  if not (Result.Version in [$0B, $0C]) then
+  { Neben den urspruenglichen Versionen 0x0B/0x0C (Paradox 10/11) werden
+    auch 0x09/0x0A (Paradox 8/9) gelesen; deren Datenkopf beginnt ebenfalls
+    bei $78. }
+  if not (Result.Version in [$09, $0A, $0B, $0C]) then
     raise EDBParadoxFileReadError.CreateFmt(
       'Paradox file version 0x%.2x is not supported.', [Result.Version]);
 
@@ -182,7 +185,7 @@ var
   CalculatedRecordSize: Int64;
 begin
   Fields := nil;
-  if Header.Version >= $0B then
+  if Header.Version >= $09 then
     DataHeaderOffset := DataHeaderSize
   else
     DataHeaderOffset := CommonHeaderSize;

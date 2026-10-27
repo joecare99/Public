@@ -20,6 +20,7 @@ type
     function BuildLongSemanticsFixture: TBytes;
     function BuildSQLQueryFixture: TBytes;
     function BuildUnsupportedFieldFixture: TBytes;
+    function BuildNumberDateFixture: TBytes;
     function WriteDMLFixture: string;
     function WriteInternalReaderFixture(const Data: TBytes;
       const TableFileName: string = 'Synthetic.DB'): string;
@@ -37,6 +38,7 @@ type
     procedure SQLQueryRejectsUnsupportedFieldType;
     procedure SQLQueryReadsSyntheticTable;
     procedure SQLQueryReadsBDELongValueEncodings;
+    procedure SQLQueryReadsNumberAndDateFields;
     procedure SQLQueryReadsSecondaryIndexFixture;
     procedure SQLQueryRejectsDeletedSlotsUntilSupported;
     procedure SQLQueryProjectsFiltersAndOrders;
@@ -444,6 +446,56 @@ begin
   Result[BlockOffset + 7] := 1;
 end;
 
+function TTestDBParadoxConnection.BuildNumberDateFixture: TBytes;
+const
+  HeaderSize = $800;
+  BlockSize = $800;
+  RecordSize = 16;
+  { Version 0x09: Datenkopf bei $78, Tabellenname-Laenge 79. }
+  FieldNamesOffset = $78 + 3 * 2 + 4 + 3 * 4 + 79;
+  { ID (Long), Number (Number/Double), Purchased (Date) je Zeile. }
+  Rows: array[0..1, 0..15] of Byte = (
+    ($80, 0, 0, 1, $C0, $20, 0, 0, 0, 0, 0, 0, $80, $0B, $1D, $7D),
+    ($80, 0, 0, 2, $C0, $28, 0, 0, 0, 0, 0, 0, $80, $0B, $1E, $CC)
+  );
+var
+  BlockOffset: SizeInt;
+  RecordOffset: SizeInt;
+  RowIndex, ByteIndex: Integer;
+begin
+  Result := nil;
+  SetLength(Result, HeaderSize + BlockSize);
+  WriteUInt16LE(Result, 0, RecordSize);
+  WriteUInt16LE(Result, 2, HeaderSize);
+  Result[4] := 0;
+  Result[5] := 2;
+  WriteInt32LE(Result, 6, Length(Rows));
+  WriteUInt16LE(Result, $0C, 1);
+  WriteUInt16LE(Result, $0E, 1);
+  WriteUInt16LE(Result, $10, 1);
+  WriteUInt16LE(Result, $21, 3);
+  Result[$39] := $09;
+  Result[$78] := $04;
+  Result[$79] := 4;
+  Result[$7A] := $06;
+  Result[$7B] := 8;
+  Result[$7C] := $02;
+  Result[$7D] := 4;
+  Move('ID'#0'Number'#0'Purchased'#0, Result[FieldNamesOffset], 20);
+
+  BlockOffset := HeaderSize;
+  WriteUInt16LE(Result, BlockOffset, 0);
+  WriteUInt16LE(Result, BlockOffset + 2, 0);
+  WriteUInt16LE(Result, BlockOffset + 4,
+    (Length(Rows) - 1) * RecordSize);
+  for RowIndex := 0 to High(Rows) do
+  begin
+    RecordOffset := BlockOffset + 6 + RowIndex * RecordSize;
+    for ByteIndex := 0 to RecordSize - 1 do
+      Result[RecordOffset + ByteIndex] := Rows[RowIndex][ByteIndex];
+  end;
+end;
+
 function TTestDBParadoxConnection.WriteDMLFixture: string;
 var
   Directory, FileName, BdeTemplateDirectory: string;
@@ -679,7 +731,6 @@ var
   RecordSize: Integer;
   SeenRows: Integer;
   FamilyLock: TDBParadoxFamilyLock;
-  LockedIndex: TFileStream;
 begin
   TableFileName := WriteDMLFixture;
   Connection := TDBParadoxTestConnection.Create(nil);
@@ -759,12 +810,15 @@ begin
       FamilyLock.Free;
     end;
 
-    LockedIndex := TFileStream.Create(ChangeFileExt(TableFileName, '.PX'),
-      fmOpenRead or fmShareDenyWrite);
+    { Ein Familienmitglied laesst sich nicht ersetzen. Statt einer
+      Windows-Dateisperre (die unter Unix wirkungslos ist) wird der Fehler
+      portabel ueber die Fault-Injection mitten in der Publikation ausgeloest. }
+    Connection.FaultInjector :=
+      TDBParadoxTestPublicationFault.Create(dpeAfterReplacement, 0);
     try
       try
         Transaction.Commit;
-        Fail('Commit must compensate when replacing a locked family member.');
+        Fail('Commit must compensate when replacing a family member.');
       except
         on E: EDBParadoxPublicationError do ;
       end;
@@ -774,7 +828,7 @@ begin
       CheckEquals(2, Length(Rows),
         'The original database image must be restored after partial publication.');
     finally
-      LockedIndex.Free;
+      Connection.FaultInjector := nil;
     end;
 
     Transaction.Commit;
@@ -1293,6 +1347,57 @@ begin
     DeleteFile(FixtureFileName);
     DeleteFile(FixtureFileName + '.dbparadox.lock');
     RemoveDir(FixtureDirectory);
+  end;
+end;
+
+procedure TTestDBParadoxConnection.SQLQueryReadsNumberAndDateFields;
+var
+  FixtureFileName: string;
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+  Query: TSQLQuery;
+begin
+  { Version 0x09 mit Feldtyp 6 (Number) und 2 (Date). }
+  FixtureFileName := WriteInternalReaderFixture(
+    BuildNumberDateFixture, 'NumberDate.DB');
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  Query := TSQLQuery.Create(nil);
+  try
+    Connection.DatabaseName := ExtractFileDir(FixtureFileName);
+    Connection.Transaction := Transaction;
+    Transaction.Database := Connection;
+    Query.SQLConnection := Connection;
+    Query.SQLTransaction := Transaction;
+    Query.SQL.Text :=
+      'SELECT ID, Number, Purchased FROM NumberDate.DB ORDER BY ID';
+    Query.ReadOnly := True;
+    Query.Open;
+    try
+      CheckFalse(Query.EOF);
+      CheckEquals(1, Query.FieldByName('ID').AsInteger);
+      CheckEquals(8.0, Query.FieldByName('Number').AsFloat, 0.0001);
+      CheckEquals(34851, Trunc(Query.FieldByName('Purchased').AsDateTime));
+      Query.Next;
+      CheckFalse(Query.EOF);
+      CheckEquals(2, Query.FieldByName('ID').AsInteger);
+      CheckEquals(12.0, Query.FieldByName('Number').AsFloat, 0.0001);
+      CheckEquals(35186, Trunc(Query.FieldByName('Purchased').AsDateTime));
+      Query.Next;
+      CheckTrue(Query.EOF);
+    finally
+      Query.Close;
+    end;
+    if Transaction.Active then
+      Transaction.Commit;
+    Connection.Connected := False;
+  finally
+    Query.Free;
+    Transaction.Free;
+    Connection.Free;
+    DeleteFile(FixtureFileName);
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
+    RemoveDir(ExtractFileDir(FixtureFileName));
   end;
 end;
 

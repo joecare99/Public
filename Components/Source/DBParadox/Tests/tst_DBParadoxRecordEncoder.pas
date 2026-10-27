@@ -19,6 +19,9 @@ type
     procedure RejectsInvalidIntegerAndFieldWidth;
     procedure RejectsUnrepresentableParadoxLongMinimum;
     procedure RejectsNonEmptyMemoAndUnsupportedTypes;
+    procedure EncodesParadoxNumberAndDate;
+    procedure EncodesNullNumberAndDateAsZeroes;
+    procedure RejectsMalformedNumberAndDateWidths;
     procedure RejectsMismatchedValueCount;
   end;
 
@@ -264,6 +267,90 @@ begin
     Fail('Expected an unsupported field type to be rejected.');
   except
     on E: EDBParadoxUnsupportedRecordField do ;
+  end;
+end;
+
+procedure TTestDBParadoxRecordEncoder.EncodesParadoxNumberAndDate;
+var
+  Fields: TDBParadoxRecordFields;
+  Values: TDBParadoxRecordValues;
+  Encoded: TBytes;
+begin
+  Fields := nil;
+  SetLength(Fields, 2);
+  Fields[0].Name := 'Number';
+  Fields[0].TypeCode := $06;
+  Fields[0].Length := 8;
+  Fields[1].Name := 'Purchased';
+  Fields[1].TypeCode := $02;
+  Fields[1].Length := 4;
+  { 8.0 als Double und TDateTime 34851 (Tage seit 1899-12-30). }
+  Values := ['8', '34851'];
+
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+
+  CheckEquals(12, Length(Encoded));
+  { 8.0 = 0x4020000000000000, Vorzeichenbit gekippt, big-endian. }
+  CheckEquals($C0, Encoded[0]);
+  CheckEquals($20, Encoded[1]);
+  CheckEquals(0, Encoded[2]);
+  CheckEquals(0, Encoded[7]);
+  { 34851 + 693594 = 728445 = 0x000B1D7D, gekippt, big-endian. }
+  CheckEquals($80, Encoded[8]);
+  CheckEquals($0B, Encoded[9]);
+  CheckEquals($1D, Encoded[10]);
+  CheckEquals($7D, Encoded[11]);
+end;
+
+procedure TTestDBParadoxRecordEncoder.EncodesNullNumberAndDateAsZeroes;
+var
+  Fields: TDBParadoxRecordFields;
+  Values: TDBParadoxRecordValues;
+  Encoded: TBytes;
+  Index: SizeInt;
+begin
+  Fields := nil;
+  SetLength(Fields, 2);
+  Fields[0].Name := 'Number';
+  Fields[0].TypeCode := $06;
+  Fields[0].Length := 8;
+  Fields[1].Name := 'Purchased';
+  Fields[1].TypeCode := $02;
+  Fields[1].Length := 4;
+  Values := ['', ''];
+
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+
+  for Index := 0 to High(Encoded) do
+    CheckEquals(0, Encoded[Index]);
+end;
+
+procedure TTestDBParadoxRecordEncoder.RejectsMalformedNumberAndDateWidths;
+var
+  Fields: TDBParadoxRecordFields;
+  Values: TDBParadoxRecordValues;
+begin
+  Fields := nil;
+  SetLength(Fields, 1);
+  Fields[0].Name := 'Number';
+  Fields[0].TypeCode := $06;
+  Fields[0].Length := 4;
+  Values := ['1'];
+  try
+    EncodeDBParadoxRecord(Fields, Values);
+    Fail('Expected a malformed number field width to be rejected.');
+  except
+    on E: EDBParadoxRecordEncodingError do ;
+  end;
+
+  Fields[0].Name := 'Purchased';
+  Fields[0].TypeCode := $02;
+  Fields[0].Length := 8;
+  try
+    EncodeDBParadoxRecord(Fields, Values);
+    Fail('Expected a malformed date field width to be rejected.');
+  except
+    on E: EDBParadoxRecordEncodingError do ;
   end;
 end;
 

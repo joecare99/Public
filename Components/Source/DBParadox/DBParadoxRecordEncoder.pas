@@ -27,8 +27,11 @@ implementation
 
 const
   ParadoxAlpha = $01;
+  ParadoxDate = $02;    { Date: 4-Byte-Tagesnummer }
   ParadoxShort = $03;
   ParadoxLong = $04;
+  ParadoxNumber = $06;  { Number: 8-Byte IEEE-Gleitkommazahl }
+  ParadoxDateOffset = 693594;
   ParadoxMemo = $0C;
   ParadoxBlob = $0D;
   ParadoxFormattedMemo = $0E;
@@ -247,6 +250,68 @@ begin
   end;
 end;
 
+procedure EncodeNumber(const AValue: UnicodeString;
+  const AFieldName: string; const ADestination: TBytes;
+  const AOffset: SizeInt);
+var
+  Text: string;
+  Value: Double;
+  Bits: QWord;
+  ByteIndex: SizeInt;
+begin
+  Text := Trim(UTF8Encode(AValue));
+  if Text = '' then
+    Exit;  { leer = Null (alle Bytes null) }
+  try
+    Value := StrToFloat(Text);
+  except
+    on E: EConvertError do
+      raise EDBParadoxRecordEncodingError.CreateFmt(
+        'Value for number field "%s" is invalid.', [AFieldName]);
+  end;
+  { Big-endian mit gekipptem Vorzeichenbit (wie die Long-Felder). }
+  Bits := 0;
+  Move(Value, Bits, SizeOf(Double));
+  Bits := Bits xor QWord($8000000000000000);
+  for ByteIndex := 0 to 7 do
+    ADestination[AOffset + ByteIndex] :=
+      Byte((Bits shr ((7 - ByteIndex) * 8)) and $FF);
+end;
+
+procedure EncodeDate(const AValue: UnicodeString;
+  const AFieldName: string; const ADestination: TBytes;
+  const AOffset: SizeInt);
+var
+  Text: string;
+  Value: Double;
+  Days: Cardinal;
+begin
+  Text := Trim(UTF8Encode(AValue));
+  if Text = '' then
+    Exit;  { leer = Null (alle Bytes null) }
+  { Je nach Herkunft liegt ein TDateTime als Zahl oder als Datumsstring vor. }
+  try
+    Value := StrToFloat(Text);
+  except
+    on E: EConvertError do
+    begin
+      try
+        Value := StrToDate(Text);
+      except
+        on E2: EConvertError do
+          raise EDBParadoxRecordEncodingError.CreateFmt(
+            'Value for date field "%s" is invalid.', [AFieldName]);
+      end;
+    end;
+  end;
+  { Big-endian mit gekipptem Vorzeichenbit (wie die Long-Felder). }
+  Days := Cardinal(Trunc(Value) + ParadoxDateOffset) xor $80000000;
+  ADestination[AOffset] := Byte((Days shr 24) and $FF);
+  ADestination[AOffset + 1] := Byte((Days shr 16) and $FF);
+  ADestination[AOffset + 2] := Byte((Days shr 8) and $FF);
+  ADestination[AOffset + 3] := Byte(Days and $FF);
+end;
+
 function EncodeDBParadoxRecord(const Fields: TDBParadoxRecordFields;
   const Values: TDBParadoxRecordValues): TBytes;
 var
@@ -286,6 +351,14 @@ begin
           for ValueIndex := 1 to Length(Value) do
             Result[Offset + ValueIndex - 1] := Windows1252Byte(Value[ValueIndex]);
         end;
+      ParadoxDate:
+        begin
+          if Field.Length <> 4 then
+            raise EDBParadoxRecordEncodingError.CreateFmt(
+              'Date field "%s" has an unsupported physical size.',
+              [Field.Name]);
+          EncodeDate(Value, Field.Name, Result, Offset);
+        end;
       ParadoxShort:
         begin
           if Field.Length <> 2 then
@@ -301,6 +374,14 @@ begin
               'Long field "%s" has an unsupported physical size.',
               [Field.Name]);
           EncodeLong(Value, Field.Name, Result, Offset);
+        end;
+      ParadoxNumber:
+        begin
+          if Field.Length <> 8 then
+            raise EDBParadoxRecordEncodingError.CreateFmt(
+              'Number field "%s" has an unsupported physical size.',
+              [Field.Name]);
+          EncodeNumber(Value, Field.Name, Result, Offset);
         end;
       ParadoxAutoIncrement:
         begin

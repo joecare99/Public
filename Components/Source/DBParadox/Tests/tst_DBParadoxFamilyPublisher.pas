@@ -1497,8 +1497,8 @@ begin
     end;
     TDBParadoxFamilyJournal.Prepare(TableFileName, StageDirectory,
       'Synthetic', Members);
-    ManifestPath := ChangeFileExt(TableFileName, '') +
-      '.DB.dbparadox-journal\manifest';
+    ManifestPath := IncludeTrailingPathDelimiter(
+      ChangeFileExt(TableFileName, '') + '.DB.dbparadox-journal') + 'manifest';
     ManifestText := ReadTextFile(ManifestPath);
     ManifestText[1] := 'X';
     WriteTextFile(ManifestPath, ManifestText);
