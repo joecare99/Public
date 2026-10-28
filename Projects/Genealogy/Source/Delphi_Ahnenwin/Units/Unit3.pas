@@ -1,4 +1,4 @@
-﻿unit Unit3;
+unit Unit3;
 
 {-------------------------------------------------------------------------------
   Unit3 - TForm3, reconstructed from the IDR disassembly
@@ -13,7 +13,7 @@
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit28, Unit29, Unit36, Unit39;
 
 type
   TForm3 = class(TForm)
@@ -1633,9 +1633,297 @@ begin
   end;
 end;
 
-procedure TForm3.gedein_5;
+{005BC604 - Phase-III-Flush: schreibt die Daten der aktuellen Familie
+  (Husband- und Wife-Nummer, RelN/Married-Flag, Geschieden-Datum/-Ort,
+  Ehedaten/-orte/-zeugen und die Quellen) in die Datentabellen.}
+procedure sub_005BC604(AHusn, AWifn, ARelN: Integer; AMarried: Integer;
+  ADatD, AOrtD, ADat1, AOrt1, AWit1, ADat2, AOrt2, AWit2, AQm1, AQm2,
+  AQd: AnsiString); register;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { TODO: Listing fehlt noch - Originaladresse 005BC604. }
+end;
+
+procedure TForm3.gedein_5;
+label
+  LHeaderLoop, LPhase1, LPhase1Tail, LPhase2, LPhase2Start, LPhase3, LPhase3Tail;
+var
+  zaeler, lastnr, nummer, personCount, famCount: Integer;
+  startnr, maxnum: Integer;
+  married, relN, husn, wifn, famIdx, childCount: Integer;
+  chrKey, snr, iii, kIdx, divres: Integer;
+  gvar_0253686C: Integer;
+  skipHeder, srcmode: Integer;
+  Dtag1, Dmonat1, Djahr1: AnsiString;
+  srcKey, showtext, srcstr: AnsiString;
+  srcRec: AnsiString;
+  header, srcname, zeile, r, sn1, key, dstr, ptmp: AnsiString;
+  alt84, alt88, temp0, temp1, sav1, sav2: AnsiString;
+  m1dat, m1ort, m1wit, m2dat, m2ort, m2wit: AnsiString;
+  ddat, dort, qm1, qm2, qd: AnsiString;
+  kv: array[0..1] of TVarRec;
+begin
+  { $005BFB94: kompletter Import einer GEDCOM-Datei. Legt zun?chst eine
+    tempor?re Familiestabelle "fsc" (Nr/Fnr/V/M/K) im EXE-Verzeichnis an und
+    ordnet danach die ersten GEDCOM-Zeilen den Kopfdaten zu (Header-Loop).
+    Phase I z?hlt/registriert @INDI- und @F-Objekte und importiert die
+    Stammerfassungs-Objekte (0 @S/0 @P/0 @N), Phase II schreibt die Personen,
+    Phase III die Familien. }
+  gvar_0253686C := 0;
+  skipHeder := 0;
+  startnr := DataModule2.Table1Nummer.AsInteger;  {//534 [edx+58]}
+  DataModule2.Table1.Open;  {//[5C]}
+  gvar_02536860 := TTable.Create(nil);  {005BFC05: Create mit ecx=[ebp-4], dl=1}
+  gvar_02536860.DatabaseName := ExtractFilePath(ParamStr(0));  {005BFBF2}
+  gvar_02536860.TableType := ttDefault;  {dl=1: ttDefault}
+  gvar_02536860.TableName := 'fsc';  {005BFC4F}
+  gvar_02536860.FieldDefs.Clear;  {005BFC54}
+  gvar_02536860.FieldDefs.Add('Nr', ftAutoInc, 0, True);  {005BFC70}
+  gvar_02536860.FieldDefs.Add('Fnr', ftInteger, 0, True);  {005BFC82}
+  gvar_02536860.FieldDefs.Add('V', ftInteger, 0, False);  {005BFC94}
+  gvar_02536860.FieldDefs.Add('M', ftInteger, 0, False);  {005BFCA6}
+  gvar_02536860.FieldDefs.Add('K', ftString, 180, False);  {005BFCBB size 0xB4}
+  gvar_02536860.IndexDefs.Clear;  {005BFCC5 +24C}
+  gvar_02536860.IndexDefs.Add('Nr', 'Nr', [ixPrimary]);  {004A9778 opt 0x1}
+  gvar_02536860.IndexDefs.Add('Fnr', 'Fnr', []);  {004A9778 opt 0x0}
+  try
+    gvar_02536860.CreateTable;  {005BFD13}
+  except
+    { 005BFD27: Exception abfangen, Meldung, Abbruch (kein Reraise). }
+    ShowMessage('Fehler');
+    Screen.Cursor := crDefault;
+    exit;
+  end;
+  gvar_02536860.Open;  {005BFD45}
+  gvar_02536860.IndexName := 'Fnr';  {005BFD54}
+  OpenDialog1.Filter := 'Gedcom-Dateien (*.ged)|*.ged';  {005BFD6A}
+  if not OpenDialog1.Execute then
+  begin
+    { 005C52E1: Abbruch-Epilog (Ohne Datenaustausch). }
+    Form1.Label18.Visible := False;
+    Form1.Label19.Visible := False;
+    { 005C5302: Form1.Repso2.SetDataSource(DataModule2.DataSource1) - die
+      DataSource-Eigenschaft ist in Delphi 9 schreibgesch??tzt, Recon ??ber
+      die DataSet-Eigenschaft der Quelle. }
+    DataModule2.DataSource1.DataSet := Form1.Repso2;
+    DataModule2.Table1.EnableControls;
+    Form1.Repso2.EnableControls;
+    DataModule2.Table1.IndexName := '';
+    DataModule2.Table1.First;
+    if lastnr > 0 then
+      DataModule2.Table1.FindKey([startnr]);
+    Screen.Cursor := crDefault;
+    gvar_02536860.Close;
+    gvar_02536860.DeleteTable;
+    exit;
+  end;
+  Screen.Cursor := crHourGlass;  {5C55: 0xFFF5 = -11}
+  zaeler := 1;  {005BFD9C}
+  if DataModule2.Table1.RecordCount > 1 then
+  begin
+    { 005BFDBE: Verzweigung vor dem Import. }
+    gvar_0253686C := Application.MessageBox(
+      'Bestehende Daten ?berschreiben ?', 'Gedcom-Datei einlesen', 3);
+    if gvar_0253686C = ID_CANCEL then
+    begin
+      { 005BFE4E. }
+      Screen.Cursor := crDefault;
+      gvar_02536860.Close;
+      gvar_02536860.DeleteTable;
+      exit;
+    end
+    else if gvar_0253686C = IDYES then
+    begin
+      { 005BFE75: alle Tabellen leeren, auch die Formulareinstellungen. }
+      Form14.ListBox1.Clear;  {Form14.ListBox1 //300}
+      Form28.ListBox1.Clear;  {Form28.ListBox1 //300}
+      Form29.ListBox1.Clear;  {Form29.ListBox1 //2F8}
+      Form36.ListBox1.Clear;  {Form36.ListBox1 //300}
+      Form39.ListBox1.Clear;  {Form39.ListBox1 //300}
+      DataModule2.Table5.MasterSource := nil;
+      DataModule2.Table5.Open;
+      DataModule2.Table5.Close;
+      DataModule2.Table5.EmptyTable;
+      DataModule2.Table5.Open;
+      DataModule2.Table1.Open;
+      DataModule2.Table1.Close;
+      DataModule2.Table1.EmptyTable;
+      DataModule2.Table1.Open;
+      DataModule2.Table13.Open;
+      DataModule2.Table13.Close;
+      DataModule2.Table13.EmptyTable;
+      DataModule2.Table13.Open;
+      DataModule2.Table38.Open;
+      DataModule2.Table38.Close;
+      DataModule2.Table38.EmptyTable;
+      DataModule2.Table38.Open;
+      Form1.anzeigen;  {005D42BC}
+    end
+    else if gvar_0253686C = IDNO then
+    begin
+      { 005BFDE7: Daten sollen erhalten bleiben - nur zuletzt bearbeiteten
+        Datensatz wiederfinden. }
+      DataModule2.Table1.IndexName := '';
+      DataModule2.Table1.Last;
+      lastnr := DataModule2.Table1Nummer.AsInteger;
+      nummer := DataModule2.Table1Nummer.AsInteger;
+      gvar_02536944 := nummer;
+      DataModule2.Table1.FindKey([startnr]);
+    end;
+  end;
+  { 005BFFCB: gemeinsame Vorbereitung. }
+  DataModule2.Table5.MasterSource := nil;
+  DataModule2.Table1.DisableControls;
+  DataModule2.Table5.DisableControls;
+  DataModule2.Table25.Open;  {005BFFF9}
+  DataModule2.Table25.Close;
+  DataModule2.Table25.EmptyTable;
+  DataModule2.Table25.Open;
+  DataModule2.Table25.IndexName := 'AA';  {0x5C54EC}
+  Form1.Repso2.Open;
+  Form1.Repso2.EmptyDataSet;  {005C0051}
+  Form1.Refresh;
+  DataModule2.Table4.Open;
+  DataModule2.Table4.Close;
+  DataModule2.Table4.EmptyTable;
+  DataModule2.Table4.Open;
+  Form1.Label19.Visible := True;
+  Form1.Label19.Caption := 'Gedcom vorbereiten';
+  Form1.Label19.Refresh;
+  AssignFile(gvar_02536670, OpenDialog1.FileName);
+  DataModule2.Table38.Open;
+  DataModule2.Table13.Open;
+  header := '';
+  gvar_02536848 := '';
+  gvar_0253685C := '';
+  Reset(gvar_02536670);
+
+  { Kopf-Header-Loop (005C011C..005C0D48): Verarbeitung der GEDCOM-Headereihe. }
+  zeile := '';
+  while True do
+  begin
+    if Pos('@ INDI', zeile) > 0 then
+    begin
+      { 005C0D48: Phase-I-Einstieg. }
+      if gvar_02536848 = 'unic' then
+        ShowMessage('Die Gedcom-Datei ist im Unicode-Zeichensatz codiert.' +
+          #13#10 + 'Es kann (v.a.bei Umlauten) zu Lesefehlern kommen.');
+      personCount := 0;  {005C0D65 [10]}
+      famCount := 0;
+      Form1.Label18.Visible := True;
+      Form1.Label18.Caption := '0';
+      Form1.Label18.Refresh;
+      break;
+    end;
+    if Pos('0 HEAD', zeile) = 4 then
+      gvar_02536848 := 'utf';  {005C017E - Original setzt hier 'utf' als Vorgabe}
+    if UpperCase(Copy(zeile, 1, 6)) = '1 FILE' then
+      header := header + #13#10 + 'Datei: ' +
+      {005C0207: CatN5}
+        Copy(zeile, 8, Length(zeile)) + #13#10;
+    if Pos('DATE', ucase(zeile)) > 0 then
+    begin
+      {005C02A9: ucase(zeile); Pos('DATE', ...); 2 DATE}
+      sub_00577934(Copy(zeile, 8, Length(zeile)));
+      header := header + #13#10 + 'Datum: ' + gvar_02536624 + '.' +
+        gvar_02536628 + '.' + gvar_0253662C;  {CatN8 005C028B}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 SOUR' then
+    begin
+      header := header + #13#10 + 'Quelle: ' +
+      {005C02CB: CatN4 005C02DA}
+        Copy(zeile, 8, Length(zeile));
+      srcname := Trim(Copy(zeile, 8, Length(zeile)));  {005C0332}
+      ReadLn(gvar_02536670, zeile);  {005C0338: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 VERS' then
+      begin
+        header := header + Copy(zeile, 8, Length(zeile)) + ' ';  {CatN3 005C03B2}
+        srcname := srcname + ' ' + Trim(Copy(zeile, 8, Length(zeile)));  {CatN3 005C0441}
+      end;
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 DEST' then
+      header := header + #13#10 + 'Ziel: ' +
+        Copy(zeile, 8, Length(zeile));  {CatN4 005C04BB}
+    if UpperCase(Copy(zeile, 1, 6)) = '1 NAME' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + 'Einsender: ' + #13#10 +
+          Copy(zeile, 8, Length(zeile));  {CatN5 005C0572}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '2 ADR1' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C061F}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '2 ADR2' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C06CC}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 POST' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C0779}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 CITY' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + ' ' + Copy(zeile, 8, Length(zeile));  {CatN3 005C0826}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 PHON' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C08D3}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 EMAIL' then
+    begin
+      if Trim(Copy(zeile, 9, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 9, Length(zeile));  {CatN3 005C0980}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 GEDC' then
+    begin
+      header := header + 'GEDCOM: ' + #13#10;  {CatN3 005C09DA}
+      ReadLn(gvar_02536670, zeile);  {005C09E7: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 VERS' then
+        header := header + Copy(zeile, 8, Length(zeile)) + ' ';  {CatN3 005C0A8A}
+      ReadLn(gvar_02536670, zeile);  {005C0A97: zus??tzlich, nach VERS}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 FORM' then
+        header := header + Copy(zeile, 8, Length(zeile));  {LStrCat 005C0B2D}
+    end;
+    if Pos('1 PLAC', zeile) > 0 then
+    begin
+      ReadLn(gvar_02536670, zeile);  {005C0B4B: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if Pos('2 FORM', zeile) > 0 then
+        gvar_0253685C := Trim(Copy(zeile, 8, Length(zeile)));  {005C0BAA}
+    end;
+    if Pos('_EXTENDED_LOCATIONS', zeile) > 0 then
+      header := header + #13#10 + 'Erweiterung: EXTENDED_LOCATIONS';  {CatN3 005C0BD5}
+    if Pos('1 CHAR ', ucase(zeile)) > 0 then
+    begin
+      header := header + #13#10 + 'Zeichensatz: ' +
+        Copy(zeile, 8, Length(zeile));  {CatN4 005C0C39}
+      if Pos('1 CHAR IBM', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ibm';  {005C0C6A}
+      if Pos('1 CHAR UTF', ucase(zeile)) > 0 then
+        gvar_02536848 := 'utf';  {005C0C9B}
+      if Pos('1 CHAR ANSI', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ansi';  {005C0CCC}
+      if Pos('1 CHAR ANSEL', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ansel';  {005C0CFD}
+      if Pos('1 CHAR UNIC', ucase(zeile)) > 0 then
+        gvar_02536848 := 'unic';  {005C0D2E}
+    end;
+    { 005C0D33: '@ INDI'-Exits von oben }
+  end;
+
+  { Phase I (005C0DA0..005C2698) und weiter folgt im nachsten Chunk. }
 end;
 
 function TForm3.Ziff(AIn: AnsiString): Integer;
