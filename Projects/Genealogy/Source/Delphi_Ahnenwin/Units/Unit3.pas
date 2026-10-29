@@ -1,4 +1,4 @@
-﻿unit Unit3;
+unit Unit3;
 
 {-------------------------------------------------------------------------------
   Unit3 - TForm3, reconstructed from the IDR disassembly
@@ -13,7 +13,7 @@
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit28, Unit29, Unit36, Unit39;
 
 type
   TForm3 = class(TForm)
@@ -1633,9 +1633,1406 @@ begin
   end;
 end;
 
-procedure TForm3.gedein_5;
+{005BC604 - Phase-III-Flush: schreibt die Daten der aktuellen Familie
+  (Husband- und Wife-Nummer, RelN/Married-Flag, Geschieden-Datum/-Ort,
+  Ehedaten/-orte/-zeugen und die Quellen) in die Datentabellen.}
+procedure sub_005BC604(AHusn, AWifn, ARelN: Integer; AMarried: Integer;
+  ADatD, AOrtD, ADat1, AOrt1, AWit1, ADat2, AOrt2, AWit2, AQm1, AQm2,
+  AQd: AnsiString); register;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005BC604: Ehe-/Familie-Satz (Table5) zu AHusn/AWifn suchen bzw. ergänzen
+    und die im GEDCOM-Import (gedein_5 Phase III) gesammelten Heirats-/
+    2. Heirats-/Scheidungsdaten zuweisen. }
+  if not DataModule2.Table5.FindKey([AHusn]) then  {005BC6A0}
+  begin
+    DataModule2.Table5.Append;  {005BC6B5 [80]}
+    DataModule2.Table5Nummer.AsInteger := AHusn;  {005BC6C6 [410]}
+    DataModule2.Table5Epnum.AsInteger := AWifn;  {005BC6D9 [414]}
+  end;
+  { TODO C2: 005BD081/005BC6E4 - Edit-Pfad (Verbind 440, Datum/Ort/Zeuge/Quelle-
+    Feldgruppen 418-45C, '2 SOUR'-Kette), Post, Pass-2 (005BD096). }
+  DataModule2.Table5.Post;  {Platzhalter Ende - wird von C2 fortgesetzt}
+end;
+
+procedure TForm3.gedein_5;
+label
+  LHeaderLoop, LPhase1, LPhase1Tail, LPhase2, LPhase2Start, LPhase2Tail,
+  LPhase3, LPhase3Tail;
+var
+  zaeler, lastnr, nummer, personCount, famCount: Integer;
+  startnr, maxnum: Integer;
+  married, relN, husn, wifn, famIdx, childCount: Integer;
+  chrKey, snr, iii, kIdx, divres: Integer;
+  namIdx: Integer;
+  tt: AnsiString;
+  gvar_0253686C: Integer;
+  skipHeder, srcmode: Integer;
+  Dtag1, Dmonat1, Djahr1: AnsiString;
+  srcKey, showtext, srcstr: AnsiString;
+  srcRec: AnsiString;
+  header, srcname, zeile, r, sn1, key, dstr, ptmp: AnsiString;
+  alt84, alt88, temp0, temp1, sav1, sav2: AnsiString;
+  m1dat, m1ort, m1wit, m2dat, m2ort, m2wit: AnsiString;
+  m2hnd, m1hnd, m2wit2, m1ort2, m2hnd2: AnsiString;
+  ddat, dort, qm1, qm2, qd: AnsiString;
+  kv: array[0..1] of TVarRec;
+begin
+  { $005BFB94: kompletter Import einer GEDCOM-Datei. Legt zun?chst eine
+    tempor?re Familiestabelle "fsc" (Nr/Fnr/V/M/K) im EXE-Verzeichnis an und
+    ordnet danach die ersten GEDCOM-Zeilen den Kopfdaten zu (Header-Loop).
+    Phase I z?hlt/registriert @INDI- und @F-Objekte und importiert die
+    Stammerfassungs-Objekte (0 @S/0 @P/0 @N), Phase II schreibt die Personen,
+    Phase III die Familien. }
+  gvar_0253686C := 0;
+  skipHeder := 0;
+  startnr := DataModule2.Table1Nummer.AsInteger;  {//534 [edx+58]}
+  DataModule2.Table1.Open;  {//[5C]}
+  gvar_02536860 := TTable.Create(nil);  {005BFC05: Create mit ecx=[ebp-4], dl=1}
+  gvar_02536860.DatabaseName := ExtractFilePath(ParamStr(0));  {005BFBF2}
+  gvar_02536860.TableType := ttDefault;  {dl=1: ttDefault}
+  gvar_02536860.TableName := 'fsc';  {005BFC4F}
+  gvar_02536860.FieldDefs.Clear;  {005BFC54}
+  gvar_02536860.FieldDefs.Add('Nr', ftAutoInc, 0, True);  {005BFC70}
+  gvar_02536860.FieldDefs.Add('Fnr', ftInteger, 0, True);  {005BFC82}
+  gvar_02536860.FieldDefs.Add('V', ftInteger, 0, False);  {005BFC94}
+  gvar_02536860.FieldDefs.Add('M', ftInteger, 0, False);  {005BFCA6}
+  gvar_02536860.FieldDefs.Add('K', ftString, 180, False);  {005BFCBB size 0xB4}
+  gvar_02536860.IndexDefs.Clear;  {005BFCC5 +24C}
+  gvar_02536860.IndexDefs.Add('Nr', 'Nr', [ixPrimary]);  {004A9778 opt 0x1}
+  gvar_02536860.IndexDefs.Add('Fnr', 'Fnr', []);  {004A9778 opt 0x0}
+  try
+    gvar_02536860.CreateTable;  {005BFD13}
+  except
+    { 005BFD27: Exception abfangen, Meldung, Abbruch (kein Reraise). }
+    ShowMessage('Fehler');
+    Screen.Cursor := crDefault;
+    exit;
+  end;
+  gvar_02536860.Open;  {005BFD45}
+  gvar_02536860.IndexName := 'Fnr';  {005BFD54}
+  OpenDialog1.Filter := 'Gedcom-Dateien (*.ged)|*.ged';  {005BFD6A}
+  if not OpenDialog1.Execute then
+  begin
+    { 005C52E1: Abbruch-Epilog (Ohne Datenaustausch). }
+    Form1.Label18.Visible := False;
+    Form1.Label19.Visible := False;
+    { 005C5302: Form1.Repso2.SetDataSource(DataModule2.DataSource1) - die
+      DataSource-Eigenschaft ist in Delphi 9 schreibgesch??tzt, Recon ??ber
+      die DataSet-Eigenschaft der Quelle. }
+    DataModule2.DataSource1.DataSet := Form1.Repso2;
+    DataModule2.Table1.EnableControls;
+    Form1.Repso2.EnableControls;
+    DataModule2.Table1.IndexName := '';
+    DataModule2.Table1.First;
+    if lastnr > 0 then
+      DataModule2.Table1.FindKey([startnr]);
+    Screen.Cursor := crDefault;
+    gvar_02536860.Close;
+    gvar_02536860.DeleteTable;
+    exit;
+  end;
+  Screen.Cursor := crHourGlass;  {5C55: 0xFFF5 = -11}
+  zaeler := 1;  {005BFD9C}
+  if DataModule2.Table1.RecordCount > 1 then
+  begin
+    { 005BFDBE: Verzweigung vor dem Import. }
+    gvar_0253686C := Application.MessageBox(
+      'Bestehende Daten ?berschreiben ?', 'Gedcom-Datei einlesen', 3);
+    if gvar_0253686C = ID_CANCEL then
+    begin
+      { 005BFE4E. }
+      Screen.Cursor := crDefault;
+      gvar_02536860.Close;
+      gvar_02536860.DeleteTable;
+      exit;
+    end
+    else if gvar_0253686C = IDYES then
+    begin
+      { 005BFE75: alle Tabellen leeren, auch die Formulareinstellungen. }
+      Form14.ListBox1.Clear;  {Form14.ListBox1 //300}
+      Form28.ListBox1.Clear;  {Form28.ListBox1 //300}
+      Form29.ListBox1.Clear;  {Form29.ListBox1 //2F8}
+      Form36.ListBox1.Clear;  {Form36.ListBox1 //300}
+      Form39.ListBox1.Clear;  {Form39.ListBox1 //300}
+      DataModule2.Table5.MasterSource := nil;
+      DataModule2.Table5.Open;
+      DataModule2.Table5.Close;
+      DataModule2.Table5.EmptyTable;
+      DataModule2.Table5.Open;
+      DataModule2.Table1.Open;
+      DataModule2.Table1.Close;
+      DataModule2.Table1.EmptyTable;
+      DataModule2.Table1.Open;
+      DataModule2.Table13.Open;
+      DataModule2.Table13.Close;
+      DataModule2.Table13.EmptyTable;
+      DataModule2.Table13.Open;
+      DataModule2.Table38.Open;
+      DataModule2.Table38.Close;
+      DataModule2.Table38.EmptyTable;
+      DataModule2.Table38.Open;
+      Form1.anzeigen;  {005D42BC}
+    end
+    else if gvar_0253686C = IDNO then
+    begin
+      { 005BFDE7: Daten sollen erhalten bleiben - nur zuletzt bearbeiteten
+        Datensatz wiederfinden. }
+      DataModule2.Table1.IndexName := '';
+      DataModule2.Table1.Last;
+      lastnr := DataModule2.Table1Nummer.AsInteger;
+      nummer := DataModule2.Table1Nummer.AsInteger;
+      gvar_02536944 := nummer;
+      DataModule2.Table1.FindKey([startnr]);
+    end;
+  end;
+  { 005BFFCB: gemeinsame Vorbereitung. }
+  DataModule2.Table5.MasterSource := nil;
+  DataModule2.Table1.DisableControls;
+  DataModule2.Table5.DisableControls;
+  DataModule2.Table25.Open;  {005BFFF9}
+  DataModule2.Table25.Close;
+  DataModule2.Table25.EmptyTable;
+  DataModule2.Table25.Open;
+  DataModule2.Table25.IndexName := 'AA';  {0x5C54EC}
+  Form1.Repso2.Open;
+  Form1.Repso2.EmptyDataSet;  {005C0051}
+  Form1.Refresh;
+  DataModule2.Table4.Open;
+  DataModule2.Table4.Close;
+  DataModule2.Table4.EmptyTable;
+  DataModule2.Table4.Open;
+  Form1.Label19.Visible := True;
+  Form1.Label19.Caption := 'Gedcom vorbereiten';
+  Form1.Label19.Refresh;
+  AssignFile(gvar_02536670, OpenDialog1.FileName);
+  DataModule2.Table38.Open;
+  DataModule2.Table13.Open;
+  header := '';
+  gvar_02536848 := '';
+  gvar_0253685C := '';
+  Reset(gvar_02536670);
+
+  { Kopf-Header-Loop (005C011C..005C0D48): Verarbeitung der GEDCOM-Headereihe. }
+  zeile := '';
+  while True do
+  begin
+    if Pos('@ INDI', zeile) > 0 then
+    begin
+      { 005C0D48: Phase-I-Einstieg. }
+      if gvar_02536848 = 'unic' then
+        ShowMessage('Die Gedcom-Datei ist im Unicode-Zeichensatz codiert.' +
+          #13#10 + 'Es kann (v.a.bei Umlauten) zu Lesefehlern kommen.');
+      personCount := 0;  {005C0D65 [10]}
+      famCount := 0;
+      Form1.Label18.Visible := True;
+      Form1.Label18.Caption := '0';
+      Form1.Label18.Refresh;
+      break;
+    end;
+    if Pos('0 HEAD', zeile) = 4 then
+      gvar_02536848 := 'utf';  {005C017E - Original setzt hier 'utf' als Vorgabe}
+    if UpperCase(Copy(zeile, 1, 6)) = '1 FILE' then
+      header := header + #13#10 + 'Datei: ' +
+      {005C0207: CatN5}
+        Copy(zeile, 8, Length(zeile)) + #13#10;
+    if Pos('DATE', ucase(zeile)) > 0 then
+    begin
+      {005C02A9: ucase(zeile); Pos('DATE', ...); 2 DATE}
+      sub_00577934(Copy(zeile, 8, Length(zeile)));
+      header := header + #13#10 + 'Datum: ' + gvar_02536624 + '.' +
+        gvar_02536628 + '.' + gvar_0253662C;  {CatN8 005C028B}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 SOUR' then
+    begin
+      header := header + #13#10 + 'Quelle: ' +
+      {005C02CB: CatN4 005C02DA}
+        Copy(zeile, 8, Length(zeile));
+      srcname := Trim(Copy(zeile, 8, Length(zeile)));  {005C0332}
+      ReadLn(gvar_02536670, zeile);  {005C0338: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 VERS' then
+      begin
+        header := header + Copy(zeile, 8, Length(zeile)) + ' ';  {CatN3 005C03B2}
+        srcname := srcname + ' ' + Trim(Copy(zeile, 8, Length(zeile)));  {CatN3 005C0441}
+      end;
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 DEST' then
+      header := header + #13#10 + 'Ziel: ' +
+        Copy(zeile, 8, Length(zeile));  {CatN4 005C04BB}
+    if UpperCase(Copy(zeile, 1, 6)) = '1 NAME' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + 'Einsender: ' + #13#10 +
+          Copy(zeile, 8, Length(zeile));  {CatN5 005C0572}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '2 ADR1' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C061F}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '2 ADR2' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C06CC}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 POST' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C0779}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 CITY' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + ' ' + Copy(zeile, 8, Length(zeile));  {CatN3 005C0826}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 PHON' then
+    begin
+      if Trim(Copy(zeile, 8, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 8, Length(zeile));  {CatN3 005C08D3}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 EMAIL' then
+    begin
+      if Trim(Copy(zeile, 9, Length(zeile))) <> '' then
+        header := header + #13#10 + Copy(zeile, 9, Length(zeile));  {CatN3 005C0980}
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 GEDC' then
+    begin
+      header := header + 'GEDCOM: ' + #13#10;  {CatN3 005C09DA}
+      ReadLn(gvar_02536670, zeile);  {005C09E7: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 VERS' then
+        header := header + Copy(zeile, 8, Length(zeile)) + ' ';  {CatN3 005C0A8A}
+      ReadLn(gvar_02536670, zeile);  {005C0A97: zus??tzlich, nach VERS}
+      zsa(zeile, r);
+      zeile := r;
+      if UpperCase(Copy(zeile, 1, 6)) = '2 FORM' then
+        header := header + Copy(zeile, 8, Length(zeile));  {LStrCat 005C0B2D}
+    end;
+    if Pos('1 PLAC', zeile) > 0 then
+    begin
+      ReadLn(gvar_02536670, zeile);  {005C0B4B: inline ReadLn}
+      zsa(zeile, r);
+      zeile := r;
+      if Pos('2 FORM', zeile) > 0 then
+        gvar_0253685C := Trim(Copy(zeile, 8, Length(zeile)));  {005C0BAA}
+    end;
+    if Pos('_EXTENDED_LOCATIONS', zeile) > 0 then
+      header := header + #13#10 + 'Erweiterung: EXTENDED_LOCATIONS';  {CatN3 005C0BD5}
+    if Pos('1 CHAR ', ucase(zeile)) > 0 then
+    begin
+      header := header + #13#10 + 'Zeichensatz: ' +
+        Copy(zeile, 8, Length(zeile));  {CatN4 005C0C39}
+      if Pos('1 CHAR IBM', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ibm';  {005C0C6A}
+      if Pos('1 CHAR UTF', ucase(zeile)) > 0 then
+        gvar_02536848 := 'utf';  {005C0C9B}
+      if Pos('1 CHAR ANSI', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ansi';  {005C0CCC}
+      if Pos('1 CHAR ANSEL', ucase(zeile)) > 0 then
+        gvar_02536848 := 'ansel';  {005C0CFD}
+      if Pos('1 CHAR UNIC', ucase(zeile)) > 0 then
+        gvar_02536848 := 'unic';  {005C0D2E}
+    end;
+    { 005C0D33: '@ INDI'-Exits von oben }
+  end;
+
+  begin
+    { Phase I (005C0DA0..005C2698): Objekte zählen und
+      Stammerfassungs-Objekte (@S/@P/@N) importieren. }
+    repeat  {005C26A8: Body 005C0DA0..}
+      if Pos('@ INDI', zeile) > 0 then
+      begin
+        { 005C0DA0: @INDI-Einstieg. }
+        inc(personCount);
+        Form1.Label18.Caption := IntToStr(personCount);
+        Form1.Label18.Refresh;
+        gvar_02536870 := Copy(zeile, Pos('@ INDI', zeile) - 4, 4);  {005C0E05}
+        Form1.Repso2.Append;
+        Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C0E22 [+0A8]}
+        Form1.Repso2alt.AsString := gvar_02536870;  {005C0E2A [+0B0]}
+        Form1.Repso2.Post;  {005C0E40}
+      end
+      else if Pos('0 @F', zeile) > 0 then
+      begin
+        { 005C0E69: Familienindex erhöhen. }
+        inc(famCount);
+        Form1.Label18.Caption := IntToStr(personCount + famCount);
+        Form1.Label18.Refresh;
+      end
+      else if Pos('0 @S', zeile) > 0 then
+      begin
+        { 005C0EA9: Stammdaten-Objekt (@S) einlesen. }
+        gvar_02536858 := 'SOUR0';
+        gvar_02536850 := Trim(Copy(zeile, 3, 20));   {005C0F17 Copy(3,20)}
+        gvar_02536850 := LeftStr(gvar_02536850,
+          Length(gvar_02536850) - 5);  {005C0F15}
+        ReadLn(gvar_02536670, zeile);  {005C0F2D}
+        zsa(zeile, r);
+        zeile := r;
+        if gvar_02536650 = 1 then  {005C0F65 Utf8ToAnsi}
+          zeile := Utf8ToAnsi(zeile);
+        Form1.Repso2.IndexName := 'ih';  {005C0F81}
+        if Form1.Repso2.FindKey([gvar_02536850]) then
+        begin
+          Form1.Repso2.Edit;
+          Form1.Repso2inh2.AsString := Trim(Copy(zeile, 8, Length(zeile)));  {005C1005 [+0B0] [8D0]}
+          Form1.Repso2.Post;
+          sn1 := Form1.Repso2inh2.AsString;  {005C1021 GetAsString [+60]}
+        end;
+      end;
+
+      if gvar_02536858 = 'SOUR0' then
+      begin
+        { 005C102E: Datenobjekt-Kopierer (Table38/index tit). }
+        zsa(zeile, r);
+        zeile := r;
+        DataModule2.Table38.IndexName := 'tit';  {005C106F}
+        if not DataModule2.Table38.FindKey([sn1]) then
+        begin
+          DataModule2.Table38.Append;
+          DataModule2.Table38Titel.AsString := sn1;  {005C10BD [+0B0] [A18]}
+          DataModule2.Table38.Post;
+        end;
+        if DataModule2.Table38.FindKey([sn1]) then
+        begin
+          if Pos('1 ABBR', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Abk.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C113F [A1C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 EVEN', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Ereig.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C11A6 [A20]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 DATE', zeile) > 0 then
+          begin
+            if Pos('FROM', zeile) > 0 then
+            begin
+              if Pos('TO', zeile) > 0 then
+              begin
+                DataModule2.Table38.Edit;
+                DataModule2.Table38Von.AsString :=
+                  Copy(zeile, 13, Pos('TO', zeile) - 13);  {005C1292 [A24]}
+                DataModule2.Table38.Post;
+              end
+              else
+              begin
+                DataModule2.Table38.Edit;
+                DataModule2.Table38Von.AsString :=
+                  Copy(zeile, 13, Length(zeile));  {005C1237 [A24]}
+                DataModule2.Table38.Post;
+              end;
+            end;
+            if Pos('TO', zeile) > 0 then
+            begin
+              DataModule2.Table38.Edit;
+              DataModule2.Table38Bis.AsString :=
+                Copy(zeile, Pos('TO', zeile) + 3, Length(zeile));  {005C1305 [A28]}
+              DataModule2.Table38.Post;
+            end;
+          end
+          else if Pos('3 PLAC', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Standort.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C136C [A2C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('1 PUBL', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Publ.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C13D3 [A30]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 CALN', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bestand.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C143A [A3C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 NOTE', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C14A1 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 CONC', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              DataModule2.Table38Bem.AsString +
+              Copy(zeile, 8, Length(zeile));  {005C1522 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 CONT', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              DataModule2.Table38Bem.AsString + #13 + #10 +
+              Copy(zeile, 8, Length(zeile));  {005C15BC CatN4 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 MEDI', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Med.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C1639 [A40]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('AUTH', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;  {005C1681}
+            if Trim(DataModule2.Table38Bem.AsString) = '' then
+              DataModule2.Table38Bem.AsString :=
+                Copy(zeile, 8, Length(zeile))  {005C16D1}
+            else
+              DataModule2.Table38Bem.AsString :=
+                DataModule2.Table38Bem.AsString + #13#10 +
+                Copy(zeile, 8, Length(zeile));  {005C172A CatN4}
+            DataModule2.Table38.Post;
+          end;
+        end;
+      end;
+
+      if Pos('1 SOUR @S', zeile) > 0 then
+      begin
+        { 005C1775: Quellenreferenz registrieren (Repso2/index ih). }
+        gvar_02536858 := 'SOUR1';  {005C1780}
+        Form1.Repso2.IndexName := 'ih';  {005C1792}
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C1801}
+          Form1.Repso2alt.AsString := gvar_02536870;  {005C181B [8D4]}
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));  {005C1861 [8CC]}
+          Form1.Repso2.Post;
+        end;
+      end;
+      if Pos('2 SOUR @S', zeile) > 0 then
+      begin
+        { 005C1896. }
+        gvar_02536858 := 'SOUR2';
+        Form1.Repso2.IndexName := 'ih';
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));
+          Form1.Repso2.Post;
+        end;
+      end;
+
+      if Pos('2 PLAC', zeile) > 0 then  {005C19A8}
+      begin
+        if Pos(',', zeile) > 0 then
+          tt := Copy(zeile, 8, Pos(',', zeile) - 8)  {005C19CA}
+        else
+          tt := Copy(zeile, 8, Length(zeile));  {005C19F2}
+      end;
+      if Pos('3 _LOC @P', zeile) > 0 then  {005C1A10}
+      begin
+        Form1.Repso2.IndexName := 'ih';
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C1A94}
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));
+          Form1.Repso2inh2.AsString := tt;  {005C1B12 [8D0]}
+          Form1.Repso2.Post;
+        end;
+      end;
+      if Pos('0 @P', zeile) > 0 then  {005C1B38}
+      begin
+        gvar_02536858 := 'PL';
+        tt := '';  {005C1B5C}
+        gvar_02536850 := Trim(Copy(zeile, 3, 20));  {005C1B67}
+        gvar_02536850 := LeftStr(gvar_02536850,
+          Length(gvar_02536850) - 5);  {005C1BA1}
+        ReadLn(gvar_02536670, zeile);  {005C1BD0}
+        zsa(zeile, r);
+        zeile := r;
+        Form1.Repso2.IndexName := 'ih';  {005C1C0B}
+        if Form1.Repso2.FindKey([gvar_02536850]) then
+        begin
+          Form1.Repso2.Edit;
+          if Pos(',', zeile) > 0 then  {005C1C69}
+            Form1.Repso2inh2.AsString :=
+              Trim(Copy(zeile, 8, Pos(',', zeile) - 8))
+          else
+            Form1.Repso2inh2.AsString :=
+              Trim(Copy(zeile, 8, Length(zeile)));
+          Form1.Repso2.Post;
+          tt := Form1.Repso2inh2.AsString;  {005C1D11 GetAsString}
+        end;
+        DataModule2.Table13.IndexName := 'ort_';  {005C1D24}
+        if not DataModule2.Table13.FindKey([tt]) then
+        begin
+          DataModule2.Table13.Append;
+          DataModule2.Table13Ort.AsString := tt;  {005C1D6F [A44]}
+          DataModule2.Table13.Post;
+        end;
+      end;
+
+      if gvar_02536858 = 'PL' then  {005C1D95}
+      begin
+        zsa(zeile, r);  {005C1DAA}
+        zeile := r;
+        DataModule2.Table13.IndexName := 'ort_';  {005C1DC9}
+        if DataModule2.Table13.FindKey([tt]) then
+        begin
+          if Pos('1 _ABBR', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Abk.AsString :=
+              Copy(zeile, 9, Length(zeile));  {005C1E47 [A68]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('2 LATI', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Bg.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C1EAE [A70]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('2 LONG', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Lg.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C1F15 [A6C]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _FSTAE', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Bland.AsString :=
+              Copy(zeile, 10, Length(zeile));  {005C1F7C [A58]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _FCTRY', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Land.AsString :=
+              Copy(zeile, 10, Length(zeile));  {005C1FE3 [A4C]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _FCNTY', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Lkr.AsString :=
+              Copy(zeile, 10, Length(zeile));  {005C204A [A64]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _POST', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13PLZ.AsString :=
+              Copy(zeile, 9, Length(zeile));  {005C20B1 [A48]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _FPOST', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13PLZ.AsString :=
+              Copy(zeile, 10, Length(zeile));  {005C2118 [A48]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 POST', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13PLZ.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C217F [A48]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _MAIDENHEAD', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Maid.AsString :=
+              Copy(zeile, 15, Length(zeile));  {005C21E6 [A74]}
+            DataModule2.Table13.Post;
+          end
+          else if Pos('1 _GOV', zeile) > 0 then
+          begin
+            DataModule2.Table13.Edit;
+            DataModule2.Table13Gov.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C224A [A54]}
+            DataModule2.Table13.Post;
+          end;
+        end;
+      end;
+
+      if Pos('0 @N', zeile) > 0 then  {005C2270}
+      begin
+        gvar_02536858 := '0note';
+        Form1.Repso2.IndexName := 'ih';  {005C2294}
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 4, Length(zeile)))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C2308}
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 4, Length(zeile)));
+          Form1.Repso2.Post;
+        end;
+      end;
+      if (Pos('1 CONT ', zeile) > 0) and (gvar_02536858 = '0note') then  {005C239B}
+      begin
+        Form1.Repso2.Edit;
+        Form1.Repso2inh.AsString :=
+          Form1.Repso2inh.AsString + #13#10 +
+          Copy(zeile, 8, Length(zeile));  {005C2410 CatN3 [8CC]}
+        Form1.Repso2.Post;
+      end;
+      if Pos('1 NOTE @N', zeile) > 0 then  {005C2446}
+      begin
+        Form1.Repso2.IndexName := 'ih';
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C24CA}
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));
+          Form1.Repso2.Post;
+        end;
+      end;
+      if Pos('2 NOTE @N', zeile) > 0 then  {005C2558}
+      begin
+        Form1.Repso2.IndexName := 'ih';
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C25DC}
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));
+          Form1.Repso2.Post;
+        end;
+      end;
+
+      ReadLn(gvar_02536670, zeile);  {005C266A: Loop-Tail}
+    until (Pos('0 TRLR', zeile) > 0) or Eof(gvar_02536670);  {005C2686/Form 2699}
+
+    { 005C26AE: Phase-I-Abschluss. }
+    Form1.Label18.Visible := False;  {005C26AE [400]}
+    header := header + #13#10 + #13#10 +
+      IntToStr(personCount) + ' Personen' + #13#10 +
+      IntToStr(famCount) + ' Familien';  {005C26BD CatN5+CatN4}
+    Form1.Label19.Caption := header;  {005C271E [404]}
+    Form1.Label19.Refresh;
+    ShowMessage(header);  {005C273A}
+    header := '';  {005C2742}
+    gvar_0253684C := '';
+    gvar_02536854 := '';
+    Reset(gvar_02536670);  {005C275E}
+    repeat
+      ReadLn(gvar_02536670, zeile);  {005C276F}
+    until Pos('@ INDI', zeile) > 0;  {005C278B}
+    Form1.Label18.Visible := True;  {005C279C}
+    Form1.Label18.Caption := '0 %';  {005C27AB}
+    Form1.Label18.Refresh;
+    Form1.Label19.Visible := True;  {005C27CA}
+    Form1.Label19.Caption := 'Gedcom einlesen  ';  {005C27D9}
+    Form1.Label19.Refresh;
+    exit;  {005C27F8 -> 005C47E5}
+  end;
+
+  { Phase II (005C27FD..): Personen aus @INDI lesen und in Table1 schreiben,
+    inklusive Namens-Kontrolle (SURN/GIVN/TYPE) }
+  LPhase2:
+  if Pos('@ INDI', zeile) > 0 then
+  begin
+    { 005C2812: @INDI-Einstieg. }
+    inc(nummer);  {[ebp-18]}
+    namIdx := 0;  {005C2817 [38]}
+    alt84 := '';
+    alt88 := '';
+    Form1.Label18.Caption :=
+      IntToStr(Round(zaeler / (personCount + famCount) * 100)) + ' %';  {005C2830-286A}
+    Form1.Label18.Refresh;
+    inc(zaeler);  {005C288F [-3C]}
+    if (DataModule2.Table1.RecordCount = 1) and (nummer = 1) then
+      DataModule2.Table1.Edit  {005C28A8}
+    else
+      DataModule2.Table1.Append;  {005C28B4}
+    DataModule2.Table1Nummer.AsInteger := nummer;  {005C28C6 [-18]}
+    DataModule2.Table1Vater.AsInteger := 0;  {005C28DB}
+    DataModule2.Table1Mutter.AsInteger := 0;  {005C28EF}
+    DataModule2.Table1Lebt.AsString := 'n';  {005C28FD [5B4]}
+  end;
+  if Pos('1 NAME', zeile) > 0 then
+  begin
+    { 005C291B. }
+    gvar_02536858 := 'NAME';
+    if Copy(zeile, 8, 1) <> '/' then  {005C2953}
+    begin
+      srcstr := Trim(zeile);
+      if Length(srcstr) > 7 then  {005C296E}
+        Nam(zeile, ptmp);  {005C297C erfassende Name-Zerlegung}
+    end;
+    inc(namIdx);  {005C2981}
+  end;
+  if Pos('ALIA', zeile) = 3 then  {005C2984}
+  begin
+    if Pos('@', zeile) > 0 then  {005C29A2}
+    begin
+      Form1.Repso2.IndexName := 'alt_';  {005C29AF}
+      if Form1.Repso2.FindKey(
+        [Trim(Copy(zeile, 9, Length(Trim(zeile)) - 9))]) then  {005C29C1}
+      begin
+        lastnr := Form1.Repso2nr.AsInteger;  {005C2A33 [+58]}
+        srcKey := 'Diese Person k?nnte identisch sein mit Nr. ' +
+          IntToStr(lastnr);  {005C2A4B CatN3}
+        sub_005772E4(srcKey);  {005C2A67}
+      end;
+    end
+    else
+      sub_005772E4('Alias-Name: ' + Copy(zeile, 8, Length(zeile)));  {005C2A8C}
+  end;
+  if Pos('2 SURN', zeile) > 0 then  {005C2ABC}
+  begin
+    if namIdx = 1 then
+      DataModule2.Table1Name.AsString := Copy(zeile, 8, Length(zeile))  {005C2AEE}
+    else
+      sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+        Copy(zeile, 8, Length(zeile)));  {005C2B4B CatN4}
+    if Trim(Copy(zeile, 8, Length(zeile))) <>
+       Trim(DataModule2.Table1Name.AsString) then  {005C2B8A-2BC1}
+      sub_005772E4('"SURN"-Name stimmt nicht mit Name *berein.');  {005C2BC3}
+  end;
+  if Pos('2 GIVN', zeile) > 0 then  {005C2BE2}
+  begin
+    if namIdx = 1 then
+      DataModule2.Table1Vornamen.AsString :=
+        Copy(zeile, 8, Length(zeile))  {005C2C0E [544]}
+    else
+      sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+        Copy(zeile, 8, Length(zeile)));
+    if Trim(Copy(zeile, 8, Length(zeile))) <>
+       Trim(DataModule2.Table1Vornamen.AsString) then  {005C2CA5-2CE1}
+      sub_005772E4('"GIVN"-Name stimmt nicht mit Vornamen *berein.');  {005C2CE3}
+  end;
+  if Pos('2 FONE', zeile) > 0 then  {005C2CFC}
+    sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));
+  if Pos('2 NICK', zeile) > 0 then  {005C2D6C}
+    sub_005772E4('Spitzname: ' + Copy(zeile, 8, Length(zeile)));
+  if Pos('2 NPFX', zeile) > 0 then  {005C2DBC}
+    sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));
+  if Pos('2 NSFX', zeile) > 0 then  {005C2E2A}
+    sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));
+  if Pos('2 SPFX', zeile) > 0 then  {005C2E98}
+    sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));
+  if Pos('2 ROMN', zeile) > 0 then  {005C2F06}
+    sub_005772E4('zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));
+  if Copy(zeile, 8, 1) = '/' then  {005C2F91 (NAME-Zerlegung der 2. Zeile)}
+  begin
+    alt84 := Trim(Copy(zeile, Pos('/', zeile) + 1, 40));  {005C2FAA-2FD3}
+    alt84 := Copy(alt84, 1, Length(alt84) - 1);  {005C2FDF-2FF6 keine Nach-'/-Zeilen'}
+  end;
+  if Pos('2 TYPE', zeile) > 0 then  {005C2FFD}
+  begin
+    if Pos('/', zeile) > 0 then  {005C3021}
+    begin
+      alt84 := Trim(Copy(zeile, Pos('/', zeile) + 1, 40));  {005C3023-3053}
+      alt84 := Copy(alt84, 1, Length(alt84) - 1);  {005C306E}
+    end;
+    if Copy(zeile, 8, 3) = 'aka' then  {005C3084}
+      sub_005772E4('auch bekannt als: ' + alt88 + ' ' + alt84)  {005C30A8 CatN4}
+    else if Copy(zeile, 8, 5) = 'birth' then
+      sub_005772E4('Geburtsname: ' + alt84)  {005C3104 CatN3}
+    else if Copy(zeile, 8, 9) = 'immigrant' then
+      sub_005772E4('Name nach Einwanderung: ' + alt88 + ' ' + alt84)  {005C3150}
+    else if Copy(zeile, 8, 6) = 'maiden' then
+      sub_005772E4('Name vor erster Ehe: ' + alt84)  {005C31AC}
+    else if Copy(zeile, 8, 7) = 'married' then
+      sub_005772E4('Ehename: ' + alt84)  {005C31F8}
+    else if Copy(zeile, 8, 8) = 'adoption' then
+      sub_005772E4('Adoptivname: ' + alt84)  {005C3244}
+    else if Copy(zeile, 8, 7) = 'divorce' then
+      sub_005772E4('Name nach Scheidung: ' + alt84)  {005C3290}
+    else if Copy(zeile, 8, 9) = 'pseudonym' then
+      sub_005772E4('Künstlername: ' + alt88 + ' ' + alt84)  {005C32DC}
+    else if Copy(zeile, 8, 9) = 'religious' then
+      sub_005772E4('Ordensname: ' + alt88 + ' ' + alt84)  {005C3338}
+    else if Copy(zeile, 8, 7) = 'unified' then
+      sub_005772E4('Stammname: ' + alt84)  {005C3394}
+    else if Copy(zeile, 8, 7) = 'variant' then  {005C33DE}
+    begin
+      if Trim(DataModule2.Table1Namex.AsString) = '' then  {005C340F [5BC]}
+        DataModule2.Table1Namex.AsString := alt84
+      else
+        DataModule2.Table1Namex.AsString :=
+          DataModule2.Table1Namex.AsString + '; ' + alt84;  {005C344F CatN3}
+    end
+    else if Copy(zeile, 8, 6) = 'estate' then  {005C3498}
+    begin
+      if Trim(DataModule2.Table1Hausname.AsString) = '' then  {005C34C9 [5C8]}
+        DataModule2.Table1Hausname.AsString := alt84
+      else
+        DataModule2.Table1Hausname.AsString :=
+          DataModule2.Table1Hausname.AsString + '; ' + alt84;  {005C350D CatN3}
+    end;
+  end;
+  if (gvar_02536858 = 'NAME') and (Pos('2 NOTE', zeile) > 0) then  {005C352D}
+    sub_005772E4('Bem. zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));  {005C354F CatN4}
+  if (gvar_02536858 = 'NAME') and (Pos('2 SOUR', zeile) > 0) then  {005C35AC}
+    sub_005772E4('Quelle zu Name ' + IntToStr(namIdx) + ': ' +
+      Copy(zeile, 8, Length(zeile)));  {005C35CE CatN4}
+
+  { TODO C6: 1 SEX-Rest am 005C3640 ff. - Listing-Extrakt L3553..4302 }
+  if Pos('1 SEX', zeile) > 0 then  {005C3640}
+  begin
+    srcstr := Trim(Copy(zeile, 7, Length(zeile)));  {005C3656}
+    if Pos('Mm', srcstr) > 0 then  {005C3675}
+      DataModule2.Table1Geschlecht.AsString := 'm'  {005C368B [548]}
+    else if Pos('FfWw', srcstr) > 0 then  {005C36D2}
+      DataModule2.Table1Geschlecht.AsString := 'w'  {005C36E8}
+    else if Pos('Xx', srcstr) > 0 then  {005C372F}
+      DataModule2.Table1Geschlecht.AsString := 'x'  {005C3745}
+    else if Pos('Uu', srcstr) > 0 then  {005C3789}
+      DataModule2.Table1Geschlecht.AsString := 'x';  {005C379F [548]}
+  end;
+  if Pos('2 _RUFN', zeile) > 0 then  {005C37BB}
+  begin
+    DataModule2.Table1Rufname.AsString := Copy(zeile, 12, Length(zeile));  {005C37EF [600]}    if Pos(gvar_0253685C,
+      Trim(DataModule2.Table1Vornamen.AsString)) = 0 then  {005C3845}
+      sub_005772E4(
+        'Hinweis: Rufname ist nicht in "Vornamen" enthalten.');  {005C384E}
+  end;
+  if Pos('1 OCCU', zeile) > 0 then  {005C3867}
+    DataModule2.Table1Beruf.AsString :=
+      Copy(zeile, 8, Length(zeile));  {005C3897 [550]}
+  if Pos('1 RELI', zeile) > 0 then  {005C38AC}
+  begin
+    if (Pos('röm', zeile) > 0) and (Pos('kath', zeile) > 0) then  {005C38BF}
+      DataModule2.Table1Religion.AsString := 'rk'  {005C38DF [54C]}
+    else
+      DataModule2.Table1Religion.AsString :=
+        Copy(zeile, 8, Length(zeile));  {005C3915 [54C]}
+  end;
+  if Pos('1 IDNO', zeile) > 0 then  {005C392A}
+    DataModule2.Table1IDNR.AsString :=
+      Copy(zeile, 8, Length(zeile));  {005C395A [5C0]}
+  if Pos('1 BIRT', zeile) > 0 then  {005C396F}
+  begin
+    gvar_02536858 := 'BIRT';  {005C397B}
+    goto LPhase2Tail;  {005C3980}
+  end;
+  if Pos('1 CHR', zeile) > 0 then  {005C3994}
+  begin
+    gvar_02536858 := 'BAPT';
+    goto LPhase2Tail;
+  end;
+  if Pos('1 BAP', zeile) > 0 then  {005C399E}
+  begin
+    gvar_02536858 := 'BAPT';  {005C39B1}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 DEAT', zeile) > 0 then  {005C39CA}
+  begin
+    gvar_02536858 := 'DEAT';  {005C39D6}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 BURI', zeile) > 0 then  {005C39EF}
+  begin
+    gvar_02536858 := 'BURI';  {005C39FB}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 RESI', zeile) > 0 then  {005C3A14}
+  begin
+    gvar_02536858 := 'RESI';  {005C3A20}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 CHAN', zeile) > 0 then  {005C3A39}
+  begin
+    gvar_02536858 := 'CHAN';  {005C3A45}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 EMIG', zeile) > 0 then  {005C3A5E}
+  begin
+    gvar_02536858 := 'EMIG';  {005C3A6A}
+    if Trim(Copy(zeile, 8, Length(zeile))) <> '' then  {005C3A9E}
+      sub_005772E4(Copy(zeile, 8, Length(zeile)));  {005C3ACF}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 FAMS', zeile) > 0 then  {005C3AE8}
+  begin
+    sub_005BD88C(zeile, DataModule2.Table1Nummer.AsInteger);  {005C3AFC}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 FAMC', zeile) > 0 then  {005C3B15}
+  begin
+    sub_005BDAFC(zeile, DataModule2.Table1Nummer.AsInteger);  {005C3B29}
+    goto LPhase2Tail;
+  end;
+  if (Pos('2 DATE BET', zeile) > 0) or (Pos('2 DATE FROM', zeile) > 0) or
+     (Pos('2 DATE TO', zeile) > 0) then  {005C3B42-3B64}
+  begin
+    ddat := '';  {005C3B6A [-7C]}
+    if gvar_02536858 = 'BIRT' then  {005C3B77}
+      ddat := 'Geburt: '
+    else if gvar_02536858 = 'BAPT' then  {005C3B92}
+      ddat := 'Taufe: '
+    else if gvar_02536858 = 'DEAT' then  {005C3BB2}
+      ddat := 'Tod: '
+    else if gvar_02536858 = 'BURI' then  {005C3BD2}
+      ddat := 'Bestatt.: ';
+    if Pos('BET', zeile) > 0 then  {005C3BFF}
+    begin
+      sub_005772E4(ddat + ' zwischen ' +
+        Copy(zeile, 11, Pos('AND', zeile) - 12) + ' und ' +
+        Copy(zeile, Pos('AND', zeile) + 4, 20));  {005C3C7A CatN5}
+      goto LPhase2Tail;
+    end
+    else if Pos('FROM', zeile) > 0 then  {005C3C99}
+    begin
+      if Pos('TO', zeile) > 0 then  {005C3CAE}
+      begin
+        sub_005772E4(ddat + 'von ' +
+          Copy(zeile, 12, Pos('TO', zeile) - 13) + ' bis ' +
+          Copy(zeile, Pos('TO', zeile) + 3, 20));  {005C3D29 CatN5}
+        goto LPhase2Tail;
+      end;
+      sub_005772E4(ddat + 'ab ' + Copy(zeile, 12, 20));  {005C3D70 CatN3}
+      goto LPhase2Tail;
+    end;
+    if Pos('TO', zeile) > 0 then  {005C3D8F}
+    begin
+      DataModule2.Table1Kommentar.AsString :=
+        TrimRight(DataModule2.Table1Kommentar.AsString) + ptmp + ddat +
+        'bis ' + Copy(zeile, 10, 20);  {005C3DF4 CatN5 [5B0]}
+      goto LPhase2Tail;
+    end;
+  end;
+  if Pos('2 DATE', zeile) > 0 then  {005C3E23}
+  begin
+    sub_005BE4B8(zeile);  {005C3E28}
+    goto LPhase2Tail;
+  end;
+  if Pos('2 PLAC', zeile) > 0 then  {005C3E41}
+  begin
+    sub_005BEF5C(zeile);  {005C3E46}
+    goto LPhase2Tail;
+  end;
+  if Pos('2 CAUS', zeile) > 0 then  {005C3E5F}
+  begin
+    sub_005BE418(zeile);  {005C3E64}
+    goto LPhase2Tail;
+  end;
+  if (Pos('2 _GODP', zeile) > 0) or (Pos('2 GODP', zeile) > 0) then  {005C3E7D-3EAA}
+  begin
+    gvar_02536858 := 'BAPT';
+    sub_005BD73C(zeile);  {005C3E91}
+    goto LPhase2Tail;
+  end;
+  if Pos('3 AGE', zeile) > 0 then  {005C3ED7}
+  begin
+    sub_005BE340(zeile);  {005C3EDC}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 NOTE', zeile) > 0 then  {005C3EF5}
+  begin
+    sub_005BDCA0(zeile);  {005C3EFA}
+    goto LPhase2Tail;
+  end;
+  if Pos('2 CONT', zeile) > 0 then  {005C3F13}
+  begin
+    sub_005BE104(zeile);  {005C3F18}
+    goto LPhase2Tail;
+  end;
+  if Pos('CONC', zeile) > 0 then  {005C3F31}
+  begin
+    sub_005BE054(zeile);  {005C3F36}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 SOUR', zeile) > 0 then  {005C3F4F}
+  begin
+    if Pos('@', zeile) > 0 then  {005C3F64}
+    begin
+      DataModule2.Table1Quelle.AsString :=
+        Trim(Copy(zeile, 8, Length(zeile)));  {005C3FA9 [5FC]}
+      if not DataModule2.Table38.FindKey(
+        [Trim(Copy(zeile, 8, Length(zeile)))]) then  {005C4001}
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString :=
+          Trim(Copy(zeile, 8, Length(zeile)));  {005C405A [A18]}
+        DataModule2.Table38.Post;
+      end;
+    end;
+    goto LPhase2Tail;
+  end;
+  if Pos('2 EMAIL', zeile) > 0 then  {005C4084}
+  begin
+    DataModule2.Table1Ema.AsString :=
+      Trim(Copy(zeile, 9, Length(zeile)));  {005C40C5 [5F4]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 EMAIL', zeile) > 0 then  {005C40DF}
+  begin
+    DataModule2.Table1Ema.AsString :=
+      Trim(Copy(zeile, 9, Length(zeile)));  {005C4120 [5F4]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 EMA', zeile) > 0 then  {005C413A}
+  begin
+    DataModule2.Table1Ema.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C417B [5F4]}
+    goto LPhase2Tail;
+  end;
+  if (Pos('2 PHON', zeile) > 0) or (Pos('1 PHON', zeile) > 0) then  {005C4195-41A6}
+  begin
+    DataModule2.Table1Tel.AsString :=
+      Trim(Copy(zeile, 8, 20));  {005C41E2 [5F0]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 URL', zeile) > 0 then  {005C41FC}
+  begin
+    DataModule2.Table1Ur.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C423D [5F8]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 WWW', zeile) > 0 then  {005C4257}
+  begin
+    DataModule2.Table1Ur.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C4298 [5F8]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 ADDR', zeile) > 0 then  {005C42B2}
+  begin
+    gvar_02536858 := 'ADDR';  {005C42BE}
+    goto LPhase2Tail;
+  end;
+  if Pos('ADR1', zeile) > 0 then  {005C42D7}
+  begin
+    DataModule2.Table1Adr1.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C4318 [5CC]}
+    goto LPhase2Tail;
+  end;
+  if Pos('ADR2', zeile) > 0 then  {005C4332}
+  begin
+    DataModule2.Table1Adr2.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C4373 [5D0]}
+    goto LPhase2Tail;
+  end;
+  if Pos('ADR3', zeile) > 0 then  {005C438D}
+  begin
+    if Pos('AHNENWIN 4', ptmp) > 0 then  {005C43A5 [-0A0]}
+    begin
+      DataModule2.Table1PLZ.AsString :=
+        Trim(Copy(zeile, 7, Length(zeile)));  {005C43E6 [5D4]}
+    end
+    else
+    begin
+      DataModule2.Table1Adrzus.AsString :=
+        Trim(Copy(zeile, 7, Length(zeile)));  {005C4430 [5DC]}
+    end;
+    goto LPhase2Tail;
+  end;
+  if Pos('ADR4', zeile) > 0 then  {005C444A}
+  begin
+    if Pos('AHNENWIN 4', ptmp) > 0 then  {005C445E}
+    begin
+      DataModule2.Table1Ort.AsString :=
+        Trim(Copy(zeile, 7, Length(zeile)));  {005C44A3 [5D8]}
+    end;
+    goto LPhase2Tail;
+  end;
+  if Pos('ADR5', zeile) > 0 then  {005C44BD}
+  begin
+    if Pos('AHNENWIN 4', ptmp) > 0 then  {005C44D1}
+    begin
+      DataModule2.Table1Ort.AsString :=
+        Trim(Copy(zeile, 7, Length(zeile)));  {005C4516 [5DC]}
+    end;
+    goto LPhase2Tail;
+  end;
+  if Pos('CITY', zeile) > 0 then  {005C4530}
+  begin
+    DataModule2.Table1Ort.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C4571 [5D8]}
+    goto LPhase2Tail;
+  end;
+  if Pos('POST', zeile) > 0 then  {005C458B}
+  begin
+    DataModule2.Table1PLZ.AsString :=
+      Trim(Copy(zeile, 7, Length(zeile)));  {005C45CC [5D4]}
+    goto LPhase2Tail;
+  end;
+  if Pos('1 SOUR @', zeile) > 0 then  {005C45E6}
+  begin
+    gvar_02536850 := '';  {005C45F0 LStrClr}
+    Form1.Repso2.IndexName := 'ih';  {005C4603}
+    if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then  {005C465C}
+      gvar_02536850 := Form1.Repso2inh2.AsString;  {005C4684 [8D0]}
+    if Pos(gvar_02536850,
+      DataModule2.Table1Quelle.AsString) = 0 then  {005C46A7}
+    begin
+      if Length(Trim(DataModule2.Table1Quelle.AsString)) > 0
+        then  {005C46DF jbe-4748}
+      begin
+        DataModule2.Table1.Edit;  {005C46E6}
+        DataModule2.Table1Quelle.AsString :=
+          Trim(DataModule2.Table1Quelle.AsString + '; ' +
+            gvar_02536850);  {005C4740 CatN3}
+      end
+      else
+      begin
+        DataModule2.Table1.Edit;  {005C474D}
+        DataModule2.Table1Quelle.AsString :=
+          gvar_02536850;  {005C4762}
+      end;
+    end;
+    goto LPhase2Tail;
+  end;
+  if Pos('2 SOUR @', zeile) > 0 then  {005C4779}
+  begin
+    sour(zeile);  {005C4781}
+    goto LPhase2Tail;
+  end;
+
+  LPhase2Tail:
+  if not Eof(gvar_02536670) then
+  begin
+    ReadLn(gvar_02536670, zeile);
+    goto LPhase2;
+  end;
+
+  LPhase3:
+  { TODO C7: fsc-Auswertung 005C47FC..005C52D2 - Listing-Extrakt L4643..5444 }
+  DataModule2.Table5.IndexName := 'fnr';  {005C4806}
+  DataModule2.Table5.First;  {005C4810}
+  DataModule2.Table5.Open;  {005C481D [80]}
+  while not DataModule2.Table5.Eof do  {005C4949/4955 loop}
+  begin
+    if (DataModule2.Table5.FieldByName('v').AsInteger > 0) and
+      (DataModule2.Table5.FieldByName('m').AsInteger > 0) then  {005C4836-4859}
+    begin
+      DataModule2.Table5.Append;  {005C4867}
+      DataModule2.Table5Nummer.AsInteger :=
+        DataModule2.Table5.FieldByName('v').AsInteger;  {005C488C [410]}
+      DataModule2.Table5Epnum.AsInteger :=
+        DataModule2.Table5.FieldByName('m').AsInteger;  {005C48B2 [414]}
+      DataModule2.Table5.Post;  {005C48C2}
+      DataModule2.Table5.Append;  {005C48D0}
+      DataModule2.Table5Nummer.AsInteger :=
+        DataModule2.Table5.FieldByName('m').AsInteger;  {005C48F5 [410]}
+      DataModule2.Table5Epnum.AsInteger :=
+        DataModule2.Table5.FieldByName('v').AsInteger;  {005C491B [414]}
+      DataModule2.Table5.Post;  {005C492B}
+    end;
+    DataModule2.Table5.Next;  {005C4936}
+  end;
+  DataModule2.Table5.First;  {005C4960}
+  while not DataModule2.Table5.Eof do  {005C4AF3/4AFF loop}
+  begin
+    if Length(Trim(DataModule2.Table5.FieldByName('k').AsString)) > 0 then  {005C499C}
+    begin
+      if Length(Trim(DataModule2.Table5.FieldByName('k').AsString)) div 6 > 0 then  {005C49D8-49F1}
+      begin
+        iii := Length(Trim(DataModule2.Table5.FieldByName('k').AsString)) div 6;  {005C49F7 [-0A8]}
+        kIdx := 1;  {005C49FD [-1C]}
+        repeat  {005C4A04 loop-head}
+          DataModule2.Table1.FindKey([
+            StrToInt(Copy(DataModule2.Table5.FieldByName('k').AsString,
+              (kIdx - 1) * 6 + 1, 6))]);  {005C4A64}
+          DataModule2.Table1.Edit;  {005C4A6E}
+          DataModule2.Table1Vater.AsInteger :=
+            DataModule2.Table5.FieldByName('v').AsInteger;  {005C4A93 [538]}
+          DataModule2.Table1Mutter.AsInteger :=
+            DataModule2.Table5.FieldByName('m').AsInteger;  {005C4AB9 [53C]}
+          DataModule2.Table1.Post;  {005C4AC6}
+          Inc(kIdx);  {005C4ACC}
+          Dec(iii);  {005C4ACF}
+        until iii = 0;
+      end;
+    end;
+    DataModule2.Table5.Next;  {005C4AE0}
+  end;
+  DataModule2.Table5.MasterSource := nil;  {005C4B0F [80]}
+  DataModule2.Table5.IndexName := 'num';  {005C4B21}
+  famIdx := 0;  {005C4B28 [-34]}
+  married := 1;  {005C4B2B [-30]}
+  childCount := 0;  {005C4B34 [-20]}
+  while not Eof(gvar_02536670) do  {005C52BB/52CC loop}
+  begin
+    if Pos('0 @F', zeile) > 0 then  {005C4B44}
+    begin
+      if (famIdx > 0) and (husn > 0) and (wifn > 0) then  {005C4B55-4B61}
+        sub_005BC604(husn, wifn, relN, married, m2hnd, m1hnd, m1dat, m1ort,
+          m2hnd2, m2dat, m2ort, m1ort2, m2wit, m2wit2, sav2);  {005C4B9C push-order 30,68,6C,...,78}
+      Inc(famIdx);  {005C4BA1}
+      gvar_02536858 := 'MARR';  {005C4BAE}
+      husn := 0;  {005C4BB5 [-24]}
+      wifn := 0;  {005C4BBA [-28]}
+      relN := 1;  {005C4BBD [-2C]}
+      m1dat := '';  {005C4BC7 [-50]}
+      m2dat := '';  {005C4BCF [-5C]}
+      m2hnd := '';  {005C4BD7 [-68]}
+      m1ort := '';  {005C4BDF [-54]}
+      m2ort := '';  {005C4BE7 [-60]}
+      m1hnd := '';  {005C4BEF [-6C]}
+      m2hnd2 := '';  {005C4BF7 [-58]}
+      m1ort2 := '';  {005C4BFF [-64]}
+      m2wit := '';  {005C4C07 [-70]}
+      m2wit2 := '';  {005C4C0F [-74]}
+      sav2 := '';  {005C4C17 [-78]}
+      Form1.Label18.Caption :=
+        IntToStr(Round((zaeler / (personCount + famCount)) * 100)) + ' %';  {005C4C3E}
+      Form1.Label18.Refresh;  {005C4C76 [400]}
+      Inc(zaeler);  {005C4C7B}
+    end;
+    if Pos('1 DIV', zeile) > 0 then  {005C4C8D}
+      gvar_02536858 := 'DIV';  {005C4C99}
+    if Pos('1 HUSB', zeile) > 0 then  {005C4CAD}
+    begin
+      husn := 0;  {005C4CB5 [-24]}
+      Form1.Repso2.IndexName := 'alt_';  {005C4CF7}
+      if Form1.Repso2.FindKey([
+        Copy(zeile, 9, Length(Trim(zeile)) - 9)]) then  {005C4D21}
+        husn := Form1.Repso2nr.AsInteger;  {005C4D3C}
+    end;
+    if Pos('1 WIFE', zeile) > 0 then  {005C4D53}
+    begin
+      if husn > 0 then  {005C4D5D}
+      begin
+        wifn := 0;  {005C4D65 [-28]}
+        Form1.Repso2.IndexName := 'alt_';  {005C4DA7}
+        if Form1.Repso2.FindKey([
+          Copy(zeile, 9, Length(Trim(zeile)) - 9)]) then  {005C4DD1}
+          wifn := Form1.Repso2nr.AsInteger;  {005C4DEC}
+      end;
+    end;
+    if Pos('1 CHIL', zeile) > 0 then  {005C4E03}
+    begin
+      Inc(childCount);  {005C4E09 [-20]}
+      Form1.Repso2.IndexName := 'alt_';  {005C4E19}
+      if Form1.Repso2.FindKey([
+        Copy(zeile, 9, Length(Trim(zeile)) - 9)]) then  {005C4E75}
+      begin
+        DataModule2.Table1.FindKey([Form1.Repso2nr.AsInteger]);  {005C4EAA}
+        DataModule2.Table1.Edit;  {005C4EB4}
+        if husn > 0 then  {005C4EBD}
+          DataModule2.Table1Vater.AsInteger := husn;  {005C4ECC}
+        if wifn > 0 then  {005C4ED6}
+          DataModule2.Table1Mutter.AsInteger := wifn;  {005C4EE5}
+        DataModule2.Table1Indj.AsString :=
+          RightStr(IntToStr(childCount), 4);  {005C4F1D [5E0]}
+        DataModule2.Table1.Post;  {005C4F2C}
+      end;
+    end;
+    if Pos('2 TYPE RELI', zeile) > 0 then  {005C4F46}
+      relN := 1;  {005C4F48 [-2C]}
+    if Pos('2 TYPE CIVIL', zeile) > 0 then  {005C4F63}
+      relN := 2;  {005C4F65}
+    if Pos('2 DATE', zeile) > 0 then  {005C4F80}
+    begin
+      if gvar_02536858 = 'MARR' then  {005C4F91}
+      begin
+        if relN = 1 then  {005C4F97}
+          m1dat := zeile  {005C4F9F [-50]}
+        else if relN = 2 then  {005C4FAD}
+          m2dat := zeile;  {005C4FB9 [-5C]}
+      end
+      else if gvar_02536858 = 'DIV' then  {005C4FD2}
+        m2hnd := zeile;  {005C4FDE [-68]}
+    end;
+    if Pos('2 PLAC', zeile) > 0 then  {005C4FF7}
+    begin
+      if gvar_02536858 = 'MARR' then  {005C5008}
+      begin
+        if relN = 1 then  {005C500E}
+          m1ort := zeile  {005C5016 [-54]}
+        else if relN = 2 then  {005C5024}
+          m2ort := zeile;  {005C5030 [-60]}
+      end
+      else if gvar_02536858 = 'DIV' then  {005C5049}
+        m1hnd := zeile;  {005C5055 [-6C]}
+    end;
+    if Pos('2 _WITN', zeile) > 0 then  {005C506E}
+    begin
+      if relN = 1 then  {005C5078}
+      begin
+        if Length(Trim(m2hnd2)) > 0 then  {005C508F}
+          m2hnd2 := zeile + ', ' + m2hnd2  {005C50A4 CatN3 [-58]}
+        else
+          m2hnd2 := zeile;  {005C50B4}
+      end
+      else if relN = 2 then  {005C50C2}
+      begin
+        if Length(Trim(m1ort2)) > 0 then  {005C50DD}
+          m1ort2 := zeile + ', ' + m1ort2  {005C50ED CatN3 [-64]}
+        else
+          m1ort2 := zeile;  {005C5102}
+      end;
+    end;
+    if Pos('2 SOUR', zeile) > 0 then  {005C511B}
+    begin
+      if gvar_02536858 = 'MARR' then  {005C512C}
+      begin
+        if relN = 1 then  {005C5132}
+          m2wit := zeile  {005C513A [-70]}
+        else if relN = 2 then  {005C5148}
+          m2wit2 := zeile;  {005C5154 [-74]}
+      end
+      else if gvar_02536858 = 'DIV' then  {005C516D}
+        sav2 := zeile;  {005C5179 [-78]}
+    end;
+    if Pos('1 MARRIED', zeile) > 0 then  {005C5192}
+    begin
+      if Pos('1 _STAT NOT MARRIED', zeile) > 0 then  {005C51A3}
+        married := 0  {005C51A7 [-30]}
+      else if Pos('1 _STAT MARRIED', zeile) > 0 then  {005C51BB}
+        married := 1;  {005C51BD}
+    end;
+    if Pos('1 _STAT NOT MARRIED', zeile) > 0 then  {005C51D5}
+      married := 0;  {005C51D9}
+    if Pos('1 _STAT MARRIED', zeile) > 0 then  {005C51ED}
+      married := 1;  {005C51EF}
+    if Pos('2 NOTE not marr', zeile) > 0 then  {005C5207}
+      married := 0;  {005C520B}
+    if not Eof(gvar_02536670) then  {005C5225}
+    begin
+      zsa(zeile, ptmp);  {005C5236}
+      zeile := ptmp;  {005C5244}
+    end
+    else
+    begin
+      if (famIdx > 0) and (husn > 0) and (wifn > 0) then  {005C526F-527B}
+        sub_005BC604(husn, wifn, relN, married, m2hnd, m1hnd, m1dat, m1ort,
+          m2hnd2, m2dat, m2ort, m1ort2, m2wit, m2wit2, sav2);  {005C52B6}
+      Break;  {005C52CC}
+    end;
+  end;
+
+  LPhase3Tail:
+  CloseFile(gvar_02536670);  {005C52D7}
+  Form1.Label18.Hide;  {005C52E9 [400]}
+  Form1.Label19.Hide;  {005C52F6 [404]}
+  DataModule2.Table5.MasterSource := nil;  {005C4B0F-recon-prec}
+  DataModule2.Table1.EnableControls;  {005C5312 [5C]}
+  DataModule2.Table5.EnableControls;  {005C531F [80]}
+  DataModule2.Table1.IndexName := '';  {005C532B}
+  DataModule2.Table1.First;  {005C5335}
+  if startnr > 0 then  {005C533E [-0C]}
+    DataModule2.Table1.FindKey([startnr]);  {005C535D}
+  Screen.Cursor := crDefault;  {005C536B}
+  DataModule2.Table5.Close;  {005C5375}
+  DataModule2.Table5.DeleteTable;  {005C537F}
 end;
 
 function TForm3.Ziff(AIn: AnsiString): Integer;
