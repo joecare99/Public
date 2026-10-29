@@ -28,7 +28,7 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 | 9 | `sub_00568e3c`  | Unit13 | 175 |
 | 10| `vorf_erm2`     | Unit13 | 225 |
 | 11| `sub_005BEF5C`  | Unit3  | 308 |
-| 12| `sub_00582C24`  | Unit3  | 411 |
+| 12| `sub_00582C24`  | Unit3  | 411 |  **</br> COMPLETED 2026-10-29 (build green)** |
 | 13| `nam2`          | Unit17 | 486 |
 | 14| `fambeltern`    | Unit17 | 509 |
 | 15| `nr1`           | Unit13 | 658 |
@@ -633,3 +633,28 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - `sub_005BC604` remains a stub (declare 4 register ints + 12 stack AnsiStrings, exact register/stack push order 30,68,6C,50,54,58,5C,60,64,70,74,78 = 16 args, listing L62911ff; body still to be decoded as a separate batch).
 - Loop-tail convention: `LPhase2Tail` ends each Phase II chunk with ReadLn + goto LPhase2; `005C27F8 jmp 005C47E5` was recon-coded as `goto LPhase2` - final-stage candidate for verification against C8 epilogue.
 - Verified: build.cmd -> [build] SUCCESS (28063 lines, only known unused-local hints).
+
+### Batch: Unit3 sub_005BC604 (Ehe/Familie-Schreiber) - COMPLETED, build green (2026-10-29)
+- Fully converted `sub_005BC604` in Units\Unit3.pas (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_B604.txt, L1-1094 only - the remaining 8378-line extract region duplicates already-converted helpers like sub_005BD73C; method ends 005BD6CA `ret 30`), transcribed in 3 chunks: C1 prolog (Table5.FindKey([AHusn]) -> Append Nummer[410]/Epnum[414]), C2 edit path pass 1 (Verbind[440] from AMarried; date triplets Htag/Hmonat/Hjahr 418-420, Satag 42C-434, Schtag 444-44C via sub_00577934 comma-split Copy(8,Pos-8)/Copy(8,Length(TrimRight)); raw texts Hort 424/Saort 438/Schort 450; witnesses Copy(9) -> Trauz 428/Satrauz 43C; three '2 SOUR @' blocks -> Hqu 454/Saqu 458/Schqu 45C via Form1.Repso2 'ih'/Repso2inh2 dedup with '; ' chain; Post), pass-2 entry FindKey([AWifn]) + mirroring Append, C3 mirrored edit path (no source-field writes on pass 2, faithful to listing) + Post.
+- Field names verified in Unit2.pas: Table5Nummer 410, Epnum 414, Htag/Hmonat/Hjahr 418/41C/420, Hort 424, Trauz 428, Satag/Samonat/Sajahr 42C-434, Saort 438, Satrauz 43C, Verbind 440, Schtag/Schmonat/Schjahr 444-44C, Schort 450, Hqu 454, Saqu 458, Schqu 45C.
+- Param slot mapping verified: +34 AMarried (int), +30..+8 = 11 AnsiStrings (ADatD/AOrtD/ADat1/AOrt1/AWit1/ADat2/AOrt2/AWit2/AQm1/AQm2/AQd), LStrAddRef list and ret 30 consistent; gedein_5 call sites (push order 30,68,...,78) untouched.
+- Recognized ASM control-flow quirk: 005BD081/005BD67C are loop-check junctions; the Next/Eof tails 005BD063/005BD65E are unreachable after FindKey/Append positioning - documented in Unit3 comments.
+- Verified: build.cmd -> [build] SUCCESS (28292 lines, only known unused-local hints).
+
+### Batch: Unit3 gedein_5 C4-Verifikation (Kontrollfluss) - COMPLETED, build green (2026-10-29)
+- 005C27F8 `jmp 005C47E5` verified: Phase-I exit block re-enters the Phase-II read loop (ReadLn-zsa-free entry at 005C47E5 EOF check) - recon `exit;` was WRONG, replaced with `goto LPhase2;` (Unit3.pas ~L2563).
+- Phase2Tail (005C4786-005C47E5) verified against listing L71026-71054: ReadLn -> '0 @F'-check (005C47A2 jg 005C47FC = Phase3 entry) -> EOF-check (005C47C4) -> zsa(zeile,ptmp) + zeile upload -> EOF-check (005C47E5 je 005C27FD). Recon tail previously missed the '0 @F' long-jump AND the zsa - both added; without them Phase II would silently drop entire family records and never reach Phase III.
+- Phase3 loop tail (005C520E-005C52CC, listing L71695-71755) verified: recon had Eof-check BEFORE ReadLn and flushed family in an else-branch - WRONG order. Correct: ReadLn first, then zsa, then flush-condition (Pos('0 @')+Pos('@F')>0 && famIdx/husn/wifn>0 -> sub_005BC604), then loop condition. Rewritten accordingly.
+- Verified: build.cmd -> [build] SUCCESS (28291 lines, only known hints; new W1036 uninit warnings for husn/wifn/relN/nummer are compiler flow-blindness from the goto/labeled-loop structure, consistent with prior phases).
+
+### Batch: Unit3 sub_00582C24 (Datum-Export-Formatter) - COMPLETED, build green (2026-10-29)
+- Fully converted `sub_00582C24` into Units\Unit3.pas as `function sub_00582C24(A, B, C: AnsiString): AnsiString;` (A=Tag, B=Monatsnr, C=Jahr; Result via hidden [ebp+8], `ret 4` verified).
+- Semantics (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_582c24.txt, 00582C24-00582DFF): month lookup via `case StrToInt(B) of 1..12` -> JAN..DEC (jmp table 00582C97); with month: Format('%2s',[A])+' '+mon+' '+Format('%4s',[C]); without: Format('%2s')+Format('%2s')+Format('%4s') dot-triplet DD.MM.YYYY; prefix marker string 'um*UM*ca*CA*VO*vo*na*NA*ER*er'(Pos in A) suppresses standard Result; then uppercase ladder UM->'ABT ', CA->'ABT ', VO->'BEF ', NA->'AFT ', ER->'CAL ' each as 'XBT ' + mon + ' ' + C (day omitted, only when StrToInt(B)>0); empty A -> 'MON YYYY' (CatN3 mon+' '+C), empty A and B -> C only. Delphi try/finally pairs (582DF5/582F00/582F7F/582FFE/58307D/5830F9) collapse to the CatN3 fallbacks - omitted in recon (normal-flow only).
+- 21 call sites (005A66xx..005B9D7A) all inside still-missing TForm3.gedausv (005B5224) and friends - recon call sites will follow when those methods are converted.
+- Verified: build.cmd -> [build] SUCCESS (28382 lines, only known hints).
+
+### Batch: Unit3 gedein_5 C4-Verifikation alt84/alt88 - COMPLETED, build green (2026-10-29)
+- alt88 verified: [ebp-88] only ever LStrClr'ed at 005C282B (Phase2 head, alongside alt84 [ebp-84] at 005C2820); no other assignment in gedein_5 region - so alt88 is effectively constant ''. Recon `alt88 := ''` matches; aka/immigrant/pseudonym/religious messages ('...alt88+alt84') therefore emit a leading space like the original.
+- Missing guard found and fixed: ASM 005C2F63-2F72 compares gvar_02536858 with 'NAME' (jne 005C352D) and gates the whole alt84/'2 TYPE'/type-name ladder (005C2F78-005C350D). Recon ran it ungated; wrapped in `if gvar_02536858 = 'NAME' then begin ... end;` (Unit3.pas ~L2662).
+- alt84 slot mapping re-verified (listing L69565-69614): Copy(zeile,8,1)='/' check 005C2F91; alt84 := Trim(Copy(zeile, Pos+1, 40)) then Copy(alt84,1,Length-1) in-place ([ebp-84] push as Copy result target). Both '1 NAME'-2nd-line and '2 TYPE' variants identical.
+- Verified: build.cmd -> [build] SUCCESS (28294 lines, only known hints).
