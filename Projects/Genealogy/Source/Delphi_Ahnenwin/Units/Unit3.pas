@@ -1640,7 +1640,18 @@ procedure sub_005BC604(AHusn, AWifn, ARelN: Integer; AMarried: Integer;
   ADatD, AOrtD, ADat1, AOrt1, AWit1, ADat2, AOrt2, AWit2, AQm1, AQm2,
   AQd: AnsiString); register;
 begin
-  { TODO: Listing fehlt noch - Originaladresse 005BC604. }
+  { 005BC604: Ehe-/Familie-Satz (Table5) zu AHusn/AWifn suchen bzw. ergänzen
+    und die im GEDCOM-Import (gedein_5 Phase III) gesammelten Heirats-/
+    2. Heirats-/Scheidungsdaten zuweisen. }
+  if not DataModule2.Table5.FindKey([AHusn]) then  {005BC6A0}
+  begin
+    DataModule2.Table5.Append;  {005BC6B5 [80]}
+    DataModule2.Table5Nummer.AsInteger := AHusn;  {005BC6C6 [410]}
+    DataModule2.Table5Epnum.AsInteger := AWifn;  {005BC6D9 [414]}
+  end;
+  { TODO C2: 005BD081/005BC6E4 - Edit-Pfad (Verbind 440, Datum/Ort/Zeuge/Quelle-
+    Feldgruppen 418-45C, '2 SOUR'-Kette), Post, Pass-2 (005BD096). }
+  DataModule2.Table5.Post;  {Platzhalter Ende - wird von C2 fortgesetzt}
 end;
 
 procedure TForm3.gedein_5;
