@@ -1923,7 +1923,206 @@ begin
     { 005C0D33: '@ INDI'-Exits von oben }
   end;
 
-  { Phase I (005C0DA0..005C2698) und weiter folgt im nachsten Chunk. }
+  { Phase I (005C0DA0..005C2698): Objekte zählen und
+    Stammerfassungs-Objekte (@S/@P/@N) importieren. }
+    repeat  {005C26A8: Body 005C0DA0..}
+      if Pos('@ INDI', zeile) > 0 then
+      begin
+        { 005C0DA0: @INDI-Einstieg. }
+        inc(personCount);
+        Form1.Label18.Caption := IntToStr(personCount);
+        Form1.Label18.Refresh;
+        gvar_02536870 := Copy(zeile, Pos('@ INDI', zeile) - 4, 4);  {005C0E05}
+        Form1.Repso2.Append;
+        Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C0E22 [+0A8]}
+        Form1.Repso2alt.AsString := gvar_02536870;  {005C0E2A [+0B0]}
+        Form1.Repso2.Post;  {005C0E40}
+      end
+      else if Pos('0 @F', zeile) > 0 then
+      begin
+        { 005C0E69: Familienindex erhöhen. }
+        inc(famCount);
+        Form1.Label18.Caption := IntToStr(personCount + famCount);
+        Form1.Label18.Refresh;
+      end
+      else if Pos('0 @S', zeile) > 0 then
+      begin
+        { 005C0EA9: Stammdaten-Objekt (@S) einlesen. }
+        gvar_02536858 := 'SOUR0';
+        gvar_02536850 := Trim(Copy(zeile, 3, 20));   {005C0F17 Copy(3,20)}
+        gvar_02536850 := LeftStr(gvar_02536850,
+          Length(gvar_02536850) - 5);  {005C0F15}
+        ReadLn(gvar_02536670, zeile);  {005C0F2D}
+        zsa(zeile, r);
+        zeile := r;
+        if gvar_02536650 = 1 then  {005C0F65 Utf8ToAnsi}
+          zeile := Utf8ToAnsi(zeile);
+        Form1.Repso2.IndexName := 'ih';  {005C0F81}
+        if Form1.Repso2.FindKey([gvar_02536850]) then
+        begin
+          Form1.Repso2.Edit;
+          Form1.Repso2inh2.AsString := Trim(Copy(zeile, 8, Length(zeile)));  {005C1005 [+0B0] [8D0]}
+          Form1.Repso2.Post;
+          sn1 := Form1.Repso2inh2.AsString;  {005C1021 GetAsString [+60]}
+        end;
+      end;
+
+      if gvar_02536858 = 'SOUR0' then
+      begin
+        { 005C102E: Datenobjekt-Kopierer (Table38/index tit). }
+        zsa(zeile, r);
+        zeile := r;
+        DataModule2.Table38.IndexName := 'tit';  {005C106F}
+        if not DataModule2.Table38.FindKey([sn1]) then
+        begin
+          DataModule2.Table38.Append;
+          DataModule2.Table38Titel.AsString := sn1;  {005C10BD [+0B0] [A18]}
+          DataModule2.Table38.Post;
+        end;
+        if DataModule2.Table38.FindKey([sn1]) then
+        begin
+          if Pos('1 ABBR', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Abk.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C113F [A1C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 EVEN', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Ereig.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C11A6 [A20]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 DATE', zeile) > 0 then
+          begin
+            if Pos('FROM', zeile) > 0 then
+            begin
+              if Pos('TO', zeile) > 0 then
+              begin
+                DataModule2.Table38.Edit;
+                DataModule2.Table38Von.AsString :=
+                  Copy(zeile, 13, Pos('TO', zeile) - 13);  {005C1292 [A24]}
+                DataModule2.Table38.Post;
+              end
+              else
+              begin
+                DataModule2.Table38.Edit;
+                DataModule2.Table38Von.AsString :=
+                  Copy(zeile, 13, Length(zeile));  {005C1237 [A24]}
+                DataModule2.Table38.Post;
+              end;
+            end;
+            if Pos('TO', zeile) > 0 then
+            begin
+              DataModule2.Table38.Edit;
+              DataModule2.Table38Bis.AsString :=
+                Copy(zeile, Pos('TO', zeile) + 3, Length(zeile));  {005C1305 [A28]}
+              DataModule2.Table38.Post;
+            end;
+          end
+          else if Pos('3 PLAC', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Standort.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C136C [A2C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('1 PUBL', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Publ.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C13D3 [A30]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 CALN', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bestand.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C143A [A3C]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('2 NOTE', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C14A1 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 CONC', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              DataModule2.Table38Bem.AsString +
+              Copy(zeile, 8, Length(zeile));  {005C1522 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 CONT', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Bem.AsString :=
+              DataModule2.Table38Bem.AsString + #13 + #10 +
+              Copy(zeile, 8, Length(zeile));  {005C15BC CatN4 [A38]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('3 MEDI', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;
+            DataModule2.Table38Med.AsString :=
+              Copy(zeile, 8, Length(zeile));  {005C1639 [A40]}
+            DataModule2.Table38.Post;
+          end
+          else if Pos('AUTH', zeile) > 0 then
+          begin
+            DataModule2.Table38.Edit;  {005C1681}
+            if Trim(DataModule2.Table38Bem.AsString) = '' then
+              DataModule2.Table38Bem.AsString :=
+                Copy(zeile, 8, Length(zeile))  {005C16D1}
+            else
+              DataModule2.Table38Bem.AsString :=
+                DataModule2.Table38Bem.AsString + #13#10 +
+                Copy(zeile, 8, Length(zeile));  {005C172A CatN4}
+            DataModule2.Table38.Post;
+          end;
+        end;
+      end;
+
+      if Pos('1 SOUR @S', zeile) > 0 then
+      begin
+        { 005C1775: Quellenreferenz registrieren (Repso2/index ih). }
+        gvar_02536858 := 'SOUR1';  {005C1780}
+        Form1.Repso2.IndexName := 'ih';  {005C1792}
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;  {005C1801}
+          Form1.Repso2alt.AsString := gvar_02536870;  {005C181B [8D4]}
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));  {005C1861 [8CC]}
+          Form1.Repso2.Post;
+        end;
+      end;
+      if Pos('2 SOUR @S', zeile) > 0 then
+      begin
+        { 005C1896. }
+        gvar_02536858 := 'SOUR2';
+        Form1.Repso2.IndexName := 'ih';
+        if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 20))]) then
+        begin
+          Form1.Repso2.Append;
+          Form1.Repso2nr.AsInteger := gvar_02536944 + personCount;
+          Form1.Repso2alt.AsString := gvar_02536870;
+          Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 20));
+          Form1.Repso2.Post;
+        end;
+      end;
+
+      { TODO C3b: 2 PLAC / 3 _LOC @P / 0 @P / Tag PL / 0 @N / 1 CONT / 1 NOTE /
+        2 NOTE (005C19A8..005C2669) - Listing-Extrakt L1843..2656. }
+
+      ReadLn(gvar_02536670, zeile);  {005C266A: Loop-Tail}
+      ReadLn(gvar_02536670, zeile);
+    until (Pos('0 TRLR', zeile) > 0) or Eof(gvar_02536670);
 end;
 
 function TForm3.Ziff(AIn: AnsiString): Integer;
