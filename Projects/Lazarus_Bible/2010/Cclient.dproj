@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Cclient.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DDECOLOR\Frm_CLIMAIN.PAS">
+			<DCCReference Include="..\source\DDECOLOR\Frm_CLIMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

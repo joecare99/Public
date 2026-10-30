@@ -1,10 +1,10 @@
 program Fontsamp; 
 uses 
   Forms, 
-  frm_fontsampMAIN in '..\Source\FONTSAMP\frm_fontsampMAIN.PAS' {MainForm}, 
-  Frm_fontSampABOUT in '..\Source\FONTSAMP\Frm_fontSampABOUT.PAS' {AboutForm}, 
-  PREVIEW in '..\Source\FONTSAMP\PREVIEW.PAS' {PreviewForm}, 
-  DRAWPAGE in '..\Source\FONTSAMP\DRAWPAGE.PAS'; 
+  frm_fontsampMAIN in '..\source\FontSamp\frm_fontsampMAIN.pas' {MainForm}, 
+  Frm_fontSampABOUT in '..\source\FontSamp\Frm_fontSampABOUT.pas' {AboutForm}, 
+  PREVIEW in '..\source\FontSamp\PREVIEW.pas' {PreviewForm}, 
+  DRAWPAGE in '..\source\FontSamp\DRAWPAGE.pas'; 
 {$R *.RES} 
 {$E EXE} 
 begin 

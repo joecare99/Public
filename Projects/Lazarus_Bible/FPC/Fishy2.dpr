@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_Fishy2MAIN in '..\Source\FISHY\Frm_Fishy2MAIN.PAS' {MainForm}; 
+  Frm_Fishy2MAIN in '..\source\FISHY\Frm_Fishy2MAIN.pas' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

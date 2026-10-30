@@ -52,10 +52,10 @@
 			<DelphiCompile Include="TestCDlg.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\COLORDLG\COLORDLG.PAS">
+			<DCCReference Include="..\source\COLORDLG\COLORDLG.pas">
 				<Form>ColorDlgForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS">
+			<DCCReference Include="..\source\COLORDLG\Frm_TestCdlgMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

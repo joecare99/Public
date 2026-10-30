@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
-  TMainForm = class(TForm)
+  TfrmObjListMain = class(TForm)
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
@@ -35,7 +35,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmObjListMain: TfrmObjListMain;
 
 implementation
 
@@ -55,7 +55,7 @@ type
 var
   CheckBoxArray: PObjectArray;  { Pointer to array of CheckBoxes }
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmObjListMain.FormCreate(Sender: TObject);
 begin
   GetMem(CheckBoxArray, numCheckBoxes * SizeOf(TObject));
   CheckBoxArray^[0] := CheckBox1;
@@ -66,12 +66,12 @@ begin
   CheckBoxArray^[5] := CheckBox6;
 end;
 
-procedure TMainForm.FormDestroy(Sender: TObject);
+procedure TfrmObjListMain.FormDestroy(Sender: TObject);
 begin
   FreeMem(CheckBoxArray, numCheckBoxes * SizeOf(TObject));
 end;
 
-procedure TMainForm.OnOffButtonClick(Sender: TObject);
+procedure TfrmObjListMain.OnOffButtonClick(Sender: TObject);
 var
   I: Integer;
 begin

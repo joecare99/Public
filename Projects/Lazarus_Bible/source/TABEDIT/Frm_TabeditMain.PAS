@@ -1,11 +1,35 @@
 unit Frm_TabeditMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, ExtCtrls, Tabs, Menus, Frm_AboutTabedit,
-  Clipbrd;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ ExtCtrls,
+ Menus,
+ Frm_AboutTabedit,
+
+  Clipbrd,
+{$IFnDEF FPC}
+  Windows,
+  Tabs,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  ComCtrls
+{$ENDIF};
 
 type
   TfrmMainForm = class(TForm)
@@ -28,7 +52,11 @@ type
     EditCut: TMenuItem;
     HelpMenu: TMenuItem;
     HelpAbout: TMenuItem;
+{$IFDEF FPC}
+    TabSet1: TTabControl;
+{$ELSE}
     TabSet1: TTabSet;
+{$ENDIF}
     Memo1: TMemo;
     OptionsMenu: TMenuItem;
     OptionsFont: TMenuItem;
@@ -75,8 +103,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 const
   maxPages = 8;
   untitledName = '[untitled]';
@@ -89,7 +124,8 @@ type
   end;
 
 var
-  Pages: array[0 .. maxPages - 1] of TPageRec;
+  { Heisst nicht "Pages", da TTabControl bereits eine Eigenschaft Pages hat. }
+  PageData: array[0 .. maxPages - 1] of TPageRec;
 
 { Enable / disable File menu commands }
 procedure TfrmMainForm.EnableFileMenu;
@@ -99,7 +135,7 @@ begin
   with FileMenu do
     for I := 0 to Count - 1 do     { Enable all File commands }
       Items[I].Enabled := True;
-  with TabSet1, Pages[TabIndex] do
+  with TabSet1, PageData[TabIndex] do
     if (not Dirty) or (Filename = untitledName) then
       FileSave.Enabled := False;     { Must use Save as }
 end;
@@ -113,7 +149,7 @@ begin
   begin
     for I := 0 to Count - 1 do     { Enable all Edit commands }
       Items[I].Enabled := True;
-    with TabSet1, Pages[TabIndex] do
+    with TabSet1, PageData[TabIndex] do
     begin
       if Memo1.SelLength = 0 then
       begin
@@ -131,7 +167,7 @@ procedure TfrmMainForm.SetFilename(const Path: String);
 var
   S: String[12];  { Filename.ext }
 begin
-  with TabSet1, Pages[TabIndex] do
+  with TabSet1, PageData[TabIndex] do
   begin
     Filename := Lowercase(Path);
     S := ExtractFilename(Filename);
@@ -143,7 +179,7 @@ end;
 { Read file from disk }
 procedure TfrmMainForm.LoadFile(const Path: String);
 begin
-  with Pages[TabSet1.TabIndex] do
+  with PageData[TabSet1.TabIndex] do
   try
     Memo1.Lines.LoadFromFile(Path);
     Dirty := False;
@@ -157,7 +193,7 @@ end;
 { Write current file to disk }
 procedure TfrmMainForm.SaveFile(Index: Integer);
 begin
-  with TabSet1, Pages[Index] do
+  with TabSet1, PageData[Index] do
   begin
     try
       Memo1.Lines.SaveToFile(Filename);
@@ -174,7 +210,7 @@ var
   I: Integer;
 begin
   Result := False;
-  for I := 0 to maxPages - 1 do with Pages[I] do
+  for I := 0 to maxPages - 1 do with PageData[I] do
     if Dirty then Exit;
   Result := True;
 end;
@@ -184,13 +220,13 @@ procedure TfrmMainForm.FormCreate(Sender: TObject);
 var
   I: Integer;
 begin
-  for I := 0 to maxPages - 1 do with Pages[I] do
+  for I := 0 to maxPages - 1 do with PageData[I] do
   begin
     Filename := '';
     Dirty := False;
     Page := nil;
   end;
-  with Pages[0] do
+  with PageData[0] do
   begin
     Page := TStringList.Create;
     Filename := untitledName;
@@ -203,7 +239,7 @@ procedure TfrmMainForm.FormDestroy(Sender: TObject);
 var
   I: Integer;
 begin
-  for I := 0 to maxPages - 1 do with Pages[I] do
+  for I := 0 to maxPages - 1 do with PageData[I] do
     if Page <> nil then
       Page.Free;
 end;
@@ -213,7 +249,7 @@ procedure TfrmMainForm.FileNewClick(Sender: TObject);
 var
   I: Integer;
 begin
-  for I := 0 to maxPages - 1 do with TabSet1, Pages[I] do
+  for I := 0 to maxPages - 1 do with TabSet1, PageData[I] do
   if Page = nil then
   begin
     Page := TStringList.Create;
@@ -227,7 +263,7 @@ end;
 { File|Open command }
 procedure TfrmMainForm.FileOpenClick(Sender: TObject);
 begin
-  with Pages[TabSet1.TabIndex] do
+  with PageData[TabSet1.TabIndex] do
   begin
     if Dirty then FileSaveClick(Sender);
     if {still} Dirty then Exit;  { File not saved }
@@ -241,7 +277,7 @@ procedure TfrmMainForm.FileCloseClick(Sender: TObject);
 var
   W: Word;
 begin
-  with TabSet1, Pages[TabIndex] do
+  with TabSet1, PageData[TabIndex] do
   begin
     if Dirty then
     begin
@@ -264,7 +300,7 @@ end;
 { File|Save command }
 procedure TfrmMainForm.FileSaveClick(Sender: TObject);
 begin
-  with TabSet1, Pages[TabIndex] do
+  with TabSet1, PageData[TabIndex] do
   if Filename = untitledName then
     FileSaveAsClick(Sender)
   else
@@ -274,7 +310,7 @@ end;
 { File|Save As command }
 procedure TfrmMainForm.FileSaveAsClick(Sender: TObject);
 begin
-  with TabSet1, Pages[TabIndex] do                               
+  with TabSet1, PageData[TabIndex] do                               
   if FileSaveDialog.Execute then
   begin
     SetFilename(FileSaveDialog.Filename);
@@ -296,7 +332,7 @@ var
   W: Word;
 begin
   CanClose := True;
-  for I := 0 to maxPages - 1 do with TabSet1, Pages[I] do
+  for I := 0 to maxPages - 1 do with TabSet1, PageData[I] do
   if Dirty then
   begin
     W := MessageDlg('Save changes to ' + Tabs[I] + '?',
@@ -315,7 +351,7 @@ end;
 procedure TfrmMainForm.TabSet1Change(Sender: TObject; NewTab: Integer;
   var AllowChange: Boolean);
 begin
-  with TabSet1, Pages[TabIndex] do
+  with TabSet1, PageData[TabIndex] do
   begin
     Page.Clear;
     Page.Assign(Memo1.Lines);
@@ -326,12 +362,12 @@ end;
 procedure TfrmMainForm.TabSet1Click(Sender: TObject);
 begin
   with TabSet1 do
-    Memo1.Lines.Assign(Pages[TabIndex].Page);
+    Memo1.Lines.Assign(PageData[TabIndex].Page);
 end;
 
 procedure TfrmMainForm.Memo1Change(Sender: TObject);
 begin
-  Pages[TabSet1.TabIndex].Dirty := True;
+  PageData[TabSet1.TabIndex].Dirty := True;
 end;
 
 procedure TfrmMainForm.EditCutClick(Sender: TObject);

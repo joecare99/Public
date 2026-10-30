@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DMTestMain in '..\source\DMtest\Frm_DMTestMain.pas' {MainForm},
-  Frm_Module1 in '..\source\DMtest\Frm_Module1.pas' {DataModule1: TDataModule};
+  Frm_DMTestMain in '..\source\DMTest\Frm_DMTestMain.pas' {MainForm},
+  Frm_Module1 in '..\source\DMTest\Frm_Module1.pas' {DataModule1: TDataModule};
 
 {$R *.res}
 {$IFNDEF FPC}

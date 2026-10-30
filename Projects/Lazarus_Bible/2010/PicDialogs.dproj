@@ -42,7 +42,7 @@
 			<DelphiCompile Include="PicDialogs.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\PicDialogs\Frm_PicDialogsMain.pas">
+			<DCCReference Include="..\source\PicDialogs\Frm_PicDialogsMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

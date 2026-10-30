@@ -12,9 +12,9 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MDIDemoMAIN in '..\Source\MDIDEMO\Frm_MDIDemoMAIN.PAS' {MainForm}, 
+  Frm_MDIDemoMAIN in '..\source\MDIDEMO\Frm_MDIDemoMAIN.pas' {MainForm}, 
   frm_MDIChild1 {ChildForm},
-  Frm_MDIDemoABOUT in '..\Source\MDIDEMO\Frm_MDIDemoABOUT.PAS' {AboutForm}; 
+  Frm_MDIDemoABOUT in '..\source\MDIDEMO\Frm_MDIDemoABOUT.pas' {AboutForm}; 
 {$R *.res}
 begin
   Application.Initialize;

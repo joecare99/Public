@@ -138,31 +138,31 @@
 			<Projects Include="D_XE\Runme.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\SKETCH\D_XE\Sketch.dproj">
+			<Projects Include="D_XE\Sketch.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\SPINBUTT\D_XE\Spinbutt.dproj">
+			<Projects Include="D_XE\Spinbutt.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\SPLASHIN\D_XE\Splashin.dproj">
+			<Projects Include="D_XE\Splashin.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\StaticDemo\D_XE\StaticDemo.dproj">
+			<Projects Include="D_XE\StaticDemo.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\Status\D_XE\Status.dproj">
+			<Projects Include="D_XE\Status.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\StatusOD\D_XE\StatusOD.dproj">
+			<Projects Include="D_XE\StatusOD.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\STRLIST\D_XE\Strlist.dproj">
+			<Projects Include="D_XE\Strlist.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\STRRES\D_XE\Strres.dproj">
+			<Projects Include="D_XE\Strres.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\SYSCOLOR\D_XE\Syscolor.dproj">
+			<Projects Include="D_XE\Syscolor.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="D_XE\Sysmenu.dproj">
@@ -174,19 +174,19 @@
 			<Projects Include="D_XE\Tabs.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\YESNO\D_XE\YesNoTest.dproj">
+			<Projects Include="D_XE\YesNoTest.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\WinesEntry\D_XE\WinesEntry.dproj">
+			<Projects Include="D_XE\WinesEntry.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\WinesCalc\D_XE\WinesCalc.dproj">
+			<Projects Include="D_XE\WinesCalc.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\VideoPlayer\D_XE\VideoPlayer.dproj">
+			<Projects Include="D_XE\VideoPlayer.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\UpDownDemo\D_XE\UpDownDemo.dproj">
+			<Projects Include="D_XE\UpDownDemo.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="D_XE\Toolbar3.dproj">
@@ -204,7 +204,7 @@
 			<Projects Include="D_XE\Telname.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\TABEDIT\D_XE\TabEdit.dproj">
+			<Projects Include="D_XE\TabEdit.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="D_XE\Colorlib.dproj">
@@ -243,13 +243,13 @@
 			<Projects Include="D_XE\Server2.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\Report1\D_XE\Report1.dproj">
+			<Projects Include="D_XE\Report1.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\SQLPLAY\D_XE\Sqlplay.dproj">
+			<Projects Include="D_XE\Sqlplay.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="source\WinesChart\D_XE\WinesChart.dproj">
+			<Projects Include="D_XE\WinesChart.dproj">
 				<Dependencies/>
 			</Projects>
 		</ItemGroup>
@@ -666,85 +666,85 @@
 			<MSBuild Projects="D_XE\Runme.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Sketch">
-			<MSBuild Projects="source\SKETCH\D_XE\Sketch.dproj"/>
+			<MSBuild Projects="D_XE\Sketch.dproj"/>
 		</Target>
 		<Target Name="Sketch:Clean">
-			<MSBuild Projects="source\SKETCH\D_XE\Sketch.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Sketch.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Sketch:Make">
-			<MSBuild Projects="source\SKETCH\D_XE\Sketch.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Sketch.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Spinbutt">
-			<MSBuild Projects="source\SPINBUTT\D_XE\Spinbutt.dproj"/>
+			<MSBuild Projects="D_XE\Spinbutt.dproj"/>
 		</Target>
 		<Target Name="Spinbutt:Clean">
-			<MSBuild Projects="source\SPINBUTT\D_XE\Spinbutt.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Spinbutt.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Spinbutt:Make">
-			<MSBuild Projects="source\SPINBUTT\D_XE\Spinbutt.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Spinbutt.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Splashin">
-			<MSBuild Projects="source\SPLASHIN\D_XE\Splashin.dproj"/>
+			<MSBuild Projects="D_XE\Splashin.dproj"/>
 		</Target>
 		<Target Name="Splashin:Clean">
-			<MSBuild Projects="source\SPLASHIN\D_XE\Splashin.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Splashin.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Splashin:Make">
-			<MSBuild Projects="source\SPLASHIN\D_XE\Splashin.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Splashin.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="StaticDemo">
-			<MSBuild Projects="source\StaticDemo\D_XE\StaticDemo.dproj"/>
+			<MSBuild Projects="D_XE\StaticDemo.dproj"/>
 		</Target>
 		<Target Name="StaticDemo:Clean">
-			<MSBuild Projects="source\StaticDemo\D_XE\StaticDemo.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\StaticDemo.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="StaticDemo:Make">
-			<MSBuild Projects="source\StaticDemo\D_XE\StaticDemo.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\StaticDemo.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Status">
-			<MSBuild Projects="source\Status\D_XE\Status.dproj"/>
+			<MSBuild Projects="D_XE\Status.dproj"/>
 		</Target>
 		<Target Name="Status:Clean">
-			<MSBuild Projects="source\Status\D_XE\Status.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Status.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Status:Make">
-			<MSBuild Projects="source\Status\D_XE\Status.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Status.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="StatusOD">
-			<MSBuild Projects="source\StatusOD\D_XE\StatusOD.dproj"/>
+			<MSBuild Projects="D_XE\StatusOD.dproj"/>
 		</Target>
 		<Target Name="StatusOD:Clean">
-			<MSBuild Projects="source\StatusOD\D_XE\StatusOD.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\StatusOD.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="StatusOD:Make">
-			<MSBuild Projects="source\StatusOD\D_XE\StatusOD.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\StatusOD.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Strlist">
-			<MSBuild Projects="source\STRLIST\D_XE\Strlist.dproj"/>
+			<MSBuild Projects="D_XE\Strlist.dproj"/>
 		</Target>
 		<Target Name="Strlist:Clean">
-			<MSBuild Projects="source\STRLIST\D_XE\Strlist.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Strlist.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Strlist:Make">
-			<MSBuild Projects="source\STRLIST\D_XE\Strlist.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Strlist.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Strres">
-			<MSBuild Projects="source\STRRES\D_XE\Strres.dproj"/>
+			<MSBuild Projects="D_XE\Strres.dproj"/>
 		</Target>
 		<Target Name="Strres:Clean">
-			<MSBuild Projects="source\STRRES\D_XE\Strres.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Strres.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Strres:Make">
-			<MSBuild Projects="source\STRRES\D_XE\Strres.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Strres.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Syscolor">
-			<MSBuild Projects="source\SYSCOLOR\D_XE\Syscolor.dproj"/>
+			<MSBuild Projects="D_XE\Syscolor.dproj"/>
 		</Target>
 		<Target Name="Syscolor:Clean">
-			<MSBuild Projects="source\SYSCOLOR\D_XE\Syscolor.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Syscolor.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Syscolor:Make">
-			<MSBuild Projects="source\SYSCOLOR\D_XE\Syscolor.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Syscolor.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Sysmenu">
 			<MSBuild Projects="D_XE\Sysmenu.dproj"/>
@@ -774,49 +774,49 @@
 			<MSBuild Projects="D_XE\Tabs.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="YesNoTest">
-			<MSBuild Projects="source\YESNO\D_XE\YesNoTest.dproj"/>
+			<MSBuild Projects="D_XE\YesNoTest.dproj"/>
 		</Target>
 		<Target Name="YesNoTest:Clean">
-			<MSBuild Projects="source\YESNO\D_XE\YesNoTest.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\YesNoTest.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="YesNoTest:Make">
-			<MSBuild Projects="source\YESNO\D_XE\YesNoTest.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\YesNoTest.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="WinesEntry">
-			<MSBuild Projects="source\WinesEntry\D_XE\WinesEntry.dproj"/>
+			<MSBuild Projects="D_XE\WinesEntry.dproj"/>
 		</Target>
 		<Target Name="WinesEntry:Clean">
-			<MSBuild Projects="source\WinesEntry\D_XE\WinesEntry.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\WinesEntry.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="WinesEntry:Make">
-			<MSBuild Projects="source\WinesEntry\D_XE\WinesEntry.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\WinesEntry.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="WinesCalc">
-			<MSBuild Projects="source\WinesCalc\D_XE\WinesCalc.dproj"/>
+			<MSBuild Projects="D_XE\WinesCalc.dproj"/>
 		</Target>
 		<Target Name="WinesCalc:Clean">
-			<MSBuild Projects="source\WinesCalc\D_XE\WinesCalc.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\WinesCalc.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="WinesCalc:Make">
-			<MSBuild Projects="source\WinesCalc\D_XE\WinesCalc.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\WinesCalc.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="VideoPlayer">
-			<MSBuild Projects="source\VideoPlayer\D_XE\VideoPlayer.dproj"/>
+			<MSBuild Projects="D_XE\VideoPlayer.dproj"/>
 		</Target>
 		<Target Name="VideoPlayer:Clean">
-			<MSBuild Projects="source\VideoPlayer\D_XE\VideoPlayer.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\VideoPlayer.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="VideoPlayer:Make">
-			<MSBuild Projects="source\VideoPlayer\D_XE\VideoPlayer.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\VideoPlayer.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="UpDownDemo">
-			<MSBuild Projects="source\UpDownDemo\D_XE\UpDownDemo.dproj"/>
+			<MSBuild Projects="D_XE\UpDownDemo.dproj"/>
 		</Target>
 		<Target Name="UpDownDemo:Clean">
-			<MSBuild Projects="source\UpDownDemo\D_XE\UpDownDemo.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\UpDownDemo.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="UpDownDemo:Make">
-			<MSBuild Projects="source\UpDownDemo\D_XE\UpDownDemo.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\UpDownDemo.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Toolbar3">
 			<MSBuild Projects="D_XE\Toolbar3.dproj"/>
@@ -864,13 +864,13 @@
 			<MSBuild Projects="D_XE\Telname.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="TabEdit">
-			<MSBuild Projects="source\TABEDIT\D_XE\TabEdit.dproj"/>
+			<MSBuild Projects="D_XE\TabEdit.dproj"/>
 		</Target>
 		<Target Name="TabEdit:Clean">
-			<MSBuild Projects="source\TABEDIT\D_XE\TabEdit.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\TabEdit.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="TabEdit:Make">
-			<MSBuild Projects="source\TABEDIT\D_XE\TabEdit.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\TabEdit.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Colorlib">
 			<MSBuild Projects="D_XE\Colorlib.dproj"/>
@@ -981,31 +981,31 @@
 			<MSBuild Projects="D_XE\Server2.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Report1">
-			<MSBuild Projects="source\Report1\D_XE\Report1.dproj"/>
+			<MSBuild Projects="D_XE\Report1.dproj"/>
 		</Target>
 		<Target Name="Report1:Clean">
-			<MSBuild Projects="source\Report1\D_XE\Report1.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Report1.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Report1:Make">
-			<MSBuild Projects="source\Report1\D_XE\Report1.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Report1.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Sqlplay">
-			<MSBuild Projects="source\SQLPLAY\D_XE\Sqlplay.dproj"/>
+			<MSBuild Projects="D_XE\Sqlplay.dproj"/>
 		</Target>
 		<Target Name="Sqlplay:Clean">
-			<MSBuild Projects="source\SQLPLAY\D_XE\Sqlplay.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\Sqlplay.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="Sqlplay:Make">
-			<MSBuild Projects="source\SQLPLAY\D_XE\Sqlplay.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\Sqlplay.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="WinesChart">
-			<MSBuild Projects="source\WinesChart\D_XE\WinesChart.dproj"/>
+			<MSBuild Projects="D_XE\WinesChart.dproj"/>
 		</Target>
 		<Target Name="WinesChart:Clean">
-			<MSBuild Projects="source\WinesChart\D_XE\WinesChart.dproj" Targets="Clean"/>
+			<MSBuild Projects="D_XE\WinesChart.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="WinesChart:Make">
-			<MSBuild Projects="source\WinesChart\D_XE\WinesChart.dproj" Targets="Make"/>
+			<MSBuild Projects="D_XE\WinesChart.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
 			<CallTarget Targets="BarChartp;fpcTestAboutEx;Aboutex;fpcTestActions;Actions;Addpage;Animator;BarTest;Bitview;Bitview2;Calc32;Calc32_2;Capslock;Capslock2;Chargrid;Checks;CoolDemo;TestCDlg;Exwin;MayTemp;Mdidemo;Mdidemo2;MemInfo;Memopad;Metamore;MouseExcept;Msgdlg;Multimen;Nonclien;Objlist;OleCont;OleWord1;OleWord2;Ontop;Options;PageTab;PageTabOD;Palette;PicDialogs;Polyflow;PowerTest;Printgr;Prninfo;Readme;Runme;Sketch;Spinbutt;Splashin;StaticDemo;Status;StatusOD;Strlist;Strres;Syscolor;Sysmenu;ConsSysMen;Tabs;YesNoTest;WinesEntry;WinesCalc;VideoPlayer;UpDownDemo;Toolbar3;Toolbar2;Toolbar1;Todo;Telname;TabEdit;Colorlib;Testdll;Combos;Compstrm;Constraint;Contcomp;Daynames;Dclock;Client1;Server1;Client2;Server2;Report1;Sqlplay;WinesChart"/>

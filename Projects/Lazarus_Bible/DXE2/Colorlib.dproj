@@ -109,7 +109,7 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\COLORDLL\Frm_CLRFORM.PAS">
+			<DCCReference Include="..\source\COLORDLL\Frm_CLRFORM.pas">
 				<Form>ColorForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

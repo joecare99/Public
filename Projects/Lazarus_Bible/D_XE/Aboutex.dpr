@@ -3,7 +3,7 @@ program Aboutex;
 uses
   Forms,
   ABOUT in '..\Source\AboutEx\ABOUT.PAS' {AboutForm} ,
-  Frm_AboutExMAIN in '..\Source\AboutEx\Frm_AboutExMAIN.PAS' {MainForm};
+  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas' {MainForm};
 
 {$E EXE}
 {$R *.RES}

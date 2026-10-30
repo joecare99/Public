@@ -70,10 +70,10 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CALC32\Frm_CalcABOUT.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CalcABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\Calc32\Frm_CALC64.PAS"/>
+			<DCCReference Include="..\source\Calc32\Frm_CALC64.pas"/>
 			<DCCReference Include="..\source\Strings\StrUtilsExt.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>

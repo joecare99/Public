@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Fancy.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\FANCY\Frm_FancyMAIN.PAS">
+			<DCCReference Include="..\source\FANCY\Frm_FancyMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

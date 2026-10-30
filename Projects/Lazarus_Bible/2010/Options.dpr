@@ -1,8 +1,8 @@
 program Options;
 uses
   Forms,
-  Frm_OptionsMain in '..\Source\OPTIONS\Frm_OptionsMain.PAS' {MainForm},
-  Inidata in '..\Source\Inidata\Inidata.pas';
+  Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.pas' {MainForm},
+  Inidata in '..\source\Inidata\Inidata.pas';
 
 {$E EXE}
 {$R *.RES} 

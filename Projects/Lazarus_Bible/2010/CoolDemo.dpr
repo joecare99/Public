@@ -1,7 +1,7 @@
 program CoolDemo; 
 uses 
   Forms, 
-  frm_CooldemoMain in '..\Source\Cooldemo\frm_CooldemoMain.pas' {MainForm}; 
+  frm_CooldemoMain in '..\source\Cooldemo\frm_CooldemoMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

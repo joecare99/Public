@@ -10,8 +10,8 @@ uses
   Interfaces,
   {$ENDIF }
   Forms,
-  Frm_ABOUT in '..\source\ABOUTEX\frm_About.PAS' {frmAbout},
-  Frm_AboutExMAIN in '..\source\ABOUTEX\Frm_AboutExMAIN.PAS' {frmAboutMain};
+  Frm_ABOUT in '..\source\AboutEx\Frm_ABOUT.pas' {frmAbout},
+  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas' {frmAboutMain};
 
 {$E EXE}
 {$R *.res}

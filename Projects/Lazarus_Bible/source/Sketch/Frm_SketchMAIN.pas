@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, Menus;
 
 type
-  TMainForm = class(TForm)
+  TfrmSketchMain = class(TForm)
     MainMenu1: TMainMenu;
     Demo1: TMenuItem;
     Erase1: TMenuItem;
@@ -40,7 +40,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmSketchMain: TfrmSketchMain;
 
 implementation
 
@@ -50,12 +50,12 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmSketchMain.FormCreate(Sender: TObject);
 begin
   Dragging := 0;
 end;
 
-procedure TMainForm.FormMouseDown(Sender: TObject;
+procedure TfrmSketchMain.FormMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if ssRight in Shift   then
@@ -68,31 +68,31 @@ begin
   Canvas.MoveTo(X, Y);
 end;
 
-procedure TMainForm.FormMouseMove(Sender: TObject;
+procedure TfrmSketchMain.FormMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   if Dragging>0 then
     Canvas.LineTo(X, Y);
 end;
 
-procedure TMainForm.FormMouseUp(Sender: TObject;
+procedure TfrmSketchMain.FormMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   Dragging := 0;
 end;
 
-procedure TMainForm.FormDblClick(Sender: TObject);
+procedure TfrmSketchMain.FormDblClick(Sender: TObject);
 begin
   Erase1Click(Sender);
 end;
 
-procedure TMainForm.Erase1Click(Sender: TObject);
+procedure TfrmSketchMain.Erase1Click(Sender: TObject);
 begin
   Canvas.Brush := Brush; { Assign form's brush to Canvas }
-  Canvas.FillRect(MainForm.ClientRect);  { Repaint form bkgrnd}
+  Canvas.FillRect(frmSketchMain.ClientRect);  { Repaint form bkgrnd}
 end;
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TfrmSketchMain.Exit1Click(Sender: TObject);
 begin
   Close;
 end;

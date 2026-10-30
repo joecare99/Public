@@ -1,7 +1,7 @@
 program Except2; 
 uses 
   Forms, 
-  frm_Except2MAIN in '..\Source\EXCEPT2\frm_Except2MAIN.PAS' {MainForm}; 
+  frm_Except2MAIN in '..\source\EXCEPT2\frm_Except2MAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_TestDLLMAIN in '..\source\COLORDLL\Frm_TestDLLMAIN.PAS' {MainForm};
+  Frm_TestDLLMAIN in '..\source\COLORDLL\Frm_TestDLLMAIN.pas' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

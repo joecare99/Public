@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_SpinButtonMAIN in '..\Source\SPINBUTT\Frm_SpinButtonMAIN.PAS' {MainForm}; 
+  Frm_SpinButtonMAIN in '..\source\SPINBUTT\Frm_SpinButtonMAIN.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

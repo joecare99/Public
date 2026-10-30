@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_EnumFonMAIN in '..\Source\ENUMFON\Frm_EnumFonMAIN.PAS' {MainForm}; 
+  Frm_EnumFonMAIN in '..\source\ENUMFON\Frm_EnumFonMAIN.pas' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

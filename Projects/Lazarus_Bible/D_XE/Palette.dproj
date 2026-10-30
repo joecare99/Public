@@ -49,7 +49,7 @@
 			<DelphiCompile Include="Palette.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\PALETTE\Frm_PaletteMain.PAS">
+			<DCCReference Include="..\source\PALETTE\Frm_PaletteMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

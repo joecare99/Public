@@ -2,7 +2,7 @@ program Server1;
 
 uses
   Forms,
-  Frm_SERVER in '..\source\dde1\Frm_SERVER.PAS' {ServerForm};
+  Frm_SERVER in '..\source\DDE1\Frm_SERVER.pas' {ServerForm};
 
 {$R *.RES}
 {$E EXE}

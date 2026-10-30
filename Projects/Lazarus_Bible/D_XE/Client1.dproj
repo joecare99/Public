@@ -47,7 +47,7 @@
 			<DelphiCompile Include="Client1.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\DDE1\Frm_CLIENT.PAS">
+			<DCCReference Include="..\source\DDE1\Frm_CLIENT.pas">
 				<Form>ClientForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

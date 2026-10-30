@@ -1,7 +1,7 @@
 program Toolbar3; 
 uses 
   Forms, 
-  Frm_Toolbar3MAIN in '..\Source\TOOLBAR3\Frm_Toolbar3MAIN.PAS' {MainForm}; 
+  Frm_Toolbar3MAIN in '..\source\Toolbar3\Frm_Toolbar3MAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

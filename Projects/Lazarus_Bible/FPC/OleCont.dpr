@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_OleContMain in '..\Source\OleCont\Frm_OleContMain.pas' {MainForm}; 
+  Frm_OleContMain in '..\source\OleCont\Frm_OleContMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

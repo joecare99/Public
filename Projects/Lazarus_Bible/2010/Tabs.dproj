@@ -42,17 +42,17 @@
 			<DelphiCompile Include="Tabs.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\TABS\Frm_TabsMAIN.PAS">
+			<DCCReference Include="..\source\TABS\Frm_TabsMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\TABS\Frm_ABOUT.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_ABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\TABS\Frm_OPTIONS.PAS">
+			<DCCReference Include="..\source\TABS\Frm_OPTIONS.pas">
 				<Form>OptionsDialog</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\TABS\TABSUNIT.PAS"/>
-			<DCCReference Include="..\Source\Inidata\Inidata.pas"/>
+			<DCCReference Include="..\source\TABS\TabsUnit.pas"/>
+			<DCCReference Include="..\source\Inidata\Inidata.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

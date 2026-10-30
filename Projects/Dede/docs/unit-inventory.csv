@@ -1,0 +1,262 @@
+unit,target_dpr,work_source,baseline_source,dede_dump_source,idr_source,component_source,delphi_source,declared_classes,idr_form_dfm,classification,classification_evidence
+_Unit1,,,,,_Unit1.pas,,,,,synthetic-idr-unit,"synthetic IDR startup/TLS shim; eight internal routine names match Delphi SysInit.pas, with kernel32 local-memory/TLS imports bundled"
+_Unit100,,,,,_Unit100.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit102,,,,,_Unit102.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit103,,,,,_Unit103.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit105,,,,,_Unit105.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit110,,,,,_Unit110.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit112,,,,,_Unit112.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit114,,,,,_Unit114.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit117,,,,,_Unit117.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit120,,,,,_Unit120.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit131,,,,,_Unit131.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit132,,,,,_Unit132.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit138,,,,,_Unit138.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit139,,,,,_Unit139.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit140,,,,,_Unit140.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit141,,,,,_Unit141.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit143,,,,,_Unit143.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit144,,,,,_Unit144.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit146,,,,,_Unit146.pas,,,TDUFFile,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit151,,,,,_Unit151.pas,,,,,synthetic-idr-unit,synthetic IDR unit; DPJ stream loader/writer confirmed by DPJ! and CLASSESDUMPER signatures plus MainUnit call references
+_Unit152,,,,,_Unit152.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit153,,,,,_Unit153.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit154,,,,,_Unit154.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit155,,,,,_Unit155.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit157,,,,,_Unit157.pas,,,TCodeAnalizator,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit161,,,,,_Unit161.pas,,,TWPJALF,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit162,,,,,_Unit162.pas,,soap/WSDLBind.pas,TDocumentation,,synthetic-idr-unit,synthetic IDR unit; unique Delphi class evidence in WSDLBind: TDocumentation
+_Unit163,,,,,_Unit163.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit164,,,,,_Unit164.pas,,,TModelEntity,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit165,,,,,_Unit165.pas,,,TClassAndVisibilityFilter;TIteratorFilter;TModelIterator,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit166,,,,,_Unit166.pas,,,TErrorHandler,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit167,,,,,_Unit167.pas,,,TAbstractPackage;TAttribute;TClass;TClassifier;TDataType;TFeature;TInterface;TLogicPackage;TObjectModel;TOperation;TParameter;TProperty;TUnitDependency;TUnitPackage,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit168,,,,,_Unit168.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit169,,,,,_Unit169.pas,,,TCodeParser,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit170,,,,,_Unit170.pas,,,TDelphiParser,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit171,,,,,_Unit171.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit172,,,,,_Unit172.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit176,,,,,_Unit176.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit179,,,,,_Unit179.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit182,,,,,_Unit182.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit184,,,,,_Unit184.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit185,,,,,_Unit185.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit186,,,,,_Unit186.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit187,,,,,_Unit187.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit188,,,,,_Unit188.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit189,,,,,_Unit189.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit190,,,,,_Unit190.pas,,,TAbsVarDecl;TArrayDef;TBaseDef;TClassDef;TConstDecl;TConstDeclBase;TDCURec;TDispPropDecl;TDLLImpRec;TEnumDef;TExportDecl;TFileDef;TFloatDef;TImpDef;TImpTypeDefRec;TInterfaceDef;TLabelDecl;TLocalDecl;TMethodDecl;TNameDecl;TNameFDecl;TObjDef;TObjVMTDef;TProcDecl;TProcTypeDef;TPropDecl;TPtrDef;TRangeBaseDef;TRangeDef;TRecBaseDef;TRecDef;TResStrDef;TSetDef;TSetDeftInfo;TShortStrDef;TStringDef;TSysProcDecl;TTextDef;TThreadVarDecl;TTypeDecl;TTypeDef;TTypePDecl;TVarCDecl;TVarDecl;TVariantDef;TVoidDef,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit191,,,,,_Unit191.pas,,,TUnit,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit192,,,,,_Unit192.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit193,,,,,_Unit193.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit195,,,,,_Unit195.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit196,,,,,_Unit196.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit201,,,,,_Unit201.pas,,,TASM,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit203,,,,,_Unit203.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit204,,,,,_Unit204.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit207,,,,,_Unit207.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit209,,,,,_Unit209.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit22,,,,,_Unit22.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit27,,,,,_Unit27.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit28,,,,,_Unit28.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit29,,,,,_Unit29.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit30,,,,,_Unit30.pas,,,,,synthetic-idr-unit,"synthetic IDR import shim; five shell32 API names match Delphi ShellAPI.pas, but IDR signatures omit leading HWND/HDROP arguments"
+_Unit31,,,,,_Unit31.pas,,,,,synthetic-idr-unit,"synthetic IDR Shell32 import shim; three folder API names match Delphi ShlObj.pas, but IDR signatures omit leading arguments"
+_Unit32,,,,,_Unit32.pas,,,,,synthetic-idr-unit,"synthetic IDR Winspool import shim; four printer API names match Delphi WinSpool.pas, but IDR signatures omit leading arguments"
+_Unit35,,,,,_Unit35.pas,,,,,synthetic-idr-unit,"synthetic IDR CommDlg import shim; four dialog API names match Delphi CommDlg.pas, but IDR signatures omit leading arguments"
+_Unit36,,,,,_Unit36.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit39,,,,,_Unit39.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit5,,,,,_Unit5.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit50,,,,,_Unit50.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit51,,,,,_Unit51.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit55,,,,,_Unit55.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit56,,,,,_Unit56.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit6,,,,,_Unit6.pas,,,,,synthetic-idr-unit,synthetic IDR COM/OLE import shim spanning ole32 and oleaut32; overlapping ActiveX/Ole2 declarations prevent unit resolution
+_Unit61,,,,,_Unit61.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit62,,,,,_Unit62.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit63,,,,,_Unit63.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit64,,,,,_Unit64.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit65,,,,,_Unit65.pas,VCLZip.Pro.v3.05/kpSStrm.pas,,TS_BufferStream,,synthetic-idr-unit,synthetic IDR unit; unique component class evidence in kpSStrm: TS_BufferStream
+_Unit67,,,,,_Unit67.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit71,,,,,_Unit71.pas,VCLZip.Pro.v3.05/KPLib.pas,,TDirSearch;TLFNFileStream;TSearchData,,synthetic-idr-unit,"synthetic IDR unit; unique component class evidence in KpLib: TDirSearch, TLFNFileStream, TSearchData"
+_Unit75,,,,,_Unit75.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit76,,,,,_Unit76.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit77,,,,,_Unit77.pas,,,TELFFile;TELFHeader;TELFSection,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit78,,,,,_Unit78.pas,,,TDFMProjectHeader;TFieldData;TFieldRec;ThePEFile;TMethodData;TMethodRec;TPEHeader;TPEStream,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit79,,,,,_Unit79.pas,,,TBSS,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit80,,,,,_Unit80.pas,,,TClassInfoPool;TEmulationEntry;TEmulationsPool,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit81,,,,,_Unit81.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit82,,,,,_Unit82.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit83,,,,,_Unit83.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit84,,,,,_Unit84.pas,,,TDisAsm,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit85,,,,,_Unit85.pas,,,TDeDeSymbol,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit86,,,,,_Unit86.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit87,,,,,_Unit87.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit88,,,,,_Unit88.pas,,,TClassesList;TDFMObject;TDFMProperty;TScriptParser;TShortClassRec,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit89,,,,,_Unit89.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit9,,,,,_Unit9.pas,,,,,synthetic-idr-unit,synthetic IDR OLE Automation import shim; Variant/SafeArray APIs overlap Delphi ActiveX/Ole2 declarations
+_Unit90,,,,,_Unit90.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit91,,,,,_Unit91.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit92,,,,,_Unit92.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit95,,,,,_Unit95.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit97,,,,,_Unit97.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit98,,,,,_Unit98.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+_Unit99,,,,,_Unit99.pas,,,,,synthetic-idr-unit,synthetic IDR unit name; origin unresolved
+AboutUnit,yes,AboutUnit.pas,AboutUnit.pas,AboutUnit.pas,AboutUnit.pas,,,TAboutBox,AboutBox.dfm,target-dpr-unit,reference DeDe.dpr
+ActnList,,,,,ActnList.pas,,vcl/ActnList.pas,TActionLink;TContainedAction;TCustomAction;TCustomActionList;TShortCutList,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+AddClsMemDtaUnit,yes,AddClsMemDtaUnit.pas,,AddClsMemDtaUnit.pas,AddClsMemDtaUnit.pas,,,TAddClsMemDtaForm,AddClsMemDtaForm.dfm,target-dpr-unit,reference DeDe.dpr
+AdvEmuSetUnit,,AdvEmuSetUnit.pas,AdvEmuSetUnit.pas,,,,,TAdvanceEmuSettingsForm,,v311-main-source,matching unit in trunk/Source/Main
+AnalizUnit,yes,AnalizUnit.pas,AnalizUnit.pas,AnalizUnit.pas,AnalizUnit.pas,,,TAnalyzForm,AnalyzForm.dfm,target-dpr-unit,reference DeDe.dpr
+AniFile,,,,,AniFile.pas,RxLib/Units/rxAnifile.pas;RXlib_v2.7.7/Units/rxAnifile.pas,,TAnimatedCursorImage;TIconFrame,,third-party-component-source,"unique IDR class match in component unit rxAniFile: TAnimatedCursorImage, TIconFrame"
+Animate,,,,,Animate.pas,RxLib/Units/rxAnimate.pas;RXlib_v2.7.7/Units/rxAnimate.pas,,THack;TRxImageControl,,third-party-component-source,unique IDR class match in component unit rxAnimate: TRxImageControl
+asm2opcode,,asm2opcode.pas,asm2opcode.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+Asm2Pas,,Asm2Pas.pas,Asm2Pas.pas,,,,,TAsm2PasForm,Asm2PasForm.dfm,v311-main-source,matching unit in trunk/Source/Main
+ASMConvertUnit,yes,ASMConvertUnit.pas,ASMConvertUnit.pas,ASMConvertUnit.pas,ASMConvertUnit.pas,,,TASMForm,ASMForm.dfm,target-dpr-unit,reference DeDe.dpr
+ASMShow,yes,ASMShow.pas,ASMShow.pas,ASMShow.pas,ASMShow.pas,,,TASMShowForm,ASMShowForm.dfm,target-dpr-unit,reference DeDe.dpr
+AsmTables,,AsmTables.pas,AsmTables.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+BPLUnit,yes,BPLUnit.pas,BPLUnit.pas,BPLUnit.pas,BPLUnit.pas,,,TBPL,BPL.dfm,target-dpr-unit,reference DeDe.dpr
+Buttons,,,,,Buttons.pas,,vcl/Buttons.pas,TBitBtn;TButtonGlyph;TGlyphCache;TGlyphList;TSpeedButton;TSpeedButtonActionLink,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Classes,,,,,Classes.pas,,rtl/common/Classes.pas,TBasicAction;TBasicActionLink;TBits;TClassFinder;TCollection;TCollectionItem;TComponent;TCustomMemoryStream;TFiler;TFileStream;THandleStream;TIntConst;TInterfacedPersistent;TInterfaceList;TList;TMemoryStream;TOwnedCollection;TParser;TPersistent;TPropFixup;TPropIntfFixup;TReader;TRegGroup;TRegGroups;TResourceStream;TStream;TStreamAdapter;TStringList;TStrings;TThread;TThreadList;TWriter,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ClassInfoUnit,yes,ClassInfoUnit.pas,ClassInfoUnit.pas,ClassInfoUnit.pas,ClassInfoUnit.pas,,,TClassInfoForm,ClassInfoForm.dfm,target-dpr-unit,reference DeDe.dpr
+Clipbrd,,,,,Clipbrd.pas,,vcl/Clipbrd.pas,TClipboard,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ComConst,,,,,ComConst.pas,,rtl/common/ComConst.pas;rtl/common/de/ComConst.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ComCtrls,,,,,ComCtrls.pas,,vcl/ComCtrls.pas,TComboBoxExActionLink;TComboBoxExStrings;TComboExItem;TComboExItems;TConversion;TCustomComboBoxEx;TCustomListView;TCustomStatusBar;TCustomTabControl;TCustomTreeView;TIconOptions;TListColumn;TListColumns;TListItem;TListItems;TListView;TListViewActionLink;TPageControl;TProgressBar;TStatusBar;TStatusPanel;TStatusPanels;TSubItems;TTabSheet;TTabStrings;TTreeNode;TTreeNodes;TTreeView;TWorkArea;TWorkAreas,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+CommCtrl,,,,,CommCtrl.pas,,rtl/win/CommCtrl.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ComStrs,,,,,ComStrs.pas,,vcl/ComStrs.pas;vcl/de/ComStrs.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Consts,,,,,Consts.pas,,vcl/Consts.pas;vcl/de/Consts.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Contnrs,,,,,Contnrs.pas,,rtl/common/Contnrs.pas,TObjectList;TOrderedList;TStack,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Controls,,,,,Controls.pas,,vcl/Controls.pas,TBaseDragControlObject;TControl;TControlActionLink;TControlCanvas;TCustomControl;TCustomListControl;TCustomMultiSelectListControl;TDockTree;TDockZone;TDragControlObject;TDragControlObjectEx;TDragDockObject;TDragDockObjectEx;TDragImageList;TDragObject;TDragObjectEx;TGraphicControl;THintWindow;TImageList;TMouse;TSiteList;TSizeConstraints;TWinControl;TWinControlActionLink,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ConverterUnit,yes,ConverterUnit.pas,ConverterUnit.pas,ConverterUnit.pas,ConverterUnit.pas,,,TConverterForm,ConverterForm.dfm,target-dpr-unit,reference DeDe.dpr
+CRC32,,CRC32.PAS,CRC32.PAS,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+custsetunit,yes,custsetunit.pas,custsetunit.pas,custsetunit.pas,custsetunit.pas,,,Tw32CustSetForm,w32CustSetForm.dfm,target-dpr-unit,reference DeDe.dpr
+DAsmUtil,,DAsmUtil.pas,DAsmUtil.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DateUtils,,,,,DateUtils.pas,,rtl/common/DateUtils.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DB,,,,,DB.pas,,db/DB.pas,TADTField;TArrayField;TAutoIncField;TBCDField;TBinaryField;TBlobField;TBooleanField;TBytesField;TCheckConstraint;TCheckConstraints;TCurrencyField;TDataLink;TDataSet;TDataSetField;TDataSource;TDateField;TDateTimeField;TDefaultDBScreenApplication;TDefCollection;TDetailDataLink;TField;TFieldDef;TFieldDefList;TFieldDefs;TFieldList;TFields;TFlatList;TFloatField;TFMTBCDField;TGraphicField;TGuidField;TIDispatchField;TIntegerField;TInterfaceField;TLargeintField;TLookupList;TMemoField;TNamedItem;TNumericField;TObjectField;TReferenceField;TSmallintField;TSQLTimeStampField;TStringField;TTimeField;TVarBytesField;TVariantField;TWideStringField;TWordField,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DBConsts,,,,,DBConsts.pas,,db/DBConsts.pas;db/de/DBConsts.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DBCtrls,,,,,DBCtrls.pas,,db/DBCtrls.pas,TDataSourceLink;TDBLookupControl;TDBLookupListBox;TDBNavigator;TListSourceLink;TNavButton;TNavDataLink;TPopupDataList;TVCLScreenApplication,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DBGrids,,,,,DBGrids.pas,,db/DBGrids.pas,TBookmarkList;TColumn;TColumnTitle;TCustomDBGrid;TDBGrid;TDBGridColumns;TDBGridInplaceEdit;TGridDataLink,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DBLogDlg,yes,DBLogDlg.pas,,DBLogDlg.pas,DBLogDlg.pas,,db/DBLogDlg.pas;db/de/DBLogDlg.pas,TLoginDialog,LoginDialog.dfm,target-dpr-unit,reference DeDe.dpr
+DBPWDlg,yes,DBPWDlg.pas,,DBPWDlg.pas,DBPWDlg.pas,,db/DBPWDlg.pas;db/de/DBPWDlg.pas,TPasswordDialog,PasswordDialog.dfm,target-dpr-unit,reference DeDe.dpr
+DCU32,,Dcu32.pas,Dcu32.pas,,,,,TArrayDef;TAtDecl;TBaseDef;TClassDef;TConstDecl;TConstDeclBase;TDCURec;TDispPropDecl;TDLLImpRec;TEnumDef;TExportDecl;TFileDef;TFloatDef;TImpDef;TImpTypeDefRec;TInterfaceDef;TLabelDecl;TLocalDecl;TMethodDecl;TNameDecl;TNameFDecl;TObjDef;TObjVMTDef;TProcDecl;TProcDeclBase;TProcTypeDef;TPropDecl;TPtrDef;TRangeBaseDef;TRangeDef;TRecBaseDef;TRecDef;TResStrDef;TSetDef;TSetDeftInfo;TShortStrDef;TStringDef;TSysProcDecl;TTextDef;TThreadVarDecl;TTypeDecl;TTypeDef;TTypePDecl;TUnit;TVarCDecl;TVarDecl;TVariantDef;TVoidDef,,v311-main-source,matching unit in trunk/Source/Main
+DCU_In,,DCU_In.pas,DCU_In.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DCU_Out,,DCU_Out.pas,DCU_Out.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DCUOptionUnit,yes,DCUOptionUnit.pas,DCUOptionUnit.pas,DCUOptionUnit.pas,DCUOptionUnit.pas,,,TDCUOptionForm,DCUOptionForm.dfm,target-dpr-unit,reference DeDe.dpr
+DCUTbl,,DCUTbl.pas,DCUTbl.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DCUUnit,yes,DCUUnit.pas,DCUUnit.pas,DCUUnit.pas,DCUUnit.pas,,,TDCUForm,DCUForm.dfm,target-dpr-unit,reference DeDe.dpr
+Decompiler,,Decompiler.pas,Decompiler.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDe_SDK,,DeDe_SDK.pas,DeDe_SDK.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeAnsiStream,,DeDeAnsiStream.pas,,,,,,,,working-copy-source,matching working-copy source
+DeDeBPL,,DeDeBPL.pas,DeDeBPL.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeBSS,,DeDeBSS.pas,DeDeBSS.pas,,,,,TBSS,,v311-main-source,matching unit in trunk/Source/Main
+DeDeBZUnit,,DeDeBZUnit.pas,DeDeBZUnit.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeClassEmulator,,DeDeClassEmulator.pas,DeDeClassEmulator.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeClasses,,DeDeClasses.pas,DeDeClasses.pas,,,,,TPEHeader,,v311-main-source,matching unit in trunk/Source/Main
+DeDeClassHandle,,DeDeClassHandle.pas,DeDeClassHandle.pas,,,,,TClassDumper;TClassesDumper;TPackageInfoTable,,v311-main-source,matching unit in trunk/Source/Main
+DeDeConstants,,DeDeConstants.pas,DeDeConstants.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeCrypt,,DeDeCrypt.pas,DeDeCrypt.pas,,DeDeCrypt.pas,,,TDCP_blockcipher;TDCP_hash,,v311-main-source,matching unit in trunk/Source/Main
+DeDeDCU,,DeDeDCU.pas,DeDeDCU.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeDCUDumper,,DeDeDCUDumper.pas,DeDeDCUDumper.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeDFMModel,,DeDeDFMModel.pas,,,,,,TDFMObject;TDFMProperty,,working-copy-source,matching working-copy source
+DeDeDFMTextParser,,DeDeDFMTextParser.pas,,,,,,TDFMParseFrame,,working-copy-source,matching working-copy source
+DeDeDisAsm,,DeDeDisAsm.pas,DeDeDisAsm.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeDPJEng,,DeDeDPJEng.pas,DeDeDPJEng.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeDUF,,DeDeDUF.pas,DeDeDUF.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeEditText,yes,DeDeEditText.pas,DeDeEditText.pas,DeDeEditText.pas,DeDeEditText.pas,,,TEditTextForm,EditTextForm.dfm,target-dpr-unit,reference DeDe.dpr
+DeDeELFClasses,,DeDeELFClasses.pas,DeDeELFClasses.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeExpressions,,DeDeExpressions.pas,DeDeExpressions.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeHidden,,DeDeHidden.pas,DeDeHidden.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeMemDumps,,DeDeMemDumps.pas,DeDeMemDumps.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeOffsInf,,DeDeOffsInf.pas,DeDeOffsInf.pas,,DeDeOffsInf.pas,,,TOffsInfArchive;TOffsInfStruct,,v311-main-source,matching unit in trunk/Source/Main
+DeDePAnalizer,,DeDePAnalizer.pas,DeDePAnalizer.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDePAS,,DeDePAS.pas,DeDePAS.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDePFiles,,DeDePFiles.pas,DeDePFiles.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDePParser,,DeDePParser.pas,DeDePParser.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDePProject,,DedePProject.pas,DedePProject.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeReg,,DeDeReg.pas,DeDeReg.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeRes,,DeDeRes.pas,DeDeRes.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeSym,,DeDeSym.pas,DeDeSym.pas,,,,,TDeDeSymbol,,v311-main-source,matching unit in trunk/Source/Main
+DeDeUtils,,DeDeUtils.pas,DeDeUtils.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeWpjAlf,,DeDeWpjAlf.pas,DeDeWpjAlf.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DeDeZAUnit,,DeDeZAUnit.pas,DeDeZAUnit.pas,,DeDeZAUnit.pas,,,TDCP_sha1,,v311-main-source,matching unit in trunk/Source/Main
+Dialogs,,,,,Dialogs.pas,,vcl/Dialogs.pas,TCommonDialog;TFindDialog;TFontDialog;TMessageForm;TOpenDialog;TRedirectorWindow;TSaveDialog,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+DisAsm,,DisASM.pas,DisASM.pas,,,,,TDisAsm,,v311-main-source,matching unit in trunk/Source/Main
+DisAsmTables,,DisAsmTables.pas,DisAsmTables.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+DOIAddDtaUnit,yes,DOIAddDtaUnit.pas,DOIAddDtaUnit.pas,DOIAddDtaUnit.pas,DOIAddDtaUnit.pas,,,TDOIAddDataForm,DOIAddDataForm.dfm,target-dpr-unit,reference DeDe.dpr
+DOIBUnit,yes,DOIBUnit.pas,DOIBUnit.pas,DOIBUnit.pas,DOIBUnit.pas,,,TDOIBForm,DOIBForm.dfm,target-dpr-unit,reference DeDe.dpr
+DOIParsr,yes,DOIParsr.pas,DOIParsr.pas,DOIParsr.pas,DOIParsr.pas,,,TDOIParsFrm,DOIParsFrm.dfm,target-dpr-unit,reference DeDe.dpr
+EditExprUnit,yes,EditExprUnit.pas,EditExprUnit.pas,EditExprUnit.pas,EditExprUnit.pas,,,TEditExprForm,EditExprForm.dfm,target-dpr-unit,reference DeDe.dpr
+EditPropUnit,yes,EditPropUnit.pas,,EditPropUnit.pas,EditPropUnit.pas,,,TEditPropForm,EditPropForm.dfm,target-dpr-unit,reference DeDe.dpr
+Emulator,,Emulator.pas,Emulator.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+EPFindUnit,yes,EPFindUnit.pas,EPFindUnit.pas,EPFindUnit.pas,EPFindUnit.pas,,,TEPFindForm,EPFindForm.dfm,target-dpr-unit,reference DeDe.dpr
+ExtCtrls,,,,,ExtCtrls.pas,,vcl/ExtCtrls.pas,TBevel;TCustomPanel;TCustomRadioGroup;TGroupButton;TImage;TNotebook;TPage;TPageAccess;TPanel;TRadioGroup;TSplitter;TTimer,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ExtDlgs,,,,,ExtDlgs.pas,,vcl/ExtDlgs.pas,TOpenPictureDialog;TSavePictureDialog;TSilentPaintPanel,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+FatExpression,,FatExpression.pas,FatExpression.pas,,,,,TExpNode;TExpParser;TExpToken;TFatExpression;TFunction,,v311-main-source,matching unit in trunk/Source/Main
+FileCtrl,,,,,FileCtrl.pas,,vcl/FileCtrl.pas,TDirectoryListBox;TDriveComboBox;TFileListBox;TPathLabel;TSelectDirDlg,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+FileDrop,,FileDrop.pas,,,FileDrop.pas,,,TFileDrop,,working-copy-source,matching working-copy source
+FileUtil,,,,,FileUtil.pas,RxLib/Units/rxFileUtil.pas;RXlib_v2.7.7/Units/rxFileUtil.pas,,TBrowseFolderDlg,,third-party-component-source,unique IDR class match in component unit rxFileUtil: TBrowseFolderDlg
+FixUp,,FixUp.pas,FixUp.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+FlatSB,,,,,FlatSB.pas,,rtl/win/FlatSB.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+FMTBcd,,,,,FMTBcd.pas,,db/FMTBcd.pas,TFMTBcdData;TFMTBcdVariantType;TLiteralInfo,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+FmxUtils,,FMXUTILS.PAS,FMXUTILS.PAS,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+Forms,,,,,Forms.pas,,vcl/Forms.pas,TApplication;TControlScrollBar;TCustomDockForm;TCustomForm;TForm;TMonitor;TScreen;TScrollBox;TScrollingWinControl,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+GIFCtrl,,,,,GIFCtrl.pas,RxLib/Units/rxGifctrl.pas;RXlib_v2.7.7/Units/rxGifctrl.pas,,TRxGIFAnimator,,third-party-component-source,unique IDR class match in component unit rxGIFCtrl: TRxGIFAnimator
+Graphics,,,,,Graphics.pas,,vcl/Graphics.pas,TBitmap;TBitmapCanvas;TBitmapImage;TBrush;TCanvas;TClipboardFormats;TFileFormatsList;TFont;TGraphic;TGraphicsObject;TIcon;TIconImage;TMetafile;TMetafileImage;TPatternManager;TPen;TPicture;TResourceManager;TSharedImage,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Grids,,,,,Grids.pas,,vcl/Grids.pas,TCustomDrawGrid;TCustomGrid;TDrawGrid;TInplaceEdit;TInplaceEditList;TPopupListbox;TSparseList;TSparsePointerArray;TStringGrid;TStringGridStrings;TStringSparseList,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+HelpIntfs,,,,,HelpIntfs.pas,,rtl/common/de/HelpIntfs.pas;rtl/common/HelpIntfs.pas,THelpManager;THelpViewerNode,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+HEXTools,,HEXTools.pas,HEXTools.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+IcoList,,,,,IcoList.pas,RxLib/Units/rxIcolist.pas;RXlib_v2.7.7/Units/rxIcolist.pas,,TIconList,,third-party-component-source,unique IDR class match in component unit rxIcoList: TIconList
+ImgList,,,,,ImgList.pas,,vcl/ImgList.pas,TChangeLink;TCustomImageList,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+IniFiles,,,,,IniFiles.pas,,rtl/common/IniFiles.pas,TCustomIniFile;TIniFile,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+JConsts,,,,,JConsts.pas,,vcl/de/JConsts.pas;vcl/JConsts.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+jpeg,,,,,jpeg.pas,,vcl/jpeg.pas,TJPEGData;TJPEGImage,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+kpCntn,,,,,kpCntn.pas,VCLZip.Pro.v3.05/kpCntn.pas,,TObjectList;tRegisterRec;TSortedObjectList,,third-party-component-source,matching unit under trunk/Source/Components
+kpZipObj,,,,,kpZipObj.pas,VCLZip.Pro.v3.05/kpZipObj.pas,,TEndCentral;TSortedZip;TZipHeaderInfo,,third-party-component-source,matching unit under trunk/Source/Components
+LAUnit,yes,LAUnit.pas,LAUnit.pas,LAUnit.pas,LAUnit.pas,,,TLSForm,LSForm.dfm,target-dpr-unit,reference DeDe.dpr
+ListActns,,,,,ListActns.pas,,vcl/ListActns.pas,TCustomListAction;TListActionLink;TListControlItem;TListControlItems;TStaticListAction;TStaticListItems;TVirtualListAction,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+LodoUnit,yes,LodoUnit.pas,LodoUnit.pas,LodoUnit.pas,LodoUnit.pas,,,TLogoForm,LogoForm.dfm,target-dpr-unit,reference DeDe.dpr
+MainPD,,MainPD.pas,MainPD.pas,,,,,TForm1,,v311-main-source,matching unit in trunk/Source/Main
+MainUnit,yes,MainUnit.pas,MainUnit.pas,MainUnit.pas,MainUnit.pas,,,TClassDumper;TClassesDumper;TDeDeMainForm;TPackageInfoTable,DeDeMainForm.dfm,target-dpr-unit,reference DeDe.dpr
+MakePEHUnit,,MakePEHUnit.pas,MakePEHUnit.pas,,,,,TMakePEHForm,MakePEHForm.dfm,v311-main-source,matching unit in trunk/Source/Main
+Mask,,,,,Mask.pas,,vcl/Mask.pas,TCustomMaskEdit,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+MaskUtils,,,,,MaskUtils.pas,,rtl/common/MaskUtils.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Math,,,,,Math.pas,,rtl/common/Math.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+MemLocUnit,yes,MemLocUnit.pas,,MemLocUnit.pas,MemLocUnit.pas,,,TChooseMemLocForm,ChooseMemLocForm.dfm,target-dpr-unit,reference DeDe.dpr
+Menus,,,,,Menus.pas,,vcl/Menus.pas,TMainMenu;TMenu;TMenuActionLink;TMenuItem;TMenuItemStack;TPopupList;TPopupMenu,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+MethProp,,MethProp.pas,MethProp.pas,,,,,TComponentInfo,,v311-main-source,matching unit in trunk/Source/Main
+MultiMon,,,,,MultiMon.pas,,rtl/win/MultiMon.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+op,,OP.PAS,OP.PAS,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+Placemnt,,,,,Placemnt.pas,RxLib/Units/rxPlacemnt.pas;RXlib_v2.7.7/Units/rxPlacemnt.pas,,TFormPlacement;TIniLink;TWinMinMaxInfo,,third-party-component-source,"unique IDR class match in component unit rxPlacemnt: TFormPlacement, TIniLink, TWinMinMaxInfo"
+PlugInInterface,,PlugInInterface.pas,PlugInInterface.pas,,,,,,,v311-main-source,matching unit in trunk/Source/Main
+PreferencesUnit,yes,PreferencesUnit.pas,PreferencesUnit.pas,PreferencesUnit.pas,PreferencesUnit.pas,,,TPrefsForm,PrefsForm.dfm,target-dpr-unit,reference DeDe.dpr
+Printers,,,,,Printers.pas,,vcl/Printers.pas,TPrinter;TPrinterDevice,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Registry,,,,,Registry.pas,,rtl/common/Registry.pas,TRegIniFile;TRegistry,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+RTLConsts,,,,,RTLConsts.pas,,rtl/common/de/RTLConsts.pas;rtl/common/RTLConsts.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+RXCtrls,,,,,RXCtrls.pas,RxLib/Units/RxCtrls.pas;RXlib_v2.7.7/Units/RxCtrls.pas,,TCheckListBoxItem;TCheckListBoxStrings;TGlyphCache;TGlyphList;TRxButtonGlyph;TRxCheckListBox;TRxCustomLabel;TRxCustomListBox;TRxLabel;TRxListBoxStrings;TRxSpeedButton,,third-party-component-source,matching unit under trunk/Source/Components
+RxGIF,,,,,RxGIF.pas,RxLib/Units/Rxgif.pas;RXlib_v2.7.7/Units/Rxgif.pas,,TExtension;TGIFData;TGIFFrame;TGIFImage;TGIFItem,,third-party-component-source,matching unit under trunk/Source/Components
+RxGrdCpt,,,,,RxGrdCpt.pas,RxLib/Units/Rxgrdcpt.pas;RXlib_v2.7.7/Units/Rxgrdcpt.pas,,TRxCaption;TRxCaptionList;TRxGradientCaption,,third-party-component-source,matching unit under trunk/Source/Components
+RxHook,,,,,RxHook.pas,RxLib/Units/Rxhook.pas;RXlib_v2.7.7/Units/Rxhook.pas,,TControlHook;THookList;TRxWindowHook,,third-party-component-source,matching unit under trunk/Source/Components
+RxMemDS,,,,,RxMemDS.pas,RxLib/Units/RxMemDS.pas;RXlib_v2.7.7/Units/RxMemDS.pas,,TMemBlobStream;TMemoryRecord;TRxMemoryData,,third-party-component-source,matching unit under trunk/Source/Components
+RxTimer,,,,,RxTimer.pas,RxLib/Units/RxTimer.pas;RXlib_v2.7.7/Units/RxTimer.pas,,TRxTimer;TTimerThread,,third-party-component-source,matching unit under trunk/Source/Components
+SectionEditUnit,yes,SectionEditUnit.pas,SectionEditUnit.pas,SectionEditUnit.pas,SectionEditUnit.pas,,,TFlagsEditForm,FlagsEditForm.dfm,target-dpr-unit,reference DeDe.dpr
+SelProcessUnit,yes,SelProcessUnit.pas,SelProcessUnit.pas,SelProcessUnit.pas,SelProcessUnit.pas,,,TMemDmpForm,MemDmpForm.dfm,target-dpr-unit,reference DeDe.dpr
+ShowPEUnit,yes,ShowPEUnit.pas,ShowPEUnit.pas,ShowPEUnit.pas,ShowPEUnit.pas,,,TPEIForm,PEIForm.dfm,target-dpr-unit,reference DeDe.dpr
+ShowPluginUnit,yes,ShowPluginUnit.pas,ShowPluginUnit.pas,ShowPluginUnit.pas,ShowPluginUnit.pas,,,TShowPlugInForm,ShowPlugInForm.dfm,target-dpr-unit,reference DeDe.dpr
+SpyDebugUnit,yes,SpyDebugUnit.pas,SpyDebugUnit.pas,SpyDebugUnit.pas,SpyDebugUnit.pas,,,TSpyDebugForm,SpyDebugForm.dfm,target-dpr-unit,reference DeDe.dpr
+SqlTimSt,,,,,SqlTimSt.pas,,db/SqlTimSt.pas,TSQLTimeStampData;TSQLTimeStampVariantType,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+StatsUnit,yes,StatsUnit.pas,StatsUnit.pas,StatsUnit.pas,StatsUnit.pas,,,TStatsForm,StatsForm.dfm,target-dpr-unit,reference DeDe.dpr
+StdActns,,,,,StdActns.pas,,vcl/StdActns.pas,THintAction,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+StdCtrls,,,,,StdCtrls.pas,,vcl/StdCtrls.pas,TButton;TButtonActionLink;TButtonControl;TCheckBox;TComboBox;TComboBoxStrings;TCustomCheckBox;TCustomCombo;TCustomComboBox;TCustomComboBoxStrings;TCustomEdit;TCustomGroupBox;TCustomLabel;TCustomListBox;TCustomMemo;TEdit;TGroupBox;TLabel;TListBox;TListBoxStrings;TMemo;TMemoStrings;TRadioButton,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+SymbolsUnit,yes,SymbolsUnit.pas,SymbolsUnit.pas,SymbolsUnit.pas,SymbolsUnit.pas,,,TSymbolsForm,SymbolsForm.dfm,target-dpr-unit,reference DeDe.dpr
+SysConst,,,,,SysConst.pas,,rtl/sys/de/SysConst.pas;rtl/sys/SysConst.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+system,,,,,system.pas,,rtl/sys/System.pas,TInterfacedObject;TObject,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+sysutils,,,,,sysutils.pas,,rtl/sys/SysUtils.pas,TMultiReadExclusiveWriteSynchronizer;TThreadLocalCounter,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+ToolEdit,,,,,ToolEdit.pas,RxLib/Units/rxToolEdit.pas;RXlib_v2.7.7/Units/rxToolEdit.pas,,TCustomComboEdit;TDirectoryEdit;TEditButton;TFileDirEdit;TFilenameEdit,,third-party-component-source,"unique IDR class match in component unit rxToolEdit: TCustomComboEdit, TDirectoryEdit, TFileDirEdit, TFilenameEdit"
+TreeViewUnit,yes,TreeViewUnit.pas,,TreeViewUnit.pas,TreeViewUnit.pas,,,TTreeViewForm,TreeViewForm.dfm,target-dpr-unit,reference DeDe.dpr
+Types,,,,,Types.pas,,rtl/sys/Types.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+TypInfo,,,,,TypInfo.pas,,rtl/common/TypInfo.pas,TPublishableVariantType,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+variants,,,,,variants.pas,,rtl/sys/Variants.pas,TCustomVariantType;TInvokeableVariantType,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+VCLUnZip,,,,,VCLUnZip.pas,VCLZip.Pro.v3.05/VCLUnZip.pas,,TVCLUnZip,,third-party-component-source,matching unit under trunk/Source/Components
+VCLZip,,,,,VCLZip.pas,VCLZip.Pro.v3.05/VCLZip.pas,,TMultiZipInfo;TVCLZip,,third-party-component-source,matching unit under trunk/Source/Components
+VDBConsts,,,,,VDBConsts.pas,,db/de/VDBConsts.pas;db/VDBConsts.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+Windows,,,,,Windows.pas,,rtl/win/Windows.pas,,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree
+WinHelpViewer,,,,,WinHelpViewer.pas,,vcl/WinHelpViewer.pas,TWinHelpViewer,,delphi-rtl-vcl-db-source,matching unit in installed Delphi source tree

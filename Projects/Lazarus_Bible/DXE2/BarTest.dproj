@@ -102,7 +102,7 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\BARCHART\Frm_BartestMain.pas">
+			<DCCReference Include="..\source\Barchart\Frm_BartestMain.pas">
 				<Form>frmBarChartMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

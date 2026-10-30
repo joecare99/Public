@@ -9,11 +9,33 @@
 
 unit Frm_TodoMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  StdCtrls, Menus, Dialogs, Clipbrd, SysUtils, Printers, Frm_About;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ Buttons,
+
+  StdCtrls,
+ Menus,
+ Dialogs,
+ Clipbrd,
+ SysUtils,
+ Printers,
+ TODO_Frm_ABOUT,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  PrintersDlgs
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -97,8 +119,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 const
   title = 'To Do';
 
@@ -278,7 +307,7 @@ function TMainForm.GetFirstSelection(List: TCustomListBox): Integer;
 begin
   for Result := 0 to List.Items.Count - 1 do
     if List.Selected[Result] then Exit;
-  Result := LB_ERR;
+  Result := -1;  { keine Auswahl (Delphi: LB_ERR) }
 end;
 
 procedure TMainForm.SetItem(List: TListBox; Index: Integer);
@@ -289,7 +318,7 @@ begin
   begin
     SetFocus;
     MaxIndex := List.Items.Count - 1;
-    if Index = LB_ERR then Index := 0
+    if Index < 0 then Index := 0        { Delphi: LB_ERR = -1 }
     else if Index > MaxIndex then Index := MaxIndex;
     Selected[Index] := True;
   end;
@@ -431,10 +460,34 @@ end;
 procedure TMainForm.FilePrintClick(Sender: TObject);
 var
   FPrn: System.Text;  { Printer output text file }
-  I: Integer;
+  I, Y, LineH: Integer;
 begin
   if PrintDialog1.Execute then
   begin
+    {$IFDEF FPC}
+    { Free Pascal kennt AssignPrn nicht; die Liste wird ueber die
+      Drucker-Leinwand ausgegeben. Ohne Drucker (z. B. WSL) sauber abfangen. }
+    try
+      Printer.BeginDoc;
+      try
+        LineH := Printer.Canvas.TextHeight('X') + 2;
+        Y := LineH;
+        Printer.Canvas.TextOut(100, Y, MainForm.Caption);  { Title }
+        Inc(Y, LineH);                                     { Blank line }
+        with SrcList do
+          for I := 0 to Items.Count - 1 do
+          begin
+            Printer.Canvas.TextOut(100, Y, Items[I]);       { Print line }
+            Inc(Y, LineH);
+          end;
+      finally
+        Printer.EndDoc;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Drucken nicht moeglich: ' + E.Message);
+    end;
+    {$ELSE}
     AssignPrn(FPrn);  { Direct Write/Writeln to FPrn }
     Rewrite(FPrn);    { Open printer output file }
     try
@@ -446,6 +499,7 @@ begin
     finally
       CloseFile(FPrn);  { Close printer output file }
     end;
+    {$ENDIF}
   end;
 end;
 

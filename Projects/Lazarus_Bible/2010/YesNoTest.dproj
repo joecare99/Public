@@ -42,7 +42,7 @@
 			<DelphiCompile Include="YesNoTest.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\YESNO\Frm_YesNoMAIN.PAS">
+			<DCCReference Include="..\source\YESNO\Frm_YesNoMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<DCCReference Include="..\Source\YESNO\YESNO.PAS">

@@ -1,10 +1,36 @@
 unit Frm_WinesDemoMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Db, DBTables, StdCtrls, Buttons, Grids, DBGrids, ExtCtrls, DBCtrls, ADODB;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  Db,
+ StdCtrls,
+ Buttons,
+ Grids,
+ DBGrids,
+ ExtCtrls,
+ DBCtrls,
+ ADODB,
+{$IFnDEF FPC}
+  Windows,
+  DBTables,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  db
+{$ENDIF};
 
 type
   TMainForm = class(TForm)

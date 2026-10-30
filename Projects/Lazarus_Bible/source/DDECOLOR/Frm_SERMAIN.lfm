@@ -1,0 +1,142 @@
+object MainForm: TMainForm
+  Left = 193
+  Top = 100
+  Caption = 'DDE Color Server (CServer)'
+  ClientHeight = 222
+  ClientWidth = 489
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OldCreateOrder = True
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 16
+  object RedLabel: TLabel
+    Left = 32
+    Top = 24
+    Width = 30
+    Height = 16
+    Caption = '&Red:'
+    FocusControl = RedEdit
+  end
+  object GreenLabel: TLabel
+    Left = 32
+    Top = 56
+    Width = 43
+    Height = 16
+    Caption = '&Green:'
+    FocusControl = GreenEdit
+  end
+  object BlueLabel: TLabel
+    Left = 32
+    Top = 88
+    Width = 34
+    Height = 16
+    Caption = '&Blue:'
+    FocusControl = BlueEdit
+  end
+  object Bevel1: TBevel
+    Left = 16
+    Top = 8
+    Width = 353
+    Height = 113
+  end
+  object RedSB: TScrollBar
+    Left = 88
+    Top = 24
+    Width = 217
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 0
+    OnChange = SBChange
+  end
+  object GreenSB: TScrollBar
+    Tag = 1
+    Left = 88
+    Top = 56
+    Width = 217
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 1
+    OnChange = SBChange
+  end
+  object BlueSB: TScrollBar
+    Tag = 2
+    Left = 88
+    Top = 88
+    Width = 217
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 2
+    OnChange = SBChange
+  end
+  object RedEdit: TEdit
+    Left = 320
+    Top = 22
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    Text = '0'
+    OnChange = EditChange
+  end
+  object GreenEdit: TEdit
+    Tag = 1
+    Left = 320
+    Top = 54
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    Text = '0'
+    OnChange = EditChange
+  end
+  object BlueEdit: TEdit
+    Tag = 2
+    Left = 320
+    Top = 86
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+    Text = '0'
+    OnChange = EditChange
+  end
+  object BitBtn1: TBitBtn
+    Left = 280
+    Top = 136
+    Width = 89
+    Height = 33
+    TabOrder = 6
+    Kind = bkClose
+  end
+  object SimpleIPCClient1: TSimpleIPCClient
+    ServerID = 'ddecolor'
+    left = 32
+    top = 128
+  end
+end

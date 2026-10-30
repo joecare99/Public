@@ -1,10 +1,35 @@
 unit Frm_WinesCalcMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, Grids, DBGrids, ExtCtrls, DBCtrls, Db, DBTables;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+ Buttons,
+ Grids,
+ DBGrids,
+ ExtCtrls,
+ DBCtrls,
+ Db,
+{$IFnDEF FPC}
+  Windows,
+  DBTables,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  db
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -31,8 +56,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 { Calculate the Days Old virtual field using today's
   date (returned by the SysUtils Date function) and
   the value of the database table's Purchased value. }

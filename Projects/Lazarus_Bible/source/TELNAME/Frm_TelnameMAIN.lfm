@@ -1,0 +1,83 @@
+object frmTelnameMain: TfrmTelnameMain
+  Left = 0
+  Top = 0
+  Caption = 'Telefonname und Nummer'
+  ClientHeight = 440
+  ClientWidth = 620
+  Constraints.MinHeight = 420
+  Constraints.MinWidth = 580
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  object Label1: TLabel
+    Left = 320
+    Top = 132
+    Width = 130
+    Height = 17
+    Caption = 'Telefonnummer'
+    FocusControl = NumbEdit
+  end
+  object Label2: TLabel
+    Left = 320
+    Top = 40
+    Width = 130
+    Height = 17
+    Caption = 'Telefonname'
+    FocusControl = NameEdit
+  end
+  object ListBox1: TListBox
+    Left = 24
+    Top = 64
+    Width = 264
+    Height = 336
+    Anchors = [akLeft, akTop, akBottom]
+    ItemHeight = 18
+    TabOrder = 2
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 492
+    Top = 400
+    Width = 104
+    Height = 32
+    Anchors = [akRight, akBottom]
+    Caption = 'Schließen'
+    Kind = bkClose
+    TabOrder = 5
+  end
+  object NamesBitBtn: TBitBtn
+    Left = 320
+    Top = 260
+    Width = 160
+    Height = 34
+    Caption = 'Buchstaben erzeugen'
+    TabOrder = 4
+    OnClick = NamesBitBtnClick
+  end
+  object NumberBitBtn: TBitBtn
+    Left = 320
+    Top = 168
+    Width = 160
+    Height = 34
+    Caption = 'In Nummer umwandeln'
+    TabOrder = 3
+    OnClick = NumberBitBtnClick
+  end
+  object NameEdit: TEdit
+    Left = 320
+    Top = 64
+    Width = 276
+    Height = 28
+    Anchors = [akLeft, akTop, akRight]
+    TabOrder = 0
+    OnKeyPress = NameEditKeyPress
+  end
+  object NumbEdit: TEdit
+    Left = 320
+    Top = 156
+    Width = 276
+    Height = 28
+    Anchors = [akLeft, akTop, akRight]
+    TabOrder = 1
+    OnKeyPress = NumbEditKeyPress
+  end
+end

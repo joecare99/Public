@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_ListFontMAIN in '..\Source\LISTFONT\Frm_ListFontMAIN.PAS' {MainForm}; 
+  Frm_ListFontMAIN in '..\source\LISTFONT\Frm_ListFontMAIN.pas' {MainForm}; 
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

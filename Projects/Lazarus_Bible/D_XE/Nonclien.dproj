@@ -52,7 +52,7 @@
 			<DelphiCompile Include="Nonclien.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\NONCLIEN\frm_NonClientMAIN.PAS">
+			<DCCReference Include="..\source\NONCLIEN\frm_NonClientMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

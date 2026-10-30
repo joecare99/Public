@@ -1,7 +1,7 @@
 program Sysmenu; 
 uses 
   Forms, 
-  Frm_SysmenuMain in '..\Source\SysMenu\Frm_SysmenuMain.pas' {Form1}; 
+  Frm_SysmenuMain in '..\source\SysMenu\Frm_SysmenuMain.pas' {Form1}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

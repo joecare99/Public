@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PagetabODMain in '..\Source\PageTabOD\Frm_PagetabODMain.pas' {MainForm}; 
+  Frm_PagetabODMain in '..\source\PageTabOD\Frm_PagetabODMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

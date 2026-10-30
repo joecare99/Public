@@ -39,14 +39,14 @@
 			<DelphiCompile Include="DingButtonXControl.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DingX\DingButtonXControl_TLB.pas"/>
-			<DCCReference Include="..\Source\DingX\DingButtonImpl1.pas">
+			<DCCReference Include="..\source\DingX\DingButtonXControl_TLB.pas"/>
+			<DCCReference Include="..\source\DingX\DingButtonImpl1.pas">
 				<CoClasses>DingButtonX</CoClasses>
 			</DCCReference>
-			<DCCReference Include="..\Source\DingX\Frm_DingAbout.pas">
+			<DCCReference Include="..\source\DingX\Frm_DingAbout.pas">
 				<Form>DingButtonXAbout</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\Ding\Ctrl_DingButton.pas"/>
+			<DCCReference Include="..\source\DING\Ctrl_DingButton.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

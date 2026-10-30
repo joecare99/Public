@@ -5,7 +5,7 @@ program PowerTest;
   {$MODE Delphi}
 {$ENDIF}
 
-uses unt_PowerTest in '..\source\Power\unt_PowerTest';
+uses unt_PowerTest in '..\source\POWER\unt_PowerTest.pas';
 
 begin
   Execute;

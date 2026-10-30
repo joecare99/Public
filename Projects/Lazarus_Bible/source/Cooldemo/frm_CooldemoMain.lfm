@@ -255,7 +255,6 @@ object MainForm: TMainForm
     Anchors = [akTop, akRight]
     ClientHeight = 43
     ClientWidth = 70
-    TabOrder = 4
     OnClick = Button1Click
     object Image1: TImage
       Left = 1
@@ -265,32 +264,7 @@ object MainForm: TMainForm
       Align = alClient
       OnClick = Button1Click
     end
-    object Animate1: TBGRASpriteAnimation
-      Left = 1
-      Height = 39
-      Top = 1
-      Width = 67
-      AnimInvert = False
-      AnimPosition = 1
-      AnimRepeat = 0
-      AnimRepeatLap = 0
-      AnimSpeed = 40
-      AnimStatic = False
-      AutoSize = False
-      Center = True
-      Proportional = True
-      SpriteCount = 1
-      SpriteFillOpacity = 255
-      SpriteFlipMode = flNone
-      SpriteKeyColor = clNone
-      SpriteResampleFilter = rfLinear
-      SpriteResampleMode = rmSimpleStretch
-      SpriteRotation = rtNone
-      Stretch = True
-      Tile = False
-      Caption = 'Animate1'
-      OnClick = Button1Click
-    end
+
   end
   object NavigatorImages: TImageList
     Height = 20

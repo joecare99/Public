@@ -1,10 +1,28 @@
 unit Frm_StaticDemoMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -28,8 +46,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 var
   SavedStyle: TStaticBorderStyle;
 
@@ -59,7 +84,7 @@ procedure TMainForm.StaticText1Click(Sender: TObject);
 var
   S: String;
 begin
-  MessageBeep(0);
+  Beep;
   S := TStaticText(Sender).Name;
   ShowMessage('You selected ' + S);
 end;

@@ -2,7 +2,7 @@ program Toolbar2;
 
 uses
   Forms,
-  Frm_Toolbar2MAIN in '..\source\TOOLBAR2\Frm_Toolbar2MAIN.PAS' {MainForm};
+  Frm_Toolbar2MAIN in '..\source\TOOLBAR2\Frm_Toolbar2MAIN.pas' {MainForm};
 
 {$R *.RES}
 {$E EXE}

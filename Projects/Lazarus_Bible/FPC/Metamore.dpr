@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MetaMoreMAIN in '..\Source\METAMORE\Frm_MetaMoreMAIN.PAS' {MainForm}; 
+  Frm_MetaMoreMAIN in '..\source\METAMORE\Frm_MetaMoreMAIN.pas' {MainForm}; 
 {$E exe} 
 {$R *.res}
 begin

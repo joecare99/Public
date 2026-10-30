@@ -1,13 +1,35 @@
 unit Frm_Toolbar2MAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, ExtCtrls, StdCtrls, Buttons, Grids, Calendar;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ ExtCtrls,
+ StdCtrls,
+ Buttons,
+ Grids,
+ Calendar,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmToolbar2Main = class(TForm)
     ToolbarPanel: TPanel;
     RingSB: TSpeedButton;
     DateSB: TSpeedButton;
@@ -39,18 +61,21 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmToolbar2Main: TfrmToolbar2Main;
 
 implementation
 
-{$R *.DFM}
-
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 const
   isNotInToolbar = 0;     { SpeedButton Tag flag }
   isInToolbar    = 1;     { SpeedButton Tag flag }
 
 {- Returns True if Sender is in the toolbar }
-function TMainForm.InToolbar(Sender: TObject): Boolean;
+function TfrmToolbar2Main.InToolbar(Sender: TObject): Boolean;
 begin
   with Sender as TSpeedButton do
   if Tag = isNotInToolbar then
@@ -62,7 +87,7 @@ begin
 end;
 
 {- Assign OnClick event handlers for buttons not in toolbar }
-procedure TMainForm.SBMouseDown(Sender: TObject; Button: TMouseButton;
+procedure TfrmToolbar2Main.SBMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   with Sender as TSpeedButton do
@@ -82,7 +107,7 @@ begin
 end;
 
 {- Move buttons into the toolbar }
-procedure TMainForm.SBMouseUp(Sender: TObject; Button: TMouseButton;
+procedure TfrmToolbar2Main.SBMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   with Sender as TSpeedButton do
@@ -94,28 +119,30 @@ begin
 end;
 
 {- Respond to Ring button click }
-procedure TMainForm.RingSBClick(Sender: TObject);
+procedure TfrmToolbar2Main.RingSBClick(Sender: TObject);
 begin
   if InToolbar(Sender) then
+{$IFnDEF FPC}
     MessageBeep(0);
+{$ENDIF}
 end;
 
 {- Respond to Date button click }
-procedure TMainForm.DateSBClick(Sender: TObject);
+procedure TfrmToolbar2Main.DateSBClick(Sender: TObject);
 begin
   if InToolbar(Sender) then
     ShowMessage('The date is ' + DateToStr(Date));
 end;
 
 {- Respond to Time button click }
-procedure TMainForm.TimeSBClick(Sender: TObject);
+procedure TfrmToolbar2Main.TimeSBClick(Sender: TObject);
 begin
   if InToolbar(Sender) then
     ShowMessage('The time is ' + TimeToStr(Time));
 end;
 
 {- Respond to Calendar button click }
-procedure TMainForm.CalendarSBClick(Sender: TObject);
+procedure TfrmToolbar2Main.CalendarSBClick(Sender: TObject);
 begin
   if InToolbar(Sender) then
   with Calendar1 do
@@ -126,7 +153,7 @@ begin
 end;
 
 {- Respond to Exit button click }
-procedure TMainForm.ExitSBClick(Sender: TObject);
+procedure TfrmToolbar2Main.ExitSBClick(Sender: TObject);
 begin
   if InToolbar(Sender) then
     Close;

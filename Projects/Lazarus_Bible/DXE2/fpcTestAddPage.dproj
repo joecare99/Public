@@ -61,7 +61,7 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="..\source\tests\tst_AddPage.pas"/>
-			<DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.PAS">
+			<DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.pas">
 				<Form>frmAddPageMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

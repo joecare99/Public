@@ -1,8 +1,8 @@
 program Direxec; 
 uses 
   Forms, 
-  Frm_DirExecMAIN in '..\Source\DIREXEC\Frm_DirExecMAIN.PAS' {MainForm}, 
-  Frm_Dirdlg in '..\Source\DIREXEC\..\Direx\Frm_Dirdlg.pas' {DirDlgForm};
+  Frm_DirExecMAIN in '..\source\DIREXEC\Frm_DirExecMAIN.pas' {MainForm}, 
+  Frm_Dirdlg in '..\source\DIREX\Frm_DIRDLG.pas' {DirDlgForm};
 {$R *.RES}
 {$E EXE} 
 begin 

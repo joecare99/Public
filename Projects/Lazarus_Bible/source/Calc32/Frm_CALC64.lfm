@@ -25,7 +25,6 @@ object frmCalc64Main: TfrmCalc64Main
     BevelOuter = bvNone
     ClientHeight = 248
     ClientWidth = 720
-    TabOrder = 1
     object MemButton: TSpeedButton
       Left = 12
       Height = 38
@@ -92,7 +91,6 @@ object frmCalc64Main: TfrmCalc64Main
       Font.Name = 'System'
       ParentColor = False
       ParentFont = False
-      TabOrder = 0
       object lblBinary: TLabel
         Left = 4
         Height = 53
@@ -130,7 +128,6 @@ object frmCalc64Main: TfrmCalc64Main
       Font.Name = 'System'
       ParentColor = False
       ParentFont = False
-      TabOrder = 1
       object lblHex: TLabel
         Left = 4
         Height = 28
@@ -168,7 +165,6 @@ object frmCalc64Main: TfrmCalc64Main
       Font.Name = 'System'
       ParentColor = False
       ParentFont = False
-      TabOrder = 2
       object lblDecimal: TLabel
         Left = 4
         Height = 28
@@ -204,7 +200,6 @@ object frmCalc64Main: TfrmCalc64Main
       Font.Name = 'System'
       ParentColor = False
       ParentFont = False
-      TabOrder = 3
       object lblMemory: TLabel
         Left = 4
         Height = 28

@@ -1,7 +1,7 @@
 program Fishy; 
 uses 
   Forms, 
-  Frm_FishyMAIN in '..\Source\FISHY\Frm_FishyMAIN.PAS' {MainForm}; 
+  Frm_FishyMAIN in '..\source\FISHY\Frm_FishyMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

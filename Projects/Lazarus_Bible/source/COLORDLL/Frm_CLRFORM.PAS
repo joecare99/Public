@@ -43,8 +43,8 @@ type
 var
   ColorForm: TColorForm;
 
-function FBGetColors(var FColor, BColor: TColor): WordBool;
-  export;
+function FBGetColors(var FColor, BColor: TColor): LongBool;
+  cdecl;
 
 implementation
 
@@ -72,7 +72,7 @@ begin
 end;
 
 {- Get foreground and background colors }
-function FBGetColors(var FColor, BColor: TColor): WordBool;
+function FBGetColors(var FColor, BColor: TColor): LongBool;
 begin
   Result := False;
   ColorForm := TColorForm.Create(Application);
