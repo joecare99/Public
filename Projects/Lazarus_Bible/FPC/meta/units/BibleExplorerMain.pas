@@ -15,7 +15,7 @@ uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ComCtrls, Dialogs, Menus,
   Buttons, ExtCtrls, Graphics, LCLIntf, LCLType, Process,
   BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry,
-  FormShot;
+  BibleResources, FormShot;
 
 type
   { TBibleExplorerForm }
@@ -192,12 +192,20 @@ end;
 procedure TBibleExplorerForm.LoadManifest;
 var
   FileName: string;
+  ManifestText: string;
 begin
+  if TryLoadBibleResourceText('bible.manifest.json', ManifestText) and
+    FIndex.LoadFromString(ManifestText) then
+  begin
+    lblStatus.Caption := 'Index: eingebettete Ressource';
+    Exit;
+  end;
+
   FileName := IncludeTrailingPathDelimiter(FRootPath) + 'FPC/meta/bible.manifest.json';
   if not FileExists(FileName) then
     FileName := IncludeTrailingPathDelimiter(GetCurrentDir) + 'bible.manifest.json';
   if not FIndex.LoadFromFile(FileName) then
-    lblStatus.Caption := 'Index nicht gefunden: ' + FileName
+    lblStatus.Caption := 'Index weder eingebettet noch als Datei gefunden: ' + FileName
   else
     lblStatus.Caption := 'Index: ' + FileName;
 end;

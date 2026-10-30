@@ -11,6 +11,8 @@ uses
   Forms,
   BibleExplorerMain, FormShot;
 
+{$R BibleExplorerData.res}
+
 begin
   RequireDerivedFormResource := True;
   Application.Scaled:=True;
