@@ -1,7 +1,6 @@
 unit Unit3;
 
 {-------------------------------------------------------------------------------
-  Unit3 - TForm3, reconstructed from the IDR disassembly
   Source\Projects_AhnenWin\Unit3.pas and the original resource
   Source\Projects_AhnenWin\Form3.dfm.
 
@@ -4225,6 +4224,10 @@ var
   jahr, monat, tag: AnsiString;
   personNr, proz: Integer;
   uNr: Integer;
+  bmk: Integer;             {vtbl+150 GetBookmark - Recon-Stub -1}
+  cmzCount: Integer;        {Form1.Memo1-Lines-Loop-Index (Original [esi])}
+  edi: Integer;             {NOTES-Merker (erstr. '1 NOTE' / folg. '2 CONT')}
+  komFeld: TField;          {FieldByName('kommentar') per recon}
 begin
   { 005B5224: GEDCOM-Export "v" (GEDCOM 5.5.1) - stellt alle Daten der
     geöffneten Datenbank als GED-Datei neu zusammen (Aufruf nach
@@ -4382,7 +4385,7 @@ begin
     proz := Round(personNr / gvar_02536644 * 100);           {005B5F4B..5F5C fild/fdiv/fmul 100 + ROUND}
     Form1.Label18.Caption := IntToStr(proz) + ' %';          {005B5F63..5F91 ' %' + SetText}
     Form1.Label18.Refresh;                                   {005B5FA3}
-    {edi := 0;}                                              {005B5FA8 xor edi edi - Scratch}
+    edi := 0;                                                  {005B5FA8 xor edi edi - NOTES-Merker}
     WriteLn(gvar_02536458, '0 @I' + IntToStr(personNr) +     {005B5FAA..5FD3 CatN3}
       '@ INDI');                                             {push '0 @I', IntToStr, '@ INDI'}
     uNr := DataModule2.Table24Nummer.AsInteger;              {005B5FF2..5FFF vtbl+22C +58 [ebp-168] Integer}
@@ -4419,9 +4422,391 @@ begin
           DataModule2.Table1Hausname.AsString + '/');
       WriteLn(gvar_02536458, '2 TYPE estate');               {005B63D6}
     end;
-    // TODO C3: ab 005B63EF (Geschlecht [548] -> UpperCase -> Vergleiche
-    // 'W'/'M' -> '1 SEX ...', danach Namens-/Geburts-/Sterbe-Blöcke ff.;
-    // Extrakt gedeausv.txt L1000+ transkribieren)
+    {--- C3 (005B63EF..005B8878): SEX / OCCU / RELI / IDNO / Quelleg-Ref /
+      BIRT / CHR / _GODP / DEAT / CAUS / BURI / RESI / NOTES (Schrw., lebt,
+      Memo-Kommentar) ---}
+    st5 := Trim(DataModule2.Table1Geschlecht.AsString);        {005B63EA..640E +548}
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then
+      WriteLn(gvar_02536458, '1 SEX F')                        {005B6425}
+    else
+    begin
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then
+        WriteLn(gvar_02536458, '1 SEX M')                      {005B6479}
+      else
+      begin
+        if (UpperCase(DataModule2.Table1Geschlecht.AsString) = 'X') or  {005B64BE..64C8}
+           (st5 = '') then                                             {005B64CA..64F5}
+          WriteLn(gvar_02536458, '1 SEX U');                            {005B64F7}
+      end;
+    end;
+    if Trim(DataModule2.Table1Beruf.AsString) <> '' then        {005B6510..653B +550}
+    begin
+      if gvar_02536650 = 1 then                                 {005B6548}
+        WriteLn(gvar_02536458, '1 OCCU ' +                      {005B654A..659E CatN3}
+          AnsiToUtf8(DataModule2.Table1Beruf.AsString))
+      else                                                      {005B65A0}
+        WriteLn(gvar_02536458, '1 OCCU ' +                      {005B65BF CatN3}
+          DataModule2.Table1Beruf.AsString);
+    end;
+    if Trim(DataModule2.Table1Religion.AsString) <> '' then     {005B65EB..660E +54C}
+      WriteLn(gvar_02536458, '1 RELI ' +                        {005B662F CatN3}
+        DataModule2.Table1Religion.AsString);                   {KEINE Utf8-Variante im Original}
+    if Trim(DataModule2.Table1IDNR.AsString) <> '' then         {005B665B..667E +5C0}
+      WriteLn(gvar_02536458, '1 IDNO ' +                        {005B669F CatN3}
+        DataModule2.Table1IDNR.AsString);
+    DataModule2.Table38.First;                                  {005B66C5 +530}
+    if Trim(DataModule2.Table1Quelle.AsString) <> '' then       {005B66DE..66FB +5FC}
+    begin
+      u := DataModule2.Table1Quelle.AsString;                   {005B6707..671A}
+      if DataModule2.Table38.FindKey([u]) then                  {005B6727..673E [ebp-168] VarType 0B}
+      begin
+        bmk := -1;                                              {005B674F [530] vtbl+150 GetBookmark - Recon-Stub}
+        WriteLn(gvar_02536458, '1 SOUR @S' + IntToStr(bmk) + '@');  {005B6740..6790 CatN3}
+      end;
+      sub_00576EB0(bmk, u);                                     {005B67A2 vtbl+150 (erneut) + 00576EB0 6-stellig}
+      st3 := st3 + u + '*';                                     {005B6795..67C6 CatN3 [ebp-28] SourRef-Accu}
+    end;
+    st5 := Trim(DataModule2.Table1Gebjahr.AsString);            {005B67D9..67F6 +55C}
+    if (st5 <> '') or (Trim(DataModule2.Table1Gebort.AsString) <> '') then  {005B6817..6823 +560}
+    begin
+      WriteLn(gvar_02536458, '1 BIRT');                         {005B6829}
+      if st5 <> '' then                                         {005B6861..686D}
+        WriteLn(gvar_02536458, '2 DATE ' +                      {005B6873..68FF CatN3}
+          sub_00582C24(DataModule2.Table1Gebtag.AsString,       {554 Tag}
+                       DataModule2.Table1Gebmonat.AsString,     {558 Monat}
+                       DataModule2.Table1Gebjahr.AsString));    {55C Jahr}
+      if Trim(DataModule2.Table1Gebort.AsString) <> '' then     {005B6922..6929}
+      begin
+        u := DataModule2.Table1Gebort.AsString;                 {005B693F..694E}
+        DataModule2.Table13.FindKey([u]);                       {005B6955..696A [0CC] - ohne Result-Test}
+        st2 := DataModule2.Table1Gebort.AsString + ',' +        {005B6978..69E5 CatN7 [ebp-2C]}
+               DataModule2.Table13Lkr.AsString + ',' +          {0A64}
+               DataModule2.Table13Bland.AsString + ',' +        {0A58}
+               DataModule2.Table13Land.AsString;                               {0A4C}
+        if gvar_02536650 = 1 then                               {005B69EA}
+          WriteLn(gvar_02536458, '2 PLAC ' + AnsiToUtf8(st2))   {005B6A0D CatN3}
+        else
+          WriteLn(gvar_02536458, '2 PLAC ' + st2);              {005B6A3C CatN3}
+        u := DataModule2.Table1Gebort.AsString;                 {005B6A70..6A73}
+        if DataModule2.Table13.FindKey([u]) then                {005B6A96..6A9D}
+        begin
+          bmk := -1;                                            {005B6AB2 vtbl+150 - Recon-Stub}
+          WriteLn(gvar_02536458, '3 _LOC @P' + IntToStr(bmk) + '@');  {005B6AA3..6AF3 CatN3}
+          sub_00576EB0(bmk, u);                                 {005B6B02..6B14 [0CC] vtbl+150 + 6-stellig}
+          if Pos(u, st1) = 0 then                               {005B6B1C..6B23 LStrPos - st1 [ebp-14] PLAC-Ref-Accu}
+          begin
+            sub_00576EB0(bmk, u);                               {005B6B32..6B3E vtbl+150 (erneut)}
+            st1 := st1 + u + '*';                               {005B6B4E..6B56 CatN3}
+          end;
+        end;
+      end;
+      u := DataModule2.Table1Quelleg.AsString;                  {005B6B67..6B74 +5A0}
+      if DataModule2.Table38.FindKey([u]) then                  {005B6B91..6B98}
+      begin
+        bmk := -1;                                              {005B6BAD vtbl+150 - Recon-Stub}
+        WriteLn(gvar_02536458, '2 SOUR @S' + IntToStr(bmk) + '@');  {005B6B9E..6BEE CatN3}
+        sub_00576EB0(bmk, u);                                   {005B6C00}
+        st3 := st3 + u + '*';                                   {005B6BF3..6C24 CatN3}
+      end;
+    end;
+    st5 := Trim(DataModule2.Table1Taufjahr.AsString);           {005B6C39..6C54 +56C}
+    if (st5 <> '') or (Trim(DataModule2.Table1Taufort.AsString) <> '') then   {005B6C75..6C81 +570}
+    begin
+      WriteLn(gvar_02536458, '1 CHR');                          {005B6C87}
+      if st5 <> '' then                                         {005B6CB9..6CCB}
+        WriteLn(gvar_02536458, '2 DATE ' +                      {005B6CD1..6D5D CatN3}
+          sub_00582C24(DataModule2.Table1Tauftag.AsString,      {564 Tag}
+                       DataModule2.Table1Taufmonat.AsString,    {568 Monat}
+                       DataModule2.Table1Taufjahr.AsString));   {56C Jahr}
+      if Trim(DataModule2.Table1Taufort.AsString) <> '' then    {005B6D7B..6D87}
+      begin
+        u := DataModule2.Table1Taufort.AsString;
+        DataModule2.Table13.FindKey([u]);                       {005B6DC3..6DDC}
+        st2 := DataModule2.Table1Taufort.AsString + ',' +       {005B6DDC..6E3B CatN7}
+               DataModule2.Table13Lkr.AsString + ',' +
+               DataModule2.Table13Bland.AsString + ',' +
+               DataModule2.Table13Land.AsString;
+        if gvar_02536650 = 1 then
+          WriteLn(gvar_02536458, '2 PLAC ' + AnsiToUtf8(st2))   {005B6E6B}
+        else
+          WriteLn(gvar_02536458, '2 PLAC ' + st2);              {005B6E9A}
+        u := DataModule2.Table1Taufort.AsString;
+        if DataModule2.Table13.FindKey([u]) then                {005B6EF4..6EFB}
+        begin
+          bmk := -1;                                            {005B6F10 vtbl+150 - Recon-Stub}
+          WriteLn(gvar_02536458, '3 _LOC @P' + IntToStr(bmk) + '@');  {005B6F01..6F51}
+          sub_00576EB0(bmk, u);                                 {005B6F5E..6F6C}
+          if Pos(u, st1) = 0 then                               {005B6F7A..6F81}
+          begin
+            sub_00576EB0(bmk, u);
+            st1 := st1 + u + '*';
+          end;
+        end;
+      end;
+      u := DataModule2.Table1Quellet.AsString;                  {005B6FC1..6FD2 +5A4}
+      if DataModule2.Table38.FindKey([u]) then                  {005B6FEF..6FF6}
+      begin
+        bmk := -1;                                              {005B700B vtbl+150 - Recon-Stub}
+        WriteLn(gvar_02536458, '2 SOUR @S' + IntToStr(bmk) + '@');  {005B6FFC..704C}
+        sub_00576EB0(bmk, u);                                   {005B705E..706A}
+        st3 := st3 + u + '*';                                   {005B7051..7082 CatN3}
+      end;
+    end;
+    if Trim(DataModule2.Table1Taufpat.AsString) <> '' then      {005B7097..70B2 +574}
+    begin
+      if gvar_02536650 = 1 then                                 {005B70BF}
+        WriteLn(gvar_02536458, '2 _GODP ' + AnsiToUtf8(DataModule2.Table1Taufpat.AsString))  {005B70F6 CatN3}
+      else
+        WriteLn(gvar_02536458, '2 _GODP ' +                     {005B7136 CatN3}
+          DataModule2.Table1Taufpat.AsString);
+    end;
+    st5 := Trim(DataModule2.Table1Stjahr.AsString);             {005B716A..7185 +584}
+    if (st5 <> '') or (Trim(DataModule2.Table1Stort.AsString) <> '') then    {005B71A6..71B2 +588}
+    begin
+      WriteLn(gvar_02536458, '1 DEAT');                         {005B71B8}
+      if st5 <> '' then                                         {005B71EA..71FC}
+        WriteLn(gvar_02536458, '2 DATE ' +                      {005B7202..728D CatN3}
+          sub_00582C24(DataModule2.Table1Sttag.AsString,        {57C Tag}
+                       DataModule2.Table1Stmonat.AsString,      {580 Monat}
+                       DataModule2.Table1Stjahr.AsString));     {584 Jahr}
+      if Trim(DataModule2.Table1Stort.AsString) <> '' then      {005B72AC..72B8}
+      begin
+        u := DataModule2.Table1Stort.AsString;
+        DataModule2.Table13.FindKey([u]);                       {005B72F4..72F9 - ohne Result-Test}
+        st2 := DataModule2.Table1Stort.AsString + ',' +         {005B7309..736C CatN7}
+               DataModule2.Table13Lkr.AsString + ',' +
+               DataModule2.Table13Bland.AsString + ',' +
+               DataModule2.Table13Land.AsString;
+        if gvar_02536650 = 1 then
+          WriteLn(gvar_02536458, '2 PLAC ' + AnsiToUtf8(st2))   {005B739C}
+        else
+          WriteLn(gvar_02536458, '2 PLAC ' + st2);              {005B73CB}
+        u := DataModule2.Table1Stort.AsString;
+        if DataModule2.Table13.FindKey([u]) then                {005B7425..742C}
+        begin
+          bmk := -1;                                            {005B7441 vtbl+150 - Recon-Stub}
+          WriteLn(gvar_02536458, '3 _LOC @P' + IntToStr(bmk) + '@');  {005B7432..7482}
+          sub_00576EB0(bmk, u);                                 {005B7491..749D}
+          if Pos(u, st1) = 0 then                               {005B74AB..74B2}
+          begin
+            sub_00576EB0(bmk, u);
+            st1 := st1 + u + '*';
+          end;
+        end;
+      end;
+      u := DataModule2.Table1Quelles.AsString;                  {005B74F2..74FD +5A8}
+      if DataModule2.Table38.FindKey([u]) then                  {005B7520..7527}
+      begin
+        bmk := -1;                                              {005B753C vtbl+150 - Recon-Stub}
+        WriteLn(gvar_02536458, '2 SOUR @S' + IntToStr(bmk) + '@');  {005B752D..757D}
+        sub_00576EB0(bmk, u);                                   {005B758F..759B}
+        st3 := st3 + u + '*';                                   {005B7582..75B3 CatN3}
+      end;
+    end;
+    if Trim(DataModule2.Table1Todesurs.AsString) <> '' then     {005B75C0..75E3 +58C}
+    begin
+      if gvar_02536650 = 1 then                                 {005B75F0}
+        WriteLn(gvar_02536458, '2 CAUS ' + AnsiToUtf8(DataModule2.Table1Todesurs.AsString))  {005B7622 CatN3}
+      else
+        WriteLn(gvar_02536458, '2 CAUS ' +                      {005B7667 CatN3}
+          DataModule2.Table1Todesurs.AsString);
+    end;
+    st5 := Trim(DataModule2.Table1Begjahr.AsString);            {005B7699..76B6 +598}
+    if (st5 <> '') or (Trim(DataModule2.Table1Begort.AsString) <> '') then    {005B76D7..76E3 +59C}
+    begin
+      WriteLn(gvar_02536458, '1 BURI');                         {005B76E9}
+      if st5 <> '' then                                         {005B771B..772D}
+        WriteLn(gvar_02536458, '2 DATE ' +                      {005B7733..77BD CatN3}
+          sub_00582C24(DataModule2.Table1Begtag.AsString,       {590 Tag}
+                       DataModule2.Table1Begmonat.AsString,     {594 Monat}
+                       DataModule2.Table1Begjahr.AsString));    {598 Jahr}
+      if Trim(DataModule2.Table1Begort.AsString) <> '' then     {005B77DD..77E9}
+      begin
+        u := DataModule2.Table1Begort.AsString;
+        DataModule2.Table13.FindKey([u]);                       {005B7825..782A - ohne Result-Test}
+        st2 := DataModule2.Table1Begort.AsString + ',' +        {005B783A..7897 CatN7}
+               DataModule2.Table13Lkr.AsString + ',' +
+               DataModule2.Table13Bland.AsString + ',' +
+               DataModule2.Table13Land.AsString;
+        if gvar_02536650 = 1 then
+          WriteLn(gvar_02536458, '2 PLAC ' + AnsiToUtf8(st2))   {005B78CD}
+        else
+          WriteLn(gvar_02536458, '2 PLAC ' + st2);              {005B78FC}
+        u := DataModule2.Table1Begort.AsString;
+        if DataModule2.Table13.FindKey([u]) then                {005B7956..795D}
+        begin
+          bmk := -1;                                            {005B7972 vtbl+150 - Recon-Stub}
+          WriteLn(gvar_02536458, '3 _LOC @P' + IntToStr(bmk) + '@');  {005B7963..79B3}
+          sub_00576EB0(bmk, u);                                 {005B79C2..79CE}
+          if Pos(u, st1) = 0 then                               {005B79DC..79E3}
+          begin
+            sub_00576EB0(bmk, u);
+            st1 := st1 + u + '*';
+          end;
+        end;
+      end;
+      u := DataModule2.Table1Quelleb.AsString;                  {005B7A23..7A2E +5AC}
+      if DataModule2.Table38.FindKey([u]) then                  {005B7A51..7A58}
+      begin
+        bmk := -1;                                              {005B7A6D vtbl+150 - Recon-Stub}
+        WriteLn(gvar_02536458, '2 SOUR @S' + IntToStr(bmk) + '@');  {005B7A5E..7AAE}
+        sub_00576EB0(bmk, u);                                   {005B7AC0..7ACC}
+        st3 := st3 + u + '*';                                   {005B7AB3..7AE4 CatN3}
+      end;
+    end;
+    st5 := Trim(DataModule2.Table1Lebensort.AsString);          {005B7AF9..7B14 +578}
+    if (st5 <> '') or (Trim(DataModule2.Table1Adr1.AsString) <> '') then    {005B7B35..7B41 +5CC}
+      WriteLn(gvar_02536458, '1 RESI');                         {005B7B47}
+    if st5 <> '' then                                           {005B7B8B}
+    begin
+      if gvar_02536650 = 1 then                                 {005B7B98}
+        WriteLn(gvar_02536458, '2 PLAC ' + AnsiToUtf8(DataModule2.Table1Lebensort.AsString))  {005B7BCA CatN3}
+      else
+        WriteLn(gvar_02536458, '2 PLAC ' +                      {005B7C0F CatN3}
+          DataModule2.Table1Lebensort.AsString);
+    end;
+    if Trim(DataModule2.Table1Adr1.AsString) <> '' then         {005B7C43..7C5E}
+    begin
+      WriteLn(gvar_02536458, '2 ADDR ');                        {005B7C64 - Kopfzeile ohne Inhalt}
+      if gvar_02536650 = 1 then                                 {005B7C84}
+        WriteLn(gvar_02536458, '3 ADR1 ' + AnsiToUtf8(DataModule2.Table1Adr1.AsString))  {005B7CB6 CatN3}
+      else
+        WriteLn(gvar_02536458, '3 ADR1 ' +                      {005B7CFB CatN3}
+          DataModule2.Table1Adr1.AsString);
+    end;
+    if Trim(DataModule2.Table1Adr2.AsString) <> '' then         {005B7D2F..7D4A +5D0}
+    begin
+      if gvar_02536650 = 1 then                                 {005B7D57}
+        WriteLn(gvar_02536458, '3 ADR2 ' + AnsiToUtf8(DataModule2.Table1Adr2.AsString))  {005B7D89 CatN3}
+      else
+        WriteLn(gvar_02536458, '3 ADR2 ' +                      {005B7DCE CatN3}
+          DataModule2.Table1Adr2.AsString);
+    end;
+    if Trim(DataModule2.Table1Adrzus.AsString) <> '' then       {005B7E02..7E1D +5DC}
+    begin
+      if gvar_02536650 = 1 then                                 {005B7E2A}
+        WriteLn(gvar_02536458, '3 ADR3 ' + AnsiToUtf8(DataModule2.Table1Adrzus.AsString))  {005B7E5C CatN3}
+      else
+        WriteLn(gvar_02536458, '3 ADR3 ' +                      {005B7EA1 CatN3}
+          DataModule2.Table1Adrzus.AsString);
+    end;
+    if Trim(DataModule2.Table1PLZ.AsString) <> '' then          {005B7ED5..7EF0 +5D4}
+    begin
+      if gvar_02536650 = 1 then                                 {005B7EFD}
+        WriteLn(gvar_02536458, '3 POST ' + AnsiToUtf8(DataModule2.Table1PLZ.AsString))  {005B7F2F CatN3}
+      else
+        WriteLn(gvar_02536458, '3 POST ' +                      {005B7F74 CatN3}
+          DataModule2.Table1PLZ.AsString);
+    end;
+    if Trim(DataModule2.Table1Ort.AsString) <> '' then          {005B7FA8..7FC3 +5D8}
+    begin
+      if gvar_02536650 = 1 then                                 {005B7FD0}
+        WriteLn(gvar_02536458, '3 CITY ' + AnsiToUtf8(DataModule2.Table1Ort.AsString))  {005B8002 CatN3}
+      else
+        WriteLn(gvar_02536458, '3 CITY ' +                      {005B8047 CatN3}
+          DataModule2.Table1Ort.AsString);
+    end;
+    if Trim(DataModule2.Table1Tel.AsString) <> '' then          {005B807B..8096 +5F0}
+    begin
+      if gvar_02536650 = 1 then                                 {005B80A3}
+        WriteLn(gvar_02536458, '2 PHON ' + AnsiToUtf8(DataModule2.Table1Tel.AsString))  {005B80D5 CatN3}
+      else
+        WriteLn(gvar_02536458, '2 PHON ' +                      {005B811A CatN3}
+          DataModule2.Table1Tel.AsString);
+    end;
+    if Trim(DataModule2.Table1Ema.AsString) <> '' then          {005B814E..8169 +5F4}
+    begin
+      if gvar_02536650 = 1 then                                 {005B8176}
+        WriteLn(gvar_02536458, '2 EMAIL ' + AnsiToUtf8(DataModule2.Table1Ema.AsString))  {005B81A8 CatN3}
+      else
+        WriteLn(gvar_02536458, '2 EMAIL ' +                     {005B81ED CatN3}
+          DataModule2.Table1Ema.AsString);
+    end;
+    if Trim(DataModule2.Table1Ur.AsString) <> '' then           {005B821F..823C +5F8}
+    begin
+      if gvar_02536650 = 1 then                                 {005B8249}
+        WriteLn(gvar_02536458, '2 WWW ' + AnsiToUtf8(DataModule2.Table1Ur.AsString))  {005B827B CatN3}
+      else
+        WriteLn(gvar_02536458, '2 WWW ' +                       {005B82C0 CatN3}
+          DataModule2.Table1Ur.AsString);
+    end;
+    {Schwab-Notiz (Namex [5BC]); edi-Merker - erstes '1 NOTE', dann '2 CONT'}
+    if Trim(DataModule2.Table1Namex.AsString) <> '' then        {005B82F4..830F}
+    begin
+      if edi = 0 then                                           {005B8317}
+      begin
+        edi := 1;                                               {005B831D}
+        if gvar_02536650 = 1 then                               {005B8329}
+          WriteLn(gvar_02536458, '1 NOTE Schrw.: ' +            {005B835B CatN3}
+            AnsiToUtf8(DataModule2.Table1Namex.AsString))
+        else
+          WriteLn(gvar_02536458, '1 NOTE Schrw.: ' +            {005B83A3 CatN3}
+            DataModule2.Table1Namex.AsString);
+      end
+      else
+      begin
+        if gvar_02536650 = 1 then                               {005B83D3}
+          WriteLn(gvar_02536458, '2 CONT Schrw.: ' +            {005B8405 CatN3}
+            AnsiToUtf8(DataModule2.Table1Namex.AsString))
+        else
+          WriteLn(gvar_02536458, '2 CONT Schrw.: ' +            {005B844A CatN3}
+            DataModule2.Table1Namex.AsString);
+        edi := 1;                                               {005B846E}
+      end;
+    end;
+    {Lebt-Notiz [5B4]; nach 'Schrw.'-Ausgabe ist edi immer 1 -> immer '2 CONT'}
+    if Trim(DataModule2.Table1Lebt.AsString) = 'j' then         {005B8483..84A7 LStrCmp /'j'/}
+    begin
+      if edi = 0 then                                           {005B84AF}
+        WriteLn(gvar_02536458, '1 NOTE lebt: ' +                {005B84D0 CatN3}
+          DataModule2.Table1Lebt.AsString)
+      else
+      begin
+        WriteLn(gvar_02536458, '2 CONT lebt: ' +                {005B8515 CatN3}
+          DataModule2.Table1Lebt.AsString);
+      end;
+      edi := 1;                                                 {005B8539 - in beiden Zweigen erreicht}
+    end;
+    {Notizen zum Kommentar (TMemoField [5B0]) - ueber Form27.CheckBox1 abschaltbar}
+    if Form27.CheckBox1.Checked then                            {005B853E..8555 [318] vtbl+0C4 GetChecked}
+    begin                                                       {005B8878 - Completion folgt in C4}
+    end
+    else if Trim(DataModule2.Table1Kommentar.AsString) <> '' then  {005B856B..8586 [5B0] TMemoField}
+    begin
+      Form1.Memo1.Clear;                                        {005B858C..85A1 [40C] Memo1 vtbl+0DC (als Clear gelesen)}
+      komFeld := DataModule2.Table1.FieldByName('kommentar');              {005B85A6..85B5 [5C] FieldByName}
+      Form1.Memo1.Lines.Assign(komFeld);                        {005B85BE..85CC [Memo1+220]=Lines, vtbl+8 - aus TMemoField, recon als Assign}
+      if Form1.Memo1.Lines.Count > 0 then                       {005B85D6..85EF [Memo1+220] vtbl+14 GetCount; jle -> 005B8878}
+      begin
+        if edi = 0 then
+        begin
+          u := Form1.Memo1.Lines[0];                            {005B861D..8661 [220] vtbl+0C Get(0)}
+          if gvar_02536650 = 1 then                             {005B85FE}
+            WriteLn(gvar_02536458, '1 NOTE ' + AnsiToUtf8(u))   {005B863D CatN3}
+          else
+            WriteLn(gvar_02536458, '1 NOTE ' + u);              {005B8692 CatN3}
+        end
+        else
+        begin
+          u := Form1.Memo1.Lines[0];
+          if gvar_02536650 = 1 then                             {005B86C2}
+            WriteLn(gvar_02536458, '2 CONT ' + AnsiToUtf8(u))   {005B8701 CatN3}
+          else
+            WriteLn(gvar_02536458, '2 CONT ' + u);              {005B8753 CatN3}
+        end;
+        cmzCount := 1;                          {005B85A1 mov esi,1 - 2.Cont-Lines ab Zeile 2}
+        while cmzCount < Form1.Memo1.Lines.Count do             {005B8777 vtbl+14 GetCount / 005B8870 cmp esi}
+        begin
+          u := Form1.Memo1.Lines[cmzCount];                     {005B87C1..87C4 [220] vtbl+0C Get(esi)}
+          if gvar_02536650 = 1 then                             {005B87A2}
+            WriteLn(gvar_02536458, '2 CONT ' + AnsiToUtf8(u))   {005B87E1 CatN3}
+          else
+            WriteLn(gvar_02536458, '2 CONT ' + u);              {005B8833 CatN3}
+          cmzCount := cmzCount + 1;                             {005B8857 inc esi}
+        end;
+      end;
+    end;
+    // TODO C4: ab 005B8878 (FAMS/FAMC-Loops Ǭber gvar_02536448/44C;
   end;
 end;
 
@@ -4675,5 +5060,6 @@ end;
 
 
 end.
+
 
 
