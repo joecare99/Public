@@ -4222,6 +4222,8 @@ procedure TForm3.gedausv;
 var
   krg: Integer;
   u, st1, st2, st3, st4, st5: AnsiString;
+  uLoc: AnsiString;         {C6: [ebp-18] Copy-Slot st1 / [ebp-978] Table38N-Extrakt}
+  stVon: AnsiString;        {C6: [ebp-24] FROM/TO-Zeitraum-String}
   jahr, monat, tag: AnsiString;
   personNr, proz: Integer;
   uNr: Integer;
@@ -4242,8 +4244,13 @@ begin
     (Form27 RadioButtons), SOUR/DEST/GEDC/PLAC-Kopfzeilen,
     '1 DATE '-Zeile über sub_00582C24 (Datum der Übersetzung),
     '1 FILE '-Zeile und die @S0@ SUBM-Blöcke mit dem Inhalt der
-    Form27-Edits (im Unicode-Zweig via AnsiToUtf8). Fortsetzung
-    005B5E30 ff. in den Chunks C2.. }
+    Form27-Edits (im Unicode-Zweig via AnsiToUtf8). C2: INDIVIDUAL-Record-
+    Kopf; C3: SEX/OCCU/RELI/IDNO/SOUR/BIRT/CHR/_GODP/DEAT/CAUS/BURI/RESI/
+    NOTES; C4: FAMS/FAMC-Loops, 0 @F-Records, CHIL; C5: Paar-Positionierung,
+    MARR/DIV/(CIVIL/RELI)/not-marr. C6: PLAC-Ref-Export (@P _LOC-Records aus
+    st1), SOUR-Section (@S-Records aus st3 ueber Table38 'tit', Konkordat
+    245er-Blaetterung der Bemerkung), 0 TRLR/Closing (Recon-Stub), Freel +
+    UI-Reset und Neupositionierung auf den Start-Personendatensatz. }
   krg := DataModule2.Table1Nummer.AsInteger;                  {005B5274}
   Form26.Hide;                                               {005B5281}
   Form26.ModalResult := 2;                                   {005B528D}
@@ -5068,7 +5075,258 @@ begin
         end;
       end;
     end;                                                       {Pa-Eintrag - Ende (FAM-Loop-Body)}
-    // TODO C6: ab 005BA1B8 (PLAC-Ref-Export ueber st1 [ebp-14] PLAC-Ref-Accu:
+    {--- C6 (005BA1B8..005BBCC5): PLAC-Ref-Export (@P... _LOC-Records aus
+      st1), SOUR-Section (@S-Records aus st3 ueber Table38, Index 'tit'),
+      0 TRLR, CloseFile, Freel der SListen und UI-Reset ---}
+    {PLAC-Block: @P-Records ueber die st1-Sammel-StringList}
+    if Trim(st1) <> '' then                                    {005BA1B8..BA1CD}
+    begin
+      cmzCount := Round(Length(st1) / 7);                      {005BA1D3..BA1F4 [ebp-30]}
+      if cmzCount > 0 then                                     {005BA1F4 jle -> 005BA87F}
+      begin
+        childIdx := 1;                                         {005BA1FD [ebp-0C]}
+        repeat                                                 {005BA204..BA879}
+          uLoc := Copy(st1, childIdx * 7 - 6, 6);              {005BA208..BA21C LStrCopy}
+          WriteLn(gvar_02536458, '0 @P' + IntToStr(StrToInt(uLoc)) + '@ _LOC');  {005BA221..BA269 CatN3}
+          //v1A0 GotoBookmark Table13(StrToInt(uLoc)) - Stub, Original positionierte auf den Bookmark
+          if gvar_02536650 = 1 then                            {005BA288..BA28F}
+            WriteLn(gvar_02536458, '1 NAME ' +                 {005BA291..BA2E5 CatN3}
+              AnsiToUtf8(DataModule2.Table13Ort.AsString))
+          else
+            WriteLn(gvar_02536458, '1 NAME ' +                 {005BA2E7..BA325 CatN3}
+              DataModule2.Table13Ort.AsString);
+          if Trim(DataModule2.Table13Abk.AsString) <> '' then  {005BA32A..BA355 jbe -> 005BA3FD}
+          begin
+            if gvar_02536650 = 1 then                          {005BA35B}
+              WriteLn(gvar_02536458, '1 _ABBR ' +              {005BA37D..BA3B8 CatN3}
+                AnsiToUtf8(DataModule2.Table13Abk.AsString))
+            else
+              WriteLn(gvar_02536458, '1 _ABBR ' +              {005BA3BA..BA3F8 CatN3}
+                DataModule2.Table13Abk.AsString);
+          end;
+          if Trim(DataModule2.Table13PLZ.AsString) <> '' then  {005BA3FD..BA428 jbe -> 005BA46D}
+            WriteLn(gvar_02536458, '1 _FPOST ' +             {005BA42A..BA468 CatN3 - KEINE Utf8-Variante im Original}
+              DataModule2.Table13PLZ.AsString);
+          if Trim(DataModule2.Table13Lkr.AsString) <> '' then  {005BA46D..BA498 jbe -> 005BA540}
+          begin
+            if gvar_02536650 = 1 then                          {005BA49E}
+              WriteLn(gvar_02536458, '1 _FCNTY ' +             {005BA4C0..BA4FB CatN3}
+                AnsiToUtf8(DataModule2.Table13Lkr.AsString))
+            else
+              WriteLn(gvar_02536458, '1 _FCNTY ' +             {005BA4FD..BA53B CatN3}
+                DataModule2.Table13Lkr.AsString);
+          end;
+          if Trim(DataModule2.Table13Bland.AsString) <> '' then  {005BA540..BA56B jbe -> 005BA613}
+          begin
+            if gvar_02536650 = 1 then                          {005BA571}
+              WriteLn(gvar_02536458, '1 _FSTAE ' +             {005BA593..BA5CE CatN3}
+                AnsiToUtf8(DataModule2.Table13Bland.AsString))
+            else
+              WriteLn(gvar_02536458, '1 _FSTAE ' +             {005BA5D0..BA60E CatN3}
+                DataModule2.Table13Bland.AsString);
+          end;
+          if Trim(DataModule2.Table13Land.AsString) <> '' then  {005BA613..BA63E jbe -> 005BA6E6}
+          begin
+            if gvar_02536650 = 1 then                          {005BA644}
+              WriteLn(gvar_02536458, '1 _FCTRY ' +             {005BA666..BA6A1 CatN3}
+                AnsiToUtf8(DataModule2.Table13Land.AsString))
+            else
+              WriteLn(gvar_02536458, '1 _FCTRY ' +             {005BA6A3..BA6E1 CatN3}
+                DataModule2.Table13Land.AsString);
+          end;
+          if (Trim(DataModule2.Table13Ort.AsString) <> '') and  {005BA6E6..BA711 und BA717..BA742 je jbe -> 005BA7EA}
+             (Trim(DataModule2.Table13Maid.AsString) <> '') then
+          begin
+            if gvar_02536650 = 1 then                          {005BA788}
+              WriteLn(gvar_02536458, '1 _GOV ' +               {005BA775..BA7A5 CatN3}
+                AnsiToUtf8(DataModule2.Table13Gov.AsString))
+            else
+              WriteLn(gvar_02536458, '1 _GOV ' +               {005BA7A7..BA7E5 CatN3}
+                DataModule2.Table13Gov.AsString);
+          end;
+          if Trim(DataModule2.Table13Maid.AsString) <> '' then  {005BA7EA..BA815 jbe -> 005BA873}
+          begin
+            WriteLn(gvar_02536458, '1 MAP ' +                {005BA817..BA85A CatN3}
+              DataModule2.Table13Maid.AsString);
+            WriteLn(gvar_02536458, '2 TYPE MAIDENHEAD');     {005BA85A..BA86E}
+          end;
+          Inc(childIdx);                                     {005BA873 [ebp-0C]}
+          Dec(cmzCount);                                     {005BA876 [ebp-30]}
+        until cmzCount = 0;                                  {005BA879 jne -> 005BA204}
+      end;
+    end;
+    {SOUR-Section (005BA87F..005BB3F5): Table38 (Index 'tit'), je Quelle ein
+    0 @S-Record mit Titel/Abk/Ereignis/Zeitraum/Standort/Publ/Bestand/Bem/Med}
+    DataModule2.Table38.Open;                                {005BA87F..BA88C}
+    DataModule2.Table38.IndexName := 'tit';                  {005BA894..BA89E vtbl+360}
+    DataModule2.Table38.First;                               {005BA89E..BA8AB}
+    cmzCount := DataModule2.Table38.RecordCount;             {005BA8AB..BA8BD vtbl+14C [ebp-30]}
+    while cmzCount > 0 do                                    {005BA8BD jle -> 005BB3F5}
+    begin
+      sub_00576EB0(DataModule2.Table38N.AsInteger, uLoc);    {005BA8C8..BA8DD vtbl+150 + 00576EB0}
+      uLoc := uLoc + '*';                                    {005BA8DD..BA8E8 LStrCat [ebp-978]}
+      if Pos(uLoc, st3) > 0 then                             {005BA8ED..BA8FD LStrPos - jle -> 005BB3C2 (Next)}
+      begin
+        WriteLn(gvar_02536458, '0 @S' +                      {005BA903..BA95B CatN3}
+          IntToStr(DataModule2.Table38N.AsInteger) + '@ SOUR');
+        u := DataModule2.Table38Titel.AsString;              {005BA960..BA97F [0A18]}
+        if Trim(u) <> '' then                                {005BA97F..BA98B jbe -> 005BAA33}
+        begin
+          if gvar_02536650 = 1 then                          {005BA991}
+            WriteLn(gvar_02536458, '1 TITL ' +               {005BA99A..BAA2E CatN3}
+              AnsiToUtf8(DataModule2.Table38Titel.AsString))
+          else
+            WriteLn(gvar_02536458, '1 TITL ' +               {005BA99A..BAA2E CatN3}
+              DataModule2.Table38Titel.AsString);
+        end;
+        u := DataModule2.Table38Abk.AsString;                {005BAA33..BAA5E [0A1C]}
+        if Trim(u) <> '' then                                {005BAA52..BAA5E jbe -> 005BAB06}
+        begin
+          if gvar_02536650 = 1 then                          {005BAA64}
+            WriteLn(gvar_02536458, '1 ABBR ' +               {005BAA6D..BAC1 CatN3}
+              AnsiToUtf8(DataModule2.Table38Abk.AsString))
+          else
+            WriteLn(gvar_02536458, '1 ABBR ' +               {005BAA6D..BAC1 CatN3}
+              DataModule2.Table38Abk.AsString);
+        end;
+        u := DataModule2.Table38Ereig.AsString;              {005BAB06..BAB31 [0A20]}
+        if Trim(u) <> '' then                                {005BAB25..BAB31 jbe -> 005BABD9}
+        begin
+          if gvar_02536650 = 1 then                          {005BAB37}
+            WriteLn(gvar_02536458, '2 EVEN ' +               {005BAB40..BABD9 CatN3}
+              AnsiToUtf8(DataModule2.Table38Ereig.AsString))
+          else
+            WriteLn(gvar_02536458, '2 EVEN ' +               {005BAB40..BABD9 CatN3}
+              DataModule2.Table38Ereig.AsString);
+        end;
+        {Zeitraum-String 'FROM ... TO ...' (005BABD9..005BAD50), [ebp-24]}
+        stVon := '';                                         {005BA90B LStrClr [ebp-24]}
+        u := DataModule2.Table38Von.AsString;                {005BABE1..BABEC [0A24]}
+        if Trim(u) <> '' then                                {005BABF8..BAC04 jbe -> 005BAC2C}
+          stVon := stVon + 'FROM ' +                         {005BAC06..BAC22 CatN3}
+            DataModule2.Table38Von.AsString;
+        u := DataModule2.Table38Bis.AsString;                {005BAC2C..BAC3A [0A28]}
+        if Trim(u) <> '' then                                {005BAC4B..BAC57 jbe -> 005BAC87}
+        begin
+          stVon := Trim(stVon) + '';                         {005BAC59..BAC87 LStrCat ' TO ' + Bis}
+          stVon := stVon + ' TO ' +
+            DataModule2.Table38Bis.AsString;
+        end;
+        stVon := stVon;                                      {005BAC87..BACC0 Concat (Von + Bis)}
+        if Trim(stVon) <> '' then                            {005BACC6..BACD1 jbe -> 005BAD50}
+        begin
+          if gvar_02536650 = 1 then                          {005BACD8}
+            WriteLn(gvar_02536458, '3 DATE ' +               {005BACE3..BAD4B CatN3}
+              AnsiToUtf8(stVon))
+          else
+            WriteLn(gvar_02536458, '3 DATE ' + stVon);       {005BAD23..BAD4B CatN3}
+        end;
+        u := DataModule2.Table38Standort.AsString;           {005BAD50..BAD63 [0A2C]}
+        if Trim(u) <> '' then                                {005BAD6F..BAD7B jbe -> 005BAE23}
+        begin
+          if gvar_02536650 = 1 then                          {005BAD81}
+            WriteLn(gvar_02536458, '3 PLAC ' +               {005BAD8A..BADD9 CatN3}
+              AnsiToUtf8(DataModule2.Table38Standort.AsString))
+          else
+            WriteLn(gvar_02536458, '3 PLAC ' +               {005BAD8A..BADD9 CatN3}
+              DataModule2.Table38Standort.AsString);
+        end;
+        u := DataModule2.Table38Publ.AsString;               {005BAE23..BAE33 [0A30]}
+        if Trim(u) <> '' then                                {005BAE3C..BAE4E jbe -> 005BAEF6}
+        begin
+          if gvar_02536650 = 1 then                          {005BAE54}
+            WriteLn(gvar_02536458, '1 PUBL ' +               {005BAE5D..BAEB3 CatN3}
+              AnsiToUtf8(DataModule2.Table38Publ.AsString))
+          else
+            WriteLn(gvar_02536458, '1 PUBL ' +               {005BAE5D..BAEB3 CatN3}
+              DataModule2.Table38Publ.AsString);
+        end;
+        u := DataModule2.Table38Bestand.AsString;            {005BAEF6..BAF06 [0A3C]}
+        if Trim(u) <> '' then                                {005BAF15..BAF21 jbe -> 005BAFC9}
+        begin
+          if gvar_02536650 = 1 then                          {005BAF27}
+            WriteLn(gvar_02536458, '2 CALN ' +               {005BAF30..BAFC9 CatN3}
+              AnsiToUtf8(DataModule2.Table38Bestand.AsString))
+          else
+            WriteLn(gvar_02536458, '2 CALN ' +               {005BAF30..BAFC9 CatN3}
+              DataModule2.Table38Bestand.AsString);
+        end;
+        {Bemerkung [0A38]: Laenge+7 >= 253 -> Konkordat 245er-Blaetterung (005BAFC9..BB2EF)}
+        u := DataModule2.Table38Bem.AsString;                {005BAFC9..BAFD9}
+        if Length(u) + 7 >= 253 then                         {005BAFE2..BAFEF jge -> 005BB09F}
+        begin
+          {Mehrzeilige Bemerkung (005BB09F..BB2EF)}
+          if gvar_02536650 = 1 then                          {005BB09F..BB1DE}
+          begin
+            WriteLn(gvar_02536458, '2 NOTE ' +               {005BB0AC..BB11D CatN3}
+              AnsiToUtf8(Copy(DataModule2.Table38Bem.AsString, 1, 245)));
+            cmzCount := Round(Length(u) / 245);              {005BB126..BB153 [ebp-30]}
+            if cmzCount > 0 then                             {005BB153 jle -> 005BB2EF}
+            begin
+              childIdx := 1;                                 {005BB15C [ebp-0C]}
+              repeat                                         {005BB163..BB1DC}
+                WriteLn(gvar_02536458, '3 CONC ' +           {005BB163..BB1D1 CatN3}
+                  AnsiToUtf8(Copy(DataModule2.Table38Bem.AsString, childIdx * 245 + 1, 245)));
+                Inc(childIdx);                               {005BB1D6 [ebp-0C]}
+                Dec(cmzCount);                               {005BB1D9 [ebp-30]}
+              until cmzCount = 0;                            {005BB1DC jne -> 005BB163}
+            end;
+          end
+          else
+          begin
+            WriteLn(gvar_02536458, '2 NOTE ' +               {005BB1E3..BB23D CatN3}
+              Copy(DataModule2.Table38Bem.AsString, 1, 245));
+            cmzCount := Round(Length(u) / 245);              {005BB25B..BB27B [ebp-30]}
+            if cmzCount > 0 then                             {005BB279 jle -> 005BB2EF}
+            begin
+              childIdx := 1;                                 {005BB27E [ebp-0C]}
+              repeat                                         {005BB285..BB2ED}
+                WriteLn(gvar_02536458, '3 CONC ' +           {005BB285..BB2E2 CatN3}
+                  Copy(DataModule2.Table38Bem.AsString, childIdx * 245 + 1, 245));
+                Inc(childIdx);                               {005BB2E7 [ebp-0C]}
+                Dec(cmzCount);                               {005BB2EA [ebp-30]}
+              until cmzCount = 0;                            {005BB2ED jne -> 005BB285}
+            end;
+          end;
+        end
+        else
+        begin
+          {Einzeilige Bemerkung (005BAFF5..BB09A)}
+          if gvar_02536650 = 1 then                          {005BAFF5..BB052}
+            WriteLn(gvar_02536458, '2 NOTE ' +               {005BAFFE..BB052 CatN3}
+              AnsiToUtf8(DataModule2.Table38Bem.AsString))
+          else
+            WriteLn(gvar_02536458, '2 NOTE ' +               {005BB057..BB09A CatN3}
+              DataModule2.Table38Bem.AsString);
+        end;
+        u := DataModule2.Table38Med.AsString;                {005BB2EF..BB302 [0A40]}
+        if Trim(u) <> '' then                                {005BB313..BB31A jbe -> 005BB3C2}
+        begin
+          if gvar_02536650 = 1 then                          {005BB320}
+            WriteLn(gvar_02536458, '3 MEDI ' +               {005BB329..BB3C2 CatN3}
+              AnsiToUtf8(DataModule2.Table38Med.AsString))
+          else
+            WriteLn(gvar_02536458, '3 MEDI ' +               {005BB329..BB3C2 CatN3}
+              DataModule2.Table38Med.AsString);
+        end;
+      end;
+      DataModule2.Table38.Next;                              {005BB3CA}
+      if DataModule2.Table38.Eof then                        {005BB3D7..BB3F5}
+        break;                                               {005BB3DE jne -> 005BB3F5 - Eof-Rechtsende}
+    end;
+    {Abschluss (005BB3F5..005BB4A3): UI-Reset, 0 TRLR, CloseFile, Freel, anzeigen}
+    st3 := '';                                               {005BB3F5..BB3FD LStrClr [ebp-28]}
+    Form1.Label18.Hide;                                      {005BB402..BB40A Form1+400}
+    Form1.Label19.Hide;                                      {005BB416..BB41C Form1+404}
+    WriteLn(gvar_02536458, '0 TRLR');                        {005BB421..BB43A}
+    CloseFile(gvar_02536458);                                {005BB43A..BB444}
+    gvar_02536448.Free;                                      {005BB444..BB44E}
+    gvar_0253644C.Free;                                      {005BB44E..BB458}
+    Form1.Refresh;                                           {005BB45D..BB464}
+    DataModule2.Table1.IndexName := '';                      {005BB469..BB475 [5C]}
+    u := IntToStr(krg);                                      {005BB475..BB492 [ebp-168] VarType 0B}
+    DataModule2.Table1.FindKey([krg]);                       {005BB485..BB497 [5C]}
+    Form1.anzeigen;                                          {005BB49E TForm1.anzeigen}
   end;
 end;
 
