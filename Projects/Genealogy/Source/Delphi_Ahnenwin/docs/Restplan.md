@@ -30,7 +30,7 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 | 11| `sub_005BEF5C`  | Unit3  | 308 |
 | 12| `sub_00582C24`  | Unit3  | 411 | **</br> COMPLETED 2026-10-29 (build green)** |
 | 13| `nam2`          | Unit17 | 486 | **</br> COMPLETED 2026-10-30 (build green)** |
-| 14| `fambeltern`    | Unit17 | 509 |
+| 14| `fambeltern`    | Unit17 | 509 | **</br> COMPLETED 2026-10-30 (build green)** |
 | 15| `nr1`           | Unit13 | 658 |
 | 16| `nr2`           | Unit13 | 665 |
 | 17| `sub_005BC604`  | Unit3  | 1096 | **</br> COMPLETED 2026-10-29 (build green)** |
@@ -674,3 +674,13 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - AIn edge cases (listing-faithful, commented in recon): Copy(AIn,1,5)='     ' -> AIn keeps only leading whitespace (Copy 1..Length-TrimLeftLen); ELSE when Trim(AIn) nonempty -> AIn cleared (LStrClr [ebp-4] at 0053CF57 exactly as binary does).
 - Fields verified in Unit2.pas: Table3 604=Nummer/610=Name/614=Vornamen/61C=Religion/620=Beruf/690=IDNR/698=Hausname; Table14 (E0) 1E8=Zeile, 1F0=Nm2.
 - Verified: build.cmd -unit 17 -> SUCCESS (28121 lines, no new Unit17 hints).
+
+### Batch: Unit17 fambeltern (Eltern-Abschnitt Familienblatt) + sub_0053D06C - COMPLETED, build green (2026-10-30)
+- Converted `TForm17.fambeltern(AIn: AnsiString)` (Units\Unit17.pas; Projects_AhnenWin\Unit17.pas L3070-3577, 0053FD18-00540491, plain `ret`): writes the parents' section of the Familienblatt into Table14.
+- Flow: if Vater[538]>0 or Mutter[53C]>0 -> empty Table14.Append+Post + Inc(gvar_0061EFCC); Vater>0 -> Table3.FindKey + nam2(AIn+'Vater : ') + gebst(AIn+11 spaces) + gvar_0061EFCC+3 (order verbatim per LStrCat3 edx+ecx convention: AIn first, label second); Table10.IndexName='num' + FindKey([Table1Vater]) then while not Eof: Epnum[3B8]=Mutter -> Table14.Append + spouse line block; Table10.Next each round; Mutter>0 -> nam2/gebst mirror + gvar_0061EFCC+3.
+- Spouse-line ladder inside Epnum=Mutter: Pos('Ehes', Verbind[3E4])>0 -> (a) Saort[3DC]/Sajahr[3D8] nonempty -> Table13.FindKey([Saort]) + only when Sajahr<>'' line = AIn + '           oo (S) ' + sub_0053D06C(Satag[3D0]+'.'+Samonat[3D4]+'.'+Sajahr) + TrimRight(' '+Saort); (b) else Hort[3C8]/Hjahr[3C4] nonempty -> Table13.FindKey([Hort]) + only when Hjahr<>'' line with Htag[3BC]='HK' comparison -> '           oo ' plain else '           oo (K) ' + norm(date triplet) + TrimRight(' '+Hort); (c) else line = AIn+'            oo' (12 spaces). Pos('Ehes')<=0 (o-o path): Table13.FindKey([Hort]) then only when Trim(Verbind)<>'' line = AIn + '           (o-o ' + norm(H-tag triplet) + TrimRight(' '+Hort) + ')'. Table14.Post per matching row, faithfully even when nothing written.
+- New helper `procedure sub_0053D06C(ALine; var AErgebnis)` (Units\Unit17.pas, twin of sub_00576FF8/Unit3): date normalizer 0053D06C-0053D2F9 - '..'->'', 'HK'->'HK '+Copy(4,7), 'vo.r'->Copy(1,2)+Copy(4,1)+' '+RightStr(4), 'na.ch'->Copy(1,2)+Copy(4,2)+' '+RightStr(4), leading '.'/blank strip loop Copy(2,9), s[1]>'9' -> dot-strip + Insert(' ') before first char < ':'.
+- Signature correction: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358, 2-param) still TODO stub.
+- AHNGlobals fix: gvar_0061EFCC was AnsiString -> Integer (binary does `inc`/`add 3` - Familienblatt-Zeilenzaehler).
+- Uses extended by StrUtils (RightStr).
+- Verified: build.cmd -unit 17 -> SUCCESS (28735 lines, no Unit17 hints).
