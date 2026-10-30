@@ -4,7 +4,7 @@ Kurzfassung des aktuellen Stands der Delphi-Bible auf Linux (FPC/Lazarus).
 
 ## Build-Stand (Ubuntu 26.04, FPC 3.2.2, Lazarus 4.8.0)
 
-`FPC/tools/build_all.sh` baut **alle 129** Projekte unter Linux (FPC 3.2.2,
+`tools/build_all.sh` baut **alle 129** Projekte unter Linux (FPC 3.2.2,
 Lazarus 4.8); mit der Windows-Lazarus 4.8 ebenfalls alle.
 
 Neu interpretierte, zuvor Windows-spezifische Demos:
@@ -34,7 +34,7 @@ Behoben beim Neuaufsetzen des Builds:
 
 * Lazarus-Konfiguration zeigte auf entferntes `/usr/lib/lazarus/4.4`
   (installiert ist `/usr/share/lazarus/4.8.0`).
-* Shell-Skripte in `FPC/tools/*.sh` von CRLF auf LF (`fix_line_endings.py`).
+* Shell-Skripte in `tools/*.sh` von CRLF auf LF (`fix_line_endings.py`).
 * 92 Quelldateien mit Gross-Endung (`.PAS`/`.DFM`) kleingeschrieben
   (`normalize_extensions.py`) - FPC sucht unter Linux mit exakter Schreibweise.
 * Pfad-Case in den `.lpi` an die tatsaechliche Ordnerschreibweise angepasst
@@ -58,17 +58,17 @@ Behoben beim Neuaufsetzen des Builds:
 
 | Datei | Zweck |
 |---|---|
-| `FPC/tools/gen_projects.py` | erzeugt alle `.lpr`/`.lpi`/`.lpg` aus den `.dpr` (Linux-Pfade, Buildmodi) |
-| `FPC/tools/build_all.sh` | baut alle Projekte, schreibt `build/build-report.txt` |
-| `FPC/tools/build_one.sh` | baut einzelne Projekte |
-| `FPC/tools/run_demo.sh` | startet ein Demo und prueft, ob es laeuft |
-| `FPC/tools/shot_test.sh` | erzeugt einen Screenshot (`--screenshot`) |
-| `FPC/tools/port_units.py` | setzt die FPC-Kopfzeilen und bedingte `uses`-Abschnitte |
-| `FPC/tools/fix_unit_refs.py` | vereinheitlicht Unit-Verweise (Linux ist case-sensitiv) |
-| `FPC/tools/consolidate_delphi_projects.py` | fuehrt die Legacy-Versionsordner zusammen |
-| `FPC/tools/dfm2txt.pas` | wandelt alte binäre DFM in Text-DFM |
-| `FPC/tools/fix_lfm.py` | entfernt LCL-unbekannte Eigenschaften aus LFMs |
-| `FPC/tools/setup_lazarus.sh` | registriert die benoetigten Lazarus-Pakete |
+| `tools/gen_projects.py` | erzeugt alle `.lpr`/`.lpi`/`.lpg` aus den `.dpr` (Linux-Pfade, Buildmodi) |
+| `tools/build_all.sh` | baut alle Projekte, schreibt `build/build-report.txt` |
+| `tools/build_one.sh` | baut einzelne Projekte |
+| `tools/run_demo.sh` | startet ein Demo und prueft, ob es laeuft |
+| `tools/shot_test.sh` | erzeugt einen Screenshot (`--screenshot`) |
+| `tools/port_units.py` | setzt die FPC-Kopfzeilen und bedingte `uses`-Abschnitte |
+| `tools/fix_unit_refs.py` | vereinheitlicht Unit-Verweise (Linux ist case-sensitiv) |
+| `tools/consolidate_delphi_projects.py` | fuehrt die Legacy-Versionsordner zusammen |
+| `tools/dfm2txt.pas` | wandelt alte binäre DFM in Text-DFM |
+| `tools/fix_lfm.py` | entfernt LCL-unbekannte Eigenschaften aus LFMs |
+| `tools/setup_lazarus.sh` | registriert die benoetigten Lazarus-Pakete |
 
 ## Aufbau
 
@@ -84,7 +84,7 @@ source/_core/              gemeinsame Bausteine
     tools/                 FormShot (Screenshot)
 FPC/<Demo>.lpr|.lpi        Lazarus-Projekte
 FPC/meta/                  Meta-App "BibleExplorer"
-FPC/tools/                 Werkzeuge
+tools/                 Werkzeuge
 bin/<cpu>-<os>/            erzeugte Programme
 build/                     Build-Bericht und Screenshots
 ```
@@ -159,7 +159,7 @@ build/                     Build-Bericht und Screenshots
     Verhaltens-Memo, statt die Meta-App mitzureissen.
 * **Smoke-Test:** `FPC/demo_smoke.lpr` erzeugt alle zweiunddreissig
   Demo-Formulare einmal (Registry-Factory: LFM-Stream + FormCreate,
-  ohne GUI-Klick). Build + Lauf via `FPC/tools/smoke_test.sh` - alle
+  ohne GUI-Klick). Build + Lauf via `tools/smoke_test.sh` - alle
   32 Demos melden OK.
   Fuer alle anderen Demos startet die App das gebaute Programm
   ("Externes Programm starten", rot markiert) bzw. erzeugt einen

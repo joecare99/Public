@@ -16,6 +16,9 @@ function TryLoadBibleSource(const ADemoFolder, ARelativeFile: string;
 
 implementation
 
+uses
+  LResources, BibleExplorerEmbeddedData;
+
 function NormalizeBibleResourceName(const AName: string): string;
 begin
   Result := LowerCase(StringReplace(AName, '\', '/', [rfReplaceAll]));
@@ -23,27 +26,13 @@ end;
 
 function TryLoadBibleResourceText(const AName: string; out AText: string): Boolean;
 var
-  Stream: TResourceStream;
-  Lines: TStringList;
+  Resource: TLResource;
 begin
-  Result := False;
   AText := '';
-  try
-    Stream := TResourceStream.Create(HInstance,
-      NormalizeBibleResourceName(AName), PChar(10));
-  except
-    on E: EResNotFound do
-      Exit;
-  end;
-  Lines := TStringList.Create;
-  try
-    Lines.LoadFromStream(Stream);
-    AText := Lines.Text;
-    Result := True;
-  finally
-    Lines.Free;
-    Stream.Free;
-  end;
+  Resource := LazarusResources.Find(NormalizeBibleResourceName(AName), 'RCDATA');
+  Result := Resource <> nil;
+  if Result then
+    AText := Resource.Value;
 end;
 
 function TryLoadBibleSource(const ADemoFolder, ARelativeFile: string;

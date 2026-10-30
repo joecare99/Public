@@ -167,26 +167,23 @@ var
   Dir: string;
   I: Integer;
 begin
-  { 1) Parameter }
+  Result := '';
   if (ParamCount >= 1) and DirectoryExists(ParamStr(1)) then
   begin
     Result := IncludeTrailingPathDelimiter(ParamStr(1));
     Exit;
   end;
-  { 2) relativ zum Programm }
   Dir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
-  for I := 1 to 5 do
+  for I := 1 to 6 do
   begin
-    if DirectoryExists(IncludeTrailingPathDelimiter(Dir) + 'source') and
-       FileExists(IncludeTrailingPathDelimiter(Dir) + 'FPC/meta/bible.manifest.json') then
+    if FileExists(IncludeTrailingPathDelimiter(Dir) +
+      'source/BibleExplorer/data/bible.manifest.json') then
     begin
       Result := Dir;
       Exit;
     end;
     Dir := IncludeTrailingPathDelimiter(IncludeTrailingPathDelimiter(Dir) + '..');
   end;
-  { 3) aktuelles Verzeichnis }
-  Result := IncludeTrailingPathDelimiter(GetCurrentDir);
 end;
 
 procedure TBibleExplorerForm.LoadManifest;
@@ -197,15 +194,17 @@ begin
   if TryLoadBibleResourceText('bible.manifest.json', ManifestText) and
     FIndex.LoadFromString(ManifestText) then
   begin
-    lblStatus.Caption := 'Index: eingebettete Ressource';
+    lblStatus.Caption := 'Index: eingebettet';
     Exit;
   end;
 
-  FileName := IncludeTrailingPathDelimiter(FRootPath) + 'FPC/meta/bible.manifest.json';
-  if not FileExists(FileName) then
-    FileName := IncludeTrailingPathDelimiter(GetCurrentDir) + 'bible.manifest.json';
+  if FRootPath <> '' then
+    FileName := IncludeTrailingPathDelimiter(FRootPath) +
+      'source/BibleExplorer/data/bible.manifest.json'
+  else
+    FileName := 'source/BibleExplorer/data/bible.manifest.json';
   if not FIndex.LoadFromFile(FileName) then
-    lblStatus.Caption := 'Index weder eingebettet noch als Datei gefunden: ' + FileName
+    lblStatus.Caption := 'Eingebettetes Manifest fehlt; Datei-Fallback nicht gefunden.'
   else
     lblStatus.Caption := 'Index: ' + FileName;
 end;
@@ -269,8 +268,11 @@ begin
     'Lernziel:' + #13#10 + ADemo.Learning + #13#10 + #13#10 +
     'Ordner: ' + ADemo.Folder + #13#10 +
     'Projekt: ' + ADemo.Project;
-  SourcePath := ADemo.LocateSourcePath(
-    IncludeTrailingPathDelimiter(FRootPath) + 'source');
+  if FRootPath <> '' then
+    SourcePath := ADemo.LocateSourcePath(
+      IncludeTrailingPathDelimiter(FRootPath) + 'source')
+  else
+    SourcePath := '';
   codeView.ShowDemo(ADemo, SourcePath);
   lblStatus.Caption := 'Code: ' + IntToStr(codeView.CodeLength) + ' Zeichen';
   listFiles.Clear;

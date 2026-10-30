@@ -11,7 +11,7 @@ uses
   Forms,
   BibleExplorerMain, FormShot;
 
-{$R BibleExplorerData.res}
+{$R *.res}
 
 begin
   RequireDerivedFormResource := True;
