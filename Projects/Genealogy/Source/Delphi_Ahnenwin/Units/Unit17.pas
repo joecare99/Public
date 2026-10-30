@@ -43,7 +43,7 @@ type
     procedure fambeltern; //0053FD18
     procedure FormShow(Sender: TObject); //00545204
     procedure RadioButton2Click(Sender: TObject); //0054510C
-    procedure nam2; //0053CC38
+    procedure nam2(AIn: AnsiString); //0053CC38
     procedure BitBtn1Click(Sender: TObject); //005405C4
     procedure BitBtn2Click(Sender: TObject); //005405A0
     procedure gebstvn; //0053D358
@@ -117,9 +117,56 @@ begin
   CheckBox16.Checked := False;
 end;
 
-procedure TForm17.nam2;
+procedure TForm17.nam2(AIn: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0053CC38: Builds the name output line "s" for the family sheet
+    from the caller's name text AIn plus the current Table3 person,
+    gated by the sheet's checkboxes; writes both strings to Table14.
+    AIn is cleared in two listing-faithful edge cases (see below). }
+  s := '';
+  if CheckBox9.Checked then
+  begin
+    Form1.ucase(DataModule2.Table3Name.AsString, t);
+    s := AIn + t + ' ' + DataModule2.Table3Vornamen.AsString +
+      ' (DS ' + IntToStr(DataModule2.Table3Nummer.AsInteger) + ')';
+  end
+  else if Pos('                oo ', AIn) > 0 then
+  begin
+    Form1.ucase(DataModule2.Table3Name.AsString, t);
+    s := AIn + #13#10 + '                    ' + t + ' ' +
+      DataModule2.Table3Vornamen.AsString;
+  end
+  else
+  begin
+    Form1.ucase(DataModule2.Table3Name.AsString, t);
+    s := AIn + t + ' ' + DataModule2.Table3Vornamen.AsString;
+  end;
+  if CheckBox1.Checked then
+    if DataModule2.Table3IDNR.AsString <> '' then
+      s := s + ' (ID: ' + DataModule2.Table3IDNR.AsString + ')';
+  if CheckBox11.Checked then
+    if DataModule2.Table3Beruf.AsString <> '' then
+      s := s + ', ' + DataModule2.Table3Beruf.AsString;
+  if CheckBox13.Checked then
+    if DataModule2.Table3Hausname.AsString <> '' then
+      s := s + ', ' + DataModule2.Table3Hausname.AsString;
+  if CheckBox7.Checked then
+    if DataModule2.Table3Religion.AsString <> '' then
+      s := s + ', ' + DataModule2.Table3Religion.AsString;
+  if Copy(AIn, 1, 5) = '     ' then
+    AIn := Copy(AIn, 1, Length(AIn) - Length(TrimLeft(AIn)))
+  else if Trim(AIn) <> '' then
+    AIn := ''; {0053CF57: verbatim - nonempty AIn is cleared here
+      (LStrClr [ebp-4]); listing-faithful. }
+  if s <> '' then
+  begin
+    DataModule2.Table14.Append;
+    DataModule2.Table14Zeile.AsString := s;
+    DataModule2.Table14Nm2.AsString := AIn;
+    DataModule2.Table14.Post;
+  end;
 end;
 
 procedure TForm17.BitBtn1Click(Sender: TObject);
