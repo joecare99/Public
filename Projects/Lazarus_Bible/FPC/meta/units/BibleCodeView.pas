@@ -10,7 +10,7 @@ interface
 
 uses
   Classes, SysUtils, Controls, Forms, StdCtrls, ComCtrls, ExtCtrls, SynEdit,
-  BibleDemoInfo;
+  BibleDemoInfo, BibleResources;
 
 type
   { TBibleCodeView }
@@ -68,6 +68,7 @@ procedure TBibleCodeView.ShowDemo(ADemo: TBibleDemo; const ASourcePath: string);
 var
   I: Integer;
   FileName: string;
+  SourceText: string;
 begin
   FDemo := ADemo;
   FSourcePath := ASourcePath;
@@ -80,13 +81,23 @@ begin
   FCombo.ItemIndex := 0;
   if ADemo.Markers.Count > 0 then
     ShowMarker(0)
-  else
-    if ADemo.Units.Count > 0 then
+  else if ADemo.Units.Count > 0 then
+  begin
+    if TryLoadBibleSource(ADemo.Folder, ADemo.Units[0], SourceText) then
+    begin
+      FLastFile := 'Ressource: source/' + ADemo.Folder + '/' + ADemo.Units[0];
+      FEditor.Lines.Text := SourceText;
+    end
+    else
     begin
       FileName := IncludeTrailingPathDelimiter(ASourcePath) + ADemo.Units[0];
+      FLastFile := FileName;
       if FileExists(FileName) then
-        FEditor.Lines.LoadFromFile(FileName);
+        FEditor.Lines.LoadFromFile(FileName)
+      else
+        FLastFile := FileName + ' (nicht gefunden)';
     end;
+  end;
 end;
 
 procedure TBibleCodeView.ComboChanged(Sender: TObject);
@@ -99,6 +110,7 @@ procedure TBibleCodeView.ShowMarker(Index: Integer);
 var
   Marker: TBibleMarker;
   FileName: string;
+  SourceText: string;
   I: Integer;
   Line: Integer;
 begin
@@ -106,14 +118,22 @@ begin
   if (FDemo = nil) or (Index < 0) or (Index >= FDemo.Markers.Count) then
     Exit;
   Marker := TBibleMarker(FDemo.Markers[Index]);
-  FileName := IncludeTrailingPathDelimiter(FSourcePath) + Marker.FileName;
-  FLastFile := FileName;
-  if not FileExists(FileName) then
+  if TryLoadBibleSource(FDemo.Folder, Marker.FileName, SourceText) then
   begin
-    FLastFile := FileName + ' (nicht gefunden)';
-    Exit;
+    FLastFile := 'Ressource: source/' + FDemo.Folder + '/' + Marker.FileName;
+    FEditor.Lines.Text := SourceText;
+  end
+  else
+  begin
+    FileName := IncludeTrailingPathDelimiter(FSourcePath) + Marker.FileName;
+    FLastFile := FileName;
+    if not FileExists(FileName) then
+    begin
+      FLastFile := FileName + ' (nicht gefunden)';
+      Exit;
+    end;
+    FEditor.Lines.LoadFromFile(FileName);
   end;
-  FEditor.Lines.LoadFromFile(FileName);
   Line := 0;
   for I := 0 to FEditor.Lines.Count - 1 do
     if Pos(Marker.Text, FEditor.Lines[I]) > 0 then

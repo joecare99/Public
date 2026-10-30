@@ -34,9 +34,9 @@ begin
     '4': Result := 'GHI';
     '5': Result := 'JKL';
     '6': Result := 'MNO';
-    '7': Result := 'PQRS';
+    '7': Result := 'PRS';
     '8': Result := 'TUV';
-    '9': Result := 'WXYZ';
+    '9': Result := 'WXY';
   else
     raise ETelnameError.Create('Ungueltige Ziffer: ' + ADigit);
   end;

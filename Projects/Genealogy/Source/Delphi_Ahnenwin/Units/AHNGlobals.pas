@@ -113,7 +113,7 @@ var
   gvar_0061EFB8: AnsiString; //0061EFB8  used by Unit14
   gvar_0061EFBC: AnsiString; //0061EFBC  used by Unit14
   gvar_0061EFC0: Integer; //0061EFC0  used by Unit14
-  gvar_0061EFCC: AnsiString; //0061EFCC  used by Unit1, Unit17
+  gvar_0061EFCC: Integer; //0061EFCC  used by Unit1, Unit17  (Familienblatt-Zeilenzaehler: inc/add 1 bzw. 3 im Binary)
   gvar_0061EFD0: Integer; //0061EFD0  used by Unit1, Unit17
   gvar_0061EFD4: Integer; //0061EFD4  used by Unit17
   gvar_0061EFE0: AnsiString; //0061EFE0  used by Unit18, Unit27
