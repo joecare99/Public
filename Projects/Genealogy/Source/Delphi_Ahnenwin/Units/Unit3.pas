@@ -4223,6 +4223,8 @@ var
   krg: Integer;
   u, st1, st2, st3, st4, st5: AnsiString;
   jahr, monat, tag: AnsiString;
+  personNr, proz: Integer;
+  uNr: Integer;
 begin
   { 005B5224: GEDCOM-Export "v" (GEDCOM 5.5.1) - stellt alle Daten der
     geöffneten Datenbank als GED-Datei neu zusammen (Aufruf nach
@@ -4344,13 +4346,83 @@ begin
         WriteLn(gvar_02536458, '2 ADR2 ' + Form27.Edit2.Text); {005B5BF0 cat}
       if Trim(Form27.Edit3.Text) <> '' then                  {005B5C2C..5C44}
         WriteLn(gvar_02536458, '1 POST ' + Form27.Edit3.Text); {005B5C6A cat}
-      { TODO C2: ANSI-Zweig weiter ab 005B5C8E (City/Phon/E-Mail ohne
-        Konversion), anschließend Junction 005B5E30 und Gesamtdaten-
-        Ausgabe; TH }
+      if Trim(Form27.Edit5.Text) <> '' then                  {005B5C8E..5CCE Edit5=340}
+        WriteLn(gvar_02536458, '1 CITY ' + Form27.Edit5.Text); {005B5CE4 cat 1 CITY ' + Edit5 (005B5CCD GetText)}
+      if Trim(Form27.Edit4.Text) <> '' then                  {005B5D08..5D38 Edit4=310}
+        WriteLn(gvar_02536458, '1 PHON ' + Form27.Edit4.Text); {005B5D5E cat}
+      if Trim(Form27.Edit6.Text) <> '' then                  {005B5D82..5DB2 Edit6=348, leer -> jmp 005B5E30}
+        WriteLn(gvar_02536458, '1 EMAIL ' + Form27.Edit6.Text); {005B5DD8 cat, dann jmp 005B5E30}
+    end
+    else                                                     {005B5DFE}
+    begin
+      WriteLn(gvar_02536458, '0 @S0@ SUBM');                 {005B5DFE}
+      WriteLn(gvar_02536458, '1 NAME UNKNOWN');              {005B5E17}
     end;
   end;
-  // TODO C2: Ab 005B5E30 (Familien-Daten) - Rekon fortgeführt nach
-  // Transkription von .../gedausv.txt L600+ (Last-Chunk-Grenze).
+  Form27.Visible := False;                                   {005B5E39 TCustomForm.SetVisible(False)}
+  Form1.Label18.Visible := True;                             {005B5E4D Form1+400}
+  Form1.Label18.Caption := '0 %';                            {005B5E64 SetText}
+  Form1.Label18.Refresh;                                     {005B5E76}
+  Form1.Label19.Visible := True;                             {005B5E8A Form1+404}
+  Form1.Label19.Caption := 'Gedcom schreiben';               {005B5E9C SetText}
+  Form1.Label19.Refresh;                                     {005B5EB3}
+  gvar_02536644 := DataModule2.Table24.RecordCount;          {005B5EC2 vtbl+14C}
+  DataModule2.Table1.IndexName := '';                        {005B5ED4 +5C SetIndexName('')}
+  DataModule2.Table24.IndexName := '';                       {005B5EE3 +1D0 SetIndexName('')}
+  DataModule2.Table24.First;                                 {005B5EF0}
+  DataModule2.Table29.Open;                                  {005B5EFD +248}
+  DataModule2.Table29.IndexName := 'qu';                     {005B5F0F +248 'qu'}
+  personNr := 1;                                             {005B5F14 [ebp-0C]}
+  st2 := '';                                                 {005B5F1B [ebp-10]}
+  gedausxv;                                                  {005B5F25}
+  DataModule2.Table24.IndexName := '';                       {005B5F34}
+  DataModule2.Table24.First;                                 {005B5F41; jmp in while-Bedingung 005B8B7D}
+  while not DataModule2.Table24.Eof do                       {005B8B7D Bedingung}
+  begin
+    proz := Round(personNr / gvar_02536644 * 100);           {005B5F4B..5F5C fild/fdiv/fmul 100 + ROUND}
+    Form1.Label18.Caption := IntToStr(proz) + ' %';          {005B5F63..5F91 ' %' + SetText}
+    Form1.Label18.Refresh;                                   {005B5FA3}
+    {edi := 0;}                                              {005B5FA8 xor edi edi - Scratch}
+    WriteLn(gvar_02536458, '0 @I' + IntToStr(personNr) +     {005B5FAA..5FD3 CatN3}
+      '@ INDI');                                             {push '0 @I', IntToStr, '@ INDI'}
+    uNr := DataModule2.Table24Nummer.AsInteger;              {005B5FF2..5FFF vtbl+22C +58 [ebp-168] Integer}
+    DataModule2.Table1.FindKey([uNr]);                       {005B6019}
+    st4 := Trim(DataModule2.Table1Vornamen.AsString);        {005B6024..603A +544}
+    if Pos('!', st4) > 0 then                                {005B603F..604E}
+      Delete(st4, Pos('!', st4), 1);                         {005B6078 LStrDelete 1 Zeichen an '!'-Pos}
+    if gvar_02536650 = 1 then                                {005B6082}
+      WriteLn(gvar_02536458, '1 NAME ' +                     {005B60F3 CatN4 -> AnsiToUtf8 -> CatN3}
+        AnsiToUtf8(st4 + ' /' + Trim(DataModule2.Table1Name.AsString) + '/'))
+    else                                                     {005B6119}
+      WriteLn(gvar_02536458, '1 NAME ' + st4 + ' /' +        {005B6155 CatN5}
+        Trim(DataModule2.Table1Name.AsString) + '/');        {push '1 NAME ', st4, ' /', Trim(Name), '/'}
+    if Trim(DataModule2.Table1Namex.AsString) <> '' then     {005B617F..61AA +5BC}
+    begin
+      if gvar_02536650 = 1 then                              {005B61B0}
+        WriteLn(gvar_02536458, '1 NAME /' +                  {005B61ED CatN3}
+          AnsiToUtf8(DataModule2.Table1Namex.AsString) + '/')
+      else                                                   {005B6219}
+        WriteLn(gvar_02536458, '1 NAME /' +                  {005B6242 CatN3}
+          DataModule2.Table1Namex.AsString + '/');
+      WriteLn(gvar_02536458, '2 TYPE variant');              {005B6266}
+    end;
+    if Trim(DataModule2.Table1Rufname.AsString) <> '' then   {005B627F..62AA +600}
+      WriteLn(gvar_02536458, '2 _RUFNAME ' +                 {005B62D0 CatN3}
+        DataModule2.Table1Rufname.AsString);
+    if Trim(DataModule2.Table1Hausname.AsString) <> '' then  {005B62EF..631A +5C8}
+    begin
+      if gvar_02536650 = 1 then                              {005B6320}
+        WriteLn(gvar_02536458, '1 NAME /' +                  {005B635D CatN3}
+          AnsiToUtf8(DataModule2.Table1Hausname.AsString) + '/')
+      else                                                   {005B6389}
+        WriteLn(gvar_02536458, '1 NAME /' +                  {005B63AC CatN3}
+          DataModule2.Table1Hausname.AsString + '/');
+      WriteLn(gvar_02536458, '2 TYPE estate');               {005B63D6}
+    end;
+    // TODO C3: ab 005B63EF (Geschlecht [548] -> UpperCase -> Vergleiche
+    // 'W'/'M' -> '1 SEX ...', danach Namens-/Geburts-/Sterbe-Blöcke ff.;
+    // Extrakt gedeausv.txt L1000+ transkribieren)
+  end;
 end;
 
 procedure TForm3.lieszeil;

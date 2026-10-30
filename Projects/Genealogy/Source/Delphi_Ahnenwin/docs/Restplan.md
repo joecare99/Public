@@ -694,3 +694,12 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Unit3 uses extended: + Unit26, Unit27.
 - Junction 005B5E30 (followed by the family/person export loop, listing L600+ not yet transcribed) left as TODO C2; uninit-var W1036 warnings of gedein_5 unchanged; new hint H2077 krg (written, read only by later chunks) accepted.
 - Verified: build.cmd -unit 3 -> SUCCESS (28865 lines).
+
+### Batch: Unit3 gedeausv Chunk C2 (005B5E30-005B63EF) - COMPLETED, build green (2026-10-30)
+- Completes the ANSI @S0@ SUBM ladder exactly like the UTF-8 one but WITHOUT AnsiToUtf8: Edit5 '1 CITY ', Edit4 '1 PHON ', Edit6 '1 EMAIL '; Edit1 empty -> '0 @S0@ SUBM' + '1 NAME UNKNOWN' (005B5DFE branch was the left-leg target of the C1 Edit1-check).
+- Junction 005B5E30: Form27.Visible := False; Form1.Label18 [400] Visible/'0 %'/Refresh; Form1.Label19 [404] Visible/'Gedcom schreiben'/Refresh.
+- gvar_02536644 := Table24.RecordCount (vtbl+14C); Table1.IndexName := ''; Table24.IndexName := ''; Table24.First; Table29.Open; Table29.IndexName := 'qu'; personNr ([ebp-0C]) := 1; st2 ([ebp-10]) := ''; call Form3.gedausxv (005B5F25 prefix method); Table24.IndexName := ''; Table24.First.
+- Person loop (listing loop-head jmp 005B8B7D = Eof condition; body 005B5F4B ff) recon'd as `while not DataModule2.Table24.Eof do`: progress Round(personNr/gvar_02536644*100) -> Label18 '%'+Refresh; {edi:=0} scratch; WriteLn '0 @I'+IntToStr+@ INDI (CatN3 order '0 @I',Nr,'@ INDI'); uNr ([ebp-168] Integer) := Table24Nummer.AsInteger; Table1.FindKey([uNr]); st4 := Trim(Table1Vornamen [+544]); Pos('!')->LStrDelete 1 char at pos; NAME variants via CatN4/5: 650=1 -> AnsiToUtf8(st4 + ' /' + Trim(Name [+540]) + '/'), else '1 NAME ' + st4 + ' /' + Trim(Name) + '/'; Namex [+5BC] nonempty -> '1 NAME /'+(Utf8?)Namex+'/' + '2 TYPE variant'; Rufname [+600] -> '2 _RUFNAME '; Hausname [+5C8] -> '1 NAME /'+(Utf8?)Hausname+'/' + '2 TYPE estate'.
+- New vars: personNr, proz, uNr: Integer. u ([ebp-168]) renamed uNr (TIntegerField.AsInteger = Integer, not AnsiString).
+- TODO C3: from 005B63EF (Geschlecht [+548] -> UpperCase -> 'W'/'M'/'1 SEX' blocks, then further person sub-blocks, Extrakt gedeausv.txt L1000+).
+- Verified: build.cmd -unit 3 -> SUCCESS (28937 lines).
