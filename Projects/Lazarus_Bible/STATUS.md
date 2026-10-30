@@ -92,7 +92,9 @@ build/                     Build-Bericht und Screenshots
 ## Stand der Demos
 
 * **MVVM-Muster (View / ViewModel / Model, eine Klasse je Datei):**
-  `HELLO`, `Calc32`, `README` - vollstaendig umgestellt und getestet.
+  `HELLO`, `Calc32`, `README`, `Telname` - vollstaendig umgestellt und getestet.
+  `Telname` hat ausserdem `source/tests/tst_Telname.pas` und den direkt
+  ausfuehrbaren Konsolen-Test `FPC/TelnameTest.lpi` (5 Tests).
 * **Eingebettet (Verhalten):** `HELLO`, `Calc32`, `README`, `Enumfon`,
   `Printgr` - die Showcase-Registry kennt sie, der
   Schliessen-Knopf und das Demo-Menue laufen im Frame.
