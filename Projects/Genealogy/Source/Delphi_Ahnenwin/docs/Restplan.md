@@ -28,14 +28,14 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 | 9 | `sub_00568e3c`  | Unit13 | 175 |
 | 10| `vorf_erm2`     | Unit13 | 225 |
 | 11| `sub_005BEF5C`  | Unit3  | 308 |
-| 12| `sub_00582C24`  | Unit3  | 411 |
-| 13| `nam2`          | Unit17 | 486 |
-| 14| `fambeltern`    | Unit17 | 509 |
+| 12| `sub_00582C24`  | Unit3  | 411 | **</br> COMPLETED 2026-10-29 (build green)** |
+| 13| `nam2`          | Unit17 | 486 | **</br> COMPLETED 2026-10-30 (build green)** |
+| 14| `fambeltern`    | Unit17 | 509 | **</br> COMPLETED 2026-10-30 (build green)** |
 | 15| `nr1`           | Unit13 | 658 |
 | 16| `nr2`           | Unit13 | 665 |
-| 17| `sub_005BC604`  | Unit3  | 1096 |
-| 18| `sub_005BE4B8`  | Unit3  | 645 |
-| 19| `illki`         | Unit3  | 687 |
+| 17| `sub_005BC604`  | Unit3  | 1096 | **</br> COMPLETED 2026-10-29 (build green)** |
+| 18| `sub_005BE4B8`  | Unit3  | 645 | **</br> COMPLETED 2026-10-28 (build green)** |
+| 19| `illki`         | Unit3  | 687 | **</br> COMPLETED 2026-10-30 (build green)** |
 
 > **Note on Unit13 items (4â€“10, 15â€“16):** they touch the shared chart arrays.
 > The layout is now PINNED â€” see "Phase A findings" below.
@@ -626,3 +626,120 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - `Form3.sour` (= sub_005BF434 body, "2 SOUR @" Repso2 resolver) was found already reconstructed in Unit3.pas.
 - Verified: build.cmd -> [build] SUCCESS. Array-slicing PowerShell quirks avoided by direct Read tool usage.
 - Next: main body of TForm3.gedein_5 (stub, current recon L1807+), which calls sub_005BC604 (huge, L62911-71288 of the listing - approx 8300 lines, separate batch) - register declaration stub with 15 params (3 register + 12 stack) first.
+
+### Batch: Unit3 gedein_5 main body (005BFB94) - COMPLETED, build green (2026-10-29)
+- Fully converted `TForm3.gedein_5` in Units\Unit3.pas (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\gedein5.txt, 5432 lines, 005BFB94-005C541D), transcribed in chunks C1..C8: prolog (fsc temp table Nr/Fnr/V/M/K, open dialog), header loop, Phase I (@INDI/0 @F counting, 0 @S source import, 0 @P places, 1/2 NOTE), Phase II (persons: SEX/RUFN/OCCU/RELI/IDNO, event/date/place taboo ladder, 1 SOUR @S replication into Table1Quelle + Table38, ADDR/ADR1..ADR5/CITY/POST, EMAIL/PHON/URL/WWW), Phase III (fsc Auswertung: v/m pairs into Table5Nummer/Table5Epnum, k-splits into Table1Vater/Mutter via Table1.FindKey, family loop with 1 HUSB/WIFE/CHIL via Form1.Repso2 'alt_' index, MARR/DIV marshalling into 16 locals m1dat..sav2, MARRIED/_STAT mapping).
+- Component/field verifications: Table1 offsets 5CC=Adr1, 5D0=Adr2, 5D4=PLZ, 5D8=Ort, 5DC=Adrzus, 5F0=Tel, 5F4=Ema, 5F8=Ur, 5FC=Quelle, 600=Rufname, 5E0=Indj; [ebx+80]=Table5 (fsc Auswertung target, recon-name Table11 discarded); Form1 offsets 400=Label18, 404=Label19, 8C0=Repso2, 8C8=Repso2nr.
+- `sub_005BC604` remains a stub (declare 4 register ints + 12 stack AnsiStrings, exact register/stack push order 30,68,6C,50,54,58,5C,60,64,70,74,78 = 16 args, listing L62911ff; body still to be decoded as a separate batch).
+- Loop-tail convention: `LPhase2Tail` ends each Phase II chunk with ReadLn + goto LPhase2; `005C27F8 jmp 005C47E5` was recon-coded as `goto LPhase2` - final-stage candidate for verification against C8 epilogue.
+- Verified: build.cmd -> [build] SUCCESS (28063 lines, only known unused-local hints).
+
+### Batch: Unit3 sub_005BC604 (Ehe/Familie-Schreiber) - COMPLETED, build green (2026-10-29)
+- Fully converted `sub_005BC604` in Units\Unit3.pas (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_B604.txt, L1-1094 relevant; method ends 005BD6CA `ret 30`), transcribed in 3 chunks: C1 prolog (Table5.FindKey([AHusn]) -> Append Nummer[410]/Epnum[414]), C2 edit path pass 1 (Verbind[440] from AMarried; date triplets Htag/Hmonat/Hjahr 418-420, Satag 42C-434, Schtag 444-44C via sub_00577934 comma-split Copy(8,Pos-8)/Copy(8,Length); raw texts Hort 424/Saort 438/Schort 450; witnesses Copy(9) -> Trauz 428/Satrauz 43C; three '2 SOUR @' blocks -> Hqu 454/Saqu 458/Schqu 45C via Form1.Repso2 'ih'/Repso2inh2 dedup with '; ' chain; Post), pass-2 entry FindKey([AWifn]) + Append mirror, C3 mirrored edit path (no source-field writes on pass 2, faithful to listing) + Post @005BD656.
+- Field names verified in Unit2.pas: Table5Nummer 410, Epnum 414, Htag/Hmonat/Hjahr 418/41C/420, Hort 424, Trauz 428, Satag/Samonat/Sajahr 42C-434, Saort 438, Satrauz 43C, Verbind 440, Schtag/Schmonat/Schjahr 444-44C, Schort 450, Hqu 454, Saqu 458, Schqu 45C (Table5Schjahr restored from earlier 'Sajahr' typo).
+- Param slots: +34 AMarried (int), +30..+8 = 11 AnsiStrings (ADatD/AOrtD/ADat1/AOrt1/AWit1/ADat2/AOrt2/AWit2/AQm1/AQm2/AQd), LStrAddRef list consistent, ret 30.
+- Next/Eof tails 005BD063/005BD65E documented unreachable after FindKey/Append positioning (Unit3 comments).
+- Verified: build.cmd -> [build] SUCCESS (28292 lines).
+
+### Batch: Unit3 gedein_5 C4-Verifikation (Kontrollfluss) - COMPLETED, build green (2026-10-29)
+- 005C27F8 `jmp 005C47E5` verified: Phase-I exit RE-ENTERS the Phase-II read loop (EOF check entry at 005C47E5); recon `exit;` was wrong, replaced with `goto LPhase2;` (~L2563).
+- Phase2Tail (005C4786-005C47E5) verified vs listing L71026-71054: ReadLn -> '0 @F'-check (005C47A2 jg 005C47FC = Phase3 entry) -> EOF-check -> zsa(zeile,ptmp) + zeile upload -> EOF-check back edge. Recon tail previously missed the '0 @F' long-jump AND the zsa; without them Phase II silently dropped entire family records.
+- Phase3 loop tail (005C520E-005C52CC) verified: correct order is ReadLn first, then zsa, then flush-condition (Pos('0 @')+Pos('@F')>0 && famIdx/husn/wifn>0 -> sub_005BC604), then loop condition (no Eof-check before ReadLn). Rewritten.
+- New W1036 uninit warnings (husn/wifn/relN/nummer) accepted = compiler flow-blindness from goto/labeled-loop structure.
+- Verified: build.cmd -> [build] SUCCESS (28291 lines).
+
+### Batch: Unit3 gedein_5 C4 alt84/alt88 - COMPLETED, build green (2026-10-29)
+- alt88 ([ebp-88]) only ever cleared at 005C282B -> effectively constant ''; recon `alt88 := ''` matches (aka/immigrant messages emit leading space like original).
+- Missing gate fixed: ASM 005C2F63-2F72 `gvar_02536858='NAME'` (jne 005C352D) guards the whole alt84/'2 TYPE'/type-name ladder (005C2F78-005C350D); recon ran it ungated -> wrapped in `if gvar_02536858 = 'NAME' then begin ... end;`. The '2 NOTE' block follows afterwards with its own guard.
+- alt84 slot mapping re-verified (listing L69565-69614): Copy(zeile,8,1)='/' check 005C2F91; alt84 := Trim(Copy(zeile, Pos+1, 40)) then Copy(alt84,1,Length-1) in place; '1 NAME'-2nd-line and '2 TYPE' variants identical.
+- Verified: build.cmd -> [build] SUCCESS (28294 lines).
+
+### Batch: Unit3 sub_00582C24 (Datum-Export-Formatter) - COMPLETED, build green (2026-10-29)
+- Converted as `function sub_00582C24(A, B, C: AnsiString): AnsiString;` (A=Tag, B=Monatsnr, C=Jahr; Result via hidden [ebp+8], `ret 4`) in Units\Unit3.pas after sub_005BEF5C.
+- Semantics (extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_582c24.txt, 00582C24-00582DFF): `case StrToInt(B)` -> JAN..DEC (jmp table 00582C97); with month: Format('%2s',[A])+' '+mon+' '+Format('%4s',[C]) = 'DD MON YYYY'; without: DD.MM.YYYY dot-triplet. Prefix marker 'um*UM*ca*CA*VO*vo*na*NA*ER*er' (Pos in A) suppresses standard Result; uppercase ladder UM/CA->'ABT ', VO->'BEF ', NA->'AFT ', ER->'CAL ', each 'PREFIX '+mon+' '+C, only when StrToInt(B)>0; empty A -> 'MON YYYY', empty A+B -> C. try/finally pairs collapse to CatN3 fallbacks (normal-flow only).
+- 21 call sites (005A66xx..005B9D7A) all in still-open methods, mainly TForm3.gedausv (005B5224, TODO stub).
+- Verified: build.cmd -> [build] SUCCESS (28382 lines).
+
+### Batch: Unit3 illki (Lebenslinien-Katalogeintrag) - COMPLETED, build green (2026-10-30)
+- Converted `TForm3.illki(ALine: AnsiString; ANr: Integer; var AErgebnis: AnsiString)` (Units\Unit3.pas; extract C:\Users\Mir\AppData\Local\Temp\opencode\illki.txt, 00584350-00584E21, `ret 4`; edx=ALine LStrAddRef, ecx=ANr, [ebp+8]=var-result via mov ebx). Interface + implementation declarations updated (was parameterless TODO stub).
+- Body: AErgebnis:=''; empty-Trim exit; Table1.IndexName:='' + First; num=Round(Length/7); loop over 7-char packets -> k=StrToInt(Copy(ALine,(i-1)*7+1,6)) -> Table1.FindKey([k]); AErgebnis += Name+' '+Vornamen; name-list adds to gvar_02536440 in three variants gated by gvar_02536414/gvar_02536418 (with ' * '+Gebjahr / plain), suffix sub_00576F54(i) with empty separator (CatN7/5/3 push pairs verified).
+- lfbh2 block: gvar_02536454 := Form1.lfbh2.IndexName saved, bookmark vtbl+150 stubbed as `bmk := -1`, IndexName 'Pro' + First; sub_00576EB0(Table1Nummer.AsInteger, u) -> FindKey([StrToInt(u)]) -> AErgebnis += ' [' + IntToStr(lfbh2Nm.AsInteger) + ']', lfbFlag:=1; IndexName restored; vtbl+1A0 stub comment; lfbFlag<>0 -> Continue (skips following blocks, jmp 00584DDA loop tail, faithful).
+- Remaining blocks in order: gvar_02536404 Religion ', '; gvar_025363F0 Beruf ', ' + Hausname ' ' (Table1Hausname 5C8, verified Unit2.pas); birth/baptism(death-replacement) triplets via sub_00576FF8 (procedure (ALine; var) verified) with ' * '/' ~ '/' + ' prefixes; gvar_02536410=1 -> oabk(place)->gvar_02536664 else AErgebnis += ' '+place; gvar_02536444.Add(place+sub_00576F54(ANr)) after each event block; Taufpat ' (TP: ...)' gated gvar_02536400.
+- Verified: build.cmd -unit 3 -> SUCCESS (28532 lines; known hints H2164 's' in oabk, H2077 bmk per stub convention).
+
+### Batch: Unit17 nam2 (Namenszeile Familienblatt) - COMPLETED, build green (2026-10-30)
+- Converted `TForm17.nam2(AIn: AnsiString)` (Units\Unit17.pas; Projects_AhnenWin\Unit17.pas L52-277, 0053CC38-0053CFCF, plain `ret`): builds sheet name line `s` from caller text AIn + current Table3 person, writes both to Table14 (Append, Zeile[1E8]=s, Nm2[1F0]=AIn, Post) when s <> ''.
+- Three name variants: CheckBox9 checked -> ' (DS '+IntToStr(Table3Nummer)+')' suffix; else `Pos('                oo ', AIn)` > 0 (16 spaces + 'oo ') -> AIn+#13#10+20 spaces+name; else plain concat - all as ucase(Table3Name [610]) + ' ' + Table3Vornamen [614] via Form1.ucase(x, var).
+- Toggle blocks in listing order: CheckBox1 ' (ID: ' + Table3IDNR [690] + ')'; CheckBox11 ', ' + Beruf [620]; CheckBox13 ', ' + Hausname [698]; CheckBox7 ', ' + Religion [61C], each only when the field is nonempty.
+- AIn edge cases (listing-faithful, commented in recon): Copy(AIn,1,5)='     ' -> AIn keeps only leading whitespace (Copy 1..Length-TrimLeftLen); ELSE when Trim(AIn) nonempty -> AIn cleared (LStrClr [ebp-4] at 0053CF57 exactly as binary does).
+- Fields verified in Unit2.pas: Table3 604=Nummer/610=Name/614=Vornamen/61C=Religion/620=Beruf/690=IDNR/698=Hausname; Table14 (E0) 1E8=Zeile, 1F0=Nm2.
+- Verified: build.cmd -unit 17 -> SUCCESS (28121 lines, no new Unit17 hints).
+
+### Batch: Unit17 fambeltern (Eltern-Abschnitt Familienblatt) + sub_0053D06C - COMPLETED, build green (2026-10-30)
+- Converted `TForm17.fambeltern(AIn: AnsiString)` (Units\Unit17.pas; Projects_AhnenWin\Unit17.pas L3070-3577, 0053FD18-00540491, plain `ret`): writes the parents' section of the Familienblatt into Table14.
+- Flow: if Vater[538]>0 or Mutter[53C]>0 -> empty Table14.Append+Post + Inc(gvar_0061EFCC); Vater>0 -> Table3.FindKey + nam2(AIn+'Vater : ') + gebst(AIn+11 spaces) + gvar_0061EFCC+3 (order verbatim per LStrCat3 edx+ecx convention: AIn first, label second); Table10.IndexName='num' + FindKey([Table1Vater]) then while not Eof: Epnum[3B8]=Mutter -> Table14.Append + spouse line block; Table10.Next each round; Mutter>0 -> nam2/gebst mirror + gvar_0061EFCC+3.
+- Spouse-line ladder inside Epnum=Mutter: Pos('Ehes', Verbind[3E4])>0 -> (a) Saort[3DC]/Sajahr[3D8] nonempty -> Table13.FindKey([Saort]) + only when Sajahr<>'' line = AIn + '           oo (S) ' + sub_0053D06C(Satag[3D0]+'.'+Samonat[3D4]+'.'+Sajahr) + TrimRight(' '+Saort); (b) else Hort[3C8]/Hjahr[3C4] nonempty -> Table13.FindKey([Hort]) + only when Hjahr<>'' line with Htag[3BC]='HK' comparison -> '           oo ' plain else '           oo (K) ' + norm(date triplet) + TrimRight(' '+Hort); (c) else line = AIn+'            oo' (12 spaces). Pos('Ehes')<=0 (o-o path): Table13.FindKey([Hort]) then only when Trim(Verbind)<>'' line = AIn + '           (o-o ' + norm(H-tag triplet) + TrimRight(' '+Hort) + ')'. Table14.Post per matching row, faithfully even when nothing written.
+- New helper `procedure sub_0053D06C(ALine; var AErgebnis)` (Units\Unit17.pas, twin of sub_00576FF8/Unit3): date normalizer 0053D06C-0053D2F9 - '..'->'', 'HK'->'HK '+Copy(4,7), 'vo.r'->Copy(1,2)+Copy(4,1)+' '+RightStr(4), 'na.ch'->Copy(1,2)+Copy(4,2)+' '+RightStr(4), leading '.'/blank strip loop Copy(2,9), s[1]>'9' -> dot-strip + Insert(' ') before first char < ':'.
+- Signature correction: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358, 2-param) still TODO stub.
+- AHNGlobals fix: gvar_0061EFCC was AnsiString -> Integer (binary does `inc`/`add 3` - Familienblatt-Zeilenzaehler).
+- Uses extended by StrUtils (RightStr).
+- Verified: build.cmd -unit 17 -> SUCCESS (28735 lines, no Unit17 hints).
+
+### Batch: Unit3 gedeausv (005B5224, GEDCOM-Export 5.5.1) Chunk C1 - COMPLETED, build green (2026-10-30)
+- Whole-method extract created: C:\Users\Mir\AppData\Local\Temp\opencode\gedausv.txt (5889 listing lines, 005B5224-005BBCC5; Projects_AhnenWin\Unit3.pas L57025-62908). Parameterless TForm3 method, esi=Self, edi=gvar_0253665C.
+- Chunk C1 transcribed (005B5224-005B5E30): krg := Table1Nummer; Form26.Hide + ModalResult := 2 (vtbl+24C); source-monster string gvar_0253665C := '' then 'qu'-Indexlauf - listing-truth: SetIndexName('qu') on Table29 [248], but First/Next/Eof + Table24Nummer [22C] on Table24 [1D0] (transcribed verbatim, noted as suspicious). File setup: SaveDialog1[3FC] (GetFileName -> System.Assign to gvar_02536458 Text var; explicit System.Assign because bare Assign resolves to TForm3.Assign), Title='ged' (+60), Filter='Gedcom-Dateien (*.ged)|*.ged' (+74), FilterIndex:=2 (+5C), Rewrite. 0 HEAD block: Form27.RadioButton2 -> BOM #$EF#$BB#$BF + '0 HEAD', else plain. CHAR-Varianten: RadioButton1 -> gvar_02536654:=1 + '1 CHAR ANSI'; else RadioButton2 -> gvar_02536650:=1 + '1 CHAR UTF-8'; else RadioButton3 -> gvar_02536650:=1 + '1 CHAR Unicode' (654/650/658 := 0 before). Then '1 SOUR AHNENWIN'/'2 VERS 5.1'/'1 DEST OTHER'; '1 DATE ' + sub_00582C24(Copy(DateToStr 1,2), Copy 4,2, Copy 7,4) [Tag/MonatsNr/Jahr]; '1 FILE ' (+ AnsiToUtf8 in 650-branch) of ExtractFileName(SaveDialog1.FileName); '1 SUBM @S0@'/'1 GEDC'/'2 VERS 5.5.1'/'2 FORM LINEAGE-LINKED'/'1 PLAC'/'2 FORM place, county, state, country'; '1 LANG German' in BOTH charset branches; @S0@ SUBM blocks:
+  - 650-branch (UTF-8): Edit1 nonempty -> '0 @S0@ SUBM'(AnsiToUtf8), '1 ADDR', '2 ADR1 '..'1 POST '(Edit3), '1 CITY '(Edit5[340]), '1 PHON '(Edit4[310]), '1 EMAIL '(Edit6[348]) all via AnsiToUtf8; Edit1 empty -> only '0 @S0@ SUBM'+'1 NAME UNKNOWN'.
+  - ANSI branch: same ladder WITHOUT conversions; transcribed through Edit3/'1 POST ' (Listing L600).
+- Form27 (TOKBottomDlg1/GEDCOM output dialog) field map verified: 304=Edit1, 308=Edit2, 30C=Edit3, 310=Edit4, 340=Edit5, 348=Edit6, 328=RadioButton1, 32C=RadioButton2, 334=RadioButton3 (Units\Unit27.pas); Form26 = gvar_0061EFFC (Units\Unit26.pas).
+- Unit3 uses extended: + Unit26, Unit27.
+- Junction 005B5E30 (followed by the family/person export loop, listing L600+ not yet transcribed) left as TODO C2; uninit-var W1036 warnings of gedein_5 unchanged; new hint H2077 krg (written, read only by later chunks) accepted.
+- Verified: build.cmd -unit 3 -> SUCCESS (28865 lines).
+
+### Batch: Unit3 gedeausv Chunk C2 (005B5E30-005B63EF) - COMPLETED, build green (2026-10-30)
+- Completes the ANSI @S0@ SUBM ladder exactly like the UTF-8 one but WITHOUT AnsiToUtf8: Edit5 '1 CITY ', Edit4 '1 PHON ', Edit6 '1 EMAIL '; Edit1 empty -> '0 @S0@ SUBM' + '1 NAME UNKNOWN' (005B5DFE branch was the left-leg target of the C1 Edit1-check).
+- Junction 005B5E30: Form27.Visible := False; Form1.Label18 [400] Visible/'0 %'/Refresh; Form1.Label19 [404] Visible/'Gedcom schreiben'/Refresh.
+- gvar_02536644 := Table24.RecordCount (vtbl+14C); Table1.IndexName := ''; Table24.IndexName := ''; Table24.First; Table29.Open; Table29.IndexName := 'qu'; personNr ([ebp-0C]) := 1; st2 ([ebp-10]) := ''; call Form3.gedausxv (005B5F25 prefix method); Table24.IndexName := ''; Table24.First.
+- Person loop (listing loop-head jmp 005B8B7D = Eof condition; body 005B5F4B ff) recon'd as `while not DataModule2.Table24.Eof do`: progress Round(personNr/gvar_02536644*100) -> Label18 '%'+Refresh; {edi:=0} scratch; WriteLn '0 @I'+IntToStr+@ INDI (CatN3 order '0 @I',Nr,'@ INDI'); uNr ([ebp-168] Integer) := Table24Nummer.AsInteger; Table1.FindKey([uNr]); st4 := Trim(Table1Vornamen [+544]); Pos('!')->LStrDelete 1 char at pos; NAME variants via CatN4/5: 650=1 -> AnsiToUtf8(st4 + ' /' + Trim(Name [+540]) + '/'), else '1 NAME ' + st4 + ' /' + Trim(Name) + '/'; Namex [+5BC] nonempty -> '1 NAME /'+(Utf8?)Namex+'/' + '2 TYPE variant'; Rufname [+600] -> '2 _RUFNAME '; Hausname [+5C8] -> '1 NAME /'+(Utf8?)Hausname+'/' + '2 TYPE estate'.
+- New vars: personNr, proz, uNr: Integer. u ([ebp-168]) renamed uNr (TIntegerField.AsInteger = Integer, not AnsiString).
+- TODO C3: from 005B63EF (Geschlecht [+548] -> UpperCase -> 'W'/'M'/'1 SEX' blocks, then further person sub-blocks, Extrakt gedeausv.txt L1000+).
+- Verified: build.cmd -unit 3 -> SUCCESS (28937 lines).
+
+### Batch: Unit3 gedeausv Chunk C3 (005B63EF-005B8878) - COMPLETED, build green (2026-10-30)
+- Person-Loop-Fortsetzung transkribiert (Units\Unit3.pas, Extrakt gedeausv.txt L1000-3265): SEX (UpperCase-Vergleiche W/F M/X, leer -> '1 SEX U', nur ein乗 Vergleich); OCCU/RELI/IDNO; Quelleg-Quelref-Blocks;
+  BIRTblock: check Trim(Gebjahr [55C]) + Gebort [560], '1 BIRT'; '2 DATE ' via sub_00582C24(Gebtag 554, Gebmonat 558, Gebjahr 55C); PLAC-Block: FindKey(Table13 [0CC]) ohne Result-Test (positions Table13-Felder) + CatN7 chain 'Ort,Lkr,Bland,Land' (Gebort + Table13Lkr [A64] + Table13Bland [A58] + Table13Land [A4C]); 650 -> AnsiToUtf8; SECOND FindKey mit Result-Test -> '3 _LOC @P'+IntToStr(bmk)+'@' + sub_00576EB0 + Pos(u, st1[ebp-14] PlacRef-Accu) -> st1 += u+'*' DEDUP; Table38.FindKey([Quelleg [5A0]]) -> '2 SOUR @S'+IntToStr(bmk)+'@' + st3[ebp-28] SourRef-Accu += u+'*'.
+- Identische Blockstruktur fuer CHR (56C/570 Check; DATE args TAUFTAG 564/Monat 568/Jahr 56C; Quelle [5A4]), DEAT (584/588; Sttag 57C/Monat 580/Jahr 584; Quelleb [5A8]), BURI (598/59C; Begtag 590/Monat 594/Jahr 598; Quelle [5AC]); '2 _GODP ' via TAUFPAT [574] (Utf8-Variante), '2 CAUS ' via TODESBEZEICHUNG-QUELLE [58C].
+- Anmerkung: Feld-Checks sind jeweils auf dem JAHR-Field (55C/56C/584/598), nicht auf dem Tag - im Original so.
+- RESI-Block: Check Lebensort [578] + Adr1 [5CC] -> '1 RESI'; '2 PLAC ' (Lebensort, Utf8-variante); Adr1 -> '2 ADDR '-Kopfzeile OHNE Inhalt + '3 ADR1 '; Adr2 [5D0] '3 ADR2 '; Adrzus [5DC] '3 ADR3 '; PLZ [5D4] '3 POST '; Ort [5D8] '3 CITY '; Tel [5F0] '2 PHON '; Ema [5F4] '2 EMAIL '; Ur [5F8] '2 WWW ' - alle mit 650/AnsiToUtf8-Unterscheidung.
+- NOTES-Block: Namex [5BC] -> '1 NOTE Schrw.: '(edi=0, dann edi:=1) sonst '2 CONT Schrw.: '; Lebt [5B4]='j' -> '1 NOTE lebt: '/''2 CONT lebt: '' sonst '2 CONT lebt: ', edi := 1 in BEIDEN Zweigen (Jump-Effekt 005B8539); Kommentar TMemoField [5B0] skip if Form27.CheckBox1 [318] Checked (vtbl+0C4); sonst Memo1 [40C] Clear (vtbl+0DC recon als Clear), komFeld := Table1.FieldByName('kommentar'), Memo1.Lines.Assign(komFeld) ([Memo1+220]=Lines vtbl+8 - recon Annahme), Count-Test (vtbl+14), erste Zeile '1 NOTE '/'2 CONT ' (edi-getrieben), while cmzCount < Lines.Count -> '2 CONT '-Zeilen (Get(esi) vtbl+0C, inc esi 005B8857).
+- Neue Locals in gedeausv: edi (NOTES-Merker, init 0 im Loop-Kopf 005B5FA8), bmk (Recon-Stub -1 fuer alle vtbl+150 GetBookmark-Aufrufe), cmzCount (Memo-Lines-Loop-Index), komFeld: TField.
+- TODO C4: ab 005B8878 (FAMS/FAMC-Loops gvar_02536448/44C TStringList, RightStr(6)/StrToInt, sub_00576EB0-Compare, '@F'-Blocks, danach loop-tail personNr+Table1.FindKey([krg])+Table24.Next 'lfn'-Index, FAM-Loop ab 005B8BA4).
+- Verified: build.cmd -unit 3 -> SUCCESS (29323 lines).
+
+### Batch: Unit3 gedeausv Chunk C4 (005B8878-005B8EF9) - COMPLETED, build green (2026-10-30)
+- FAMS-Loop ueber gvar_02536448 ([ebp-30]=Count, esi=famI): Vergleich Copy(item,1,6) UND Copy(item,7,6) gegen sub_00576EB0(Table24Lfdn [228]+58) -> bei Treffer '1 FAMS @F'+IntToStr(StrToInt(RightStr(item,6)))+'@' (CatN3).
+- FAMC-Loop ueber gvar_0253644C: Pos('*'+u6, item) > 0 (CatN3 + LStrPos test/jle) -> '1 FAMC @F...@'-Emission.
+- Person-Loop-Tail (im while): inc [ebp-0C]=personNr; Table1.FindKey([krg]); Table24.Next; while-Kopf 005B8B7D/8B8C (Eof).
+- Familien-Export (nach while): Table24.IndexName := 'lfn'; Table24.First; FAM-Loop ueber gvar_02536448 (005B8BB1..005BA0DA): '0 @F'+Int(StrToInt(RightStr(item,6)))+'@ FAM'; HUSB: Copy 1..6 != '000000' -> '1 HUSB @I'+Int+@; WIFE: Copy 7..6 != '000000' -> '1 WIFE @I'; CHIL: Length(item)>12 -> Copy(item,13,Len-12), Round(Len/7)=childCount [ebp-34], childIdx [ebp-0C]-Reuse (personNr-Slot recycelt!), Copy(item, 13+7*childIdx, 6).
+- Neue Locals: famI (esi), u6 (00576EB0-Output), childCount, childIdx (Slot-Reuse-Anmerkung).
+- TODO C5: ab 005B8EF9 (Paar-Positionierung Copy 1..6/7..6 '000000'-Checks, [168] -> Table24.FindKey -> [22C]+58 Nummer -> Table1.FindKey; Ehe-Suche Table12 [80] First/RecordCount 14C/Next; [410]/[414]+58-Feldvergleiche; 'Ehes'/'and'-Pos auf [440] -> '1 _STAT MARRIED'/'1 _STAT NOT MARRIED'; '1 MARR'/'2 TYPE RELI' ab 005B9234).
+- Verified: build.cmd -unit 3 -> SUCCESS (29386 lines). Splice-Unglueck Anfangs behoben (Block war vorne gelandet): Unit-Header restauriert; kuenftige Chunk-Inserts nur noch via Edit-Tool.
+
+### Batch: Unit3 gedeausv Chunk C5 (005B8EF9-005BA1B8) - COMPLETED, build green (2026-10-30)
+- Paar-Positionierung (005B8EF9..914D): FAM-Item ohne '000000'-Partner (beide Checks Copy 1..6/7..6, ';000000';-je -> skip direkt zum not-marr-Hinweis) -> uNr := StrToInt(Copy(item,1,6)); Table24.FindKey (untested); uNr := Table24Nummer [22C]+58; Table1.FindKey; Table5 [80].First + RecordCount-Loop (005B9025 dec/jle, [ebp-30]): erste Matching-Nummer-Schleife (005B9129 je 005B9031): Table5Nummer [410] = Table24Nummer -> uNr := StrToInt(Copy(item,7,6)) -> Table24.FindKey -> Table5Epnum [414] = Table24Nummer -> break (Found -> 005B914D); sonst Table24 zurueck auf Partner 1 (Copy 1..6) und Table5.Next (005B9113), Eof -> break.
+- Table5-Verbind-Kennzeichnung [440]: Pos('Ehes') -> '1 _STAT MARRIED'; Pos('and') -> '1 _STAT NOT MARRIED'.
+- MARR-RELI-Block (005B9234..971B): Kopf-Bedingung (Trim(Hjahr 420) > '..' LStrCmp-ja) OR (Trim(Hort 424) <> '', jbe -> 005B9720 CIVIL-Check); '1 MARR' + '2 TYPE RELI'; '2 DATE' via sub_00582C24(Htag 418/Hmonat 41C/Hjahr 420) bei Trim(Hjahr)<>'', Trim-empty -> jbe 005B9322 skip; PLAC: Trim(Hort)<>'', sonst jbe 005B9720 (skip WITN+SOUR+CIVIL!! - Listing-truth: bei leerem RELI-PLAC werden Trauz [428]/Hqu [454] uebersprungen und direkt CIVIL angelaufen); untested FindKey(Table13 [0CC]) + CatN7 'Ort,Lkr,Bland,Land' -> '2 PLAC ' (Utf8-Variante); 2. FindKey mit Test -> '3 _LOC @P'+bmk + sub_00576EB0 + Pos-Dedup in st1; '2 _WITN ' via Table5Trauz [428] (Trim, Utf8-Variante); '2 SOUR @S'+IntToStr(bmk)+'@' via Table38 [530].FindKey(Table5Hqu [454]) + st3-Dedup.
+- MARR-CIVIL-Block (005B9720..9C73): gleiche Struktur mit Sa* - Feldern: Kopf (Trim(Sajahr 434) > '..') OR (Trim(Saort 438)<>''; jbe -> 005B9C73 skip); '1 MARR' + '2 TYPE CIVIL'; DATE (Satag 42C/Samonat 430/Sajahr 434); PLAC/_LOC via Saort; '2 _WITN ' via Table5Satrauz [43C]; '2 SOUR' via Table38.FindKey(Table5Saqu [458]) + st3-Dedup.
+- DIV-Block (005B9C73..005BA0D5): Kopf (Trim(Schjahr 44C) > '..') OR (Trim(Schort 450)<>'', jbe -> 005BA0DA); '1 DIV' (KEIN TYPE); DATE (Schtag 444/Schmonat 448/Schjahr 44C); PLAC/_LOC via Schort; '2 SOUR' via Table38.FindKey(Table5Schqu [45C]) + st3-Dedup.
+- not-marr-Hinweis (005BA0DA..005BA1AE, loop-body-Join): erneut Pos('and', Verbind) > 0 und Trim(Copy(item,1,6))<>'' UND Trim(Copy(item,7,6))<>'' -> '2 NOTE not marr'. Danach FAM-Loop-backedge (inc esi/dec [ebp-30]/jne 005B8BCA).
+- Table5-[428]/[43C]-Recon-Feedback: Table5Trauz/Satrauz (Unit2 verifiziert: 428 = Table5Trauz); Table13Lkr/Bland/Land-Offsets 0A64/0A58/0A4C wie in C3.
+- TODO C6: ab 005BA1B8 (@P-PLAC-Record-Export ueber st1-Accu: Round(Len/7) = [ebp-30], childIdx [ebp-0C]-Reuse, Copy(st1, 7*(idx-1)+1, 6), '0 @P'+IntToStr+@ _LOC, StrToInt -> FindKey Table13 [0CC]) bis 005BBCC5-Ende.
+- Verified: build.cmd -unit 3 -> SUCCESS (29585 lines, EXIT=0).
+
+### Batch: Unit3 gedeausv Chunk C6 (005BA1B8-005BBCC5) - COMPLETED, build green (2026-10-30) - GEDEAUSV DAMIT KOMPLETT
+- PLAC-Block (005BA1B8..BA879): if Trim(st1 [ebp-14] PLAC-Ref-Accu) <> '' -> cmzCount [ebp-30] := Round(Length/7); childIdx [ebp-0C]-Reuse := 1; repeat: uLoc [ebp-18] := Copy(st1, childIdx*7-6, 6); WriteLn '0 @P'+IntToStr(StrToInt(uLoc))+'@ _LOC'; Listing vtbl+1A0 (GotoBookmark - Recon-Stub-Konvention aus gedein) positionierte Table13; dann Table13-Feldjaeger im Ort-Datensatz: '1 NAME ' (Table13Ort [A44], Utf8-Variante); '1 _ABBR ' (Abk [A68]); '1 _FPOST ' (PLZ [A48] - KEINE Utf8-Variante im Original); '1 _FCNTY ' (Lkr [A64]); '1 _FSTAE ' (Bland [A58]); '1 _FCTRY ' (Land [A4C]); '1 _GOV ' (Gov [A54], Nur wenn Trim(Ort)<>'' UND Trim(Maid [A74])<>''); '1 MAP ' (Maid) + '2 TYPE MAIDENHEAD'; Inc(childIdx)/Dec(cmzCount)-Loop.
+- SOUR-Section (005BA87F..BB3F5): Table38 [530].Open + IndexName := 'tit' + First; cmz := RecordCount (vtbl+14C); while: sub_00576EB0(Table38N [A14].AsInteger, u6) + '*'-Suffix; if Pos(u6, st3 [ebp-28] SourRef-Accu) > 0 -> '0 @S'+IntToStr(Table38N)+'@ SOUR'; dann Tab38-Feldhilfen: '1 TITL '(Titel [0A18]); '1 ABBR '(Abk [0A1C]); '2 EVEN '(Ereig [0A20]); Zeitraum [ebp-24]: Trim(Von [0A24])+'FROM ' + Trim(Bis [0A28])+' TO ' -> Trim-Check '3 DATE ' (Utf8-Variante); '3 PLAC '(Standort [0A2C]); '1 PUBL '(Publ [0A30]); '2 CALN '(Bestand [0A3C]); Bem [0A38]: Length+7 >= 253 -> '2 NOTE ' + Copy(1,245) + cmzCount := Round(Length/245) + childIdx-Reuse repeat '3 CONC ' + Copy(childIdx*245+1, 245), sonst EINZEILIG '2 NOTE ' direkt; '3 MEDI '(Med [0A40]); Table38.Next + Eof-Break.
+- Abschluss (005BB3F5..BB4A3): Form1.Label18 [400]/Label19 [404].Hide; '0 TRLR' + CloseFile(gvar_02536458); gvar_02536448/0253644C.Free; Form1.Refresh; Table1.IndexName := ''; Table1.FindKey([krg [ebp-8]]); Form1.anzeigen.
+- Neue Locals in gedeausv: uLoc [ebp-18 Copy-slot/-978 Table38N-Extrakt], stVon [ebp-24]. st1 [ebp-14] PLAC-Accu und st3 SourRef-Accu enden leer (005BB3F5 st3 := '').
+- Verifiziert: build.cmd -unit 3 -> SUCCESS (29843 lines, EXIT=0, nur altbekannte Hints/Warnungen).
+- gedeausv (005B5224-005BBCC5) damit VOLLZÄHLIG rekonstruiert.
+
