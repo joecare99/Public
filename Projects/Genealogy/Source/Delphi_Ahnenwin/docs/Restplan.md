@@ -35,7 +35,7 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 | 16| `nr2`           | Unit13 | 665 |
 | 17| `sub_005BC604`  | Unit3  | 1096 |
 | 18| `sub_005BE4B8`  | Unit3  | 645 |
-| 19| `illki`         | Unit3  | 687 |
+| 19| `illki`         | Unit3  | 687 | **</br> COMPLETED 2026-10-30 (build green)** |
 
 > **Note on Unit13 items (4â€“10, 15â€“16):** they touch the shared chart arrays.
 > The layout is now PINNED â€” see "Phase A findings" below.
@@ -658,3 +658,10 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Missing guard found and fixed: ASM 005C2F63-2F72 compares gvar_02536858 with 'NAME' (jne 005C352D) and gates the whole alt84/'2 TYPE'/type-name ladder (005C2F78-005C350D). Recon ran it ungated; wrapped in `if gvar_02536858 = 'NAME' then begin ... end;` (Unit3.pas ~L2662).
 - alt84 slot mapping re-verified (listing L69565-69614): Copy(zeile,8,1)='/' check 005C2F91; alt84 := Trim(Copy(zeile, Pos+1, 40)) then Copy(alt84,1,Length-1) in-place ([ebp-84] push as Copy result target). Both '1 NAME'-2nd-line and '2 TYPE' variants identical.
 - Verified: build.cmd -> [build] SUCCESS (28294 lines, only known hints).
+
+### Batch: Unit3 illki (Lebenslinien-Katalogeintrag) - COMPLETED, build green (2026-10-30)
+- Full listing verified first (extract C:\Users\Mir\AppData\Local\Temp\opencode\illki.txt, 00584350-00584E21, `ret 4`): signature `procedure TForm3.illki(ALine: AnsiString; ANr: Integer; var AErgebnis: AnsiString)` confirmed - edx=ALine (LStrAddRef), ecx=ANr, [ebp+8]=var-result via `mov ebx,[ebp+8]`; interface + implementation declarations in Units\Unit3.pas updated accordingly.
+- Body per listing: AErgebnis:=''; empty-Trim exit; Table1.IndexName:='' + First; num=Round(Length/7); loop over 7-char packets -> k=StrToInt(Copy(ALine,(i-1)*7+1,6)) -> Table1.FindKey([k]); AErgebnis += Name+' '+Vornamen; name-list adds to gvar_02536440 in three variants gated by gvar_02536414/gvar_02536418 (' * '+Gebjahr / plain), suffix sub_00576F54(i) always with empty-string separator (CatN7/5/3 push pairs verified).
+- lfbh2 block: gvar_02536454 := Form1.lfbh2.IndexName saved, bookmark via vtbl+150 stubbed as `bmk := -1` (recon convention), IndexName 'Pro' + First; sub_00576EB0(Table1Nummer.AsInteger, u) -> FindKey([StrToInt(u)]) on Form1.lfbh2 -> AErgebnis += ' [' + IntToStr(lfbh2Nm.AsInteger) + ']' + lfbFlag:=1; IndexName restored; vtbl+1A0 GotoBookmark stub as comment; lfbFlag<>0 -> Continue (jumps 00584DDA loop tail - religion/job/places/death blocks skipped, faithful to listing).
+- Remaining blocks: gvar_02536404 Religion ', '; gvar_025363F0 Beruf ', ' + Hausname ' ' (vtbl+60 AsString on Table1 5C8 = Table1Hausname, verified in Unit2.pas); birth/twin baptism/death triplets via sub_00576FF8 (procedure (ALine; var), verified signature) with ' * '/' ~ '/' + ' prefixes; oabk->gvar_02536664 accumulation when gvar_02536410=1 and place non-clause else AErgebnis += ' '+place; gvar_02536444.Add(place+F54(ANr)) after each of the three event blocks; Taufpat ' (TP: ...)' add gated gvar_02536400.
+- Verified: build.cmd -> [build] SUCCESS (28532 lines, only known hints: H2164 's' in oabk, H2077 bmk - both recon-stub conventions).

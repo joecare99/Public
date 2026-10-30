@@ -40,7 +40,7 @@ type
     procedure indi; //005967C8
     procedure Ortdreh(AOrt: AnsiString; var AErgebnis: AnsiString); //0057893C
     procedure oabk(AIn: AnsiString; var AErgebnis: AnsiString); //00584EBC
-    procedure illki; //00584350
+    procedure illki(ALine: AnsiString; ANr: Integer; var AErgebnis: AnsiString); //00584350
     procedure Even(AIn: AnsiString); //0057B94C
     procedure zsa(ALine: AnsiString; var AErgebnis: AnsiString); //00577834
     procedure ansl(AIn: AnsiString; var AOut: AnsiString); //005832F8
@@ -1468,9 +1468,159 @@ begin
   end;
 end;
 
-procedure TForm3.illki;
+procedure TForm3.illki(ALine: AnsiString; ANr: Integer;
+  var AErgebnis: AnsiString);
+var
+  i, num, k, lfbFlag, bmk: Integer;
+  s, u: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00584350: Builds a "Lebenslinien"-like catalog entry for the person
+    numbers packed 7 characters each into ALine. AErgebnis receives
+    "Name Vorname" plus birth/baptism/death details of every person
+    found; gvar_02536440 collects names, gvar_02536444 places,
+    gvar_02536664 abbreviated places. ANr is the caller's own line
+    number, used as the suffix produced by sub_00576F54. }
+  AErgebnis := '';
+  if Length(Trim(ALine)) = 0 then
+    Exit;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.First;
+  num := Round(Length(ALine) / 7);
+  if num <= 0 then
+    Exit;
+  i := 1;
+  while i <= num do
+  begin
+    k := StrToInt(Copy(ALine, (i - 1) * 7 + 1, 6));
+    DataModule2.Table1.FindKey([k]);
+    AErgebnis := AErgebnis + DataModule2.Table1Name.AsString + ' ' +
+      DataModule2.Table1Vornamen.AsString;
+    if Trim(DataModule2.Table1Name.AsString) <> '' then
+    begin
+      if gvar_02536414 = 1 then
+      begin
+        if gvar_02536418 = 1 then
+        begin
+          sub_00576F54(i, u);
+          gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' +
+            DataModule2.Table1Vornamen.AsString + ' * ' +
+            DataModule2.Table1Gebjahr.AsString + u);
+        end
+        else
+        begin
+          sub_00576F54(i, u);
+          gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' +
+            DataModule2.Table1Vornamen.AsString + u);
+        end;
+      end
+      else
+      begin
+        sub_00576F54(i, u);
+        gvar_02536440.Add(DataModule2.Table1Name.AsString + u);
+      end;
+    end;
+    lfbFlag := 0;
+    gvar_02536454 := Form1.lfbh2.IndexName;
+    bmk := -1; //v150 GetBookmark - Stub, Original war Client-Bookmarkhandle
+    Form1.lfbh2.IndexName := 'Pro';
+    Form1.lfbh2.First;
+    sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u);
+    k := StrToInt(u);                                        {0058462A}
+    if Form1.lfbh2.FindKey([k]) then
+    begin
+      AErgebnis := AErgebnis + ' [' +
+        IntToStr(Form1.lfbh2Nm.AsInteger) + ']';
+      lfbFlag := 1;
+    end;
+    Form1.lfbh2.IndexName := gvar_02536454;
+    //v1A0 GotoBookmark - Stub, Original restaurierte das Bookmarkhandle
+    if lfbFlag <> 0 then
+    begin
+      Inc(i);
+      Continue;                                              {00584DDA}
+    end;
+    if gvar_02536404 = 1 then
+      if Trim(DataModule2.Table1Religion.AsString) <> '' then
+        AErgebnis := AErgebnis + ', ' +
+          DataModule2.Table1Religion.AsString;
+    if gvar_025363F0 = 1 then
+    begin
+      if Trim(DataModule2.Table1Beruf.AsString) <> '' then
+        AErgebnis := AErgebnis + ', ' +
+          DataModule2.Table1Beruf.AsString;
+      if Trim(DataModule2.Table1Hausname.AsString) <> '' then
+        AErgebnis := AErgebnis + ' ' +
+          DataModule2.Table1Hausname.AsString;
+    end;
+    if (Trim(DataModule2.Table1Gebjahr.AsString) <> '') or
+      (Trim(DataModule2.Table1Gebort.AsString) <> '') then
+    begin
+      sub_00576FF8(DataModule2.Table1Gebtag.AsString + '.' +
+        DataModule2.Table1Gebmonat.AsString + '.' +
+        DataModule2.Table1Gebjahr.AsString, s);
+      AErgebnis := AErgebnis + ' * ' + s;
+      if gvar_02536410 = 1 then
+      begin
+        if Trim(DataModule2.Table1Gebort.AsString) <> '' then
+        begin
+          oabk(DataModule2.Table1Gebort.AsString, s);
+          gvar_02536664 := gvar_02536664 + s;
+        end
+        else
+          AErgebnis := AErgebnis + ' ' +
+            DataModule2.Table1Gebort.AsString;
+      end;
+      sub_00576F54(ANr, u);
+      gvar_02536444.Add(DataModule2.Table1Gebort.AsString + u);
+    end
+    else if (Trim(DataModule2.Table1Taufjahr.AsString) <> '') or
+      (Trim(DataModule2.Table1Taufort.AsString) <> '') then
+    begin
+      sub_00576FF8(DataModule2.Table1Tauftag.AsString + '.' +
+        DataModule2.Table1Taufmonat.AsString + '.' +
+        DataModule2.Table1Taufjahr.AsString, s);
+      AErgebnis := AErgebnis + ' ~ ' + s;
+      if gvar_02536410 = 1 then
+      begin
+        if Trim(DataModule2.Table1Taufort.AsString) <> '' then
+        begin
+          oabk(DataModule2.Table1Taufort.AsString, s);
+          gvar_02536664 := gvar_02536664 + s;
+        end
+        else
+          AErgebnis := AErgebnis + ' ' +
+            DataModule2.Table1Taufort.AsString;
+      end;
+      sub_00576F54(ANr, u);
+      gvar_02536444.Add(DataModule2.Table1Taufort.AsString + u);
+    end;
+    if gvar_02536400 = 1 then
+      if Trim(DataModule2.Table1Taufpat.AsString) <> '' then
+        AErgebnis := AErgebnis + ' (TP: ' +
+          DataModule2.Table1Taufpat.AsString + ')';
+    if (Trim(DataModule2.Table1Stjahr.AsString) <> '') or
+      (Trim(DataModule2.Table1Stort.AsString) <> '') then
+    begin
+      sub_00576FF8(DataModule2.Table1Sttag.AsString + '.' +
+        DataModule2.Table1Stmonat.AsString + '.' +
+        DataModule2.Table1Stjahr.AsString, s);
+      AErgebnis := AErgebnis + ' + ' + s;
+      if gvar_02536410 = 1 then
+      begin
+        if Trim(DataModule2.Table1Stort.AsString) <> '' then
+        begin
+          oabk(DataModule2.Table1Stort.AsString, s);
+          gvar_02536664 := gvar_02536664 + s;
+        end
+        else
+          AErgebnis := AErgebnis + ' ' +
+            DataModule2.Table1Stort.AsString;
+      end;
+      sub_00576F54(ANr, u);
+      gvar_02536444.Add(DataModule2.Table1Stort.AsString + u);
+    end;
+    Inc(i);
+  end;
 end;
 
 procedure TForm3.Even(AIn: AnsiString);
