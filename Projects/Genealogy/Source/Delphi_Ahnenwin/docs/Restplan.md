@@ -714,3 +714,12 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Neue Locals in gedeausv: edi (NOTES-Merker, init 0 im Loop-Kopf 005B5FA8), bmk (Recon-Stub -1 fuer alle vtbl+150 GetBookmark-Aufrufe), cmzCount (Memo-Lines-Loop-Index), komFeld: TField.
 - TODO C4: ab 005B8878 (FAMS/FAMC-Loops gvar_02536448/44C TStringList, RightStr(6)/StrToInt, sub_00576EB0-Compare, '@F'-Blocks, danach loop-tail personNr+Table1.FindKey([krg])+Table24.Next 'lfn'-Index, FAM-Loop ab 005B8BA4).
 - Verified: build.cmd -unit 3 -> SUCCESS (29323 lines).
+
+### Batch: Unit3 gedeausv Chunk C4 (005B8878-005B8EF9) - COMPLETED, build green (2026-10-30)
+- FAMS-Loop ueber gvar_02536448 ([ebp-30]=Count, esi=famI): Vergleich Copy(item,1,6) UND Copy(item,7,6) gegen sub_00576EB0(Table24Lfdn [228]+58) -> bei Treffer '1 FAMS @F'+IntToStr(StrToInt(RightStr(item,6)))+'@' (CatN3).
+- FAMC-Loop ueber gvar_0253644C: Pos('*'+u6, item) > 0 (CatN3 + LStrPos test/jle) -> '1 FAMC @F...@'-Emission.
+- Person-Loop-Tail (im while): inc [ebp-0C]=personNr; Table1.FindKey([krg]); Table24.Next; while-Kopf 005B8B7D/8B8C (Eof).
+- Familien-Export (nach while): Table24.IndexName := 'lfn'; Table24.First; FAM-Loop ueber gvar_02536448 (005B8BB1..005BA0DA): '0 @F'+Int(StrToInt(RightStr(item,6)))+'@ FAM'; HUSB: Copy 1..6 != '000000' -> '1 HUSB @I'+Int+@; WIFE: Copy 7..6 != '000000' -> '1 WIFE @I'; CHIL: Length(item)>12 -> Copy(item,13,Len-12), Round(Len/7)=childCount [ebp-34], childIdx [ebp-0C]-Reuse (personNr-Slot recycelt!), Copy(item, 13+7*childIdx, 6).
+- Neue Locals: famI (esi), u6 (00576EB0-Output), childCount, childIdx (Slot-Reuse-Anmerkung).
+- TODO C5: ab 005B8EF9 (Paar-Positionierung Copy 1..6/7..6 '000000'-Checks, [168] -> Table24.FindKey -> [22C]+58 Nummer -> Table1.FindKey; Ehe-Suche Table12 [80] First/RecordCount 14C/Next; [410]/[414]+58-Feldvergleiche; 'Ehes'/'and'-Pos auf [440] -> '1 _STAT MARRIED'/'1 _STAT NOT MARRIED'; '1 MARR'/'2 TYPE RELI' ab 005B9234).
+- Verified: build.cmd -unit 3 -> SUCCESS (29386 lines). Splice-Unglueck Anfangs behoben (Block war vorne gelandet): Unit-Header restauriert; kuenftige Chunk-Inserts nur noch via Edit-Tool.

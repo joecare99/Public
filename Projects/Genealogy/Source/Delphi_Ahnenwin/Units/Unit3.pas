@@ -1,6 +1,7 @@
 unit Unit3;
 
 {-------------------------------------------------------------------------------
+  Unit3 - TForm3, reconstructed from the IDR disassembly
   Source\Projects_AhnenWin\Unit3.pas and the original resource
   Source\Projects_AhnenWin\Form3.dfm.
 
@@ -4227,6 +4228,10 @@ var
   bmk: Integer;             {vtbl+150 GetBookmark - Recon-Stub -1}
   cmzCount: Integer;        {Form1.Memo1-Lines-Loop-Index (Original [esi])}
   edi: Integer;             {NOTES-Merker (erstr. '1 NOTE' / folg. '2 CONT')}
+  famI: Integer;            {FAMS/FAM/FAMC-Loop-Index (Original [esi])}
+  u6: AnsiString;           {00576EB0-Ergebnis 6-stellige Nummer, Vergleich}
+  childCount: Integer;      {Anzahl Kinder im Paar-Eintrag [ebp-34]}
+  childIdx: Integer;        {CHIL-Loop-Index, [ebp-0C] personNr-Slot-Reuse}
   komFeld: TField;          {FieldByName('kommentar') per recon}
 begin
   { 005B5224: GEDCOM-Export "v" (GEDCOM 5.5.1) - stellt alle Daten der
@@ -4806,10 +4811,68 @@ begin
         end;
       end;
     end;
-    // TODO C4: ab 005B8878 (FAMS/FAMC-Loops Ǭber gvar_02536448/44C;
+    {FAMS-Loop ueber gvar_02536448 (Paar-Eintraege, 12 Zeichen)}
+    cmzCount := gvar_02536448.Count;                              {005B8878 [ebp-30]}
+    for famI := 0 to cmzCount - 1 do                              {005B888B..8A40}
+    begin
+      u := Copy(gvar_02536448[famI], 1, 6);                       {005B88A0..88BF LStrCopy}
+      sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, u6);        {005B88C6..88DE [228]+58 + 00576EB0}
+      if u = u6 then                                              {005B88E5..88EA}
+        WriteLn(gvar_02536458, '1 FAMS @F' +                      {005B88EC..8964 CatN3}
+          IntToStr(StrToInt(RightStr(gvar_02536448[famI], 6))) + '@')
+      else
+      begin
+        u := Copy(gvar_02536448[famI], 7, 6);                     {005B8976..8999}
+        sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, u6);      {005B89A0..89AB [228]+58}
+        if u = u6 then                                            {005B89BD..89C2}
+          WriteLn(gvar_02536458, '1 FAMS @F' +                    {005B89C4..8A37 CatN3}
+            IntToStr(StrToInt(RightStr(gvar_02536448[famI], 6))) + '@');
+      end;
+    end;
+    {FAMC-Loop ueber gvar_0253644C (Kinder-Eintraege, '*'-markiert)}
+    cmzCount := gvar_0253644C.Count;                              {005B8A46 [ebp-30]}
+    for famI := 0 to cmzCount - 1 do                              {005B8A59..8B34}
+    begin
+      sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, u6);        {005B8A78..8A8B}
+      if Pos('*' + u6, gvar_0253644C[famI]) > 0 then              {005B8A96..8AB4 LStrCat3() + LStrPos}
+        WriteLn(gvar_02536458, '1 FAMC @F' +                      {005B8AB6..8B29 CatN3}
+          IntToStr(StrToInt(RightStr(gvar_0253644C[famI], 6))) + '@');
+    end;
+    personNr := personNr + 1;                                     {005B8B3A inc [ebp-0C]}
+    DataModule2.Table1.FindKey([krg]);                            {005B8B3D..8B5A [ebp-8]=krg als FindKey-Wert}
+    DataModule2.Table24.Next;                                     {005B8B67}
+  end;                                                            {while not Table24.Eof - Kopf 005B8B7D/8B8C}
+  {Familien-Export: 'lfn'-Index, HUSB/WIFE/CHIL pro Paar-Eintrag}
+  DataModule2.Table24.IndexName := 'lfn';                         {005B8B9F}
+  DataModule2.Table24.First;                                      {005B8BAC}
+  cmzCount := gvar_02536448.Count;                                {005B8BB1 [ebp-30]}
+  for famI := 0 to cmzCount - 1 do                                {005B8BC4..005BA0DA}
+  begin
+    WriteLn(gvar_02536458, '0 @F' +                               {005B8BCA..8C3D CatN3}
+      IntToStr(StrToInt(RightStr(gvar_02536448[famI], 6))) + '@ FAM');
+    {---- HUSB ----}
+    u := Copy(gvar_02536448[famI], 1, 6);                         {005B8C42..8C7B}
+    if u <> '000000' then                                         {005B8C70..8C80}
+      WriteLn(gvar_02536458, '1 HUSB @I' +                        {005B8C82..8CFB CatN3}
+        IntToStr(StrToInt(Copy(gvar_02536448[famI], 1, 6))) + '@');
+    {---- WIFE ----}
+    u := Copy(gvar_02536448[famI], 7, 6);                         {005B8D00..8D39}
+    if u <> '000000' then                                         {005B8D34..8D3E}
+      WriteLn(gvar_02536458, '1 WIFE @I' +                        {005B8D40..8DB9 CatN3}
+        IntToStr(StrToInt(Copy(gvar_02536448[famI], 7, 6))) + '@');
+    {---- CHIL - Kinder ab Position 14, je 7 Zeichen + '*'-Separator}
+    if Length(gvar_02536448[famI]) > 12 then                      {005B8DBE..8DDE LStrLen cmp 12}
+    begin
+      u := Copy(gvar_02536448[famI], 13, Length(gvar_02536448[famI]) - 12);  {005B8DE4..8E2A LStrCopy edx=0D}
+      childCount := Round(Length(u) / 7);                         {005B8E2F..8E51 fild/fdiv 7:Single/ROUND [ebp-34]}
+      childIdx := 1;                                              {005B8E5C [ebp-0C] personNr-Slot wird recycelt}
+      for childIdx := 1 to childCount do                          {005B8E63..8F3D incl. dec/jne}
+        WriteLn(gvar_02536458, '1 CHIL @I' +                      {005B8E63..8EE8 CatN3}
+          IntToStr(StrToInt(Copy(gvar_02536448[famI], 13 + 7 * childIdx, 6))) + '@');
+    end;
+    // TODO C5: ab 005B8EF9 (Paar-Positionierung Copy 1..6/7..6 "000000"-Checks,
   end;
 end;
-
 procedure TForm3.lieszeil;
 var
   s: AnsiString;
