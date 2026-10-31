@@ -1419,6 +1419,7 @@ var
   patn: Integer;                     {00587DA3 [ebp-10] aktiver Ehepartner-Nr}
   erst: Boolean;                     {0058958F [ebp-1C] erster Kinder-Treffer}
   kopf: Boolean;                     {00589C97 [ebp-20] ' ['-Marker gesetzt}
+  perNr: Integer;                    {00586E53 esi := Table1Nummer (Kindersuchen v/ m)}
 begin
   { 00585048: OFB-Report "Ortsfamilienbuch": Inhalt von Form24.ListBox3
     (Nachnamenmuster), ListBox4 (Ortsmuster) und ListBox6 (Hausnamenmuster)
@@ -1792,7 +1793,7 @@ begin
     num := StrToInt(Form1.lfbh2Prob.AsString);               {00586DFA..E18}
     leere := False;                                          {00586E23 [ebp-0AC]}
     DataModule2.Table1.FindKey([num]);                       {00586E2A..3C}
-    esi := DataModule2.Table1Nummer.AsInteger;               {00586E41..53 [534]+58 GetAsInteger}
+    perNr := DataModule2.Table1Nummer.AsInteger;             {00586E41..53 esi [534]+58}
     if DataModule2.Table1Name.AsString <> s then             {00586E55..7B [540]+60 LStrCmp je->F86}
     begin
       DataModule2.Table14.Append;                            {00586E81..8E [0E0]}
@@ -1814,8 +1815,49 @@ begin
     zzg := ucase(DataModule2.Table1Name.AsString) + ' ' +   {00586FC9..26 CatN ebp-38}
            DataModule2.Table1Vornamen.AsString;             {00586FE1 [238]+' '+[240]}
     if Trim(DataModule2.Table1Name.AsString) <> '' then     {0058702B..5B Trim jbe->7299}
-    { 00587061 - naechster Anlauf (C3c: gvar_02536414/18-Geb-Datum + Weichageste) }
-  end; {temp - naechster Chunk ersetzt Marker + temp-end}
+    begin
+      if gvar_02536414 = 1 then                             {00587061..68 jne->7299}
+      begin
+        if gvar_02536418 = 1 then                           {0058706E..75 jne->71C8}
+        begin
+          if DataModule2.Table1Gebjahr.AsString <> '' then  {0058707B..0A3 [55C] cmp 58C8F8 '' jbe->714A}
+          begin
+            sub_00576F54(idx, u);                           {00587112..1A}
+            gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' +     {005870A9..30 CatN ebp-250 edx=7}
+              DataModule2.Table1Vornamen.AsString + ' * ' +
+              DataModule2.Table1Gebjahr.AsString + '' + u); {58C904 58C910('') 58C910('') 58C910('')}
+          end
+          else
+          begin
+            sub_00576F54(idx, u);                           {00587196..98}
+            gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' +     {0058714A..AE CatN ebp-264 edx=5}
+              DataModule2.Table1Vornamen.AsString + '' + u);
+          end;                                              {00587145 jmp 00587299}
+        end
+        else
+        begin
+          sub_00576F54(idx, u);                             {00587214..16}
+          gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' +       {005871C8..2C CatN ebp-274 edx=5}
+            DataModule2.Table1Vornamen.AsString + '' + u);
+        end;                                                {00587241 jmp 00587299}
+      end
+      else
+      begin
+        sub_00576F54(idx, u);                               {00587266..6E}
+        gvar_02536440.Add(DataModule2.Table1Name.AsString + '' + u);      {00587243..84 CatN ebp-284 edx=3}
+      end;
+      if gueltig then                                       {00587299..9D cmp [ebp-4A] jne->72F2}
+        if Form1.lfbh2Aus.AsInteger > 0 then                {0058729F..B3 [920]+58 test jle->72F2}
+          zzg := zzg + ' [aus ' + IntToStr(Form1.lfbh2Aus.AsInteger) + '] '; {005872B5..ED CatN ebp-38 edx=4}
+      if gvar_02536404 = 1 then                             {005872F2..F9 jne->7360}
+        if Trim(DataModule2.Table1Religion.AsString) <> '' then  {005872FB..2B [54C] Trim jbe->7360}
+          zzg := zzg + ', ' + DataModule2.Table1Religion.AsString;       {0058732D..5B CatN edx=3}
+      if gvar_025363F0 = 1 then                             {00587360..67 jne->7437}
+        if Trim(DataModule2.Table1Beruf.AsString) <> '' then     {0058736D..9D [550] Trim jbe->73D2}
+          zzg := zzg + ', ' + DataModule2.Table1Beruf.AsString;         {0058739F..CD CatN edx=3}
+      { 005873D2 - naechster Anlauf (C3d: Hausname [5C8] + Geb-Block) }
+    end; {temp - naechster Chunk ersetzt Marker + temp-end}
+  end; {temp - nach Loop-Koerper}
 end;
 
 procedure TForm3.ofb2;
