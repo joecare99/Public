@@ -1411,6 +1411,14 @@ var
   dup: Boolean;                     {recon Weiche Ehe-Duplikat 00585E05..C9}
   bmk: TBookmark;                   {00586742 [ebp-24] lfbh2-Lesezeichen}
   v: AnsiString;                    {00586831 [ebp-204] Pos-Nadel 6stellige Mutter-Nr}
+  zzg: AnsiString;                   {00586E41 [ebp-38] aufzubauende Berichtzeile (C3)}
+  unkMut: AnsiString;                {00586D6A [ebp-40] '*Nr*'-Kette Kinder ohne Mutter}
+  unkVat: AnsiString;                {00586D72 [ebp-44] '*Nr*'-Kette Kinder ohne Vater}
+  kcount: Integer;                   {00586DF5 [ebp-18] Kind-Zaehler}
+  ehn: Integer;                      {00587D0C [ebp-14] Eh-Kettenlaufindex}
+  patn: Integer;                     {00587DA3 [ebp-10] aktiver Ehepartner-Nr}
+  erst: Boolean;                     {0058958F [ebp-1C] erster Kinder-Treffer}
+  kopf: Boolean;                     {00589C97 [ebp-20] ' ['-Marker gesetzt}
 begin
   { 00585048: OFB-Report "Ortsfamilienbuch": Inhalt von Form24.ListBox3
     (Nachnamenmuster), ListBox4 (Ortsmuster) und ListBox6 (Hausnamenmuster)
@@ -1766,7 +1774,48 @@ begin
   idx := 0;                                                  {00586D44}
   Form1.lfbh2.First;                                         {00586D46..53}
   s := ' ';                                                  {00586D58..D60 [ebp-3C]}
-  { 00586D65: jmp 0058BFDD - naechster Anlauf (Chunk C3) }
+  { 00586D65: jmp 0058BFDD }
+  { --- C3: Tabellen-Aufbereitung (00586D6A..0058C854) --- }
+  while not Form1.lfbh2.Eof do                             {00586D6A Kopf / 0058BFDD..F1 Eof-Kante}
+  begin
+    unkMut := '';                                            {00586D6A..6D LStrClr}
+    unkVat := '';                                            {00586D72..75 LStrClr}
+    if Trim(Form1.lfbh2Prob.AsString) = '' then              {00586D7A..AA [910]+60 Trim}
+      Break;                                                 {0058BFB3 Tabelle durchlaufen -> Epilog}
+    if idx > 0 then                                          {00586DB0..B2 test ebx}
+    begin
+      DataModule2.Table14.Append;                            {00586DB4..C1 [0E0]}
+      DataModule2.Table14Zeile.AsString := ' ';              {00586DC6..DA [1E8]+0B0}
+      DataModule2.Table14.Post;                              {00586DE0..F2 +248}
+    end;
+    kcount := 0;                                             {00586DF5..FA [ebp-18]}
+    num := StrToInt(Form1.lfbh2Prob.AsString);               {00586DFA..E18}
+    leere := False;                                          {00586E23 [ebp-0AC]}
+    DataModule2.Table1.FindKey([num]);                       {00586E2A..3C}
+    esi := DataModule2.Table1Nummer.AsInteger;               {00586E41..53 [534]+58 GetAsInteger}
+    if DataModule2.Table1Name.AsString <> s then             {00586E55..7B [540]+60 LStrCmp je->F86}
+    begin
+      DataModule2.Table14.Append;                            {00586E81..8E [0E0]}
+      DataModule2.Table14Zeile.AsString := ' ';              {00586E93..AA [1E8]+0B0}
+      DataModule2.Table14.Post;                              {00586EAD..BC +248}
+      DataModule2.Table14.Append;                            {00586EC2..F0}
+      DataModule2.Table14Zeile.AsString :=                  {00586ED4..F15 ucase [540]+60}
+        ucase(DataModule2.Table1Name.AsString);
+      DataModule2.Table14.Post;                              {00586F1B..2A +248}
+      DataModule2.Table14.Append;                            {00586F30..3D}
+      DataModule2.Table14Zeile.AsString := ' ';              {00586F42..56 [1E8]+0B0}
+      DataModule2.Table14.Post;                              {00586F5C..6B +248}
+      s := DataModule2.Table1Name.AsString;                  {00586F71..83 [540]+60 -> ebp-3C}
+    end;
+    zzg := '';                                              {00586F86..89 LStrClr [ebp-38]}
+    Inc(idx);                                               {00586F8E inc ebx}
+    DataModule2.Table14.Append;                             {00586F8F..9C}
+    DataModule2.Table14Nm.AsString := IntToStr(idx);        {00586FA1..C3 [1EC]+0B0}
+    zzg := ucase(DataModule2.Table1Name.AsString) + ' ' +   {00586FC9..26 CatN ebp-38}
+           DataModule2.Table1Vornamen.AsString;             {00586FE1 [238]+' '+[240]}
+    if Trim(DataModule2.Table1Name.AsString) <> '' then     {0058702B..5B Trim jbe->7299}
+    { 00587061 - naechster Anlauf (C3c: gvar_02536414/18-Geb-Datum + Weichageste) }
+  end; {temp - naechster Chunk ersetzt Marker + temp-end}
 end;
 
 procedure TForm3.ofb2;
