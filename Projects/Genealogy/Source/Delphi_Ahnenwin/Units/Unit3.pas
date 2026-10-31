@@ -13,7 +13,9 @@ unit Unit3;
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit24, Unit28, Unit29, Unit36, Unit39, Unit26, Unit27;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, 
+Dialogs, Forms, Controls, Grids, DB, QuickRpt, QRCtrls, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit24, Unit28, Unit29, Unit36, 
+Unit39, Unit26, Unit27;
 
 type
   TForm3 = class(TForm)
@@ -1847,6 +1849,7 @@ begin
         sub_00576F54(idx, u);                               {00587266..6E}
         gvar_02536440.Add(DataModule2.Table1Name.AsString + '' + u);      {00587243..84 CatN ebp-284 edx=3}
       end;
+    end;                                                    {0058702B..299 if-Ende jbe->7299}
       if gueltig then                                       {00587299..9D cmp [ebp-4A] jne->72F2}
         if Form1.lfbh2Aus.AsInteger > 0 then                {0058729F..B3 [920]+58 test jle->72F2}
           zzg := zzg + ' [aus ' + IntToStr(Form1.lfbh2Aus.AsInteger) + '] '; {005872B5..ED CatN ebp-38 edx=4}
@@ -2616,12 +2619,204 @@ begin
             DataModule2.Table1.IndexName := '';                          {0058B87A..86}
             DataModule2.Table1.First;                                    {0058B88B..95}
             DataModule2.Table1.FindKey([perNr]);                         {0058B89A..C9}
-            { 0058B8E4 - naechster Anlauf (C3p: Table14-Write + 2. Pass) }
-          end; {temp - Body-Ende (C3j)}
-        end;
-      end; {temp}
-    end; {temp}
-  end; {temp}
+              { 0058B8E4 Table18-Loop-Tail }
+              DataModule2.Table18.Next;                              {0058B8C5..D0 [140]}
+              if DataModule2.Table18.Eof then                        {0058B8DD..E4 jne->0058B914}
+                Break;
+              if DataModule2.Table18Epnum.AsInteger = num then       {0058B8E6..0E [4CC]+58 je->00587D5B}
+                Continue
+              else
+                Break;                                               {->0058B914}
+            end;                                                     { Table18-Loop-Ende }
+            Inc(ehn);                                                {0058B914 [ebp-14]}
+            Dec(i);                                                  {0058B917..1A jne->00587D13}
+          until i = 0;                                               { Ehen-Loop-Ende }
+        end; { i > 0 - 0058B920 auch bei jle->8B920 erreichbar }
+      end; { Eh-Check - 0058B920 auch bei jbe->8B920 erreichbar }
+          { 0058B920 Table14-Write }
+          DataModule2.Table14Zeile.AsString := zzg;                  {0058B920..32 [1E8]+0B0 edx=[ebp-38]}
+          { 0058B938 2. Pass: Reset + Geschlecht -> IndexName }
+          DataModule2.Table1.IndexName := '';                        {0058B938..44 [5C]}
+          DataModule2.Table1.First;                                  {0058B949..53}
+          DataModule2.Table1.FindKey([perNr]);                       {0058B958..77}
+          if Trim(Form1.lfbh2Eh.AsString) = '000000*' then           {0058B97C..B5 jne->0058BF75}
+          begin
+            if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then begin {0058B9BB..F4}
+              DataModule2.Table1.IndexName := 'vat';                 {0058B9F6..A05}
+            end else
+            if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then begin {0058BA0C..45}
+              DataModule2.Table1.IndexName := 'mut';                 {0058BA47..56}
+            end;
+            if DataModule2.Table1.IndexName = 'vat' then             {0058BA5B..80 jne->0058BCE8}
+            begin
+              if DataModule2.Table1.FindKey([perNr]) then            {0058BA86..AC je->BCE8}
+              begin
+                while not DataModule2.Table1.Eof do begin            {0058BCCE je->BAB7}
+                  if DataModule2.Table1Mutter.AsInteger = 0 then     {0058BAB7..CB jne->BCAC}
+                  begin
+                    kopf := False;                                   {0058BAD1..D3}
+                    gvar_02536454 := Form1.lfbh2.IndexName;          {0058BAD6..F9}
+                    bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));   {0058BAFE..BB0B vtbl+150}
+                    Form1.lfbh2.IndexName := 'Pro';                  {0058BB16..28}
+                    Form1.lfbh2.First;                               {0058BB2D..3A}
+                    u := '';
+                    sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0058BB3F..57}
+                    if Form1.lfbh2.FindKey([u]) then                 {0058BB6F..8E je->BB97}
+                      kopf := True;                                  {0058BB90}
+                    Form1.lfbh2.IndexName := gvar_02536454;          {0058BB97..BAA}
+                    Form1.lfbh2.GotoBookmark(bmk);                   {0058BBC1}
+                    if kopf then                                     {0058BBCB jne->BCAC}
+                    begin
+                      u := '';
+                      sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0058BBFB..C13}
+                      u := u + '*';
+                      v := '';
+                      illki(u, idx, v);                              {0058BC33 Call self edx=u ecx=ebx}
+                      if Pos('Mutter nicht bekannt: ', zzg) = 0 then {0058BBD1..E0 jne->BC4D}
+                        zzg := zzg + #13#10#13#10'Kind(er), Mutter nicht bekannt: - ' + v {0058BBE2..46 edx=5}
+                      else
+                        zzg := zzg + ' - ' + v;                      {0058BC4D..A7 edx=3}
+                    end;
+                  end;
+                  DataModule2.Table1.Next;                           {0058BCAC..B6}
+                  if DataModule2.Table1.Eof then                     {0058BCBB..CC jne->0058BCE8}
+                    Break;
+                  if DataModule2.Table1Vater.AsInteger = perNr then  {0058BCCE..E2 [538] je->0058BAB7}
+                    Continue
+                  else
+                    Break;                                           {->0058BCE8}
+                end;
+              end;
+            end;
+            if DataModule2.Table1.IndexName = 'mut' then             {0058BCE8..0D jne->0058BF75}
+            begin
+              if DataModule2.Table1.FindKey([perNr]) then            {0058BD13..39 je->BF75}
+              begin
+                while not DataModule2.Table1.Eof do begin            {0058BF5B je->BD44}
+                  if DataModule2.Table1Vater.AsInteger = 0 then      {0058BD44..58 jne->BF39}
+                  begin
+                    kopf := False;                                   {0058BD5E..60}
+                    gvar_02536454 := Form1.lfbh2.IndexName;          {0058BD63..86}
+                    bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));   {0058BD8B..BDA0}
+                    Form1.lfbh2.IndexName := 'Pro';                  {0058BDA3..B5}
+                    Form1.lfbh2.First;                               {0058BDBA..C7}
+                    u := '';
+                    sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0058BDCC..DE}
+                    if Form1.lfbh2.FindKey([u]) then                 {0058BDFC..1B je->BE24}
+                      kopf := True;                                  {0058BE1D}
+                    Form1.lfbh2.IndexName := gvar_02536454;          {0058BE24..37}
+                    Form1.lfbh2.GotoBookmark(bmk);                   {0058BE4E}
+                    if kopf then                                     {0058BE58 jne->BF39}
+                    begin
+                      u := '';
+                      sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0058BE88..A0}
+                      u := u + '*';
+                      v := '';
+                      illki(u, idx, v);                              {0058BEC0 Call self}
+                      if Pos('Vater nicht bekannt: ', zzg) = 0 then  {0058BE5E..6D jne->BEDA}
+                        zzg := zzg + #13#10#13#10'Kind(er), Vater nicht bekannt: - ' + v {0058BE6F..D3 edx=5}
+                      else
+                        zzg := zzg + ' - ' + v;                      {0058BEDA..34 edx=3}
+                    end;
+                  end;
+                  DataModule2.Table1.Next;                           {0058BF39..43}
+                  if DataModule2.Table1.Eof then                     {0058BF48..59 jne->0058BF75}
+                    Break;
+                  if DataModule2.Table1Mutter.AsInteger = perNr then {0058BF5B..6F [53C] je->0058BD44}
+                    Continue
+                  else
+                    Break;                                           {->0058BF75}
+                end;
+              end;
+            end;
+          end;
+          { 0058BF75 Table14-Write + Post }
+          DataModule2.Table14Zeile.AsString := zzg;                  {0058BF75..87 [1E8]+0B0 edx=[ebp-38]}
+          DataModule2.Table14.Post;                                  {0058BF8D..A2 [0E0]+248}
+          DataModule2.Table1.IndexName := '';                        {0058BFA2..AE [5C]}
+          Form1.lfbh2.Next;                                          {0058BFB3..C5}
+     end;
+   { --- C3q: Epilog (0058BFF7..0058C6ED) --- }
+   DataModule2.Table1.EnableControls;                        {0058BFF7..F1}
+   DataModule2.Table18.EnableControls;                       {0058C006..13 [140]}
+   Form1.lfbh2.EnableControls;                               {0058C018..25 [8B8]}
+   DataModule2.Table1.IndexName := '';                       {0058C02A..36 [5C]}
+   DataModule2.Table1.FindKey([krg]);                        {0058C03B..61 [ebp-8]=Personnr vom Prolog}
+   Screen.Cursor := crDefault;                               {0058C062..6B}
+   Form1.Label19.Visible := False;                           {0058C070..7F [404]}
+   if Trim(gvar_02536664) <> '' then                         {0058C084..9B jbe->C315}
+   begin
+     DataModule2.Table13.Open;                               {0058C0A6..AE [0CC]}
+     DataModule2.Table13.IndexName := 'ort_';                {0058C0B8..C5}
+     DataModule2.Table14.Append;                             {0058C0D1..D7}
+     DataModule2.Table14Zeile.AsString := ' ';               {0058C0E1..F0}
+     DataModule2.Table14.Post;                               {0058C0FB..0B}
+     DataModule2.Table14.Append;                             {0058C112..18}
+     DataModule2.Table14Zeile.AsString := ' ';               {0058C124..31}
+     DataModule2.Table14.Post;                               {0058C13E..46}
+     DataModule2.Table14.Append;                             {0058C153..59}
+     DataModule2.Table14Zeile.AsString := 'Orts-Abkürzungen: '; {0058C163..72}
+     DataModule2.Table14.Post;                               {0058C17F..87}
+     DataModule2.Table13.First;                              {0058C194..9A}
+     while not DataModule2.Table13.Eof do                    {0058C1EE..2FB}
+     begin
+       sub_00576EB0(DataModule2.Table13.RecNo, u);           {0058C1F3..23 [0CC] vtbl+150}
+       if Pos(u, gvar_02536664) > 0 then                     {0058C213..26 jle->C2BF}
+       begin
+         DataModule2.Table14.Append;                          {0058C233..39}
+         DataModule2.Table14Zeile.AsString :=                 {0058C244..A4 CatN3}
+           DataModule2.Table13Abk.AsString + ': ' +
+           DataModule2.Table13Ort.AsString;
+         DataModule2.Table14.Post;                            {0058C2B1..B9}
+       end;
+       DataModule2.Table13.Next;                              {0058C2C6..CC}
+     end;
+   end;
+   Form1.lfbh2.EmptyDataSet;                                 {0058C31A..22 [8B8]}
+   Form15.QRMemo1.Visible := False;                          {0058C32E..36 [310]}
+   Form15.QRMemo1.Enabled := False;                          {0058C342..4C +64}
+InputQuery('OFB', 'Überschrift : ', gvar_02536438);         {0058C34F..68 var-Result, Boolesch-Rückwert verworfen}
+   Form15.QRLabel1.Caption := gvar_02536438;                 {0058C374..80 [2F8]}
+   Form15.QuickRep1.Page.Columns := 1;                       {0058C38C..9D}
+   Form15.QRLabel2.Visible := False;                         {0058C3A9..B1 [2FC]}
+   Form15.QRLabel2.Enabled := False;                         {0058C3BD..C5 +64}
+   Form15.QRShape3.Visible := False;                         {0058C3D1..D9 [304]}
+   Form15.QRShape3.Enabled := False;                         {0058C3E5..EF +64}
+   Form15.QRBand1.Height := 30;                              {0058C3F9..04 [2F4]}
+   Form15.QRLabel3.Caption := 'OFB';                         {0058C410..1B [368]}
+   Form15.QRDBText4.Visible := False;                        {0058C427..2F [31C]}
+   Form15.QRDBText5.Visible := False;                        {0058C43B..43 [320]}
+   Form15.QRDBText6.Visible := False;                        {0058C44F..57 [324]}
+   Form15.QRDBText7.Visible := False;                        {0058C463..6B [328]}
+   Form15.QRDBText8.Visible := False;                        {0058C47B..7F [32C]}
+   Form15.QRDBText9.Visible := False;                        {0058C48B..93 [330]}
+   Form15.QRDBText10.Visible := False;                       {0058C49F..A7 [334]}
+   Form15.QRDBText11.Visible := False;                       {0058C4B3..BB [338]}
+   Form15.QRDBText12.Visible := False;                       {0058C4C7..CF [33C]}
+   DataModule2.Table14.Open;                                 {0058C4D4..E1}
+   Form15.QuickRep1.DataSet := DataModule2.Table14;         {0058C4ED..03}
+   Form15.QRDBText1.DataSet := DataModule2.Table14;         {0058C50A..1F}
+   Form15.QRDBText1.DataField := 'zeile';                    {0058C52B..36}
+   Form15.QRDBText2.DataSet := DataModule2.Table14;         {0058C542..55}
+   Form15.QRDBText2.DataField := 'nm';                       {0058C55A..6C}
+   Form15.QRDBText1.Visible := True;                         {0058C571..80}
+   Form15.QRDBText2.Visible := True;                         {0058C585..94}
+   Form15.QRDBText1.Enabled := True;                         {0058C599..AA +64}
+   Form15.QRDBText2.Enabled := True;                         {0058C5AD..BE +64}
+   Form15.QRDBText1.Left := 60;                              {0058C5C8..D3}
+   Form15.QRDBText1.Width := 610;                            {0058C5DF..EA}
+   Form15.QRDBText2.Left := 8;                               {0058C5F4..01}
+   Form15.QRDBText2.Width := 40;                             {0058C60B..18}
+   PByte(Integer(Form15.QRDBText1)+$242)^ := 0;              {0058C622..2A +242}
+   PByte(Integer(Form15.QRDBText2)+$242)^ := 0;              {0058C636..3E +242}
+   Form15.QRDBText2.AutoSize := False;                       {0058C64C..54}
+   Form15.QRDBText1.Font.Size := 9;                          {0058C660..6E +68}
+   Form15.QRDBText2.Font.Size := 9;                          {0058C67A..88 +68}
+   PByte(Integer(Form15.QRDBText1)+$0E0)^ := 0;              {0058C694..9E +0E0}
+   Form15.QRDBText2.Enabled := True;                         {0058C6AB..B5}
+    { Form15.QuickRep1.OnPreview := showpreview }             {0058C6C2..CB +2AC/+2A8 [ebp-4]}
+    { Form15.QuickRep1.Preview; - die Vorschau ist im
+      Kompatibilitaetsschicht nicht implementiert. }          {0058C6E2..E8}
 end;
 
 procedure TForm3.ofb2;
