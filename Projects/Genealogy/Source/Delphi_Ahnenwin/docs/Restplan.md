@@ -743,3 +743,13 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Verifiziert: build.cmd -unit 3 -> SUCCESS (29843 lines, EXIT=0, nur altbekannte Hints/Warnungen).
 - gedeausv (005B5224-005BBCC5) damit VOLLZÄHLIG rekonstruiert.
 
+
+### Batch: Unit3 famn (0057D560) CHIL-Kind-Eltern-Block (0057DB55..0057DD66) - COMPLETED, build green (2026-10-30)
+- famille-Rekonstruktion veroeffentlicht: '1 CHIL'-Zweig nicht mehr Stub: Inc(childIdx [ebp-18]); childNr [ebp-4] := Ziff(s); Table25 [1DC].FindKey([childNr]) untested -> childNr := Table25N [308]; Table1 [5C].FindKey([childNr]) untested.
+- gvar_02536840 = 1 (Datenbank-Format-Kenner): husn>0 -> Table1Kistat [5C4] := 'V'; wifn>0 -> Table1Kistat := Kistat + 'M' (GetText-SetText-CatN2); dann (REIHENFOLGE ORIGINAL: SetTexts VOR TTable.Edit) Table1.Edit; Table31 [2A4].Append; Table31Nummer [2AC] := childNr; Table31Av [2B0] := husn (Vater); Table31Am [2B4] := wifn (Mutter); Table31.Post (vtbl+248).
+- gvar_02536840 <> 1: Table1.Edit (STAATL. in dieser orignalen Ordnung ohne Post - Fortsetzung im Import); Table1Vater [538] := husn; Table1Mutter [53C] := wifn; t := RightStr(('00' + IntToStr(childIdx)),2) [CatN3 '00' + RightStr edx=2]; Table1Indm [5E4] := t (2-stellige Positionsnummer 'JJ'-Format).
+- Neue famn-Locals: childIdx [ebp-18, init 0 am 0057D5B6 kurz nach rel := 1], childNr [ebp-4]. Field names verifiziert (Unit2): Table1Kistat 5C4, Table1Indm 5E4, Table31/Nummer/Av/Am 2A4/2AC/2B0/2B4, Table25/Table25N 1DC/308.
+- Mishap fix: erstes Edit-Insert landete im NOTE-Reset-Zweig (rel := 1 im Pos('NOTE')-Handler) -> rueckgebaut und Neustart der childIdx-Init nach mIdx-Init-Platz korrekt (init Reihenfolge husn/wifn/mIdx/childIdx/rel laut Listing 0057D58F..DB).
+- Verified: build.cmd -unit 3 -> SUCCESS (29871 lines, EXIT=0, neue var W1036-Warnung entstanden und wieder behoben).
+- Unit3-Unit-Integritaet: gedeausv, gedeausv/sub_005BC604 (Pass 1+2 Mirror) und gedein_5 (Phase I/II/III inkl. fsc-Auswertung) jetzt ALLE rekonstruiert; die alten in-Block-TODO-Kommentare (TODO C2/C3 in sub_005BC604, TODO C6/C7 in gedein_5) sind VERALTET-Stubs und markierten bereits transkribierte Bloecke.
+

@@ -3504,6 +3504,8 @@ procedure TForm3.famn;
 var
   husn, wifn: Integer;
   mIdx, rel: Integer;
+  childIdx: Integer;        {0057DB69 [ebp-18] FAMC-Kinder-Reihenfolge}
+  childNr: Integer;         {0057DB75 [ebp-4] Kind-Personnr (via Table25N uebersetzt)}
   Dtag1, Dmonat1, Djahr1, Dort1, Dwit: AnsiString;
   Dtag2, Dmonat2, Djahr2, Dort2, Dwit2: AnsiString;
   Dtag3, Dmonat3, Djahr3, Dort3: AnsiString;
@@ -3516,7 +3518,8 @@ begin
     once with the husband in Nummer and once with the wife. }
   husn := 0;
   wifn := 0;
-  mIdx := 0;
+  mIdx := 0;  {0057D594 [ebp-10]}
+  childIdx := 0;  {0057D5B6..5BB [ebp-18]}
   rel := 1;
   Hqu := '';
   Squ := '';
@@ -3539,10 +3542,35 @@ begin
       if DataModule2.Table25.FindKey([wifn]) then
         wifn := DataModule2.Table25N.AsInteger;
     end;
-    if Pos('1 CHIL', s) > 0 then
+    if Pos('1 CHIL', s) > 0 then  {0057DB55..DB63}
     begin
-      { TODO: kind-parent linkage (Table15/Table31), Listingteil
-        0057DB67..0057DD66 - Originaladresse siehe Deklaration. }
+      Inc(childIdx);                                     {0057DB69 [ebp-18] - Reihenfolge-Kennzahl der Kinder des FAM}
+      childNr := Ziff(s);                                {0057DB6C..DB75 [ebp-4]}
+      DataModule2.Table25.FindKey([childNr]);            {0057DB88..DBA2 [1DC] - ohne Result-Test}
+      childNr := DataModule2.Table25N.AsInteger;         {0057DBA9..DBB4 [308]}
+      DataModule2.Table1.FindKey([childNr]);             {0057DBC7..DBDD [5C] - ohne Result-Test}
+      if gvar_02536840 = 1 then                          {0057DBDE..DBE5}
+      begin
+        if husn > 0 then                                 {0057DBEB..DBF1}
+          DataModule2.Table1Kistat.AsString := 'V';      {0057DBF1..DC05 [5C4]}
+        if wifn > 0 then                                 {0057DC0B..DC0F}
+          DataModule2.Table1Kistat.AsString :=           {0057DC11..DC4A CatN2 - GetText + 'M'}
+            DataModule2.Table1Kistat.AsString + 'M';
+        DataModule2.Table1.Edit;                         {0057DC5A..DC5F - Original: Edit erst NACH den SetText-Aufrufen}
+        DataModule2.Table31.Append;                      {0057DC66..DC71 [2A4] Kind-Eltern-Beziehung}
+        DataModule2.Table31Nummer.AsInteger := childNr;  {0057DC78..DC83 [2AC]}
+        DataModule2.Table31Av.AsInteger := husn;         {0057DC8E..DC9B [2B0] Vater}
+        DataModule2.Table31Am.AsInteger := wifn;         {0057DCA6..DCB3 [2B4] Mutter}
+        DataModule2.Table31.Post;                        {0057DCC0..DCC8 vtbl+248}
+      end
+      else
+      begin
+        DataModule2.Table1.Edit;                         {0057DCD3..DCDD}
+        DataModule2.Table1Vater.AsInteger := husn;       {0057DCE7..DCF4 [538]}
+        DataModule2.Table1Mutter.AsInteger := wifn;      {0057DCF9..DD0C [53C]}
+        t := RightStr('00' + IntToStr(childIdx), 2);     {0057DD12..DD4C CatN3 '00' + RightStr edx=2}
+        DataModule2.Table1Indm.AsString := t;            {0057DD52..DD66 [5E4]}
+      end;
     end;
     if (Pos('1 MARR', ucase(s)) > 0) or (Pos('1 _VWMARR', ucase(s)) > 0) then
     begin
