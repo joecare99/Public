@@ -13,7 +13,7 @@ unit Unit3;
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit28, Unit29, Unit36, Unit39, Unit26, Unit27;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16, Unit14, Unit24, Unit28, Unit29, Unit36, Unit39, Unit26, Unit27;
 
 type
   TForm3 = class(TForm)
@@ -1397,8 +1397,376 @@ begin
 end;
 
 procedure TForm3.ofb3;
+var
+  krg: Integer;                     {0058505B [ebp-4] aktuelle Personnr}
+  namFilter, ortFilter, husFilter: AnsiString;  {005852CC [ebp-2C] / 0058533C [ebp-30] / 005853AC [ebp-34] Form24-Listen-Muster}
+  gueltig: Boolean;                 {00585203 [ebp-4A]}
+  agu: Boolean;                     {00585A1C [ebp-49]}
+  i: Integer;                       {0058528C [ebp-50] ListBox-Durchlaufzähler}
+  num: Integer;                     {00585642/00585B93 [ebp-0B0] FindKey-Schlüssel}
+  leere: Boolean;                   {0058563C/00585B99 [ebp-0AC]}
+  idx: Integer;                     {0058566B ebx - innerer Table18-Durchlauf}
+  s, u: AnsiString;                 {diverse Zwischenwerte}
+  bl: Boolean;                      {00585B50/bl-Register - Ort-Treffer-Kette W-Zweig}
+  dup: Boolean;                     {recon Weiche Ehe-Duplikat 00585E05..C9}
+  bmk: TBookmark;                   {00586742 [ebp-24] lfbh2-Lesezeichen}
+  v: AnsiString;                    {00586831 [ebp-204] Pos-Nadel 6stellige Mutter-Nr}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00585048: OFB-Report "Ortsfamilienbuch": Inhalt von Form24.ListBox3
+    (Nachnamenmuster), ListBox4 (Ortsmuster) und ListBox6 (Hausnamenmuster)
+    in '*'-abgegrenzte Filterstrings zusammenfassen, dann Table1
+    personweise ablaufen (Geschlecht M / W), alle matchenden Treffer in
+    Form1.lfbh2 (ClientDataSet: lfbh2Nr/lfbh2Nm/lfbh2Prob/lfbh2Eh/lfbh2Ix/
+    lfbh2Nam/lfbh2Aus/lfbh2Hei) einsammeln und später vorbereiten.
+    C1 = Prolog (UI, Cursor, StringListen, Tabellenöffnung) + M-Zweig.
+    C2 = W-Zweig; C3 = Tabellen-Aufbereitung. }
+  krg := DataModule2.Table1Nummer.AsInteger;                 {0058506C}
+  gvar_02536664 := '';                                       {00585081}
+  Form1.Label19.Caption := 'OFB erstellen';                   {0058508B [404]}
+  Form1.Label19.Visible := True;                             {005850AF}
+  Form1.Label19.Refresh;                                     {005850BF}
+  Form1.Refresh;                                             {005850CB}
+  Screen.Cursor := crHourGlass;                              {005850D4 0FFF5}
+  gvar_02536440 := TStringList.Create;                       {005850E4}
+  gvar_02536440.Sorted := True;                              {005850F5}
+  PByte(Integer(gvar_02536440)+$1D)^ := 0;                   {00585101}
+  gvar_02536444 := TStringList.Create;                       {0058510A}
+  gvar_02536444.Sorted := True;                              {0058511D}
+  PByte(Integer(gvar_02536444)+$1D)^ := 0;                   {00585127}
+  Form1.lfbh2.Open;                                          {00585130 [8B8]}
+  Form1.lfbh2.EmptyDataSet;                                  {00585142}
+  Form1.lfbh2.Open;                                          {00585154}
+  Form1.lfbh2.DisableControls;                               {00585166}
+  DataModule2.Table1.Open;                                   {00585178}
+  DataModule2.Table1.IndexName := '';                        {0058518D}
+  DataModule2.Table1.First;                                  {0058519F}
+  DataModule2.Table1.DisableControls;                        {005851B1}
+  DataModule2.Table18.Open;                                  {005851BE [140]}
+  DataModule2.Table18.IndexName := 'num';                    {005851D5}
+  DataModule2.Table18.First;                                 {005851EC}
+  DataModule2.Table18.DisableControls;                       {005851FE}
+  gueltig := False;                                          {00585203}
+  if Form24.ListBox3.Visible and                             {00585207..24A ListBox3 [300]}
+     Form24.ListBox4.Visible and                             {0058521C ListBox4 [304]}
+     Form24.ListBox6.Visible then                            {00585235 ListBox6 [368]}
+  begin
+    gueltig := True;                                         {0058524E}
+    Form24.RadioButton2.Visible := True;                     {00585252 [38C] +0C8 SetVisible}
+  end;
+  namFilter := '';                                           {00585269}
+  for i := 1 to Form24.ListBox3.Count do                     {00585289..CA vtbl+218 Items}
+    namFilter := namFilter + '*' + Form24.ListBox3.Items[i-1];
+  namFilter := namFilter + '*';                              {005852CC}
+  ortFilter := '';                                           {005852D9}
+  for i := 1 to Form24.ListBox4.Count do                     {005852F9..3A}
+    ortFilter := ortFilter + '*' + Form24.ListBox4.Items[i-1];
+  ortFilter := ortFilter + '*';                              {0058533C}
+  husFilter := '';                                           {00585349}
+  for i := 1 to Form24.ListBox6.Count do                     {00585369..AC}
+    husFilter := husFilter + '*' + Form24.ListBox6.Items[i-1];
+  husFilter := husFilter + '*';                              {005853AC}
+  while not DataModule2.Table1.Eof do                        {0058590E..1F Hauptloop u. 005858FB..5 Kante}
+  begin
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then  {005853BE..3E6 [548]}
+    begin
+      Form1.lfbh2.Append;                                    {005853F1..03 [8B8]}
+      Form1.lfbh2Nam.AsString := DataModule2.Table1Name.AsString;  {00585403..28 [91C]/[540]}
+      if gvar_025363E8 = 1 then                              {00585430}
+        Form1.lfbh2Ix.AsString :=                            {00585439..85 [918] Vornamen+GebJahr+TaufJahr}
+          DataModule2.Table1Vornamen.AsString +              {00585439 [544]}
+          DataModule2.Table1Gebjahr.AsString +               {00585451 [55C]}
+          DataModule2.Table1Taufjahr.AsString;               {00585469 [56C]}
+      sub_00576EB0(DataModule2.Table1Nummer.AsInteger, s);   {005854A6..C0 [534]+58}
+      Form1.lfbh2Prob.AsString := s;                         {005854C2..D2 [910]}
+      if gvar_025363E0 = 1 then                              {005854D8}
+      begin
+        if Trim(DataModule2.Table1Gebjahr.AsString) > '' then  {005854E5..515 [55C]+Trim}
+          Form1.lfbh2Ix.AsString :=                          {0058551B..5A0}
+            DataModule2.Table1Gebjahr.AsString +             {00585521}
+            DataModule2.Table1Gebmonat.AsString +            {00585546 [558]}
+            DataModule2.Table1Gebtag.AsString                {00585557 [554]}
+        else
+          Form1.lfbh2Ix.AsString :=                          {005855A5..624}
+            DataModule2.Table1Taufjahr.AsString +            {005855B8 [56C]}
+            DataModule2.Table1Taufmonat.AsString +           {005855CE [568]}
+            DataModule2.Table1Tauftag.AsString;              {005855E7 [564]}
+      end;
+      num := DataModule2.Table1Nummer.AsInteger;             {0058562A..40 [ebp-0B0]}
+      leere := False;                                        {00585642 [ebp-0AC]}
+      if DataModule2.Table18.FindKey([num]) then             {00585649..63}
+      begin
+        idx := 1;                                            {0058566B ebx}
+        repeat                                               {00585675..866}
+          sub_00576EB0(DataModule2.Table18Epnum.AsInteger, u);  {0058569C..D3 [4CC]+58 + 00576EB0}
+          Form1.lfbh2Eh.AsString := Form1.lfbh2Eh.AsString + u + '*';  {00585675..E2 GetText [914] + Nr + '*'}
+          if (gvar_025363E4 = 1) and (idx = 1) then          {005856E2..F2}
+          begin
+            if Trim(DataModule2.Table18Sajahr.AsString) > '' then  {005856F8..728 [4EC]}
+              Form1.lfbh2Ix.AsString :=                      {0058572E..7B3}
+                DataModule2.Table18Sajahr.AsString +         {00585734}
+                DataModule2.Table18Samonat.AsString +        {00585752 [4E8]}
+                DataModule2.Table18Satag.AsString            {00585770 [4E4]}
+            else
+              Form1.lfbh2Ix.AsString :=                      {005857B8..83D}
+                DataModule2.Table18Hjahr.AsString +          {005857BE [4D8]}
+                DataModule2.Table18Hmonat.AsString +         {005857DC [4D4]}
+                DataModule2.Table18Htag.AsString;            {005857FA [4D0]}
+          end;
+          DataModule2.Table18.Next;                          {0058583D..4C}
+        until DataModule2.Table18.Eof or                     {00585854..5C +0A1}
+          (DataModule2.Table18Nummer.AsInteger <>            {00585865..8E [4C8]/[534]}
+           DataModule2.Table1Nummer.AsInteger);
+      end;
+      Form1.lfbh2Eh.AsString := Form1.lfbh2Eh.AsString + '000000*';  {00585894..B7 CatN '000000*'}
+      Form1.lfbh2.Post;                                      {005858DE vtbl+248}
+    end
+    else if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then  {0058594A..983}
+    begin
+      { 00585989..9D4: toter Pos-Test auf '*' + Hausname + '*' in husFilter -
+        das setg-Ergebnis wird bei 00585A1C ohne Verwendung ueberschrieben }
+      agu := Pos('*' + DataModule2.Table1Name.AsString + '*', namFilter) > 0;  {005859D9..5A1C [ebp-49]}
+      if (Pos('*' + DataModule2.Table1Gebort.AsString + '*', ortFilter) > 0) or   {00585A20..68}
+         (Pos('*' + DataModule2.Table1Taufort.AsString + '*', ortFilter) > 0) or   {00585A6E..B6}
+         (Pos('*' + DataModule2.Table1Stort.AsString + '*', ortFilter) > 0) or     {00585ABC..B04}
+         (Pos('*' + DataModule2.Table1Begort.AsString + '*', ortFilter) > 0) then  {00585B06..4E}
+        bl := True                                                  {00585B54}
+      else
+        bl := False;                                                {00585B50}
+      if gueltig then                                               {00585B56..5A}
+      begin
+        agu := False;                                               {00585B5C [ebp-49]}
+        bl := False;                                                {00585B60}
+        Form24.RadioButton2.Visible := True;                        {00585B62..73 vtbl+0C8}
+      end;
+      if not bl then                                                {00585B79..7B}
+      begin
+        num := DataModule2.Table1Nummer.AsInteger;                  {00585B81..B4 [ebp-0B0]}
+        leere := False;                                             {00585B99 [ebp-0AC]}
+        if DataModule2.Table18.FindKey([num]) then                  {00585BA0..BBB}
+        begin
+          repeat                                                    {00585BC2 jmp 00585CD3 Kante}
+            if (Pos('*' + DataModule2.Table18Saort.AsString + '*', ortFilter) > 0) or   {00585BC7..C0F}
+               (Pos('*' + DataModule2.Table18Hort.AsString + '*', ortFilter) > 0) or     {00585C15..C5D}
+               (Pos('*' + DataModule2.Table18Schort.AsString + '*', ortFilter) > 0) then {00585C5F..CA7}
+              bl := True;                                           {00585CA9}
+            DataModule2.Table18.Next;                               {00585CAB..B8}
+          until DataModule2.Table18.Eof or                          {00585CBD..D1}
+            (DataModule2.Table18Nummer.AsInteger <>                 {00585CD3..CFB Kante}
+             DataModule2.Table1Nummer.AsInteger);
+        end;
+      end;
+      if namFilter = '*' then                                       {00585D01..13}
+        agu := True;
+      if ortFilter = '*' then                                       {00585D14..23}
+        bl := True;
+      if (agu and bl) or ((husFilter = '*') and                     {00585D25..4E Sonderfall}
+         (namFilter = '*') and (ortFilter = '*')) then              {00585D50..53 je 00586689}
+      begin
+        sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u);        {00585D59..72 [ebp-48]}
+        num := DataModule2.Table1Nummer.AsInteger;                  {00585D73..85 [ebp-0B0]}
+        leere := False;                                             {00585D8B [ebp-0AC]}
+        if DataModule2.Table18.FindKey([num]) then                  {00585D92..DAC}
+        begin
+          idx := 1;                                                 {00585DB4}
+          repeat                                                    {00585DB9 jmp 00586374 Kante}
+            Form1.lfbh2.IndexName := 'Pro';                         {00585DBE..D5}
+            sub_00576EB0(DataModule2.Table18Epnum.AsInteger, u);    {00585DD5..EB [ebp-13C]}
+            dup := True;                                            {00585ECF Append-Vorgabe}
+            if Form1.lfbh2.FindKey([u]) then                        {00585E05..24 +2C4 VType 0B}
+            begin
+              sub_00576EB0(DataModule2.Table18Nummer.AsInteger, s); {00585E2A..42 [ebp-140]}
+              if Form1.lfbh2.FindKey([s]) and                       {00585E47..79 +2C4 je 00586347}
+                 (Pos(u, Form1.lfbh2Eh.AsString) > 0) then          {00585E7F..C8 jne 00586347}
+                dup := False;
+            end;                                                    {00585ECF: bei FindKey-Fehlschlag Append}
+            if dup then
+            begin
+              Form1.lfbh2.Append;                                   {00585ECF..EDC}
+              Form1.lfbh2Nam.AsString := DataModule2.Table1Name.AsString;  {00585EE1..B0 [91C]/[540]}
+              if gvar_025363E8 = 1 then                              {00585F14..1B}
+                Form1.lfbh2Ix.AsString :=                            {00585F21..A0}
+                  DataModule2.Table1Vornamen.AsString +              {00585F21..57 [544]}
+                  DataModule2.Table1Gebjahr.AsString +               {00585F3F..75 [55C]}
+                  DataModule2.Table1Taufjahr.AsString;               {00585F5D..9E [56C]}
+              sub_00576EB0(DataModule2.Table1Nummer.AsInteger, s);   {00585FA6..C0 [ebp-160]/[534]}
+              Form1.lfbh2Prob.AsString := s;                         {00585FC3..E0 [910]}
+              if gvar_025363E0 = 1 then                              {00585FDE..E5}
+              begin
+                if Trim(DataModule2.Table1Gebjahr.AsString) > '' then  {00585FEB..5A1B [55C]}
+                  Form1.lfbh2Ix.AsString :=                        {00586021..A6}
+                    DataModule2.Table1Gebjahr.AsString +           {00585FF8 [55C]}
+                    DataModule2.Table1Gebmonat.AsString +          {00586054 [558]}
+                    DataModule2.Table1Gebtag.AsString              {0058606D [554]}
+                else
+                  Form1.lfbh2Ix.AsString :=                        {005860AB..12A}
+                    DataModule2.Table1Taufjahr.AsString +          {005860B8 [56C]}
+                    DataModule2.Table1Taufmonat.AsString +         {005860DE [568]}
+                    DataModule2.Table1Tauftag.AsString;            {00586104 [564]}
+              end;
+              sub_00576EB0(DataModule2.Table18Epnum.AsInteger, s);   {0058614E..66 [ebp-194]/[4CC]}
+              Form1.lfbh2Eh.AsString := Form1.lfbh2Eh.AsString + s + '*';  {00586130..9B CatN}
+              if (gvar_025363E4 = 1) and (idx = 1) then              {005861A1..B1}
+              begin
+                if Trim(DataModule2.Table18Sajahr.AsString) > '' then  {005861B7..E7 [4EC]}
+                  Form1.lfbh2Ix.AsString :=                        {005861ED..77}
+                    DataModule2.Table18Sajahr.AsString +           {00586205 [4EC]}
+                    DataModule2.Table18Samonat.AsString +          {00586223 [4E8]}
+                    DataModule2.Table18Satag.AsString              {00586241 [4E4]}
+                else
+                  Form1.lfbh2Ix.AsString :=                        {00586277..B7}
+                    DataModule2.Table18Hjahr.AsString +            {005862BA [4D8]}
+                    DataModule2.Table18Hmonat.AsString +           {005862E0 [4D4]}
+                    DataModule2.Table18Htag.AsString;              {00586301 [4D0]}
+              end;
+              Form1.lfbh2.Post;                                     {00586332..41 +248}
+            end;
+            DataModule2.Table18.Next;                               {00586347..54}
+          until DataModule2.Table18.Eof or                          {00586359..6D}
+            (DataModule2.Table18Nummer.AsInteger <>                 {00586359..9C Kante}
+             DataModule2.Table1Nummer.AsInteger);
+        end
+        else
+        begin
+          DataModule2.Table1.IndexName := 'mut';                    {005863A7..B6}
+          num := StrToInt(u);                                        {005863BB..C3 [ebp-0B0]}
+          leere := False;                                            {005863C9 [ebp-0AC]}
+          if DataModule2.Table1.FindKey([num]) then                  {005863D0..E9 'mut'-Suche}
+          begin
+            DataModule2.Table1.IndexName := '';                      {005863EF..FB}
+            num := StrToInt(u);                                       {00586400..08}
+            leere := False;                                           {0058640E [ebp-0AC]}
+            DataModule2.Table1.FindKey([num]);                        {00586415..27 Positionierung}
+            Form1.lfbh2.Append;                                       {0058642C..39}
+            Form1.lfbh2Nam.AsString := DataModule2.Table1Name.AsString;  {0058643E..6B [91C]/[540]}
+            if gvar_025363E8 = 1 then                                 {00586471..78}
+              Form1.lfbh2Ix.AsString := DataModule2.Table1Vornamen.AsString;  {0058647A..A7 [544]}
+            sub_00576EB0(DataModule2.Table1Nummer.AsInteger, s);      {005864AD..C9 [ebp-1D0]/[534]}
+            Form1.lfbh2Prob.AsString := s;                            {005864CA..E5 [910]}
+            if gvar_025363E0 = 1 then                                 {005864E5..EC}
+            begin
+              if Trim(DataModule2.Table1Gebjahr.AsString) > '' then   {005864F2..5A22 [55C]}
+                Form1.lfbh2Ix.AsString :=                             {00586528..AD}
+                  DataModule2.Table1Gebjahr.AsString +                {00586540 [55C]}
+                  DataModule2.Table1Gebmonat.AsString +               {0058655E [558]}
+                  DataModule2.Table1Gebtag.AsString                   {0058657C [554]}
+              else
+                Form1.lfbh2Ix.AsString :=                             {005865B2..37}
+                  DataModule2.Table1Taufjahr.AsString +               {005865CA [56C]}
+                  DataModule2.Table1Taufmonat.AsString +              {005865EE [568]}
+                  DataModule2.Table1Tauftag.AsString;                 {00586606 [564]}
+            end;
+            Form1.lfbh2.Post;                                         {00586637..46 +248}
+          end;
+          DataModule2.Table1.IndexName := '';                         {0058664C..58}
+          num := StrToInt(u);                                          {0058665D..65}
+          leere := False;                                              {0058666B [ebp-0AC]}
+          DataModule2.Table1.FindKey([num]);                           {00586672..84}
+        end;
+      end;
+    end;
+    DataModule2.Table1.Next;                                 {005858EC..FB}
+  end;
+  DataModule2.Table1.IndexName := '';                        {00585925..31}
+  DataModule2.Table1.First;                                  {00585940}
+  { 005866AB..BC: Table1-Eof-Kante der Hauptloop - Rekursion in den Kopf 0058594A }
+  DataModule2.Table1.IndexName := '';                        {005866CC..CE}
+  DataModule2.Table18.IndexName := 'num';                    {005866DA..E5}
+  Form1.lfbh2.IndexName := 'Pro';                            {005866F1..FC}
+  Form1.lfbh2.First;                                         {0058670E}
+  while not Form1.lfbh2.Eof do                               {00586B59..6D / 00586713 jmp Kante}
+  begin
+    u := Form1.lfbh2Prob.AsString;                            {00586718..2A [ebp-48] [910]+60}
+    bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));              {0058673A..42 vtbl+150}
+    num := StrToInt(u);                                        {00586745..4D [ebp-0B0]}
+    leere := False;                                            {00586753 [ebp-0AC]}
+    DataModule2.Table1.FindKey([num]);                         {0058675A..73 ohne Pruefung des Ergebnisses}
+    if DataModule2.Table1Vater.AsInteger > 0 then              {00586771..85}
+    begin
+      sub_00576EB0(DataModule2.Table1Vater.AsInteger, s);      {0058678B..A3 [ebp-1FC]/[538]}
+      if Form1.lfbh2.FindKey([s]) and                          {005867A8..D8 +2C4 VType 0B}
+         (DataModule2.Table1Mutter.AsInteger > 0) then         {005867E0..F4 [53C]}
+      begin
+        sub_00576EB0(DataModule2.Table1Mutter.AsInteger, v);   {005867FA..831 [ebp-204]/[53C]}
+        if Pos(v, Form1.lfbh2Eh.AsString) > 0 then             {00586836..44 jle 0058691E}
+        begin
+          DataModule2.Table1.IndexName := 'mut';               {0058684A..59}
+          num := StrToInt(u);                                   {0058685E..66 [ebp-0B0]}
+          leere := False;                                       {0058686C [ebp-0AC]}
+          if not DataModule2.Table1.FindKey([num]) then         {00586873..A88C jne 0058691E}
+            if not DataModule2.Table18.FindKey([num]) then      {00586892..BC3 [140] jne}
+            begin
+              Form1.lfbh2.GotoBookmark(bmk);                    {005868C5..DD vtbl+1A0}
+              Form1.lfbh2.Edit;                                 {005868DD..F1}
+              Form1.lfbh2Nm.AsInteger := 1;                      {005868EF..08 +0A8 edx=1}
+              Form1.lfbh2.Post;                                 {00586909..18 +248}
+            end;
+        end;
+      end;
+    end;
+    DataModule2.Table1.IndexName := '';                        {0058691E..2A}
+    num := StrToInt(u);                                         {0058692F..37}
+    leere := False;                                             {0058693D [ebp-0AC]}
+    DataModule2.Table1.FindKey([num]);                          {0058694A..56}
+    if DataModule2.Table1Mutter.AsInteger > 0 then              {0058695B..6F [53C]}
+    begin
+      sub_00576EB0(DataModule2.Table1Mutter.AsInteger, s);      {00586975..8D [ebp-208]}
+      if Form1.lfbh2.FindKey([s]) and                          {00586998..C4 +2C4 0B}
+         (DataModule2.Table1Vater.AsInteger > 0) and           {005869CA..DE [538]}
+         (Pos(IntToStr(DataModule2.Table1Vater.AsInteger),      {005869E4..A2E IntToStr-Nadel}
+              Form1.lfbh2Eh.AsString) > 0) then
+      begin
+        DataModule2.Table1.IndexName := 'vat';                 {00586A34..43}
+        num := StrToInt(u);                                     {00586A48..50}
+        leere := False;                                         {00586A56 [ebp-0AC]}
+        if not DataModule2.Table1.FindKey([num]) then           {00586A5D..A76 jne 00586B08}
+          if not DataModule2.Table18.FindKey([num]) then        {00586A7C..AAD [140] jne}
+          begin
+            Form1.lfbh2.GotoBookmark(bmk);                      {00586AAF..C7 vtbl+1A0}
+            Form1.lfbh2.Edit;                                   {00586AC7..DB}
+            Form1.lfbh2Nm.AsInteger := 1;                        {00586AD9..03 +0A8 edx=1}
+            Form1.lfbh2.Post;                                   {00586AF3..B02 +248}
+          end;
+      end;
+    end;
+    DataModule2.Table1.IndexName := '';                        {00586B08..14}
+    Form1.lfbh2.GotoBookmark(bmk);                             {00586B19..2B vtbl+1A0 [ebp-24]}
+    Form1.lfbh2.Next;                                          {00586B31..3E}
+  end;
+  Form1.lfbh2.IndexName := 'na';                             {00586B73..85}
+  Form1.lfbh2.First;                                         {00586B8A..97}
+  idx := 0;                                                  {00586B9C}
+  while not Form1.lfbh2.Eof do                               {00586C8B..9F / 00586C75..89 Kanten}
+  begin
+    if Form1.lfbh2Nm.AsInteger = 1 then                       {00586BA3..B6 [90C]+58}
+      Form1.lfbh2.Delete                                      {00586BB8..CA / 00586BCA Kante}
+    else
+    begin
+      inc(idx);                                                {00586BCF}
+      Form1.lfbh2.Edit;                                        {00586BD0..DD}
+      Form1.lfbh2Nm.AsInteger := idx;                           {00586BE2..F3 +0A8 edx=ebx}
+      if not gueltig then                                      {00586BF9..FD jne 00586C4E}
+      begin
+        Form1.lfbh2Hei.AsString := Copy(Form1.lfbh2Ix.AsString, 1, 4);  {00586BFF..48 [924]/[918] LStrCopy}
+      end;
+      Form1.lfbh2.Post;                                        {00586C4E..5D +248}
+      Form1.lfbh2.Next;                                        {00586C63..70}
+    end;
+  end;
+  Form1.lfbh2.IndexName := 'na';                             {00586CA5..B7}
+  if gueltig then                                             {00586CBC..D9}
+  begin
+    Form1.lfbh2.IndexName := 'heir';                          {00586CC2..D4}
+  end;
+  Form1.lfbh2.First;                                         {00586CD9..E6}
+  DataModule2.Table1.IndexName := '';                        {00586CEB..F7}
+  DataModule2.Table14.Open;                                   {00586CFC..D09 [0E0]}
+  DataModule2.Table14.Close;                                  {00586D0E..1B}
+  DataModule2.Table14.EmptyTable;                             {00586D20..2D}
+  DataModule2.Table14.Open;                                   {00586D32..44}
+  idx := 0;                                                  {00586D44}
+  Form1.lfbh2.First;                                         {00586D46..53}
+  s := ' ';                                                  {00586D58..D60 [ebp-3C]}
+  { 00586D65: jmp 0058BFDD - naechster Anlauf (Chunk C3) }
 end;
 
 procedure TForm3.ofb2;
