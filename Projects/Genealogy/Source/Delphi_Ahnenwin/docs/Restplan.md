@@ -779,4 +779,11 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Neue Variablen: bl: Boolean, dup: Boolean (recon Ehe-Duplikat-Weiche), bmk: TBookmark, v: AnsiString (Pos-Nadel 6stellige Mutter-Nr).
 - Verified: build.cmd -unit 3 -> SUCCESS (EXIT=0). Wichtig: '+2C4 FindKey' TVarRec-nachweis; +150 GetBookmark / +1A0 GotoBookmark - Paar bestätigt; gedeausv-Stub-Konvention (bmk := -1, GotoBookmark = no-op) nicht fuer ofb3 (echte Calls im Listing).
 
-### Next chunk C3: Report-Generator-Loop 00586D6A..0058BF7B (Tabelle14 [0E0]-Aufbau, gvar_02536440/02536444-Ablagen, Ausdruck-Aufbau in Form1.lfbh2-Anchluss).
+### ofb3 COMPLET (C1..C3q DONE, build gruen 2026-10-31) - Commits r1622..r1625 (C3q noch im WC, SVN-Server offline)
+- C3a..C3h: Report-Generator-Loop (while lfbh2.Eof, Name-/Nachnamen-Blocke, Religion/Beruf/Hausname, Geb/Tauf/St-Blocke, gvar-Weichen, Ehen-Loop).
+- C3i..C3n (r1622): M-Zweig Kind-Loops mit 'vat'-Index, Mutter-nicht-bekannt (illki), erst->Integer.
+- C3o (r1623): W-Zweig gespiegelt (unkVat, 'mut'-Index, Kind-Loop Vater=patn [538], Vater-nicht-bekannt).
+- C3p (r1625): Ehen-Loop repeat/until (i=Length(lfbh2Eh) div 7), Table18-Loop-Tail (Next/Eof/Epnum[4CC]=num), Table14-Write B920+BF75 (Zeile:=zzg, Post), 2. Pass vat/mut unter '000000*'-Weiche (Pro-Kopf-Check, 'Kind(er), Mutter/Vater nicht bekannt: - '+illki bzw. ' - '+illki).
+- C3q (im WC, Commit ausstehend): Epilog 0058BFF7..C6ED: EnableControls Table1[5C]/Table18[140]/lfbh2[8B8]; Table1.IndexName:=''; Table1.FindKey([krg]) [ebp-8]; crDefault; Label19.Visible:=False [404]; if Trim(gvar_02536664)<>'': Table13[0CC] Open, 'ort_'-Index, 3 Leerbloecke+Kopfzeile 'Orts-Abkuerzungen: ' in Table14[0E0], while Table13: sub_00576EB0(Table13.RecNo,u) [vtbl+150=RecNo, Konf. oabk L2802/L5872], if Pos(u,gvar_02536664)>0: Zeile:=Table13Abk+': '+Table13Ort, Post; danach lfbh2.EmptyDataSet; Form15-Setup (QRMemo1/QRLabel2/QRShape3/QRDBText4..12 unsichtbar, QRBand1.Height:=30, QRLabel3:='OFB', Page.Columns:=1, InputQuery('OFB','Ueberschrift : ',gvar_02536438) -> QRLabel1.Caption, QRDBText1 'zeile' 60/610 Font 9, QRDBText2 'nm' 8/40 AutoSize False, +242/+0E0 PByte-Write); OnPreview/Preview = nicht implementiert (Konv. Unit1 L8282).
+- Balance-Fix C3q: fehlendes 'end' der if-0058702B-Block nach L1849 (Assy jne->7299); exakt 3 offene begins (Prozedur L1424, while L1782, if L1819).
+- Uses: QuickRpt, QRCtrls ergaenzt; D7-Konv.: InputQuery-Return-Boolean wird verworfen (E2034-Test).

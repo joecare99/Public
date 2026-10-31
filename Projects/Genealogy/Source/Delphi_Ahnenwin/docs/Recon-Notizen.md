@@ -18,7 +18,7 @@ Technische Merkhilfen für die methodische Rekonstruktion. Doku des Fortschritts
 | `call dword [ecx+0B0]` mit edx=Str | `TField.AsString :=` (Setter) auf TField-Objekt |
 | `call dword [ecx+2C4]` | `TDataSet.FindKey` (test al → je) |
 | `call dword [ecx+248]` | `TDataSet.Post` |
-| `call dword [ecx+150]` | Bookmark-getter → `[ebp-24]` (bmk) |
+| `call dword [ecx+150]` | **kontextabhängig**: auf lfbh2 = Bookmark-getter (bmk); auf Table13 [0CC] = **RecNo** (bestätigt: oabk L2802 `sub_00576EB0(Table13.RecNo,u)`, L5872) |
 | `call dword [ecx+1A0]` | `GotoBookmark` (edx=bmk) |
 | `call dword [edx+0C4]` | `TCheckBox.Checked` |
 | `call @LStrCatN` edx=N | `concat` aus N Strings (Pushs in umgekehrter Reihenfolge) |
@@ -36,11 +36,13 @@ Nummer **[534]** · Vater **[538]** · Mutter **[53C]** · Name [540] · Vorname
 **⚠ Häufiger Fehler:** [538] = **Vater**, [53C] = **Mutter** — vor jedem Edit prüfen, welches Feld der `cmp`/`mov`-Offset adressiert!
 
 ## DataModule2-Objekt-Offsets (eax aus [0061DC3C])
-Table1 **[5C]** · Table18 **[140]** · Table14-Zeile-TField **[1E8]** · Table14-TTable **[0E0]**
+Table1 **[5C]** · Table13 **[0CC]** · Table14-TTable **[0E0]** · Table14-Zeile-TField **[1E8]** · Table14-Nm-TField **[1EC]** · Table18 **[140]**
+Table13-Felder: Ort **[A44]** · PLZ [A48] · Land [A4C] · ... · Lkr [A64] · **Abk [A68]** · Lg [A6C] · Bg [A70] (Unit2 L656-668)
 Table18-Felder: Nummer [4C8] · Epnum [4CC] · Satag [4E0] · Samonat [4E4] · Sajahr [4EC]?? (prüfen) · Saort [4F0] · Satrauz [4F4] · Verbind [4F8] · Htag [4D0]?? · Hmonat [4D4]?? · Hjahr [4D8] · Hort [4DC]
 
-## Form1 / Form24
-- Form1 **[0061DBD4]**: lfbh2 (TClientDataSet) **[8B8]**; Fields: Nm [90C] · Eh [914] · Aus [920] (lfbh2-Feld-Offsets, TField-Objekte)
+## Form1 / Form24 / Form15
+- Form1 **[0061DBD4]**: Label19 **[404]** · lfbh2 (TClientDataSet) **[8B8]**; Fields: Nm [90C] · Eh [914] · Aus [920] (lfbh2-Feld-Offsets, TField-Objekte)
+- Form15 **[0061D7F4]** (Unit15-L19+): QuickRep1 [2F0] · QRBand1 [2F4] · QRLabel1 [2F8] · QRLabel2 [2FC] · QRShape3 [304] · QRMemo1 [310] · QRDBText4 [31C] · QRDBText5..12 [320..33C] · QRDBText1 [350] · QRDBText2 [354] · QRLabel3 [368]; TQRLabel.SetAutoStretch = `[+0E4]`→ in Recon via `.AutoSize`; `+242`-Byte-Write per `PByte(Integer(Comp)+$242)^ := 0`; OnPreview `+2AC/+2A8` = **nicht implementiert** (Konv. Unit1 L8282, Unit16)
 - Form24 **[0061D330]**: CheckBox14 **[394]**, Checked via vtbl+0C4
 - Form1-Memo1 [220]?? · DBMemo1 (Width +48, Font +68) — Kommentar-Mirror
 
@@ -78,6 +80,13 @@ zzg [ebp-38] (AnsiString) · unkMut [ebp-40] · unkVat [ebp-44] · kcount [ebp-1
 - `' ['+Nm+']'`-Kopf-Marker + `' [oo '+Nm+']'`-Scan-Loop mit kopf-Flag + gvar_02536454-IndexName-Restore + GotoBookmark
 - `' * '` (Geb) / `' ~ '` (Tauf) / `' + '` (St) — jeweils mit `sub_00576FF8`-Normalisierung + oabk/gvar_02536664-Weiche + `gvar_02536444.Add(Ort+v)`
 - `zzg` (ebp-38) = laufender Zeilentext; `gvar_02536440/2536444` = Listen; Table14 = Druck-Export
+
+## ofb3-Epilog (C3q, 0058BFF7..C6ED) — abgearbeitet
+- `[ebp-8]` im Prolog = `Table1Nummer.AsInteger` der aktuellen Person (0058506C..7E) → Epilog `Table1.FindKey([krg])`
+- 2. Pass-Weiche nur bei `Trim(lfbh2Eh) = '000000*'` (jne -> BF75 = Epilog-Write)
+- String-Neue (C8xx): `58CB20 'ort_'` · `58CB30 'Orts-Abkürzungen: '` · `58CB4C 'Überschrift : '` · `58CB64 'OFB'` · `58CB70 'zeile'` · `58CB80 'nm'` · `58C9D0 ': '`
+- D7-Konvention: `InputQuery(T, P, S)` = Function mit `var S: String`, Return-Boolean wird verworfen; kein 4. Parameter (E2034)
+- `TField/TCtrl` Private-VT-Member (`+242`, `+0E0`) via PByte — kein direkter property-Zugriff in QuickRpt-Kompatibilitaetslage
 
 ## Offene TODOs / Fallstricke
 - [140]=Table18 (nicht Table13!); [1E8]=Table14Zeile-TField; [0E0]=Table14-TTable
