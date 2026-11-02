@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_KeyCountMAIN in '..\source\KEYCOUNT\Frm_KeyCountMAIN.pas' {MainForm}; 
+  Frm_KeyCountMAIN in '..\source\KEYCOUNT\Frm_KeyCountMAIN.PAS' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

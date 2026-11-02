@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_FindReplMAIN in '..\source\FINDREPL\Frm_FindReplMAIN.pas' {MainForm}; 
+  Frm_FindReplMAIN in '..\source\FINDREPL\Frm_FindReplMAIN.PAS' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

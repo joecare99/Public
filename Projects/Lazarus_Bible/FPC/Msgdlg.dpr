@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MsgDlgMAIN in '..\source\MSGDLG\Frm_MsgDlgMAIN.pas' {MainForm}; 
+  Frm_MsgDlgMAIN in '..\source\MSGDLG\Frm_MsgDlgMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin

@@ -108,7 +108,7 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="../source/Barchart;../source/_core/tools"/>
+      <IncludeFiles Value="../source/Barchart;../source/_core/tools;$(ProjOutDir)"/>
       <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
@@ -125,6 +125,11 @@
         <DebugInfoType Value="dsDwarf3"/>
       </Debugging>
       <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
     </Linking>
   </CompilerOptions>
 </CONFIG>

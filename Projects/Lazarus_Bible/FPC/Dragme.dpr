@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DragMeMAIN in '..\source\DRAGME\Frm_DragMeMAIN.pas' {MainForm}; 
+  Frm_DragMeMAIN in '..\source\DRAGME\Frm_DragMeMAIN.PAS' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

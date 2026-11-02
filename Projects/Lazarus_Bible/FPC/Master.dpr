@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MasterMAIN in '..\source\MASTER\Frm_MasterMAIN.pas' {MainForm}; 
+  Frm_MasterMAIN in '..\source\MASTER\Frm_MasterMAIN.PAS' {MainForm}; 
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

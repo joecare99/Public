@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_CLIENT in '..\source\DDE1\Frm_CLIENT.pas' {ClientForm};
+  Frm_CLIENT in '..\source\DDE1\Frm_CLIENT.PAS' {ClientForm};
 
 {.$R *.RES}
 {$E EXE}

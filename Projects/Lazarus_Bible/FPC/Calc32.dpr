@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   Forms, SysUtils,
   Frm_CALC in '..\source\Calc32\view\Frm_CALC.pas' {CalcForm},
-  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.pas' {AboutForm},
+  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.PAS' {AboutForm},
   Calc32ViewModel in '..\source\Calc32\viewmodel\Calc32ViewModel.pas',
   CalculatorModel in '..\source\Calc32\model\CalculatorModel.pas';
 {$IFNDEF FPC}

@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MemoPadMAIN in '..\source\MEMOPAD\Frm_MemoPadMAIN.pas' {MainForm}; 
+  Frm_MemoPadMAIN in '..\source\MEMOPAD\Frm_MemoPadMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

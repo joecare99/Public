@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_ContCompMAIN in '..\source\CONTCOMP\frm_ContCompMAIN.pas' {MainForm};
+  frm_ContCompMAIN in '..\source\CONTCOMP\frm_ContCompMAIN.PAS' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

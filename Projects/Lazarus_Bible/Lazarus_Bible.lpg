@@ -1,651 +1,896 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <ProjectGroup FileVersion="1">
-    <Targets Count="129">
-      <Target0 FileName="FPC/AboutEx.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target0>
-      <Target1 FileName="FPC/Actions.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target1>
-      <Target2 FileName="FPC/Addpage.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target2>
-      <Target3 FileName="FPC/Animator.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target3>
-      <Target4 FileName="FPC/BarTest.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target4>
-      <Target5 FileName="FPC/BarTest2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target5>
-      <Target6 FileName="FPC/Bitview.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target6>
-      <Target7 FileName="FPC/Bitview2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target7>
-      <Target8 FileName="FPC/Calc32.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target8>
-      <Target9 FileName="FPC/Calc32_2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target9>
-      <Target10 FileName="FPC/Calc64.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target10>
-      <Target11 FileName="FPC/Capslock.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target11>
-      <Target12 FileName="FPC/Capslock2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target12>
-      <Target13 FileName="FPC/Cclient.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target13>
-      <Target14 FileName="FPC/CharGrid.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target14>
-      <Target15 FileName="FPC/Checks.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target15>
-      <Target16 FileName="FPC/Checks2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target16>
-      <Target17 FileName="FPC/Client1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target17>
-      <Target18 FileName="FPC/Client2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target18>
-      <Target19 FileName="FPC/Colorlib.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target19>
-      <Target20 FileName="FPC/Combos.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target20>
-      <Target21 FileName="FPC/Compstrm.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target21>
-      <Target22 FileName="FPC/Constraint.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target22>
-      <Target23 FileName="FPC/Contcomp.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target23>
-      <Target24 FileName="FPC/CoolDemo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target24>
-      <Target25 FileName="FPC/Cserver.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target25>
-      <Target26 FileName="FPC/DMTest.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target26>
-      <Target27 FileName="FPC/Daynames.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target27>
-      <Target28 FileName="FPC/Dclock.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target28>
-      <Target29 FileName="FPC/DingButtonXControl.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target29>
-      <Target30 FileName="FPC/Direx.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target30>
-      <Target31 FileName="FPC/Direxec.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target31>
-      <Target32 FileName="FPC/Direxec2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target32>
-      <Target33 FileName="FPC/Dragme.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target33>
-      <Target34 FileName="FPC/Dropfile.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target34>
-      <Target35 FileName="FPC/Enumfon.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target35>
-      <Target36 FileName="FPC/Enumwin.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target36>
-      <Target37 FileName="FPC/Except1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target37>
-      <Target38 FileName="FPC/Except2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target38>
-      <Target39 FileName="FPC/Except3.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target39>
-      <Target40 FileName="FPC/Exlist.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target40>
-      <Target41 FileName="FPC/Exwin.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target41>
-      <Target42 FileName="FPC/Fancy.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target42>
-      <Target43 FileName="FPC/Filemenu.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target43>
-      <Target44 FileName="FPC/Findrepl.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target44>
-      <Target45 FileName="FPC/Fishy.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target45>
-      <Target46 FileName="FPC/Fishy2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target46>
-      <Target47 FileName="FPC/FontSamp.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target47>
-      <Target48 FileName="FPC/GlyphLst.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target48>
-      <Target49 FileName="FPC/Hello.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target49>
-      <Target50 FileName="FPC/IPCClient.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target50>
-      <Target51 FileName="FPC/IPCServer.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target51>
-      <Target52 FileName="FPC/Keycount.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target52>
-      <Target53 FileName="FPC/Keyinfo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target53>
-      <Target54 FileName="FPC/Lister.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target54>
-      <Target55 FileName="FPC/Listfont.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target55>
-      <Target56 FileName="FPC/Listtext.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target56>
-      <Target57 FileName="FPC/Master.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target57>
-      <Target58 FileName="FPC/MayTemp.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target58>
-      <Target59 FileName="FPC/Mdidemo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target59>
-      <Target60 FileName="FPC/Mdidemo2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target60>
-      <Target61 FileName="FPC/MemInfo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target61>
-      <Target62 FileName="FPC/Memopad.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target62>
-      <Target63 FileName="FPC/Metamore.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target63>
-      <Target64 FileName="FPC/MouseExcept.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target64>
-      <Target65 FileName="FPC/Msgdlg.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target65>
-      <Target66 FileName="FPC/Multimen.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target66>
-      <Target67 FileName="FPC/Nonclien.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target67>
-      <Target68 FileName="FPC/Objlist.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target68>
-      <Target69 FileName="FPC/OleCont.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target69>
-      <Target70 FileName="FPC/OleWord1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target70>
-      <Target71 FileName="FPC/OleWord2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target71>
-      <Target72 FileName="FPC/Ontop.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target72>
-      <Target73 FileName="FPC/Options.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target73>
-      <Target74 FileName="FPC/PageTab.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target74>
-      <Target75 FileName="FPC/PageTabOD.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target75>
-      <Target76 FileName="FPC/Palette.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target76>
-      <Target77 FileName="FPC/PicDialogs.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target77>
-      <Target78 FileName="FPC/Polyflow.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target78>
-      <Target79 FileName="FPC/PowerTest.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target79>
-      <Target80 FileName="FPC/Printgr.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target80>
-      <Target81 FileName="FPC/Prninfo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target81>
-      <Target82 FileName="FPC/Readme.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target82>
-      <Target83 FileName="FPC/Report1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target83>
-      <Target84 FileName="FPC/Runme.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target84>
-      <Target85 FileName="FPC/Server1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target85>
-      <Target86 FileName="FPC/Server2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target86>
-      <Target87 FileName="FPC/Sketch.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target87>
-      <Target88 FileName="FPC/Spinbutt.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target88>
-      <Target89 FileName="FPC/Splashin.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target89>
-      <Target90 FileName="FPC/Sqlplay.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target90>
-      <Target91 FileName="FPC/StaticDemo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target91>
-      <Target92 FileName="FPC/Status.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target92>
-      <Target93 FileName="FPC/StatusOD.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target93>
-      <Target94 FileName="FPC/Strlist.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target94>
-      <Target95 FileName="FPC/Strres.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target95>
-      <Target96 FileName="FPC/Syscolor.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target96>
-      <Target97 FileName="FPC/Sysmenu.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target97>
-      <Target98 FileName="FPC/TabEdit.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target98>
-      <Target99 FileName="FPC/Tabs.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target99>
-      <Target100 FileName="FPC/Telname.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target100>
-      <Target101 FileName="FPC/TestCDlg.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target101>
-      <Target102 FileName="FPC/TestDing.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target102>
-      <Target103 FileName="FPC/Testdll.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target103>
-      <Target104 FileName="FPC/Todo.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target104>
-      <Target105 FileName="FPC/Toolbar1.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target105>
-      <Target106 FileName="FPC/Toolbar2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target106>
-      <Target107 FileName="FPC/Toolbar3.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target107>
-      <Target108 FileName="FPC/WinesEntry.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target108>
-      <Target109 FileName="FPC/YesNoTest.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target109>
-      <Target110 FileName="FPC/fpcTestAboutEx.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target110>
-      <Target111 FileName="FPC/fpcTestActions.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target111>
-      <Target112 FileName="FPC/fpcTestAddPage.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target112>
-      <Target113 FileName="FPC/fpcTestAll.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target113>
-      <Target114 FileName="FPC/fpcTestBarChart.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target114>
-      <Target115 FileName="FPC/fpcTestBarTest2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target115>
-      <Target116 FileName="FPC/fpcTestBitView.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target116>
-      <Target117 FileName="FPC/fpcTestBitView2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target117>
-      <Target118 FileName="FPC/fpcTestCalc32.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target118>
-      <Target119 FileName="FPC/fpcTestCalc64.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target119>
-      <Target120 FileName="FPC/fpcTestCapsLock.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target120>
-      <Target121 FileName="FPC/fpcTestCapsLock2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target121>
-      <Target122 FileName="FPC/fpcTestCharGrid.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target122>
-      <Target123 FileName="FPC/fpcTestChecks.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target123>
-      <Target124 FileName="FPC/fpcTestChecks2.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target124>
-      <Target125 FileName="FPC/BarChartp.lpk">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target125>
-      <Target126 FileName="FPC/DingPkg.lpk">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target126>
-      <Target127 FileName="FPC/meta/BibleExplorer.lpi">
-        <BuildModes Count="2"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-      </Target127>
-      <Target128 FileName="FPC/TelnameTest.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target128>
+  <ProjectGroup FileVersion="2">
+    <Targets>
+      <Target FileName="FPC\AboutEx.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Actions.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Addpage.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Animator.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\BarTest.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\BarTest2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Bitview.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Bitview2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Calc32.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Calc32_2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Calc64.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Capslock.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Capslock2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Cclient.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\CharGrid.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Checks.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Checks2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Client1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Client2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Colorlib.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Combos.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Compstrm.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Constraint.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Contcomp.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\CoolDemo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Cserver.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\DMTest.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Daynames.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Dclock.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\DingButtonXControl.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Direx.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Direxec.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Direxec2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Dragme.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Dropfile.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Enumfon.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Enumwin.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Except1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Except2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Except3.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Exlist.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Exwin.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Fancy.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Filemenu.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Findrepl.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Fishy.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Fishy2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\FontSamp.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\GlyphLst.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Hello.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\IPCClient.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\IPCServer.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Keycount.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Keyinfo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Lister.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Listfont.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Listtext.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Master.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\MayTemp.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Mdidemo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Mdidemo2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\MemInfo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Memopad.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Metamore.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\MouseExcept.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Msgdlg.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Multimen.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Nonclien.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Objlist.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\OleCont.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\OleWord1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\OleWord2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Ontop.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Options.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\PageTab.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\PageTabOD.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Palette.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\PicDialogs.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Polyflow.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\PowerTest.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Printgr.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Prninfo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Readme.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Report1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Runme.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Server1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Server2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Sketch.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Spinbutt.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Splashin.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Sqlplay.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\StaticDemo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Status.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\StatusOD.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Strlist.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Strres.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Syscolor.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Sysmenu.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\TabEdit.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Tabs.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Telname.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\TestCDlg.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\TestDing.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Testdll.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Todo.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Toolbar1.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Toolbar2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\Toolbar3.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\WinesEntry.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\YesNoTest.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\TelnameTest.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestAboutEx.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestActions.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestAddPage.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestAll.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestBarChart.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestBarTest2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestBitView.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestBitView2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestCalc32.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestCalc64.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestCapsLock.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestCapsLock2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestCharGrid.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestChecks.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\fpcTestChecks2.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
+      <Target FileName="FPC\BarChartp.lpk"/>
+      <Target FileName="FPC\DingPkg.lpk"/>
+      <Target FileName="FPC\meta\BibleExplorer.lpi">
+        <BuildModes>
+          <Mode Name="Default"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
+        </BuildModes>
+      </Target>
     </Targets>
   </ProjectGroup>
 </CONFIG>

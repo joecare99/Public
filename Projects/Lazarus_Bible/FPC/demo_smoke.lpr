@@ -9,11 +9,13 @@ uses
   Classes,
   contnrs,
   BibleShowcase,
-  BibleShowcaseRegistry;
+  BibleShowcaseRegistry,
+  Frm_StaticDemoMain;
 
 var
   Reg: TShowcaseRegistry;
   I: Integer;
+  DemoForm: TForm;
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
@@ -24,12 +26,22 @@ begin
     begin
       Write('  ', TShowcaseEntry(Reg.Showcase.Entries[I]).Key, ' ... ');
       try
-        TShowcaseEntry(Reg.Showcase.Entries[I]).Factory;
+        DemoForm := TShowcaseEntry(Reg.Showcase.Entries[I]).Factory;
+        DemoForm.Free;
         Writeln('OK');
       except
         on E: Exception do
           Writeln('FEHLER: ', E.Message);
       end;
+    end;
+    Write('  StaticDemo ... ');
+    try
+      DemoForm := TStaticDemoForm.Create(nil);
+      DemoForm.Free;
+      Writeln('OK');
+    except
+      on E: Exception do
+        Writeln('FEHLER: ', E.Message);
     end;
   finally
     Reg.Free;

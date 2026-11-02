@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DClockMAIN in '..\source\DCLOCK\Frm_DClockMAIN.pas' {MainForm};
+  Frm_DClockMAIN in '..\source\DCLOCK\Frm_DClockMAIN.PAS' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

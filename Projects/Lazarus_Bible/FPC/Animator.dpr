@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   Forms,
   Frm_AnimatorMain in '..\source\Animator\Frm_AnimatorMain.pas' {MainForm},
-  cmpAnimator in '..\source\Animator\cmpAnimator.pas';
+  cmpAnimator in '..\source\Animator\CmpAnimator.pas';
 
 {$E EXE}
 {$R *.res}

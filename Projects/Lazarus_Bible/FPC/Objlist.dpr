@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_ObjListMAIN in '..\source\OBJLIST\Frm_ObjListMAIN.pas' {MainForm}; 
+  Frm_ObjListMAIN in '..\source\OBJLIST\Frm_ObjListMAIN.PAS' {MainForm}; 
 {$R *.res}
 begin
   Application.Initialize;

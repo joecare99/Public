@@ -21,8 +21,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/WinesEntry"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../source/WinesEntry;../source/_core/tools"/>
-            <OtherUnitFiles Value="../source/WinesEntry;../source/_core/tools"/>
+            <IncludeFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -54,8 +54,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/WinesEntry"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../source/WinesEntry;../source/_core/tools"/>
-            <OtherUnitFiles Value="../source/WinesEntry;../source/_core/tools"/>
+            <IncludeFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -108,8 +108,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/WinesEntry"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="../source/WinesEntry;../source/_core/tools"/>
-      <OtherUnitFiles Value="../source/WinesEntry;../source/_core/tools"/>
+      <IncludeFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/WinesEntry;../source/_core/services;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
