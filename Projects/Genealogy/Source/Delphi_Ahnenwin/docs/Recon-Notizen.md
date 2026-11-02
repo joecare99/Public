@@ -41,13 +41,13 @@ Table13-Felder: Ort **[A44]** · PLZ [A48] · Land [A4C] · ... · Lkr [A64] · 
 Table18-Felder: Nummer [4C8] · Epnum [4CC] · Satag [4E0] · Samonat [4E4] · Sajahr [4EC]?? (prüfen) · Saort [4F0] · Satrauz [4F4] · Verbind [4F8] · Htag [4D0]?? · Hmonat [4D4]?? · Hjahr [4D8] · Hort [4DC]
 
 ## Form1 / Form24 / Form15
-- Form1 **[0061DBD4]**: Label19 **[404]** · lfbh2 (TClientDataSet) **[8B8]**; Fields: Nm [90C] · Eh [914] · Aus [920] (lfbh2-Feld-Offsets, TField-Objekte)
+- Form1 **[0061DBD4]**: Label19 **[404]** · lfbh2 (TClientDataSet) **[8B8]**; Fields: Nm [90C] · Eh [914] · **Aus [920] = Integer** · **Hei [924] = String-Jahresfeld (lfbh2Edit/Post: Sajahr [4EC] / Hjahr [4D8])** · Ix [918] · Nam [91C] (Unit1.pas L411-418)
 - Form15 **[0061D7F4]** (Unit15-L19+): QuickRep1 [2F0] · QRBand1 [2F4] · QRLabel1 [2F8] · QRLabel2 [2FC] · QRShape3 [304] · QRMemo1 [310] · QRDBText4 [31C] · QRDBText5..12 [320..33C] · QRDBText1 [350] · QRDBText2 [354] · QRLabel3 [368]; TQRLabel.SetAutoStretch = `[+0E4]`→ in Recon via `.AutoSize`; `+242`-Byte-Write per `PByte(Integer(Comp)+$242)^ := 0`; OnPreview `+2AC/+2A8` = **nicht implementiert** (Konv. Unit1 L8282, Unit16)
 - Form24 **[0061D330]**: CheckBox14 **[394]**, Checked via vtbl+0C4
 - Form1-Memo1 [220]?? · DBMemo1 (Width +48, Font +68) — Kommentar-Mirror
 
 ## gvar-Weichen (Delphi-Globale, meist `= 1` gesetzt)
-25363EC Alter · 25363F0 Beruf · 25363F4 Notiz/Kommentar · 25363F8 Todesurs · 25363FC Satrauz-TZ · 2536400 Taufpat · 2536404 Religion · 2536410 oabk-Schalter (Ort-Abk. nach gvar_02536664 statt in zzg) · 2536414/2536418 Kinder-Name-Weichen (gvar_02536440-Add) · 2536454 lfbh2-IndexName-Save (AnsiString) · 2536664 gvar_02536664 (AnsiString, oabk-Anhang) · 25366644 gvar_02536644 (Single, Zeilenindex)
+25363EC Alter · 25363F0 Beruf · 25363F4 Notiz/Kommentar · 25363F8 Todesurs · 25363FC Satrauz-TZ · 2536400 Taufpat · 2536404 Religion · 2536410 oabk-Schalter (Ort-Abk. nach gvar_02536664 statt in zzg) · 2536414/2536418 Kinder-Name-Weichen (gvar_02536440-Add) · 2536454 lfbh2-IndexName-Save (AnsiString) · **2536644** gvar_02536644 (**Single**, Zeilen-/Trefferzähler; `mov dword [2536644],0` / `inc dword [2536644]` = Ganzzahl-Op, kein String!) · 2536664 gvar_02536664 (AnsiString, oabk-Anhang)
 
 ## Subroutines (Unit3)
 - `sub_00576FF8(ALine; var out)` — Datum-Normalisierer (`'T.M.J'` → formatiert)
@@ -94,3 +94,30 @@ zzg [ebp-38] (AnsiString) · unkMut [ebp-40] · unkVat [ebp-44] · kcount [ebp-1
 - Eh-String: 7 Zeichen pro Ehe, Nr in den ersten 6, Trennzeichen an Pos 7
 - `'000000*'`-Sonderfall im 2. Pass = „keine gültige Eh-Nummer" → illki-Blöcke für Waisenkinder
 - Original springt bei `i<=0` (jle->8B920) direkt zum Table14-Write — Pascal: `if i > 0 then begin ... end;` danach B920-Code
+
+## [54C]-Konsistenzcheck (2026-10-31) — 4 Bugs behoben (Unit3.pas)
+- **Bug-1 C3h (005885A8..BC)**: Zweiter Guard fehlte — ASM hat NACHEINANDER 	est eax,eax; jle 8887D auf Vater [538] (5885A0) UND Mutter [53C] (5885BA). Fix: if (num > 0) and (Table1Mutter.AsInteger > 0) then.
+- **Bug-2 C3h (00588645..6D)**: Pos-Needle kam aus u (Vater6/[ebp-490], nur für lfbh2.FindKey([u])). ASM baut die Needle FRISCH: [53C] Mutter → sub_00576EB0 → [ebp-498] → LStrCat '*'. Fix: sub_00576EB0(Table1Mutter, u) vor dem Pos (u danach nur noch Scratch, nächste Nutzung überschreibt).
+- **Bug-3 C3h (005886F0..58872F)**: Control-Flow war invertiert. ASM: Loop-Top 5886F0 → Prob[910] StrToInt vs Vater[538] → **je 588626 (Match) / jmp 58887D (Non-Match = sofort Exit)**; Match: Needle+Pos → jle 5886C4 (kein Treffer = Next) / gefunden → zzg [aus Nm] + jmp 8887D; Next 5886C4 → Eof 5886D3..E1 → jne 8887D / Fall → Loop-Top. Vorher stand der Break unbedingt im Match-Zweig, Non-Match fing.
+- **Bug-4 M-Head (00589571..86)**: Table1Vater = patn → **Table1Mutter = patn** ([53C] gegen [ebp-10]=patn, jne 5898BE; der alte Kommentar sagte schon [53C]). W-Seite (L2436 [538] Vater=patn) bleibt korrekt — dort ist perNr die Mutter.
+- OK verifiziert: alle 8 [538]/[53C]-Fälle in C1/C2, Religion-[54C]-Blöcke (ofb3: L1861/2148/2356/2532), Tails T2/T3/T4, Else-Branch 5898BE (kein Inc(kcount), edx=7), Pos-Asymmetrie M=sub_00576EB0(Mutter) / W=IntToStr(Vater).
+
+## [54C]+Feldname-Konsistenzcheck (2026-11-01) — 2 weitere Bugs behoben
+- **Bug-5 (587E4C..79)**: `lfbh2Aus` → **`lfbh2Hei`**. ASM schreibt per AsString-Setter an `[924]` — Unit1 L411-418: **Aus = [920] Integer** (nur gelesenes `' [aus N]'`-Feld), **Hei = [924] String** = Hochzeit/Jahr-Ziel. Quelle [4EC] = Sajahr.
+- **Bug-6 (588291..BE)**: `lfbh2Aus` → **`lfbh2Hei`** (gleiche Stelle im H-Satz; Quelle [4D8] = Hjahr).
+- Verifiziert korrekt: Ehen-/Bezie-Pfad (587D96 jne→58A701, 588479 Bezie, 588C4 Epnum), S-Satz S-*: [4E4]/[4E8]/[4EC]/[4F0]/[4F4], H-Satz H-*: [4D8]/[4DC]/[4E0]=**Table18Trauz** (Unit2 L311 — H-TZ-Block, nicht Satrauz!), Tail (B8E4 Eof→B914, B8F5 [4CC]→B8E6, B909 [534]→je B8E6), Table14-Write [1E8]+0B0, oabk/illki-Helper, gvar-2536644-Single-Counter, Table13-A44/A68 + RecNo-[150], lfbh2.Nm=[90C], lfbh2.Aus=[920] (Integer-Lesung), W-Zweig-Feldzuordnungen (Mutter-Vergl. [53C]=patn bei M/Kindersuche, Vater-Vergl. [538]=patn bei W-Seite).
+- **Tabelle der Table18-Offsets (Unit2 L304-317, gegen ofb3-Listing abgeglichen)**: Nummer [4C8] **4C8·4CC** Epnum · Htag [4D0] · Hmonat [4D4] · Hjahr [4D8] · Hort [4DC] · **Trauz [4E0]** · Satag [4E4] · Samonat [4E8] · Sajahr [4EC] · Saort [4F0] · Satrauz [4F4] · Verbind [4F8]
+
+## ofb2-Start + Bug-7 ofb3 (2026-11-01)
+- **ofb2** (0058CB84+): Listing-Extract `Temp\opencode\ofb2.txt` aus Projects_AhnenWin\Unit3.pas L20970..28999. Chunk 1 (Setup bis 0058CEF8) transkribiert; **Table15 [0E8]** = Ehen-Tabelle der ofb2-Variante (Schwestertabelle Table18, 'num'-Index).
+- **Bug-7 ofb3 C1 (r1628)**: Form24-ListBox-Gate 585207..24C — vtbl+0C4 ist **Count** (identischer Slot wie die Loop-Bounds ofb3 585280 / ofb2 58CD71), NICHT Visible. Maschinell: tote Count-Calls L3/L4 (D2-Items-Sync), einziger `jle 58524C` testet nur **ListBox6.Count**. Vorherige `.Visible`-Transkription (L1461-463) war falsch → `if ListBox6.Count > 0`.
+- Merke: **vtbl+0C4 auf Form24-ListBoxes [300]/[304]/[368] = Count**, +0C8 auf [38C] RadioButton = SetVisible — nicht verwechseln.
+
+## Offene Strukturfragen M-Zweig (005894A8..58A6FC) — bewusst NICHT angefasst
+- **T1-Paradox**: 58A603 cmp Vater,esi; je 589571 — Je-Pfad hat KEIN Table1.Next (einziger Next im M-Block = 58A675 im else-Pfad), Head/Kopf/Body bewegen Table1 nicht (Kopf-Scan ist komplett lfbh2-basiert, Body nur Feld-Getter/oabk). Listing-faith wäre Endlosschleife auf Kind#1 — Auflösung nur mit dem Original-Binary möglich (AHNWIN51.exe passt adressmäßig NICHT, s.u.).
+- **Recon-Arbeitsstand** (bewusst so gelassen): T1 if Vater=perNr → Next; Continue (L2302ff) + Kopf-Scan NACH der While (L2320ff) mit Placeholder { Table1.Next / Kind-Loop-Tail in C3m } (L2352) — weicht vom Listing ab, wo Kopf/Body PRO Kind im Zyklus laufen (Branches → jmp 589B9B → Kopf → jne 58A603 / Body → Fall auf 58A603).
+- **T1-Ausgang**: ASM nach Next 58A66B: Eof → jne 58B914 (= Inc(ehn)-Ehen-Tail, L2631); NOT-Eof → **58A691** = Trim(unkMut) → ggf. illki-Print 'Mutter nicht bekannt' → IndexName:='' → First → jmp 58B827 (Personen-Ausgang). Recon hat nur if Eof then Break — der not-Eof-Exit nach A691 fehlt.
+- **Sprünge zu 58A691**: Geschlecht≠'M' (589505), patn≤0 (58953A), FindKey-Fail (589566) — alles Abbruchpfade des M-Zweigs. Recon: then-Block { skip } (L2240) — Flow läuft stattdessen in den Kopf-Scan.
+- **W-Zweig-Entry**: echter Entry ist 587DB7 jne 58A701 (C2-Region) + 58A701 UpperCase(Geschlecht)='W' → jne 58B827; der Geschlecht-Check im C3m-Setup (Recon L2234 jne->58A691, Kommentar 'W-Zweig') landet aber auf A691 (M-Abort), nicht auf 58A701.
+- **Binary-Nachweis gescheitert**: Listing-Adressen (00585048..0058C854) passen weder mit Base 00400000 (CODE endet VA 00563DB8) noch 00500000 (landet in String-Daten) in AHNWIN51.exe — Quell-Binary des Listings ist nicht im Repo; außerhalb von uild/ existiert keine weitere EXE. Wer das passende Original (Ahnen5/AhnWin52 o.ä.) hat, bitte ablegen.
+- Nächster Schritt: M-Schleife + C3m (W-Zweig L2235/L2432-Placeholder) nach Binary-Fund oder aus Listing-Logik rekonstruieren.

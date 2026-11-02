@@ -779,11 +779,98 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Neue Variablen: bl: Boolean, dup: Boolean (recon Ehe-Duplikat-Weiche), bmk: TBookmark, v: AnsiString (Pos-Nadel 6stellige Mutter-Nr).
 - Verified: build.cmd -unit 3 -> SUCCESS (EXIT=0). Wichtig: '+2C4 FindKey' TVarRec-nachweis; +150 GetBookmark / +1A0 GotoBookmark - Paar bestätigt; gedeausv-Stub-Konvention (bmk := -1, GotoBookmark = no-op) nicht fuer ofb3 (echte Calls im Listing).
 
-### ofb3 COMPLET (C1..C3q DONE, build gruen 2026-10-31) - Commits r1622..r1625 (C3q noch im WC, SVN-Server offline)
+### ofb3 COMPLET (C1..C3q DONE, build gruen) - Commits r1622..r1625, C3q + Checks in r1626 (2026-11-01)
 - C3a..C3h: Report-Generator-Loop (while lfbh2.Eof, Name-/Nachnamen-Blocke, Religion/Beruf/Hausname, Geb/Tauf/St-Blocke, gvar-Weichen, Ehen-Loop).
 - C3i..C3n (r1622): M-Zweig Kind-Loops mit 'vat'-Index, Mutter-nicht-bekannt (illki), erst->Integer.
 - C3o (r1623): W-Zweig gespiegelt (unkVat, 'mut'-Index, Kind-Loop Vater=patn [538], Vater-nicht-bekannt).
 - C3p (r1625): Ehen-Loop repeat/until (i=Length(lfbh2Eh) div 7), Table18-Loop-Tail (Next/Eof/Epnum[4CC]=num), Table14-Write B920+BF75 (Zeile:=zzg, Post), 2. Pass vat/mut unter '000000*'-Weiche (Pro-Kopf-Check, 'Kind(er), Mutter/Vater nicht bekannt: - '+illki bzw. ' - '+illki).
-- C3q (im WC, Commit ausstehend): Epilog 0058BFF7..C6ED: EnableControls Table1[5C]/Table18[140]/lfbh2[8B8]; Table1.IndexName:=''; Table1.FindKey([krg]) [ebp-8]; crDefault; Label19.Visible:=False [404]; if Trim(gvar_02536664)<>'': Table13[0CC] Open, 'ort_'-Index, 3 Leerbloecke+Kopfzeile 'Orts-Abkuerzungen: ' in Table14[0E0], while Table13: sub_00576EB0(Table13.RecNo,u) [vtbl+150=RecNo, Konf. oabk L2802/L5872], if Pos(u,gvar_02536664)>0: Zeile:=Table13Abk+': '+Table13Ort, Post; danach lfbh2.EmptyDataSet; Form15-Setup (QRMemo1/QRLabel2/QRShape3/QRDBText4..12 unsichtbar, QRBand1.Height:=30, QRLabel3:='OFB', Page.Columns:=1, InputQuery('OFB','Ueberschrift : ',gvar_02536438) -> QRLabel1.Caption, QRDBText1 'zeile' 60/610 Font 9, QRDBText2 'nm' 8/40 AutoSize False, +242/+0E0 PByte-Write); OnPreview/Preview = nicht implementiert (Konv. Unit1 L8282).
+- C3q (r1626): Epilog 0058BFF7..C6ED: EnableControls Table1[5C]/Table18[140]/lfbh2[8B8]; Table1.IndexName:=''; Table1.FindKey([krg]) [ebp-8]; crDefault; Label19.Visible:=False [404]; if Trim(gvar_02536664)<>'': Table13[0CC] Open, 'ort_'-Index, 3 Leerbloecke+Kopfzeile 'Orts-Abkuerzungen: ' in Table14[0E0], while Table13: sub_00576EB0(Table13.RecNo,u) [vtbl+150=RecNo, Konf. oabk L2802/L5872], if Pos(u,gvar_02536664)>0: Zeile:=Table13Abk+': '+Table13Ort, Post; danach lfbh2.EmptyDataSet; Form15-Setup (QRMemo1/QRLabel2/QRShape3/QRDBText4..12 unsichtbar, QRBand1.Height:=30, QRLabel3:='OFB', Page.Columns:=1, InputQuery('OFB','Ueberschrift : ',gvar_02536438) -> QRLabel1.Caption, QRDBText1 'zeile' 60/610 Font 9, QRDBText2 'nm' 8/40 AutoSize False, +242/+0E0 PByte-Write); OnPreview/Preview = nicht implementiert (Konv. Unit1 L8282).
+- [54C]-Konsistenzcheck (r1626): 4 Bugs gefixt (C3h Vater+Mutter-Guard 5885BA, Pos-Needle aus Mutter [53C] 588645, C3h Loop-Control 5886F0..72F je 88626/jmp 8887D, M-Head Table1Mutter=patn [53C] 589571).
+- Feldname-Konsistenzcheck (r1627): 2 Bugs gefixt (lfbh2Aus->lfbh2Hei [924] String; 2x: Sajahr [4EC] 587E4C und Hjahr [4D8] 588291). Notizen korrigiert (gvar-Typo 25366644->2536644 Single, lfbh2-Tabellar inkl. Hei [924], Table18-Offset-Vollzeile mit Trauz [4E0]).
 - Balance-Fix C3q: fehlendes 'end' der if-0058702B-Block nach L1849 (Assy jne->7299); exakt 3 offene begins (Prozedur L1424, while L1782, if L1819).
 - Uses: QuickRpt, QRCtrls ergaenzt; D7-Konv.: InputQuery-Return-Boolean wird verworfen (E2034-Test).
+
+### Unit3 ofb2 Chunk 1 (0058CB84-0058CEF8) - DONE, build green (r1628, 2026-11-01)
+- Listing: Projects_AhnenWin\Unit3.pas L20970..28999 (ofb2 gesamt, ~8000 Assy-Zeilen bis NList@L29000); Extract Temp\opencode\ofb2.txt.
+- Prolog wie ofb3 (krg:=Table1Nummer [534]+58, gvar_02536664:='', Label19 'OFB erstellen' sichtbar+Refresh, crHourGlass 0FFF5, gvar_02536440/444 Create+Sorted(True)+[1D]:=0, lfbh2/Open/EmptyDataSet/DisableControls — NUR 1x Open, ofb3 hatte 2x), Table1 [5C] Open/IndexName ''/First/DisableControls, Table18 [140] Open/'num'/First/DisableControls.
+- Flags: agu [ebp-5D], bl [ebp-5E], gueltig [ebp-60]; Gate 58CD3D: gueltig := ListBox6.Count>0 (vtbl+0C4=Count); RB2-Freigabe erst danach.
+- Filterstrings wie ofb3 C1: namFilter [ebp-54] (ListBox3), ortFilter [ebp-58] (ListBox4), husFilter [ebp-5C] (ListBox6), je '*'-umguenzt; if gueltig -> agu:=False, bl:=False, Form24.RadioButton2.Visible:=True [38C]+0C8.
+- NEU ggü. ofb3: DataModule2.Table15 [0E8] Open + IndexName 'num' (Ehen-Tabelle der ofb2-Variante); 0058CEF8 jmp 0058DA45 = Schleifen-Condition (Chunk 2).
+- BUG-7 ofb3 C1 (gefixt r1628): Gate 585207..24C war als 'ListBox3/4/6.Visible'-AND transkribiert. Maschinell: gleicher Slot +0C4 wie die Loop-Bounds (585280 = Count!), tote Count-Calls L3/L4, einziger Sprung jle 58524C testet NUR ListBox6.Count. Fix: tote Count-Statements + if ListBox6.Count>0.
+
+### Unit3 ofb2 Chunk 2 (0058CEFD-0058DAA5) - DONE, build green (r1629, 2026-11-01)
+- Schleifen-Condition 0058DA45: while not Table1.Eof ([5C]+0A1, je->CEFD); Body-Head: UpperCase(Geschlecht [548])='M' — NICHT-M springt direkt zum Tail (0058DA23), d.h. ofb2 verarbeitet im Hauptloop NUR M-Personen.
+- CFAF-Knoten (nur bei gvar_0253641C=0): FindKey([Table1Nummer]) auf Table15 [0E8] ('num'); bei Fail Next-Schleife mit Pos(Geschlecht,'MmxX')<>0-Check (5953D0, eax=SubStr/edx=S — Konvention via CFF0-Needle bestaetigt); CF3F-Eof -> CFF0, CF67-Eof und Pos<>0 -> CFAF (FindKey-Wdh. mit aktueller/letzter Zeile). Pascal: noch-Flag-While + Repeat/Until.
+- Tail: Table1.Next + Eof-Break (0058DA23..43). Post-Loop (0058DA5C..A5): Table1.IndexName:='' + First; if gueltig -> agu:=False, bl:=False, RadioButton2.Visible:=True; jmp 0058E996.
+- Offen (Chunk 4): Block ab 0058DAAA und E996-Weiche (zweiter Filterblock) bis ofb2-Ende.
+
+### Unit3 ofb2 Chunk 3 (0058CFF0-0058DA1D) - DONE, build green (r1630, 2026-11-01)
+- M-Filterblock CFF0: husHit = Pos('*'+Hausname+'*', husFilter) [ebp-5F]; wenn not gueltig: agu = Pos(Name vs namFilter) [ebp-5D], bl = OR-Chain Gebort/Taufort/Stort/Begort vs ortFilter [ebp-5E]; wenn not bl: FindKey Table18([Nummer]) + while Nummer=Nummer: bl = OR Saort/Hort/Schort vs ortFilter, Next bis Eof/Nummerwechsel.
+- '*'-Fallbacks (D361..D96): Filter='*' setzt agu/bl/husHit := True. Gate D39A..D3D3: gueltig -> ok:=husHit; (namFilter='*') and (ortFilter='*') -> ok:=True; sonst ok:=agu and bl. ok=0 -> skip Append (je DA23).
+- Append-Block D3D9..DA1D: lfbh2.Append; lfbh2Nam := Table1Name; gvar_025363E8=1 -> lfbh2Ix := Vornamen+Gebjahr+Taufjahr; lfbh2Prob := 576EB0(Nummer) (6-stellig); gvar_025363E0=1 -> Ix := Jahr+Monat+Tag (Geb, sonst Tauf); gvar_025363E4=1 -> lfbh2Hei := '' + Copy(Kommentar, Pos(#$92+'N')+3, 4) (2. Pos-Check; 1. Copy = Totalspeicher [ebp-114], nie gelesen).
+- Table18-Ehen-Schleife (D75D..D9C5): FindKey([Nummer]); idx:=1; while Table18Nummer=Table1Nummer: lfbh2Eh += 576EB0(Epnum)+'*'; (gvar_025363E4 and idx=1) -> Ix := erstes Ehedatum (Sajahr-Trim<>'' ? Sajahr+Samonat+Satag : Hjahr+Hmonat+Htag); Next/Eof-Break, Inc(idx). Danach lfbh2Eh += '000000*' + lfbh2.Post.
+- @LStrCopy-Konvention: Hidden-Dest-Push vor Args (lea eax,[local]; push eax) — Result wird in die Local-Variable geschrieben (Verifikation ueber ofb3-00586C1E..48).
+- lfbh2-Felder: [910] Prob, [914] Eh, [918] Ix, [91C] Nam, [924] Hei (Unit1 L411-418).
+
+### Unit3 ofb2 Chunk 4 (0058E996-Schleifenkopf + 0058DAAA..E96F) - DONE, build green (r1632, 2026-11-01)
+- 2. Table1-Pass: while not Eof (E996) — nur W-Personen (UpperCase(Geschlecht)='W', jne E974); Spiegel des M-Zweigs.
+- W-Knoten (gvar_0253641C=0): FindKey Table15 [0E8]; Fail -> Next-Schleife mit Pos(Geschlecht,'WwxX') [595408]; Eof-Ausgaenge DAF8->DBAF / DB20->DB6E — strukturidentisch mit M-Knoten (noch-Flag-While).
+- Tail (in if-W): Table1.IndexName:='' + FindKey([StrToInt(u48)]) [E948..E96F]; u48=[ebp-48], wird in DFAA gesetzt. KORRIGIERT in Chunk 5: E937..E96F laeuft NUR im E689-Pfad (kein-Ehen-Fund) — nicht nach normalem Schleifen-Exit (E684/E64F -> direkt E974). Gemeinsamer Exit: Next + Eof-Break (E974).
+- Offen (Chunk 6): E9AD..NList-Start (lfbh2-Pro-/Delete-/na-Loops wie ofb3 L1686ff). 5b/5c s.u. DONE.
+
+### Unit3 ofb2 Chunk 5 (0058DBAF..E684) - DONE, build green (r1633, 2026-11-01)
+- W-Filterblock DBAF..DD87 (Spiegel CFF0): husHit [ebp-5F]; not gueltig -> agu [ebp-5D] + bl-OR Gebort/Taufort/Stort/Begort [ebp-5E]; not bl -> FindKey Table18 + while Nummer=Nummer: bl = OR Saort/Hort/Schort vs ortFilter, Next/Eof-Break.
+- '*'-Fallbacks DF20..DF55; Gate DF59..DF92 (wie D39A): gueltig->ok:=husHit / beide '*'->True / sonst agu and bl; ok=0 -> je E974 (skippt auch E937-Tail).
+- DFAA: sub_00576EB0(Table1Nummer, u48) — u48=[ebp-48] ist die 6-stellige Nummer.
+- DFB2: FindKey Table18([Nummer]) -> Fail (je E689); sonst DFF3 idx:=1 + while Table18Nummer=Table1Nummer (E656 je->DFFD / jmp->E974), Loop-Bottom E629 Next + Eof-Break + Inc(idx).
+- (5b-Details s.u.) DFFD..E623 — dedup vor Append: lfbh2.IndexName:='Pro'; FindKey lfbh2([576EB0(Epnum)]) (Fail->E10E Append); sonst FindKey lfbh2([576EB0(Table18Nummer)]) (Fail->E629); sonst Pos(Epnum6, lfbh2Eh)<>0 -> E629 (skip), Pos=0 -> E10E. Append-Block E10E..E623: Nam, gvar_E8->Ix:=Vornamen+Gebjahr+Taufjahr, Prob:=576EB0, gvar_E0->Ix:=Gebdatum/Taufdatum (Trim-geguardet), E36F lfbh2Eh += '*'+Epnum6, gvar_E4 and idx=1 -> Ix:=Sajahr-Datum (Trim-guard) else Hjahr-Datum (Trim-guard, zusaetzlich gegen M-Zweig), E571: if Pos(#92'N',Kommentar)>0 -> Hei:=Copy(Pos+3,4) (KEIN '' vorab, KEIN 1. dead-Copy), E623 Post.
+- (5c-Details s.u.) E689..E936 — kein-Ehen-Pfad: gvar=0 -> Table1.IndexName:='mut' [595424]; FindKey([StrToInt(u48)]) -> Fail je E937; sonst IndexName:='' + FindKey, lfbh2.Append OHNE dedup (gvar_E8 -> Ix := nur Vornamen [544], nicht Cat3!), Prob, gvar_E0 -> Ix-Datum, Post -> faellt in E937: IndexName:='' + FindKey([StrToInt(u48)]).
+
+### Unit3 ofb2 Chunk 5b (0058DFFD..E623 Dedup+Append) - DONE, build green (r1634, 2026-11-01)
+- Loop-Body DFFD: lfbh2.IndexName:='Pro'; u:=576EB0(Table18Epnum). DEDUP-4-Pfade (NEU Var dup): 1. FindKey([u]) Fail -> dup:=False -> E10E Append; ok -> dup:=True, s:=576EB0(Table18Nummer), 2. FindKey([s]) Fail -> dup bleibt True -> E629 SKIP (ABWEICHUNG von ofb3: dort Fail -> Append); ok -> dup := Pos(u, lfbh2Eh)>0 (Pos<>0 -> E629 SKIP, Pos=0 -> E10E Append). ACHTUNG: ofb3-Zeile 1590 (`if FindKey and Pos>0 then dup:=False`) bildet Fail->Append ab — ofb2-Asm hat je->E629 = Fail->SKIP; ofb3-Transkription evtl. semantisch pruefen.
+- Append E10E..E623: lfbh2.Append; Nam; gvar_E8 -> Ix:=Vornamen+Gebjahr+Taufjahr; Prob:=576EB0(Nummer); gvar_E0 -> Ix:=Trim(Gebjahr)<>'' ? Gebjahr+Gebmonat+Gebtag : Taufjahr+Taufmonat+Tauftag (kein Trim auf Tauf-Zweig); Eh := Eh + u + '*'; gvar_E4 and idx=1 -> Ix:=Trim(Sajahr)<>'' ? Sajahr-Datum : (Trim(Hjahr)<>'' ? Hjahr-Datum : nichts — zusaetzlicher Hjahr-Trim-Guard vs M); Hei: EIN Pos(#92'N')-Check >0 -> Hei:=Copy(Pos+3,4), KEIN ''-Vorab, KEIN 1. dead-Copy (vs. M-Zweig D647/D65E); lfbh2.Post. Danach Loop-Bottom E629 Next/Eof-Break/Inc(idx).
+
+### Unit3 ofb2 Chunk 5c (0058E689..E96F) - DONE, build green (r1635, 2026-11-01)
+- else-Zweig (Table18-FindKey Fail): gvar_0253641C=0 -> Table1.IndexName:='mut' [595424]; FindKey([StrToInt(u48)]) — Fail -> E937; Success -> IndexName:='' + FindKey([StrToInt(u48)]) (ohne Test) + lfbh2.Append OHNE dedup: Nam; gvar_E8 -> Ix := NUR Table1Vornamen [544] (vs. Cat3 Vornamen+Gebjahr+Taufjahr im Haupt-Append); Prob:=576EB0(Nummer); gvar_E0 -> Ix := Trim(Gebjahr)<>'' ? Geb-Datum : Tauf-Datum; lfbh2.Post. KEIN Eh-Block, KEIN Hei, KEIN gvar_E4.
+- E937 (immer im else): Table1.IndexName:='' + FindKey([StrToInt(u48)]) — laeuft nach Post UND nach FindKey-Fail; NICHT nach normalem Schleifen-Exit (E684/E64F -> E974).
+
+### Unit3 ofb2 Chunk 6a (0058E9AD..EEE0 Pro-Loop) - DONE, build green (r1636, 2026-11-01)
+- Nachlauf-Setup: Table1.IndexName:='' + Table18.IndexName:='num' [5953AC] + lfbh2.IndexName:='Pro' [595418] + lfbh2.First; jmp EEE0 (Condition: not Eof -> je EA03).
+- Pro-Loop-Body EA03: u := lfbh2Prob.AsString [910]+60 [ebp-48]; bmk := lfbh2.Bookmark (vtbl+150, NEU Var bmk: TBookmark); FindKey Table1([StrToInt(u)]) ohne Test.
+- Block 1 (EA5C..EC57, Vater-Seite): Vater [538] >0; Vater6 := 576EB0; lfbh2.FindKey([Vater6]); Mutter [53C] >0; Mutter6 := 576EB0; Pos(Mutter6, lfbh2Eh)>0; Table1.IndexName:='mut' [595424]; NOT FindKey Table1([u]) AND NOT FindKey Table18([u]) (beide jne->EC57 = skip); GotoBookmark; gvar_0253641C=0 -> Edit + Nm:=1 + Post, sonst Edit + Nm:=-1 + Post (ABWEICHUNG ofb3: dort nur Nm:=1 ohne gvar-Zweig).
+- EC57: Table1.IndexName:='' + FindKey([u]) ohne Test.
+- Block 2 (EC94..EE8F, Mutter-Seite): Mutter [53C] >0; Mutter6 := 576EB0; lfbh2.FindKey([Mutter6]); Vater [538] >0; Pos(IntToStr(Vater), lfbh2Eh)>0 (PLAIN IntToStr, NICHT 576EB0 — Asymmetrie zu Block 1!); Table1.IndexName:='vat' [595430]; NOT FindKey Table1([u]) AND NOT FindKey Table18([u]); GotoBookmark; gvar-Zweig Nm:=1/-1 + Post.
+- Loop-Bottom EE8F: Table1.IndexName:='' + GotoBookmark(bmk) + lfbh2.Next.
+- Offen Chunk 6b: Delete-Loop EEFA..EF73 (Nm=-1 -> lfbh2.Delete, kein Next; else Eof-Break + Next) + 'na'-Loop EF75.. (IndexName 'na', idx:=0; Nm=1 -> wenn not gueltig: Edit + Nm:=-1 + Post, sonst nur Next; Nm<>1 -> inc idx, Edit + Nm:=idx, wenn not gueltig: Hei:=Copy(Ix,1,4), Post, Next) bis ofb2-Ende.
+
+### Unit3 ofb2 Chunk 6b (0058EEFA..F4D8 + Loop-Skelett) - DONE, build green (r1637, 2026-11-01)
+- Delete-Loop #1 EEFA..EF73: lfbh2.First; while not Eof: Nm=-1 -> lfbh2.Delete (kein Next, jmp->Condition); else Eof-Break (EF37, redundant) + Next. Raeumt gvar!=0-Markierungen.
+- 'na'-Loop EF75..F0DE: IndexName 'na' [59543C], First, idx:=0; Nm=1 (dec/jne) -> wenn not gueltig: Edit + Nm:=-1 + Post (gueltig: nur Next); Nm<>1 -> Inc(idx), Edit + Nm:=idx, wenn not gueltig: lfbh2Hei := Copy(lfbh2Ix, 1, 4), Post; Next. (Unterschied ofb3: dort Nm=1 -> Delete hier; Delete erst im Folge-Loop.)
+- Delete-Loop #2 F0DE..F159: identisch #1 — raeumt die in der 'na'-Loop gesetzten -1-Markierungen.
+- Aus-Copy-Loop F159..F401: Table1 ''/Table18 'num'/lfbh2 'Pro' + First; Body: u:=Prob, bmk:=Bookmark, FindKey Table1([u]) ohne Test; wenn Vater>0: Vater6:=576EB0 + lfbh2.FindKey (Fail->Next) -> idx := GEFUNDENEN Nm (Vater-Row!), GotoBookmark, Edit, lfbh2Aus [920] := idx, Post; ELSE Mutter>0: analog mit Mutter6. (Asymmetrie Block1/Block2 wie Pro-Loop: Vater-Pos dort 576EB0, hier im else-Zweig nur FindKey, kein Pos-Check.)
+- Output-Setup F401..F4D8: lfbh2.IndexDefs.Update; IndexName 'na'; gueltig -> 'heir' [595448]; Table1 ''; lfbh2.First; Table14 [0E0]: Open+Close+EmptyTable+Open; idx:=0; lfbh2.First (2.); prevName := ' ' [ebp-44, NEU Var] (595458); jmp 00594B8B.
+- Offen Chunk 7: Haupt-Output-Body F4DD..00594B89 (Table14-Zeilen, Namensgruppen via LStrCmp Name vs prevName, Personen/Ehen-Ausgabe) — RIESIG (~6200 Listing-Zeilen, Master ~22800..28990), Condition 00594B8B: not lfbh2.Eof -> je F4DD; Body endet Next 00594B63 + Eof-Fruehexit 00594B89 jne 00594BA5.
+- Offen Chunk 8: 00594BA5..Ende — EnableControls x3, Table1 '' + FindKey([krg]) [ebp-8], Screen.Cursor:=0, Label19.Visible:=False, Trim(gvar_02536664)>'': Table13 [0CC] Open + 'ort_'-Sortierung; @HandleAnyException 00594EB9 (Handler-Inhalt pruefen); finally-LStrArrayClr 005952C7ff NACH Konvention NICHT transkribieren (s. Unit13 L3206).
+
+### Unit3 ofb2 Chunk 7a (0058F4DD..FAD6 Personen-Zeilen-Builder) - DONE, build green (r1639, 2026-11-02)
+- Body-Einstieg F4DD: s4C:='' + s50:='' (NEU Vars [ebp-4C]/[ebp-50], erst spaeter benutzt); Trim(lfbh2Prob)='' -> Form1.lfbh2.Next + Continue (jbe->00594B63 = Loop-Bottom).
+- F523: if idx>0 -> Table14.Append + Table14Zeile:=' ' + Post (Blankzeile vor jeder Person); n1C:=0 [ebp-1C NEU]; FindKey Table1([StrToInt(Prob)]) ohne Test; t1Num := Table1Nummer [ebp-10 NEU].
+- Namensgruppe F5C9: if Table1Name <> prevName -> 3x Table14 (Leerzeile, ucase(Name), Leerzeile) + prevName := Name.
+- Zeilenrumpf: gvar_02536630:='' (ebx=@gvar, Prolog 0058CB99); Inc(idx); Table14.Append + Table14Nm:=IntToStr(idx) [1EC]; gvar_0253643C:=' '; if Trim(Table1Namex [5BC])<>'' -> gvar_0253643C += ' ('+Trim+') '; gvar_02536630 := ucase(Name)+gvar_0253643C+Vornamen.
+- if Trim(Name)<>'' (jbe->FAD9): if gvar_02536420=1 -> gvar_02536630 += ' [DS '+IntToStr(Nummer)+']'; if gvar_02536414=1: (if gvar_02536418=1: if Gebjahr>' ' -> Add(Name+' '+Vornamen+' * '+Gebjahr+''+u) edx=7 else Add(Name+' '+Vornamen+''+u) edx=5) else Add(same edx=5) else Add(Name+''+u) edx=3; alle sub_00576F54(idx,u) + gvar_02536440.Add (vtbl+38) — SPIEGEL zu ofb3 L1820-1852; Gebjahr-Vergleich ofb2 mit ' ' (ofb3 mit '', Asm-Literal 595458 vs 58C8F8).
+- Offen Chunk 7b: 0058FAD9.. (gueltig-[ebp-60]/lfbh2Aus[920]-Gate, ' [aus '-Suffix auf gvar_02536630, Geburt/Tauf/Tod-Ort-Adds in gvar_02536444, Ehen-Ausgabe, Table14-Schreibblock) bis 00594B89.
+
+### Unit3 ofb2 Chunk 7b (0058FAD9..005903CB Personen-Suffix/Daten) - DONE, build green (r1641, 2026-11-02)
+- [aus]-Gate FAD9: if not gueltig AND lfbh2Aus[920]>0 -> gvar_02536630 += ' [aus '+IntToStr(Aus)+'] ' (CatN edx=4 ebx). ACHTUNG ofb3-FIX: ofb3 L1853 stand 'if gueltig' — eigener Asm (cmp [ebp-4A],0 jne->72F2) verlangt 'if not gueltig'; korrigiert.
+- gvar_02536404=1 -> if Trim(Religion[54C])<>'' -> gvar += ', '+Religion; gvar_025363F0=1: if Trim(Beruf[550]) -> ', '+Beruf, if Trim(Hausname[5C8]) -> ', '+Hausname (beide INNERHALB des gvar410-Blocks: jne->FC6F); if Trim(Lebensort[578]) -> ' in '+Lebensort.
+- Geburt-Block FCD2: if Trim(Gebjahr)<>'' or Trim(Gebort)<>'' -> sub_00576FF8(Gebtag+'.'+Gebmonat+'.'+Gebjahr, v) (NEU Var v), gvar += ' * '+v; gvar_02536410=1: if Trim(Gebort)<>'' -> oabk(Gebort,u) + gvar_02536664 += u; else gvar += ' '+Gebort; sub_00576F54(idx,u); gvar_02536444.Add(Gebort+''+u). jmp->005900E3 ueberspringt Tauf-Block.
+- Tauf-Block FEDD (else): if Trim(Taufjahr)<>'' or Trim(Taufort)<>'' -> analog mit ' ~ ' + Tauftag/Taufmonat/Taufjahr + Taufort-Add.
+- St-Block 005900E3: if Trim(Stjahr)<>'' or Trim(Stort)<>'' -> analog mit ' + ' + Sttag/Stmonat/Stjahr + Stort-Add; Skip->005903CB.
+- Offen Chunk 7c: 005903CB.. (gvar_025363F8 Todesurs [58C], gvar_025363EC Alter [5EC], gvar_025363F4 Kommentar [5B0] mit Memo1-Kopie, dann Ehen-Ausgabe + Table14-Schreibblock) bis 00594B89.
+
+### Unit3 ofb2 Chunk 7c (005902E9..005944D1 Todesurs/Alter/Kommentar + Ehen-Loop-Setup) - DONE, build green (r1642, 2026-11-02)
+- Todesurs 02E9: gvar_025363F8=1 -> if Trim(Todesurs[58C])<>'' -> gvar += ' ('+Todesurs+')' (CatN edx=4 ebx, Literale 595464/'(' + 59550C/')'); Alter 035A: gvar_025363EC=1 -> analog mit Alter[5EC]; Kommentar 03CB: gvar_025363F4=1 -> if Trim(Kommentar[5B0])<>'' -> gvar += #13#10+Kommentar (CatN edx=3 ebx, 595518). KEIN Memo1-Kopierblock (anders als ofb2-Kommentar-Ersatz in ofb3 L1938ff - dort anderes Vorgehen).
+- Ehen-Setup 0437: if Trim(lfbh2Eh[914])<>'' (jbe->005944D1): i := Round(Length(Eh)/7) [ebp-64 = Slot-Wiederverwendung von i], if i>0 (jle->44D1): iEh:=1 [ebp-14 NEU], repeat-Loop-Head 04B9: n20:=0 [ebp-20 NEU] + Table18.FindKey([Table1Nummer]) ohne Test; while Table18Nummer[4C8] = Table1Nummer[534] do (4497 je->04FC).
+- Loop-Body 04FC..43BA NOCH OFFEN (Chunk 7d): Copy(Eh,(iEh-1)*7+1,6) -> StrToInt vs Table18Epnum[4CC] (Mismatches -> 005943D7), Heirats-/Scheidungs-Verarbeitung; innere Rueck-jump-Targets 3106/3144/319E/43BA -> 43D7, Table1Mutter[53C]=t1Num -> je 005931A9.
+- Loop-Tail (pro Iteration): 43D7 if Trim(s50)<>'' -> illki(s50,idx,s) + gvar += #13#10+'Vater nicht bekannt: '+s (CatN edx=4, 595634); s50:=''; Table1.IndexName:=''; Table1.First; Table1.FindKey([t1Num]); Table18.Next; Eof->Break (4495 jne->44C5); Inc(iEh); Dec(i); until i=0 (44CB jne->04B9).
+- Offen Chunk 7d: 005904FC..005943BA Ehen-Body, danach 7e = 005944D1.. (Table14-Schreibblock [1E8] + Folge-Ausgabe) bis 00594B89.
