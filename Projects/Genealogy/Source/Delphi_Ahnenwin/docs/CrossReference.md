@@ -348,7 +348,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `FormCreate`  @`0058426C`
   - open `illki`  @`00584350`
   - done `oabk`  @`00584EBC`
-  - open `ofb3`  @`00585048`
+  - done `ofb3`  @`00585048`
   - open `ofb2`  @`0058CB84`
   - done `NList`  @`00595720`
   - done `OList`  @`00595FB4`
