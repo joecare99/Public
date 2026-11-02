@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_FileMenuMAIN in '..\source\FILEMENU\Frm_FileMenuMAIN.pas' {MainForm};
+  Frm_FileMenuMAIN in '..\source\FILEMENU\Frm_FileMenuMAIN.PAS' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

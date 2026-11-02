@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object StaticDemoForm: TStaticDemoForm
   Left = 238
   Top = 218
   ActiveControl = StaticText2
@@ -89,9 +89,7 @@ object MainForm: TMainForm
     Top = 104
     Width = 75
     Height = 25
-    DoubleBuffered = True
     Kind = bkClose
-    ParentDoubleBuffered = False
     TabOrder = 3
   end
 end

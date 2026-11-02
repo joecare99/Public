@@ -18,7 +18,7 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Readme - Demo';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TMainReadMeForm, MainForm);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
     MainForm.Show;

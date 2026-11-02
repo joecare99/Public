@@ -33,7 +33,11 @@ implementation
 
 {$IFDEF FPC}
 uses
-  Process;
+  Process
+  {$IFDEF MSWINDOWS}
+  , Windows, ShellAPI
+  {$ENDIF}
+  ;
 {$ELSE}
 uses
   Windows, ShellAPI;
@@ -123,9 +127,13 @@ function TProcessService.Open(const ATarget: string): Boolean;
 begin
 {$IFDEF UNIX}
   { unter Linux mit dem Standardprogramm oeffnen }
-  Result := Run('xdg-open', ATarget) = 0;
+  Result := Run('xdg-open', '"' + ATarget + '"') = 0;
 {$ELSE}
-  Result := Open(ATarget);
+  {$IFDEF MSWINDOWS}
+  Result := ShellExecute(0, 'open', PChar(ATarget), nil, nil, SW_SHOWNORMAL) > 32;
+  {$ELSE}
+  Result := False;
+  {$ENDIF}
 {$ENDIF}
   Log('geoeffnet: ' + ATarget);
 end;
@@ -164,7 +172,7 @@ function TProcessService.Open(const ATarget: string): Boolean;
 begin
 {$IFDEF UNIX}
   { unter Linux mit dem Standardprogramm oeffnen }
-  Result := Run('xdg-open', ATarget) = 0;
+  Result := Run('xdg-open', '"' + ATarget + '"') = 0;
 {$ELSE}
   Result := ShellExecute(0, 'open', PChar(ATarget), nil, nil, SW_SHOWNORMAL) > 32;
 {$ENDIF}

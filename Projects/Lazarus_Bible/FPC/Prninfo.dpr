@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PrnInfoMAIN in '..\source\PRNINFO\Frm_PrnInfoMAIN.pas' {MainForm}; 
+  Frm_PrnInfoMAIN in '..\source\PRNINFO\Frm_PrnInfoMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

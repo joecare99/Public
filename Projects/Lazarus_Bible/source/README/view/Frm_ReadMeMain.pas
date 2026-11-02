@@ -17,12 +17,12 @@ uses
   ViewModelBase, PropertyChangedEventArgs, ReadMeViewModel, FormShot;
 
 type
-  { TMainForm - die View des Readme-Demos.
+  { TMainReadMeForm - die View des Readme-Demos.
 
     Zeigt den Inhalt der Readme-Datei an. Das Suchen und Lesen der Datei
     uebernimmt das ViewModel, das Oeffnen der Datei der Prozessdienst. }
 
-  TMainForm = class(TForm)
+  TMainReadMeForm = class(TForm)
     mmText: TMemo;
     btnClose: TBitBtn;
     btnOpen: TButton;
@@ -41,7 +41,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  MainForm: TMainReadMeForm;
 
 implementation
 
@@ -51,32 +51,32 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TMainReadMeForm.FormCreate(Sender: TObject);
 begin
   FViewModel := TReadMeViewModel.Create;
   FViewModel.OnPropertyChanged := ViewModelPropertyChanged;
   ApplyViewModel;
 end;
 
-procedure TMainForm.FormDestroy(Sender: TObject);
+procedure TMainReadMeForm.FormDestroy(Sender: TObject);
 begin
   FreeAndNil(FViewModel);
 end;
 
-procedure TMainForm.FormActivate(Sender: TObject);
+procedure TMainReadMeForm.FormActivate(Sender: TObject);
 begin
   FViewModel.Load;
   ApplyViewModel;
 end;
 
-procedure TMainForm.ViewModelPropertyChanged(Sender: TObject;
+procedure TMainReadMeForm.ViewModelPropertyChanged(Sender: TObject;
   const AArgs: TPropertyChangedEventArgs);
 begin
   ApplyViewModel;
 end;
 
 { - Uebertragt den Inhalt des ViewModels auf die Oberflaeche. }
-procedure TMainForm.ApplyViewModel;
+procedure TMainReadMeForm.ApplyViewModel;
 begin
   if FViewModel = nil then
     Exit;
@@ -89,7 +89,7 @@ begin
   end;
 end;
 
-procedure TMainForm.btnOpenClick(Sender: TObject);
+procedure TMainReadMeForm.btnOpenClick(Sender: TObject);
 begin
   FViewModel.OpenCommand.Execute;
 end;

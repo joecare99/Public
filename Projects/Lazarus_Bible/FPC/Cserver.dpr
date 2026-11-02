@@ -2,7 +2,7 @@ program Cserver;
 
 uses
   Forms,
-  Frm_SERMAIN in '..\source\DDECOLOR\Frm_SERMAIN.pas' {MainForm};
+  Frm_SERMAIN in '..\source\DDECOLOR\Frm_SERMAIN.PAS' {MainForm};
 
 {$R *.RES}
 {$E EXE}

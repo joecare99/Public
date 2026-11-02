@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_NonClientMAIN in '..\source\NONCLIEN\frm_NonClientMAIN.pas' {MainForm}; 
+  frm_NonClientMAIN in '..\source\NONCLIEN\frm_NonClientMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin

@@ -1,7 +1,7 @@
 program Todo; 
 uses 
   Forms, 
-  Frm_TodoMAIN in '..\source\TODO\Frm_TodoMAIN.pas' {MainForm}, 
+  Frm_TodoMAIN in '..\source\TODO\Frm_TodoMAIN.PAS' {MainForm}, 
   TODO_Frm_ABOUT in '..\source\TODO\TODO_Frm_ABOUT.pas' {AboutForm}; 
 {$R *.RES} 
 {$E EXE} 

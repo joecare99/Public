@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.pas' {MainForm}, 
+  Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.PAS' {MainForm}, 
   Inidata in '..\source\Inidata\Inidata.pas'; 
 {$E EXE} 
 {$R *.res}

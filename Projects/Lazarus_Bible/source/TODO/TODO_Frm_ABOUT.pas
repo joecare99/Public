@@ -23,7 +23,7 @@ uses
 {$ENDIF};
 
 type
-  TAboutForm = class(TForm)
+  TAboutTodoForm = class(TForm)
     Panel1: TPanel;
     OKButton: TBitBtn;
     ProgramIcon: TImage;
@@ -38,7 +38,7 @@ type
   end;
 
 var
-  AboutForm: TAboutForm;
+  AboutForm: TAboutTodoForm;
 
 implementation
 

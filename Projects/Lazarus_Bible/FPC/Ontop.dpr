@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_OntopMAIN in '..\source\ONTOP\Frm_OntopMAIN.pas' {MainForm}; 
+  Frm_OntopMAIN in '..\source\ONTOP\Frm_OntopMAIN.PAS' {MainForm}; 
 {$R *.res}
 begin
   Application.Initialize;

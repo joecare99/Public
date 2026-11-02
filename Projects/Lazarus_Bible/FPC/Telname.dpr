@@ -1,7 +1,7 @@
 program Telname; 
 uses 
   Forms, 
-  Frm_TelnameMAIN in '..\source\TELNAME\Frm_TelnameMAIN.pas' {frmTelnameMain},
+  Frm_TelnameMAIN in '..\source\TELNAME\Frm_TelnameMAIN.PAS' {frmTelnameMain},
   TelnameViewModel in '..\source\TELNAME\viewmodel\TelnameViewModel.pas',
   TelnameModel in '..\source\TELNAME\model\TelnameModel.pas';
 {$R *.RES}

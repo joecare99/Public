@@ -2,7 +2,7 @@ program Strres;
 {$R 'ERRMSG.res' '..\Source\STRRES\ERRMSG.RC'} 
 uses 
   Forms, 
-  Frm_StrresMAIN in '..\source\STRRES\Frm_StrresMAIN.pas' {MainForm}; 
+  Frm_StrresMAIN in '..\source\STRRES\Frm_StrresMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 
