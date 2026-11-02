@@ -16,8 +16,8 @@
       "title": "Bedienelemente",
       "demos": ["Actions", "Addpage", "Checks", "Combos", "Constraint", "Contcomp",
                 "Fancy", "Filemenu", "GlyphLst", "Listfont", "Listtext", "Multimen",
-                "Objlist", "Options", "Palette", "Sketch", "Spinbutt", "Status",
-                "StatusOD", "Strlist", "Strres", "Tabs", "Telname", "Toolbar1",
+                "Objlist", "Options", "Palette", "Sketch", "Spinbutt", "StaticDemo",
+                "Status", "StatusOD", "Strlist", "Strres", "Tabs", "Telname", "Toolbar1",
                 "Toolbar2", "Toolbar3", "UpDownDemo"]
     },
     {
@@ -41,7 +41,7 @@
       "id": "system",
       "title": "Systemintegration",
       "demos": ["Direx", "Direxec", "Direxec2", "Dropfile", "Enumfon", "Enumwin",
-                "Nonclien", "Ontop", "Readme", "Runme", "Syscolor", "Sysmenu"]
+                "Nonclien", "Ontop", "README", "Runme", "Syscolor", "Sysmenu"]
     },
     {
       "id": "ipc",
@@ -107,30 +107,6 @@
       ],
       "notes": "Zeigt den Einsatz der Dienste: Datei lesen und Programm starten.",
       "showcase": true
-    },
-    {
-      "key": "Actions",
-      "title": "Aktionen und Menues",
-      "summary": "TActionList, Menueeintraege und Shortcuts.",
-      "learning": "Aktionen im Menue und an Schaltflaechen binden.",
-      "folder": "Actions",
-      "project": "Actions",
-      "units": ["Frm_ActionsMain.pas"],
-      "markers": [
-        {"file": "Frm_ActionsMain.pas", "text": "ActionList1", "title": "Die Aktionsliste"}
-      ]
-    },
-    {
-      "key": "Status",
-      "title": "Statuszeile und Werkzeugleiste",
-      "summary": "Statusleiste mit veraenderlichen Feldern und eine Werkzeugleiste.",
-      "learning": "Statusleisten-Panels und ToolButtons.",
-      "folder": "Status",
-      "project": "Status",
-      "units": ["Frm_StatusMain.pas"],
-      "markers": [
-        {"file": "Frm_StatusMain.pas", "text": "procedure TMainForm.FormMouseMove", "title": "Mausposition in der Statuszeile"}
-      ]
     },
     {
       "key": "Enumfon",
@@ -509,6 +485,534 @@
         {"file": "Frm_UpDownDemoMain.pas", "text": "procedure TfrmUpDownDemoMain.SpinButton1UpClick", "title": "Der Hochzaehler"}
       ],
       "showcase": true
+    },
+    {
+      "key": "Polyflow",
+      "title": "Animierte Linien",
+      "summary": "Eine Timer-gesteuerte Animation zeichnet farbige Linien.",
+      "learning": "Canvas, Timer und Neuzeichnen eines Formulars.",
+      "folder": "POLYFLOW",
+      "project": "Polyflow",
+      "units": ["Frm_PolyflowMain.pas"],
+      "markers": [
+        {"file": "Frm_PolyflowMain.pas", "text": "PROCEDURE TMainForm.Timer1Timer", "title": "Die Animation"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Ontop",
+      "title": "Fenster im Vordergrund",
+      "summary": "Schaltet das Formular zwischen normal und immer im Vordergrund um.",
+      "learning": "FormStyle und Menuezustand synchronisieren.",
+      "folder": "ONTOP",
+      "project": "Ontop",
+      "units": ["Frm_OntopMAIN.pas"],
+      "markers": [
+        {"file": "Frm_OntopMAIN.pas", "text": "procedure TMainForm.Stayontop1Click", "title": "Fensterstil umschalten"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Todo",
+      "title": "Aufgabenliste",
+      "summary": "Aufgaben zwischen offenen und erledigten Listen verschieben.",
+      "learning": "Listen bearbeiten, Dateien speichern und Dialoge verwenden.",
+      "folder": "TODO",
+      "project": "Todo",
+      "units": ["Frm_TodoMAIN.pas", "TODO_Frm_ABOUT.pas"],
+      "markers": [
+        {"file": "Frm_TodoMAIN.pas", "text": "procedure TMainForm.IncludeBtnClick", "title": "Aufgabe in erledigt verschieben"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "CharGrid",
+      "title": "Zeichentabelle",
+      "summary": "Zeichen anzeigen und in die Zwischenablage kopieren.",
+      "learning": "StringGrid, Zeichencodierung und Clipboard.",
+      "folder": "CharGrid",
+      "project": "CharGrid",
+      "units": ["Frm_CharGridMAIN.pas", "Frm_CharGridABOUT.pas"],
+      "markers": [
+        {"file": "Frm_CharGridMAIN.pas", "text": "procedure TfrmCharGridMain.FormCreate", "title": "Die Zeichentabelle"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Keyinfo",
+      "title": "Tastaturereignisse",
+      "summary": "Zeigt Zeichencode, Taste und Modifikatortasten an.",
+      "learning": "KeyDown, KeyPress und KeyUp unterscheiden.",
+      "folder": "KEYINFO",
+      "project": "Keyinfo",
+      "units": ["Frm_KeyInfoMAIN.pas"],
+      "markers": [
+        {"file": "Frm_KeyInfoMAIN.pas", "text": "procedure TMainForm.FormKeyDown", "title": "Taste und Modifikatoren"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "StaticDemo",
+      "title": "StaticText-Steuerelemente",
+      "summary": "Vergleicht statische Texte mit verschiedenen Rahmen und Mausreaktionen.",
+      "learning": "MouseDown-, MouseUp- und Click-Ereignisse sowie BorderStyle einsetzen.",
+      "folder": "StaticDemo",
+      "project": "StaticDemo",
+      "units": ["Frm_StaticDemoMain.pas"],
+      "markers": [
+        {"file": "Frm_StaticDemoMain.pas", "text": "procedure TMainForm.StaticText1MouseDown", "title": "Rahmen beim Druecken aendern"},
+        {"file": "Frm_StaticDemoMain.pas", "text": "procedure TMainForm.StaticText1Click", "title": "Klickereignis behandeln"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Fishy",
+      "title": "Fishy-Datenbank",
+      "summary": "Durchsucht Tierdatensaetze und zeigt zugehoerige Bilder.",
+      "learning": "Datenbanktabellen, Datenquellen, Navigation und BLOB-Bilder verbinden.",
+      "folder": "FISHY",
+      "project": "Fishy",
+      "units": ["Frm_FishyMAIN.pas"],
+      "markers": [
+        {"file": "Frm_FishyMAIN.pas", "text": "procedure TMainForm.FormCreate", "title": "Datenbank verbinden und Abfrage oeffnen"},
+        {"file": "Frm_FishyMAIN.pas", "text": "function TMainForm.FindDatabaseFile", "title": "Datenbankpfad aufloesen"}
+      ]
+    },
+    {
+      "key": "Fishy2",
+      "title": "Fishy-Datenbank (Variante)",
+      "summary": "Eine zweite Datenbankansicht mit Tierbildern.",
+      "learning": "Datenbankkomponenten und datengebundene Bildanzeige vergleichen.",
+      "folder": "FISHY",
+      "project": "Fishy2",
+      "units": ["Frm_Fishy2MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Fishy2MAIN.pas", "text": "procedure TMainForm.FormCreate", "title": "Datenbank verbinden und Abfrage oeffnen"},
+        {"file": "Frm_Fishy2MAIN.pas", "text": "function TMainForm.FindDatabaseFile", "title": "Datenbankpfad aufloesen"}
+      ]
+    },
+    {
+      "key": "Master",
+      "title": "Master-Detail-Datenbank",
+      "summary": "Verknuepft Haupt- und Detaildatensaetze in einer Datenbankansicht.",
+      "learning": "Master-Detail-Beziehungen und datenabhängige Navigation verstehen.",
+      "folder": "MASTER",
+      "project": "Master",
+      "units": ["Frm_MasterMAIN.PAS"]
+    },
+    {
+      "key": "Sqlplay",
+      "title": "SQL-Abfragen",
+      "summary": "Fuehrt SQL-Abfragen aus und zeigt deren Ergebnisse an.",
+      "learning": "Abfragekomponenten, SQL-Anweisungen und Datenbankverbindungen einsetzen.",
+      "folder": "SQLPLAY",
+      "project": "Sqlplay",
+      "units": ["Frm_SqlplayMAIN.PAS", "Frm_SQLOPENDB.pas"]
+    },
+    {
+      "key": "WinesCalc",
+      "title": "Berechnete Weinfelder",
+      "summary": "Ergaenzt Weindatensaetze um berechnete Altersangaben.",
+      "learning": "Berechnete Datenbankfelder und deren Anzeige behandeln.",
+      "folder": "WinesCalc",
+      "project": "WinesCalc",
+      "units": ["Frm_WinesCalcMain.pas"]
+    },
+    {
+      "key": "WinesChart",
+      "title": "Weindaten als Diagramm",
+      "summary": "Visualisiert Weindaten in einem Diagramm.",
+      "learning": "Datenbankdaten an Diagrammserien anbinden.",
+      "folder": "WinesChart",
+      "project": "WinesChart",
+      "units": ["frm_WinesChartMain.pas"]
+    },
+    {
+      "key": "WinesDemo",
+      "title": "Wein-Datenbankdemo",
+      "summary": "Demonstriert das Anzeigen und Durchsuchen einer Weindatenbank.",
+      "learning": "Datenbankansichten und Datensatznavigation einsetzen.",
+      "folder": "WinesDemo",
+      "project": "WinesDemo",
+      "units": ["Frm_WinesDemoMain.pas"]
+    },
+    {
+      "key": "WinesEntry",
+      "title": "Weindaten bearbeiten",
+      "summary": "Zeigt die Eingabe und Bearbeitung von Weindatensaetzen.",
+      "learning": "Datengebundene Eingabefelder und Datenverzeichnisse verwalten.",
+      "folder": "WinesEntry",
+      "project": "WinesEntry",
+      "units": ["Frm_WinesEntryMain.pas"]
+    },
+    {
+      "key": "Animator",
+      "title": "Animation steuern",
+      "summary": "Steuert eine Animation mit Start-, Stopp- und Positionsbefehlen.",
+      "learning": "Eine Animationskomponente programmatisch abspielen und anhalten.",
+      "folder": "Animator",
+      "project": "Animator",
+      "units": ["Frm_AnimatorMain.pas", "CmpAnimator.pas"]
+    },
+    {
+      "key": "Barchart",
+      "title": "Balkendiagramm",
+      "summary": "Stellt Messwerte als Balken dar und aktualisiert das Diagramm.",
+      "learning": "Eigene Diagrammkomponenten, Datenaktualisierung und Timer verbinden.",
+      "folder": "Barchart",
+      "project": "BarTest",
+      "units": ["BarChart.pas", "Frm_BartestMain.pas", "Frm_BartestMain2.pas"]
+    },
+    {
+      "key": "Bitview",
+      "title": "Bitmap-Betrachter",
+      "summary": "Oeffnet eine Bilddatei und zeigt die Bitmap an.",
+      "learning": "Bilddateien laden und grafische Inhalte in einem Formular darstellen.",
+      "folder": "Bitview",
+      "project": "Bitview",
+      "units": ["Frm_BitViewMAIN.pas"]
+    },
+    {
+      "key": "Bitview2",
+      "title": "Bitmap-Betrachter mit Groessenaenderung",
+      "summary": "Laedt Bilder und passt die Darstellung an das Fenster an.",
+      "learning": "Bildanzeige bei Resize- und Aktivierungsereignissen aktualisieren.",
+      "folder": "Bitview2",
+      "project": "Bitview2",
+      "units": ["Frm_BitView2MAIN.pas"]
+    },
+    {
+      "key": "Metamore",
+      "title": "Metafile-Grafik",
+      "summary": "Demonstriert das Zeichnen und Anzeigen von Metafile-Grafiken.",
+      "learning": "Vektorbasierte Grafiken und Canvas-Ausgabe untersuchen.",
+      "folder": "METAMORE",
+      "project": "Metamore",
+      "units": ["Frm_MetaMoreMAIN.PAS"]
+    },
+    {
+      "key": "FontSamp",
+      "title": "Schriftproben drucken",
+      "summary": "Erstellt Schriftproben mit Vorschau und Seitenaufteilung.",
+      "learning": "Druckausgabe, Druckvorschau und Seitenzeichnung trennen.",
+      "folder": "FontSamp",
+      "project": "FontSamp",
+      "units": ["frm_fontsampMAIN.PAS", "PREVIEW.PAS", "DRAWPAGE.PAS", "Frm_fontSampABOUT.PAS"]
+    },
+    {
+      "key": "Lister",
+      "title": "Textliste drucken",
+      "summary": "Zeigt eine einfache Listenausgabe fuer Drucker.",
+      "learning": "Druckerausgabe und seitenweise Textdarstellung nachvollziehen.",
+      "folder": "LISTER",
+      "project": "Lister",
+      "units": ["Frm_ListerMAIN.PAS"]
+    },
+    {
+      "key": "Prninfo",
+      "title": "Druckerinformationen",
+      "summary": "Liest Informationen zum verfuegbaren Drucker aus.",
+      "learning": "Druckerschnittstelle und Druckereigenschaften abfragen.",
+      "folder": "PRNINFO",
+      "project": "Prninfo",
+      "units": ["Frm_PrnInfoMAIN.PAS"]
+    },
+    {
+      "key": "Report1",
+      "title": "Berichtsvorschau",
+      "summary": "Laedt Weindaten, zeichnet einen Bericht und zeigt eine Vorschau.",
+      "learning": "Daten laden, Berichtslayout zeichnen und Druckvorschau trennen.",
+      "folder": "Report1",
+      "project": "Report1",
+      "units": ["Frm_Report1Main.pas"]
+    },
+    {
+      "key": "Direx",
+      "title": "Verzeichnisse durchsuchen",
+      "summary": "Blaettert in Verzeichnissen und bietet einen separaten Auswahl-Dialog.",
+      "learning": "Dateisystemdialoge und Verzeichnisauswahl verwenden.",
+      "folder": "DIREX",
+      "project": "Direx",
+      "units": ["Frm_DirExMAIN.PAS", "Frm_DIRDLG.PAS"]
+    },
+    {
+      "key": "Direxec",
+      "title": "Datei aus Verzeichnis starten",
+      "summary": "Waehlt einen Verzeichniseintrag und startet das passende Programm.",
+      "learning": "Dateisystemauswahl mit Prozessstart verbinden.",
+      "folder": "DIREXEC",
+      "project": "Direxec",
+      "units": ["Frm_DirExecMAIN.PAS"]
+    },
+    {
+      "key": "Direxec2",
+      "title": "Verzeichnisstart (Variante 2)",
+      "summary": "Eine zweite Variante zum Auswaehlen und Starten von Dateien.",
+      "learning": "Dateiauswahl, Pfadbehandlung und Prozessstart vergleichen.",
+      "folder": "DIREXEC",
+      "project": "Direxec2",
+      "units": ["Frm_DirExecMain2.PAS"]
+    },
+    {
+      "key": "Dropfile",
+      "title": "Dateien per Drag-and-drop",
+      "summary": "Empfaengt und verarbeitet Dateien, die auf das Formular gezogen werden.",
+      "learning": "Datei-Drop-Ereignisse und uebergebene Dateipfade auswerten.",
+      "folder": "DROPFILE",
+      "project": "Dropfile",
+      "units": ["Frm_DropFileMAIN.PAS"]
+    },
+    {
+      "key": "Enumwin",
+      "title": "Fenster auflisten",
+      "summary": "Listet Fenster und Fenstertypen auf und kann ein Fenster aktivieren.",
+      "learning": "Fenster enumerieren und Handle-, Titel- und Klasseninformationen abfragen.",
+      "folder": "ENUMWIN",
+      "project": "Enumwin",
+      "units": ["Frm_EnumWinMAIN.PAS", "unt_getwindows.pas"]
+    },
+    {
+      "key": "Nonclien",
+      "title": "Nicht-Client-Bereich",
+      "summary": "Untersucht Nachrichten und Zeichnung im Fensterrandbereich.",
+      "learning": "Fensternachrichten ausserhalb des Client-Bereichs behandeln.",
+      "folder": "NONCLIEN",
+      "project": "Nonclien",
+      "units": ["frm_NonClientMAIN.PAS"]
+    },
+    {
+      "key": "Runme",
+      "title": "Programmstart aus der Readme-Demo",
+      "summary": "Eine Begleitdemo zum Oeffnen einer Datei im Standardprogramm.",
+      "learning": "Dateien und externe Programme aus einer Anwendung starten.",
+      "folder": "README",
+      "project": "Runme",
+      "units": ["Frm_RunMeTEST.PAS"]
+    },
+    {
+      "key": "Syscolor",
+      "title": "Systemfarben anzeigen",
+      "summary": "Zeigt die aktuell verwendeten Farben der Systemoberflaeche.",
+      "learning": "Systemfarben abfragen und deren Aenderungen darstellen.",
+      "folder": "SYSCOLOR",
+      "project": "Syscolor",
+      "units": ["Frm_SyscolorMAIN.PAS", "Frm_ABOUTDLG.PAS"]
+    },
+    {
+      "key": "Sysmenu",
+      "title": "Systemmenue anpassen",
+      "summary": "Ergaenzt das Systemmenue eines Fensters und verarbeitet Befehle.",
+      "learning": "Systemmenue-Eintraege und WM_SYSCOMMAND behandeln.",
+      "folder": "SysMenu",
+      "project": "Sysmenu",
+      "units": ["Frm_SysmenuMain.pas", "Unt_ConsSysMenu.pas"]
+    },
+    {
+      "key": "Client1",
+      "title": "DDE-Client 1",
+      "summary": "Der Clientteil des ersten Dynamic Data Exchange-Beispiels.",
+      "learning": "DDE-Verbindungen als Client aufbauen und Daten anfordern.",
+      "folder": "DDE1",
+      "project": "Client1",
+      "units": ["Frm_CLIENT.PAS"]
+    },
+    {
+      "key": "Client2",
+      "title": "DDE-Client 2",
+      "summary": "Eine zweite DDE-Clientvariante mit eigenem Nachrichtenablauf.",
+      "learning": "DDE-Clientverbindungen und Datenaustausch vergleichen.",
+      "folder": "DDE2",
+      "project": "Client2",
+      "units": ["Frm_CLIENT2.PAS"]
+    },
+    {
+      "key": "Cclient",
+      "title": "Farb-DDE-Client",
+      "summary": "Der Clientteil des Beispiels zum Austausch von Farben per DDE.",
+      "learning": "DDE-Daten empfangen und in eine grafische Oberflaeche uebernehmen.",
+      "folder": "DDECOLOR",
+      "project": "Cclient",
+      "units": ["Frm_CLIMAIN.PAS"]
+    },
+    {
+      "key": "Cserver",
+      "title": "Farb-DDE-Server",
+      "summary": "Der Serverteil des Beispiels zum Austausch von Farben per DDE.",
+      "learning": "DDE-Daten bereitstellen und Clientanfragen bedienen.",
+      "folder": "DDECOLOR",
+      "project": "Cserver",
+      "units": ["Frm_SERMAIN.PAS"]
+    },
+    {
+      "key": "DDE1",
+      "title": "DDE-Beispiel 1",
+      "summary": "Ein erster Client- und Serverdialog fuer Dynamic Data Exchange.",
+      "learning": "Client- und Serverrollen sowie DDE-Nachrichtenfluss erkennen.",
+      "folder": "DDE1",
+      "project": "",
+      "units": ["Frm_CLIENT.PAS", "Frm_SERVER.PAS"]
+    },
+    {
+      "key": "DDE2",
+      "title": "DDE-Beispiel 2",
+      "summary": "Ein zweites DDE-Beispiel mit getrennten Client- und Serverformularen.",
+      "learning": "DDE-Verbindungsaufbau und Datenuebertragung vergleichen.",
+      "folder": "DDE2",
+      "project": "",
+      "units": ["Frm_CLIENT2.PAS", "Frm_SERVER2.PAS"]
+    },
+    {
+      "key": "DDECOLOR",
+      "title": "Farben per DDE austauschen",
+      "summary": "Client und Server uebertragen Farbinformationen mit DDE.",
+      "learning": "DDE-Nachrichten in eine sichtbare Zustandsaenderung umsetzen.",
+      "folder": "DDECOLOR",
+      "project": "",
+      "units": ["Frm_CLIMAIN.PAS", "Frm_SERMAIN.PAS"]
+    },
+    {
+      "key": "Server1",
+      "title": "DDE-Server 1",
+      "summary": "Der Serverteil des ersten Dynamic Data Exchange-Beispiels.",
+      "learning": "DDE-Serverdienste und angeforderte Daten bereitstellen.",
+      "folder": "DDE1",
+      "project": "Server1",
+      "units": ["Frm_SERVER.PAS"]
+    },
+    {
+      "key": "Server2",
+      "title": "DDE-Server 2",
+      "summary": "Der Serverteil der zweiten DDE-Variante.",
+      "learning": "DDE-Serverablauf und Verbindungsende nachvollziehen.",
+      "folder": "DDE2",
+      "project": "Server2",
+      "units": ["Frm_SERVER2.PAS"]
+    },
+    {
+      "key": "Except1",
+      "title": "Ausnahmen behandeln 1",
+      "summary": "Ein erstes Beispiel fuer das Ausloesen und Abfangen von Ausnahmen.",
+      "learning": "try/except-Bloecke und Fehlermeldungen einsetzen.",
+      "folder": "EXCEPT1",
+      "project": "Except1",
+      "units": ["Frm_Except1MAIN.PAS"]
+    },
+    {
+      "key": "Except2",
+      "title": "Ausnahmen behandeln 2",
+      "summary": "Eine zweite Variante strukturierter Fehlerbehandlung.",
+      "learning": "Ausnahmen abfangen und Fehlerpfade kontrolliert behandeln.",
+      "folder": "EXCEPT2",
+      "project": "Except2",
+      "units": ["frm_Except2MAIN.PAS"]
+    },
+    {
+      "key": "Except3",
+      "title": "Eigene Ausnahmeklassen",
+      "summary": "Demonstriert eine weitere Exception-Demo mit mehreren Units.",
+      "learning": "Ausnahmeobjekte und ihre Verwendung in getrennten Units untersuchen.",
+      "folder": "EXCEPT3",
+      "project": "Except3",
+      "units": ["frm_except3MAIN.PAS", "Main.pas"]
+    },
+    {
+      "key": "Exlist",
+      "title": "Ausnahmen in einer Liste",
+      "summary": "Zeigt den Umgang mit einer Sammlung von Ausnahmefaellen.",
+      "learning": "Fehlerfaelle sammeln und nach Ursache unterscheiden.",
+      "folder": "EXLIST",
+      "project": "Exlist",
+      "units": ["Frm_exListMAIN.PAS"]
+    },
+    {
+      "key": "MouseExcept",
+      "title": "Ausnahmen bei Mausaktionen",
+      "summary": "Verknuepft Mausinteraktion mit kontrollierter Fehlerbehandlung.",
+      "learning": "Ausnahmen aus Ereignisbehandlungen sicher abfangen.",
+      "folder": "MouseExcept",
+      "project": "MouseExcept",
+      "units": ["frm_MouseExceptMain.pas"]
+    },
+    {
+      "key": "Calc64",
+      "title": "Taschenrechner (64 Bit)",
+      "summary": "Eine 64-Bit-Variante des Taschenrechners.",
+      "learning": "Plattformziele und wiederverwendbare Rechnerlogik unterscheiden.",
+      "folder": "Calc32",
+      "project": "Calc64",
+      "units": ["Frm_CALC64.PAS", "Frm_Calc2ABOUT.PAS"]
+    },
+    {
+      "key": "Clipboard",
+      "title": "Zwischenablage",
+      "summary": "Kleine Beispiele zum Kopieren und Einfuegen von Text.",
+      "learning": "Zwischenablagenutzung und Copy/Paste-Ereignisse verbinden.",
+      "folder": "Clipboard",
+      "project": "",
+      "units": ["Clip1.pas", "Clip2.pas"]
+    },
+    {
+      "key": "Compstrm",
+      "title": "Komprimierte Streams",
+      "summary": "Demonstriert das Lesen und Schreiben komprimierter Datenstroeme.",
+      "learning": "Streams und Kompression fuer persistente Daten einsetzen.",
+      "folder": "COMPSTRM",
+      "project": "Compstrm",
+      "units": ["frm_CompStrmMAIN.PAS"]
+    },
+    {
+      "key": "Daynames",
+      "title": "Wochentage aus einem Array",
+      "summary": "Liefert Namen zu den Eintraegen einer Arraystruktur.",
+      "learning": "Arrays und gekapselte Zugriffsmethoden verwenden.",
+      "folder": "DAYNAMES",
+      "project": "Daynames",
+      "units": ["ArrayP.pas"]
+    },
+    {
+      "key": "Inidata",
+      "title": "INI-Dateien",
+      "summary": "Eine gemeinsam verwendete Unit fuer INI-basierte Einstellungen.",
+      "learning": "Konfigurationswerte aus INI-Dateien lesen und schreiben.",
+      "folder": "Inidata",
+      "project": "",
+      "units": ["Inidata.pas"]
+    },
+    {
+      "key": "Keycount",
+      "title": "Tastendruecke zaehlen",
+      "summary": "Veranschaulicht die Erfassung von Tastatureingaben.",
+      "learning": "Tastaturereignisse auswerten und Eingaben zaehlen.",
+      "folder": "KEYCOUNT",
+      "project": "Keycount",
+      "units": ["Frm_KeyCountMAIN.PAS"]
+    },
+    {
+      "key": "Keytest",
+      "title": "Tastaturtest-Unit",
+      "summary": "Ein kleines Quelltextbeispiel zum Erkennen von Tasten.",
+      "learning": "Tasteninformationen aus Tastaturereignissen gewinnen.",
+      "folder": "KEYTEST",
+      "project": "",
+      "units": ["Keytest.pas"]
+    },
+    {
+      "key": "Power",
+      "title": "Potenzfunktion und Fehlerfaelle",
+      "summary": "Berechnet Potenzen und prueft ungueltige Eingaben.",
+      "learning": "Mathematische Funktionen und eigene Ausnahmepfade testen.",
+      "folder": "POWER",
+      "project": "PowerTest",
+      "units": ["PowerTest.pas", "unt_powertest.pas"]
+    },
+    {
+      "key": "YesNo",
+      "title": "Ja/Nein-Dialog",
+      "summary": "Eine kleine Anwendung mit eigenstaendigem Ja/Nein-Dialog.",
+      "learning": "Dialogformulare erzeugen und eine Benutzerentscheidung auswerten.",
+      "folder": "YESNO",
+      "project": "YesNoTest",
+      "units": ["Frm_YesNoMAIN.PAS", "Frm_YesNo.pas"]
     }
   ]
 }

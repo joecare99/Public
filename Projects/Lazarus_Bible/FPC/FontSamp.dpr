@@ -10,10 +10,10 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_fontsampMAIN in '..\source\FontSamp\frm_fontsampMAIN.pas' {MainForm}, 
-  Frm_fontSampABOUT in '..\source\FontSamp\Frm_fontSampABOUT.pas' {AboutForm}, 
-  PREVIEW in '..\source\FontSamp\PREVIEW.pas' {PreviewForm}, 
-  DRAWPAGE in '..\source\FontSamp\DRAWPAGE.pas';
+  frm_fontsampMAIN in '..\source\FontSamp\frm_fontsampMAIN.PAS' {MainForm}, 
+  Frm_fontSampABOUT in '..\source\FontSamp\Frm_fontSampABOUT.PAS' {AboutForm}, 
+  PREVIEW in '..\source\FontSamp\PREVIEW.PAS' {PreviewForm}, 
+  DRAWPAGE in '..\source\FontSamp\DRAWPAGE.PAS';
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

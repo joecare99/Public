@@ -17,8 +17,8 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Todo';
-  Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TAboutForm, AboutForm);
+  Application.CreateForm(TMainTodoForm, MainForm);
+  Application.CreateForm(TAboutTodoForm, AboutForm);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
     MainForm.Show;

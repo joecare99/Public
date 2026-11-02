@@ -68,6 +68,7 @@ var
   Item: TJSONObject;
   Demo: TBibleDemo;
   Category: TBibleCategory;
+  ReferencedKeys: TStringList;
   I, J: Integer;
 begin
   Result := False;
@@ -75,14 +76,9 @@ begin
   if Data = nil then
     Exit;
   JSON := Data as TJSONObject;
+  ReferencedKeys := TStringList.Create;
   try
-    if JSON.Find('demos') <> nil then
-      for I := 0 to JSON.Find('demos').Count - 1 do
-      begin
-        Demo := TBibleDemo.Create;
-        Demo.LoadFromJSON(JSON.Find('demos').Items[I] as TJSONObject);
-        FDemos.Add(Demo);
-      end;
+    ReferencedKeys.CaseSensitive := False;
     if JSON.Find('categories') <> nil then
       for I := 0 to JSON.Find('categories').Count - 1 do
       begin
@@ -91,11 +87,42 @@ begin
           Item.Get('title', ''));
         if Item.Find('demos') <> nil then
           for J := 0 to Item.Find('demos').Count - 1 do
+          begin
             Category.Demos.Add(Item.Find('demos').Items[J].AsString);
+            if ReferencedKeys.IndexOf(Item.Find('demos').Items[J].AsString) < 0 then
+              ReferencedKeys.Add(Item.Find('demos').Items[J].AsString);
+          end;
         FCategories.Add(Category);
       end;
+    if JSON.Find('demos') <> nil then
+      for I := 0 to JSON.Find('demos').Count - 1 do
+      begin
+        Item := JSON.Find('demos').Items[I] as TJSONObject;
+        Demo := TBibleDemo.Create;
+        Demo.LoadFromJSON(Item);
+        FDemos.Add(Demo);
+        J := ReferencedKeys.IndexOf(Demo.Key);
+        if J >= 0 then
+          ReferencedKeys.Delete(J);
+      end;
+    for I := 0 to ReferencedKeys.Count - 1 do
+    begin
+      Demo := TBibleDemo.Create;
+      Item := TJSONObject.Create;
+      try
+        Item.Add('key', ReferencedKeys[I]);
+        Item.Add('title', ReferencedKeys[I]);
+        Item.Add('folder', ReferencedKeys[I]);
+        Item.Add('project', ReferencedKeys[I]);
+        Demo.LoadFromJSON(Item);
+      finally
+        Item.Free;
+      end;
+      FDemos.Add(Demo);
+    end;
     Result := True;
   finally
+    ReferencedKeys.Free;
     Data.Free;
   end;
 end;

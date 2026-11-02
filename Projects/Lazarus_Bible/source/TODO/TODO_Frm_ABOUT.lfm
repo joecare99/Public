@@ -1,4 +1,4 @@
-object AboutForm: TAboutForm
+object AboutForm: TAboutTodoForm
   Left = 238
   Top = 104
   ActiveControl = OKButton

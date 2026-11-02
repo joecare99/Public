@@ -40,6 +40,7 @@ type
     FNotes: string;
     FUnits: TStringList;
     FMarkers: TObjectList;
+    FEmbedded: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -54,6 +55,7 @@ type
     property Folder: string read FFolder;
     property Project: string read FProject;
     property Notes: string read FNotes;
+    property Embedded: Boolean read FEmbedded;
     property Units: TStringList read FUnits;
     property Markers: TObjectList read FMarkers;
   end;
@@ -113,6 +115,7 @@ begin
   FFolder := AJSON.Get('folder', FKey);
   FProject := AJSON.Get('project', FKey);
   FNotes := AJSON.Get('notes', '');
+  FEmbedded := AJSON.Get('showcase', False);
   FUnits.Clear;
   if AJSON.Find('units') <> nil then
     for I := 0 to AJSON.Find('units').Count - 1 do

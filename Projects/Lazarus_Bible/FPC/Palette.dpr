@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PaletteMain in '..\source\PALETTE\Frm_PaletteMain.pas' {MainForm}; 
+  Frm_PaletteMain in '..\source\PALETTE\Frm_PaletteMain.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

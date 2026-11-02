@@ -1,10 +1,10 @@
 program Tabs; 
 uses 
   Forms, 
-  Frm_TabsMAIN in '..\source\TABS\Frm_TabsMAIN.pas' {MainForm}, 
+  Frm_TabsMAIN in '..\source\TABS\Frm_TabsMAIN.PAS' {MainForm}, 
   TABS_Frm_ABOUT in '..\source\TABS\TABS_Frm_ABOUT.pas' {AboutForm}, 
-  Frm_OPTIONS in '..\source\TABS\Frm_OPTIONS.pas' {OptionsDialog}, 
-  TabsUnit in '..\source\TABS\TabsUnit.pas', 
+  Frm_OPTIONS in '..\source\TABS\Frm_OPTIONS.PAS' {OptionsDialog}, 
+  TabsUnit in '..\source\TABS\TABSUNIT.PAS', 
   Inidata in '..\source\Inidata\Inidata.pas'; 
 {$R *.RES} 
 {$E EXE} 

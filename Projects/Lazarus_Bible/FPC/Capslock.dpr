@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_CapslockMAIN in '..\source\Capslock\Frm_CapslockMAIN.pas' {MainForm};
+  Frm_CapslockMAIN in '..\source\Capslock\Frm_CapslockMAIN.PAS' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

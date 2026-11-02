@@ -38,9 +38,14 @@ uses
   Frm_MultiWayMAIN, Frm_OptionsMain, Frm_PaletteMain, Frm_SketchMAIN,
   frm_ConstraintMain, frm_ContCompMAIN, Frm_FancyMAIN, Frm_FileMenuMAIN,
   Frm_ObjListMAIN, Frm_Toolbar3MAIN,
-  Frm_StrlistMAIN, Frm_StrresMAIN, Frm_StatusMain, Frm_StatusODMain,
+  Frm_StrlistMAIN, Frm_StrresMAIN, Frm_StatusMain,
   Frm_TabsMAIN, Frm_OPTIONS, TABS_Frm_ABOUT, Frm_TelnameMAIN,
-  Frm_Toolbar1MAIN, Frm_Toolbar2MAIN, Frm_UpDownDemoMain;
+  Frm_Toolbar1MAIN, Frm_Toolbar2MAIN, Frm_UpDownDemoMain, Frm_CharGridMAIN,
+  Frm_CharGridABOUT, Frm_TodoMAIN, TODO_Frm_ABOUT,
+  Frm_PolyflowMain, Frm_OntopMAIN, Frm_KeyInfoMAIN,
+  Frm_StaticDemoMain, Frm_StatusODMain,
+  Frm_WinesCalcMain, Frm_WinesDemoMain, Frm_WinesChartMain,
+  Frm_WinesEntryMain;
 
 { Fabrikfunktionen der Demos }
 
@@ -56,7 +61,7 @@ end;
 
 function CreateReadmeForm: TForm;
 begin
-  Result := TMainForm.Create(nil);
+  Result := Frm_ReadMeMain.TMainReadMeForm.Create(nil);
 end;
 
 function CreateEnumfonForm: TForm;
@@ -174,11 +179,6 @@ begin
   Result := TfrmStatusMain.Create(nil);
 end;
 
-function CreateStatusodForm: TForm;
-begin
-  Result := TfrmStatusODMain.Create(nil);
-end;
-
 function CreateTabsForm: TForm;
 begin
   Result := TfrmTabsMain.Create(nil);
@@ -202,6 +202,61 @@ end;
 function CreateUpDownDemoForm: TForm;
 begin
   Result := TfrmUpDownDemoMain.Create(nil);
+end;
+
+function CreatePolyflowForm: TForm;
+begin
+  Result := Frm_PolyflowMain.TMainPolyflowForm.Create(nil);
+end;
+
+function CreateOntopForm: TForm;
+begin
+  Result := Frm_OntopMAIN.TMainOntopForm.Create(nil);
+end;
+
+function CreateTodoForm: TForm;
+begin
+  Result := Frm_TodoMAIN.TMainTodoForm.Create(nil);
+end;
+
+function CreateCharGridForm: TForm;
+begin
+  Result := TfrmCharGridMain.Create(nil);
+end;
+
+function CreateKeyinfoForm: TForm;
+begin
+  Result := Frm_KeyInfoMAIN.TMainKeyInfoForm.Create(nil);
+end;
+
+function CreateStaticDemoForm: TForm;
+begin
+  Result := TStaticDemoForm.Create(nil);
+end;
+
+function CreateStatusODForm: TForm;
+begin
+  Result := Frm_StatusODMain.TfrmStatusODMain.Create(nil);
+end;
+
+function CreateWinesCalcForm: TForm;
+begin
+  Result := Frm_WinesCalcMain.TMainForm.Create(nil);
+end;
+
+function CreateWinesDemoForm: TForm;
+begin
+  Result := Frm_WinesDemoMain.TMainForm.Create(nil);
+end;
+
+function CreateWinesChartForm: TForm;
+begin
+  Result := Frm_WinesChartMain.TMainForm.Create(nil);
+end;
+
+function CreateWinesEntryForm: TForm;
+begin
+  Result := Frm_WinesEntryMain.TMainForm.Create(nil);
 end;
 
 constructor TShowcaseRegistry.Create;
@@ -244,12 +299,22 @@ begin
   FShowcase.Register('Strlist', 'String-Liste', @CreateStrlistForm);
   FShowcase.Register('Strres', 'String-Ressourcen', @CreateStrresForm);
   FShowcase.Register('Status', 'Statuszeile', @CreateStatusForm);
-  FShowcase.Register('StatusOD', 'Statuszeile anpassbar', @CreateStatusodForm);
   FShowcase.Register('Tabs', 'Registerkarten', @CreateTabsForm);
   FShowcase.Register('Telname', 'Telefonnamen', @CreateTelnameForm);
   FShowcase.Register('Toolbar1', 'Werkzeugleiste 1', @CreateToolbar1Form);
   FShowcase.Register('Toolbar2', 'Werkzeugleiste 2', @CreateToolbar2Form);
   FShowcase.Register('UpDownDemo', 'Dreher-Button', @CreateUpDownDemoForm);
+  FShowcase.Register('Polyflow', 'Animierte Linien', @CreatePolyflowForm);
+  FShowcase.Register('Ontop', 'Fenster im Vordergrund', @CreateOntopForm);
+  FShowcase.Register('Todo', 'Aufgabenliste', @CreateTodoForm);
+  FShowcase.Register('CharGrid', 'Zeichentabelle', @CreateCharGridForm);
+  FShowcase.Register('Keyinfo', 'Tastaturereignisse', @CreateKeyinfoForm);
+  FShowcase.Register('StaticDemo', 'StaticText-Steuerelemente', @CreateStaticDemoForm);
+  FShowcase.Register('StatusOD', 'Owner-draw-Statusleiste', @CreateStatusODForm);
+  FShowcase.Register('WinesCalc', 'Berechnete Weinfeldwerte', @CreateWinesCalcForm);
+  FShowcase.Register('WinesDemo', 'Weindatenbank', @CreateWinesDemoForm);
+  FShowcase.Register('WinesChart', 'Weindaten als Diagramm', @CreateWinesChartForm);
+  FShowcase.Register('WinesEntry', 'Weindatensaetze bearbeiten', @CreateWinesEntryForm);
 end;
 
 end.

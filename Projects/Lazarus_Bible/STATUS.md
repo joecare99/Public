@@ -83,8 +83,9 @@ source/_core/              gemeinsame Bausteine
     services/              FileService, ProcessService, BibleIpc
     tools/                 FormShot (Screenshot)
 FPC/<Demo>.lpr|.lpi        Lazarus-Projekte
-FPC/meta/                  Meta-App "BibleExplorer"
-tools/                 Werkzeuge
+FPC/meta/                  Meta-App-Projekt "BibleExplorer"
+source/BibleExplorer/      Meta-App-Quellcode, Manifest und eingebettete Ressourcen
+tools/                     Werkzeuge
 bin/<cpu>-<os>/            erzeugte Programme
 build/                     Build-Bericht und Screenshots
 ```
@@ -122,11 +123,13 @@ build/                     Build-Bericht und Screenshots
   **Ueberblick / Code / Verhalten / Dateien / Notizen** (TPageControl, damit
   die Reiterleiste sichtbar ist) und unten eine Navigationsleiste
   (`< Zurueck`, `Weiter >`, Seitenname, Statuszeile).
-* Die Metadaten stehen in `FPC/meta/bible.manifest.json` (kuratierte
-  Annotationen: Kategorie, Kurzbeschreibung, Lernziel, markierte
-  Code-Stellen, Notizen).
+* Die Metadaten liegen in `source/BibleExplorer/data/bible.manifest.json`
+  (kuratierte Annotationen: Kategorie, Kurzbeschreibung, Lernziel,
+  markierte Code-Stellen, Notizen). `tools/prepare_bible_resources.py`
+  erzeugt `source/BibleExplorer/resources/BibleExplorerEmbeddedData.pas`;
+  Manifest und Demo-Quellen werden als Lazarus-Ressourcen eingebettet.
 * Das "Verhalten" zeigt eingebettete Formulare der Showcase-Demos
-  (`FPC/meta/units/BibleShowcaseRegistry.pas`), zweiunddreissig Demos
+  (`source/BibleExplorer/services/BibleShowcaseRegistry.pas`), zweiunddreissig Demos
   sind live: `HELLO`, `Calc32`, `README`, `Enumfon`, `Printgr`,
   `Listfont`, `Combos`, `Checks`, `Spinbutt`, `Actions`, `Addpage`,
   `GlyphLst`, `Listtext`, `Multimen`, `Options`, `Palette`, `Sketch`,

@@ -1,4 +1,4 @@
-.PHONY: all build report tests index setup clean
+.PHONY: all build report tests index setup clean resources
 
 SHELL   := /bin/sh
 ROOT    := $(CURDIR)
@@ -11,10 +11,15 @@ all:
 	@python3 tools/normalize_extensions.py
 	@python3 tools/fix_unit_refs.py
 	@python3 tools/gen_projects.py
+	@python3 tools/prepare_bible_resources.py
 	@sh tools/build_all.sh $(MODE)
 
 build:
+	@python3 tools/prepare_bible_resources.py
 	@sh tools/build_all.sh $(MODE)
+
+resources:
+	@python3 tools/prepare_bible_resources.py
 
 report:
 	@cat build/build-report.txt 2>/dev/null || echo "noch kein Build gelaufen"

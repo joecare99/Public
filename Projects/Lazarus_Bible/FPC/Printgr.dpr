@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PrintgrMAIN in '..\source\PRINTGR\Frm_PrintgrMAIN.pas' {MainForm}; 
+  Frm_PrintgrMAIN in '..\source\PRINTGR\Frm_PrintgrMAIN.PAS' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

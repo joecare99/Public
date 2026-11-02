@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object MainForm: TMainReadMeForm
   Left = 238
   Top = 141
   BorderStyle = bsDialog

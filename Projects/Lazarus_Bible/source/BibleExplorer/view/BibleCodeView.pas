@@ -22,6 +22,7 @@ type
     FLastFile: string;
     FDemo: TBibleDemo;
     procedure ComboChanged(Sender: TObject);
+    procedure ShowUnit(Index: Integer);
     procedure ShowMarker(Index: Integer);
     procedure HighlightMarker(Line: Integer);
     function GetCodeLength: Integer;
@@ -67,42 +68,71 @@ end;
 procedure TBibleCodeView.ShowDemo(ADemo: TBibleDemo; const ASourcePath: string);
 var
   I: Integer;
-  FileName: string;
-  SourceText: string;
 begin
   FDemo := ADemo;
   FSourcePath := ASourcePath;
   FCombo.Clear;
   FEditor.Clear;
+  FLastFile := '';
+  FCombo.Visible := False;
   if ADemo = nil then
     Exit;
-  for I := 0 to ADemo.Markers.Count - 1 do
-    FCombo.Items.Add(TBibleMarker(ADemo.Markers[I]).Title);
-  FCombo.ItemIndex := 0;
   if ADemo.Markers.Count > 0 then
-    ShowMarker(0)
-  else if ADemo.Units.Count > 0 then
   begin
-    if TryLoadBibleSource(ADemo.Folder, ADemo.Units[0], SourceText) then
-    begin
-      FLastFile := 'Ressource: source/' + ADemo.Folder + '/' + ADemo.Units[0];
-      FEditor.Lines.Text := SourceText;
-    end
-    else
-    begin
-      FileName := IncludeTrailingPathDelimiter(ASourcePath) + ADemo.Units[0];
-      FLastFile := FileName;
-      if FileExists(FileName) then
-        FEditor.Lines.LoadFromFile(FileName)
-      else
-        FLastFile := FileName + ' (nicht gefunden)';
-    end;
+    for I := 0 to ADemo.Markers.Count - 1 do
+      FCombo.Items.Add(TBibleMarker(ADemo.Markers[I]).Title);
+    FCombo.ItemIndex := 0;
+    ShowMarker(0);
+    Exit;
+  end;
+  if ADemo.Units.Count > 0 then
+  begin
+    FCombo.Items.AddStrings(ADemo.Units);
+    FCombo.ItemIndex := 0;
+    ShowUnit(0);
+    FCombo.Visible := ADemo.Units.Count > 1;
   end;
 end;
 
 procedure TBibleCodeView.ComboChanged(Sender: TObject);
 begin
-  ShowMarker(FCombo.ItemIndex);
+  if FDemo = nil then
+    Exit;
+  if FDemo.Markers.Count > 0 then
+    ShowMarker(FCombo.ItemIndex)
+  else
+    ShowUnit(FCombo.ItemIndex);
+end;
+
+procedure TBibleCodeView.ShowUnit(Index: Integer);
+var
+  FileName: string;
+  SourceText: string;
+  RelativeFile: string;
+begin
+  FEditor.Clear;
+  FLastFile := '';
+  if (FDemo = nil) or (Index < 0) or (Index >= FDemo.Units.Count) then
+    Exit;
+  RelativeFile := FDemo.Units[Index];
+  if TryLoadBibleSource(FDemo.Folder, RelativeFile, SourceText) then
+  begin
+    FLastFile := 'Ressource: source/' + FDemo.Folder + '/' + RelativeFile;
+    FEditor.Lines.Text := SourceText;
+  end
+  else
+  begin
+    if (ExtractFilePath(RelativeFile) = '') and (FDemo.Folder <> '') then
+      FileName := IncludeTrailingPathDelimiter(FSourcePath) + FDemo.Folder +
+        PathDelim + RelativeFile
+    else
+      FileName := IncludeTrailingPathDelimiter(FSourcePath) + RelativeFile;
+    FLastFile := FileName;
+    if FileExists(FileName) then
+      FEditor.Lines.LoadFromFile(FileName)
+    else
+      FLastFile := FileName + ' (nicht gefunden)';
+  end;
 end;
 
 { Laedt die Unit der markierten Stelle und hebt die Stelle hervor. }
@@ -125,7 +155,11 @@ begin
   end
   else
   begin
-    FileName := IncludeTrailingPathDelimiter(FSourcePath) + Marker.FileName;
+    if (ExtractFilePath(Marker.FileName) = '') and (FDemo.Folder <> '') then
+      FileName := IncludeTrailingPathDelimiter(FSourcePath) + FDemo.Folder +
+        PathDelim + Marker.FileName
+    else
+      FileName := IncludeTrailingPathDelimiter(FSourcePath) + Marker.FileName;
     FLastFile := FileName;
     if not FileExists(FileName) then
     begin

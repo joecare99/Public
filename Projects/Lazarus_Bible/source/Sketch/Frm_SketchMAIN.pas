@@ -88,8 +88,9 @@ end;
 
 procedure TfrmSketchMain.Erase1Click(Sender: TObject);
 begin
-  Canvas.Brush := Brush; { Assign form's brush to Canvas }
-  Canvas.FillRect(frmSketchMain.ClientRect);  { Repaint form bkgrnd}
+  Self.Canvas.Brush := Self.Brush; { Assign form's brush to Canvas }
+  Self.Canvas.FillRect(Self.ClientRect);  { Repaint form bkgrnd}
+  Dragging := 0;
 end;
 
 procedure TfrmSketchMain.Exit1Click(Sender: TObject);

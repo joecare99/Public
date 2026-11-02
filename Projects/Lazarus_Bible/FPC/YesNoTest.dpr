@@ -8,7 +8,7 @@ uses
     Interfaces,
   {$ENDIF}
   Forms,
-  Frm_YesNoMAIN in '..\source\YESNO\Frm_YesNoMAIN.pas' {MainForm}, 
+  Frm_YesNoMAIN in '..\source\YESNO\Frm_YesNoMAIN.PAS' {MainForm}, 
   Frm_YesNo in '..\source\YESNO\Frm_YesNo.pas' {YesNoDlg};
 {$IFNDEF FPC}
 {$E EXE}

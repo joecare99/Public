@@ -14,7 +14,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ComCtrls, Dialogs, Menus,
   Buttons, ExtCtrls, Graphics, LCLIntf, LCLType, Process,
-  BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry,
+  Frm_SketchMAIN, BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry,
   BibleResources, FormShot;
 
 type
@@ -502,6 +502,12 @@ begin
       end;
     end;
   end
+  else if FCurrentDemo.Embedded then
+  begin
+    memoBehavior.Lines.Add('Diese Demo ist noch nicht eingebettet.');
+    btnStartIntern.Enabled := False;
+    btnShotIntern.Enabled := False;
+  end
   else
   begin
     memoBehavior.Lines.Add('Diese Demo laesst sich nicht intern einbetten.');
@@ -585,7 +591,6 @@ end;
 procedure TBibleExplorerForm.StartDemo;
 var
   FileName: string;
-  Output: TStringList;
 begin
   if FCurrentDemo = nil then
     Exit;
@@ -597,14 +602,16 @@ begin
   end;
   FreeAndNil(FProcess);
   FProcess := TProcess.Create(nil);
-  Output := TStringList.Create;
   try
     FProcess.Executable := FileName;
-    FProcess.Options := [poUsePipes];
     FProcess.Execute;
     memoBehavior.Lines.Add('Gestartet: ' + FileName);
-  finally
-    Output.Free;
+  except
+    on E: Exception do
+    begin
+      FreeAndNil(FProcess);
+      memoBehavior.Lines.Add('Start fehlgeschlagen: ' + E.Message);
+    end;
   end;
 end;
 
@@ -612,7 +619,6 @@ end;
   --screenshot). }
 procedure TBibleExplorerForm.MakeScreenshot;
 var
-  FileName: string;
   Binary: string;
   TempFile: string;
   Process_: TProcess;
@@ -648,18 +654,34 @@ end;
 function TBibleExplorerForm.DemoBinaryPath(ADemo: TBibleDemo): string;
 var
   Dir: string;
+  BinaryName: string;
 begin
   Result := '';
   if ADemo = nil then
     Exit;
-  Dir := IncludeTrailingPathDelimiter(FRootPath) + 'bin';
-  if not DirectoryExists(Dir) then
-    Exit;
-  { Der Build-Ordner ist <cpu>-<os> }
-  if FileExists(IncludeTrailingPathDelimiter(Dir) + 'x86_64-linux/' + ADemo.Project) then
-    Result := IncludeTrailingPathDelimiter(Dir) + 'x86_64-linux/' + ADemo.Project
-  else
-    Result := IncludeTrailingPathDelimiter(Dir) + ADemo.Project;
+  BinaryName := ADemo.Project;
+{$IFDEF MSWINDOWS}
+  if ExtractFileExt(BinaryName) = '' then
+    BinaryName := BinaryName + '.exe';
+{$ENDIF}
+  Dir := IncludeTrailingPathDelimiter(FRootPath) + 'bin' + PathDelim +
+    '$(TargetCPU)-$(TargetOS)';
+{$IFDEF CPU64}
+  Dir := StringReplace(Dir, '$(TargetCPU)', 'x86_64', []);
+{$ELSE}
+  Dir := StringReplace(Dir, '$(TargetCPU)', 'i386', []);
+{$ENDIF}
+{$IFDEF MSWINDOWS}
+  {$IFDEF CPU64}
+  Dir := StringReplace(Dir, '$(TargetOS)', 'win64', []);
+  {$ELSE}
+  Dir := StringReplace(Dir, '$(TargetOS)', 'win32', []);
+  {$ENDIF}
+{$ELSE}
+  Dir := StringReplace(Dir, '$(TargetOS)', 'linux', []);
+{$ENDIF}
+  if FileExists(IncludeTrailingPathDelimiter(Dir) + BinaryName) then
+    Result := IncludeTrailingPathDelimiter(Dir) + BinaryName;
 end;
 
 procedure TBibleExplorerForm.btnStartClick(Sender: TObject);

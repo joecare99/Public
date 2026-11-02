@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object MainForm: TMainPolyflowForm
   Left = 201
   Height = 216
   Top = 131
