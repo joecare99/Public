@@ -15,7 +15,7 @@ uses
 {$IFnDEF FPC}
   , Windows, ADODB
 {$ELSE}
-  , DBParadoxConnection, sqldb
+  , DBParadoxConnection, sqldb, WinesDatabase
 {$ENDIF}
   ;
 
@@ -84,7 +84,11 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+{$IFDEF FPC}
+  FDataDir := FindWinesDataDir;
+{$ELSE}
   FDataDir := FindDataDir;
+{$ENDIF}
   {$IFDEF FPC}
   { BDE-freie Paradox-Engine: DatabaseName ist der Ordner mit den .DB-Dateien. }
   FConnection := TDBParadoxConnection.Create(Self);

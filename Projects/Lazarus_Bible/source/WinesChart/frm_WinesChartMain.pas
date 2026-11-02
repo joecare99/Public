@@ -22,7 +22,7 @@ uses
   , ADODB, Windows, TeEngine, Series, TeeProcs, Chart, DBChart
 {$ELSE}
   , LCLIntf, LCLType, LMessages, sqldb, DBParadoxConnection,
-    TAGraph, TASeries, TATools, TAChartTeeChart
+    TAGraph, TASeries, TATools
 {$ENDIF};
 
 type
@@ -30,10 +30,11 @@ type
     DataSource1: TDataSource;
 {$IFNDEF FPC}
     DBChart1: TDBChart;
-    Series1: THorizBarSeries;
+    Series1: TLineSeries;
 {$ELSE}
     DBChart1: TChart;
-  Series1: THorizBarSeries;
+    Series1: TLineSeries;
+    Series2: TLineSeries;
 {$ENDIF}
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
@@ -95,10 +96,19 @@ begin
   DBChart1 := TChart.Create(Self);
   DBChart1.Parent := Self;
   DBChart1.SetBounds(16, 16, 513, 233);
-  DBChart1.Title.Text.Add('Wine Cellar');
-  Series1 := THorizBarSeries.Create(DBChart1);
-  Series1.Marks.Visible := True;
+  DBChart1.Title.Text.Add('Wine purchases over time');
+  DBChart1.BottomAxis.Title.Caption := 'Purchase date';
+  DBChart1.BottomAxis.Title.Visible := True;
+  DBChart1.LeftAxis.Title.Caption := 'Bottles';
+  DBChart1.LeftAxis.Title.Visible := True;
+  Series1 := TLineSeries.Create(DBChart1);
+  Series1.Title := 'Bottles per purchase';
+  Series1.ShowPoints := True;
   DBChart1.AddSeries(Series1);
+  Series2 := TLineSeries.Create(DBChart1);
+  Series2.Title := 'Total bottles';
+  Series2.ShowPoints := True;
+  DBChart1.AddSeries(Series2);
   BitBtn1 := TBitBtn.Create(Self);
   BitBtn1.Parent := Self;
   BitBtn1.SetBounds(432, 272, 75, 25);
@@ -139,19 +149,28 @@ procedure TMainForm.FormShow(Sender: TObject);
 var
   NameField: TField;
   NumberField: TField;
+  PurchasedField: TField;
+  RunningTotal: Double;
 begin
   {$IFDEF FPC}
   if not ADOTable1.Active then
     ADOTable1.Open;
   DBChart1.Title.Text.Clear;
-  DBChart1.Title.Text.Add('Wine Cellar');
+  DBChart1.Title.Text.Add('Wine purchases over time');
   NameField := ADOTable1.FieldByName('Name');
   NumberField := ADOTable1.FieldByName('Number');
+  PurchasedField := ADOTable1.FieldByName('Purchased');
   Series1.Clear;
+  Series2.Clear;
+  RunningTotal := 0;
   ADOTable1.First;
   while not ADOTable1.EOF do
   begin
-    Series1.AddXY(NumberField.AsFloat, 0, NameField.AsString);
+    Series1.AddXY(PurchasedField.AsDateTime, NumberField.AsFloat,
+      NameField.AsString);
+    RunningTotal := RunningTotal + NumberField.AsFloat;
+    Series2.AddXY(PurchasedField.AsDateTime, RunningTotal,
+      NameField.AsString);
     ADOTable1.Next;
   end;
   DBChart1.Invalidate;

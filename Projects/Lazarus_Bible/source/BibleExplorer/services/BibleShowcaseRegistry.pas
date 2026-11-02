@@ -43,9 +43,7 @@ uses
   Frm_Toolbar1MAIN, Frm_Toolbar2MAIN, Frm_UpDownDemoMain, Frm_CharGridMAIN,
   Frm_CharGridABOUT, Frm_TodoMAIN, TODO_Frm_ABOUT,
   Frm_PolyflowMain, Frm_OntopMAIN, Frm_KeyInfoMAIN,
-  Frm_StaticDemoMain, Frm_StatusODMain,
-  Frm_WinesCalcMain, Frm_WinesDemoMain, Frm_WinesChartMain,
-  Frm_WinesEntryMain;
+  Frm_StaticDemoMain, Frm_StatusODMain;
 
 { Fabrikfunktionen der Demos }
 
@@ -239,26 +237,6 @@ begin
   Result := Frm_StatusODMain.TfrmStatusODMain.Create(nil);
 end;
 
-function CreateWinesCalcForm: TForm;
-begin
-  Result := Frm_WinesCalcMain.TMainForm.Create(nil);
-end;
-
-function CreateWinesDemoForm: TForm;
-begin
-  Result := Frm_WinesDemoMain.TMainForm.Create(nil);
-end;
-
-function CreateWinesChartForm: TForm;
-begin
-  Result := Frm_WinesChartMain.TMainForm.Create(nil);
-end;
-
-function CreateWinesEntryForm: TForm;
-begin
-  Result := Frm_WinesEntryMain.TMainForm.Create(nil);
-end;
-
 constructor TShowcaseRegistry.Create;
 begin
   inherited Create;
@@ -311,10 +289,6 @@ begin
   FShowcase.Register('Keyinfo', 'Tastaturereignisse', @CreateKeyinfoForm);
   FShowcase.Register('StaticDemo', 'StaticText-Steuerelemente', @CreateStaticDemoForm);
   FShowcase.Register('StatusOD', 'Owner-draw-Statusleiste', @CreateStatusODForm);
-  FShowcase.Register('WinesCalc', 'Berechnete Weinfeldwerte', @CreateWinesCalcForm);
-  FShowcase.Register('WinesDemo', 'Weindatenbank', @CreateWinesDemoForm);
-  FShowcase.Register('WinesChart', 'Weindaten als Diagramm', @CreateWinesChartForm);
-  FShowcase.Register('WinesEntry', 'Weindatensaetze bearbeiten', @CreateWinesEntryForm);
 end;
 
 end.
