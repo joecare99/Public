@@ -4251,7 +4251,105 @@ begin
           Dec(i);                                                {005944C8 [ebp-64]}
         until i = 0;                                             {005944CB jne->005904B9}
       end;
-    end; { 005944D1: Table14-Zeilen-Schreibblock - Chunk 7e. }
+    end;
+    { 005944D1: Table14-Zeilen-Schreibblock - Chunk 7e.
+      Zeile mit dem bisherigen gvar_02536630 fuellen, je nach Geschlecht
+      den 'vat'- bzw. 'mut'-Index waehlen, die Kind(er)-Ehen ohne Mutter
+      bzw. Vater anhaengen, dann Post. Endet mit dem While-Bottom
+      (lfbh2.Next -> 00594B75/4B8B -> 0058F4DD bzw. 00594BA5). }
+    DataModule2.Table14Zeile.AsString := gvar_02536630;         {005944D1..44E2 [1E8]+0B0 edx=[ebx]}
+    DataModule2.Table1.IndexName := '';                         {005944E8..44F4 [5C] xor edx}
+    DataModule2.Table1.First;                                   {005944F9..4503}
+    DataModule2.Table1.FindKey([t1Num]);                        {00594508..452A [ebp-10] ohne Test}
+    if Trim(Form1.lfbh2Eh.AsString) = '000000*' then            {0059452F..568 [914]+60 jne->00594B26}
+    begin
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then begin {0059456E..5BD [548]}
+        DataModule2.Table1.IndexName := 'vat';                  {005945A9..5B8 [595430]}
+      end else
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then begin {005945BF..609}
+        DataModule2.Table1.IndexName := 'mut';                  {005945FA..609 [595424]}
+      end;
+      if DataModule2.Table1.IndexName = 'vat' then begin        {0059460E..633 jne->0059489A}
+        if DataModule2.Table1.FindKey([t1Num]) then             {00594639..662 je->0059489A}
+        begin
+          while DataModule2.Table1Vater.AsInteger = t1Num do begin {0059487F je->0059466D}
+            if DataModule2.Table1Mutter.AsInteger = 0 then begin    {0059466D..681 jne->0059485D}
+              eli := 0;                                          {00594687..689 [ebp-38]}
+              gvar_02536454 := Form1.lfbh2.IndexName;            {0059468C..6AF}
+              bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));     {005946C1..C9 vtbl+150 -> [ebp-34]}
+              Form1.lfbh2.IndexName := 'Pro';                    {005946D9..DE [595418]}
+              Form1.lfbh2.First;                                 {005946E3..F0}
+              sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005946F5..70E [534]+58}
+              if Form1.lfbh2.FindKey([u]) then                   {00594712..744 je->0059474D}
+                eli := 1;                                        {00594746}
+              Form1.lfbh2.IndexName := gvar_02536454;            {0059474D..760}
+              Form1.lfbh2.GotoBookmark(bmk);                     {00594765..77D vtbl+1A0}
+              if eli = 1 then                                    {0059477D..781 jne->0059485D}
+              begin
+                if Pos('Mutter nicht bekannt: ', gvar_02536630) = 0 then {00594787..795 jne->00594800}
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005947AF..7C7}
+                  u := u + '*';                                  {005947CC..7D7 @LStrCat [5953B8]}
+                  illki(u, idx, s);                              {005947DC..7E7 eax=[ebp-4] Self}
+                  gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + {00594797..7F9 CatN ebx edx=5}
+                    'Kind(er), Mutter nicht bekannt: - ' + s;    {005947A3 [595654]}
+                end else
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0059480E..82B}
+                  u := u + '*';                                  {0059482B..836}
+                  illki(u, idx, s);                              {0059483B..846}
+                  gvar_02536630 := gvar_02536630 + ' - ' + s;    {00594800..858 CatN ebx edx=3 [5955D0]}
+                end;
+              end;
+            end;
+            DataModule2.Table1.Next;                             {0059485D..867}
+            if DataModule2.Table1.Eof then Break;                {0059486C..87D jne->0059489A}
+          end;
+        end;
+      end;
+      if DataModule2.Table1.IndexName = 'mut' then begin        {0059489A..8BF jne->00594B26}
+        if DataModule2.Table1.FindKey([t1Num]) then             {005948C5..8EE je->00594B26}
+        begin
+          while DataModule2.Table1Mutter.AsInteger = t1Num do begin {00594B0B je->005948F9}
+            if DataModule2.Table1Vater.AsInteger = 0 then begin    {005948F9..90D jne->00594AE9}
+              eli := 0;                                          {00594913..915 [ebp-38]}
+              gvar_02536454 := Form1.lfbh2.IndexName;            {00594918..93B}
+              bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));     {00594940..955 vtbl+150 -> [ebp-34]}
+              Form1.lfbh2.IndexName := 'Pro';                    {00594958..96A}
+              Form1.lfbh2.First;                                 {0059496F..97C}
+              sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594981..99E}
+              if Form1.lfbh2.FindKey([u]) then                   {0059499E..9D0 je->005949D9}
+                eli := 1;                                        {005949D2}
+              Form1.lfbh2.IndexName := gvar_02536454;            {005949D9..9EC}
+              Form1.lfbh2.GotoBookmark(bmk);                     {005949F1..A03 vtbl+1A0}
+              if eli = 1 then                                    {00594A09..A0D jne->00594AE9}
+              begin
+                if Pos('Vater nicht bekannt: ', gvar_02536630) = 0 then {00594A13..A21 jne->00594A8C}
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594A23..A4A}
+                  u := u + '*';                                  {00594A58..A63}
+                  illki(u, idx, s);                              {00594A68..A73}
+                  gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + {00594A23..A85 CatN ebx edx=5}
+                    'Kind(er), Vater nicht bekannt: - ' + s;    {00594A2F [595680]}
+                end else
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594A9A..AB2}
+                  u := u + '*';                                  {00594AB7..AC2}
+                  illki(u, idx, s);                              {00594AC7..AD2}
+                  gvar_02536630 := gvar_02536630 + ' - ' + s;    {00594A8C..AE4 CatN ebx edx=3 [5955D0]}
+                end;
+              end;
+            end;
+            DataModule2.Table1.Next;                             {00594AE9..AF3}
+            if DataModule2.Table1.Eof then Break;                {00594AF8..B09 jne->00594B26}
+          end;
+        end;
+      end;
+    end;
+    DataModule2.Table14Zeile.AsString := gvar_02536630;         {00594B26..B37 [1E8]+0B0 edx=[ebx]}
+    DataModule2.Table14.Post;                                    {00594B3D..B4C [0E0]+248}
+    DataModule2.Table1.IndexName := '';                          {00594B52..B5E [5C] xor edx}
+    Form1.lfbh2.Next;                                            {00594B63..B70} {00594B75/4B8B = while-Bottom}
   end;
   { 00594BA5..: EnableControls + krg-FindKey + Cursor/Label19 +
     gvar_02536664-'ort_'-Sortierung + finally-Rumpf — Chunk 8. }
