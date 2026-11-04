@@ -2842,6 +2842,7 @@ var
   prevName: AnsiString;                         {0058F4CB [ebp-44] Namens-Vergleich}
   s4C: AnsiString;                              {0058F4DD [ebp-4C] Body-Temp}
   s50: AnsiString;                              {0058F4E5 [ebp-50] Body-Temp}
+  eli: Integer;                                 {0059257D [ebp-38] Marker-Flag Kind (lfbh2/gesp. Haupt)}
   t1Num: Integer;                               {0058F5B4 [ebp-10] Table1-Nummer}
   n1C: Integer;                                 {0058F568 [ebp-1C] Zaehler}
   v: AnsiString;                                {0058FDB5 sub_00576FF8-Ergebnis}
@@ -3893,24 +3894,346 @@ begin
               DataModule2.Table1.FindKey([t1Num]);                         {00591CDC..1CFE [ebp-10]}
               if UpperCase(DataModule2.Table1Geschlecht.AsString) <> 'M' then {00591D03..1D3C jne->310B}
               begin
-                { 0059310B..005931A8 W-Zweig - Chunk 7d3. }
-              end
-              else
-              begin
-                s4C := '';                                                 {00591D42..1D45 [ebp-4C] LStrClr}
-                DataModule2.Table1.IndexName := 'vat';                     {00591D4A..1D59 [595430]}
-                DataModule2.Table1.First;                                  {00591D5E..1D68}
-                if patn > 0 then                                           {00591D6D..1D71 [ebp-30] jle->309D}
+                s50 := '';                                       {0059314A..4D LStrClr [ebp-50]}
+                DataModule2.Table1.IndexName := 'mut';           {00593152..61 [595424]}
+                DataModule2.Table1.First;                        {00593166..70}
+                DataModule2.Table1.FindKey([t1Num]);             {00593175..97 [ebp-10]}
+                if DataModule2.Table1.Found then                 {0059319C je->005943D7}
                 begin
-                  DataModule2.Table1.FindKey([t1Num]);                     {00591D77..1D99 [ebp-10]}
-                  if DataModule2.Table1.Found then                         {00591D9E..1DA0 je->309D}
-                  begin
-                    { 00593082 Loop-Bedingung + 00591DAB Koerper (Mutter=patn) + 00593012 Else - Chunk 7d3. }
+                  while DataModule2.Table1Mutter.AsInteger = t1Num do begin {005943BC..CE je->005931A9}
+                    if DataModule2.Table1Vater.AsInteger = patn then begin    {005931A9..BE je->005931C4; jne->0059434C}
+                    begin
+                      Inc(n1C);                                   {005931C4 / C7}
+                      Inc(n20);                                   {005931C7}
+                      if n20 = 1 then                             {005931CA..CE jne->005931ED}
+                        gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + 'Kind(er): '; {005931D0..E8 CatN ebx edx=4}
+                      if Form24.CheckBox14.Checked then           {005931F6..FC je->005935C9}
+                      begin
+                        gvar_0253643C := ' ';                     {0059320A..14}
+                        if gvar_02536424 = 1 then                {00593219..20 jne->0059329C}
+                          if Trim(DataModule2.Table1Namex.AsString) <> '' then {00593222..4B jbe->0059329C}
+                            gvar_0253643C := gvar_0253643C + ' (' + Trim(DataModule2.Table1Namex.AsString) + ') '; {00593254..97 CatN 253643C edx=3}
+                        gvar_02536630 := gvar_02536630 + ' - ' + IntToStr(n1C) + '. ' + {0059329C..BF CatN ebx edx=7}
+                          DataModule2.Table1Name.AsString + gvar_0253643C + DataModule2.Table1Vornamen.AsString;
+                      end else
+                      begin
+                        gvar_0253643C := ' ';                     {005935C9..D3}
+                        if gvar_02536424 = 1 then                {005935D8..DF jne->0059365B}
+                          if Trim(DataModule2.Table1Namex.AsString) <> '' then {005935E1..F6 jbe->0059365B}
+                            gvar_0253643C := gvar_0253643C + ' (' + Trim(DataModule2.Table1Namex.AsString) + ') '; {00593613..56 CatN 253643C edx=3}
+                        gvar_02536630 := gvar_02536630 + ' - ' + IntToStr(n1C) + '. ' + {0059365B..C4 CatN ebx edx=7}
+                          DataModule2.Table1Name.AsString + gvar_0253643C + DataModule2.Table1Vornamen.AsString;
+                      end;                                        {005936F9 Trim-Test teilt beide Arms}
+                      if Trim(DataModule2.Table1Name.AsString) <> '' then begin {0059333F jbe->0059397B}
+                        if gvar_02536420 = 1 then                {005936F2..99 jne->00593743}
+                          gvar_02536630 := gvar_02536630 + ' [DS ' + IntToStr(DataModule2.Table1Nummer.AsInteger) + ']'; {00593708..3E CatN ebx edx=4}
+                        if gvar_02536414 = 1 then                {00593743..4A jne->005938AA}
+                        begin
+                          if gvar_02536418 = 1 then              {00593750..57 jne->005938A4}
+                          begin
+                            if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then begin {0059375D..81 jbe->0059382C}
+                              sub_00576F54(idx, v);
+                              gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + ' * ' + DataModule2.Table1Gebjahr.AsString + v); {0059378B..27 CatN ebp-980 edx=7}
+                            end else begin
+                              sub_00576F54(idx, v);
+                              gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + v); {00593842..A5 CatN edx=5}
+                            end;
+                          end else begin
+                            sub_00576F54(idx, v);
+                            gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + v); {00593925..6B CatN edx=5}
+                          end;
+                        end else begin
+                          sub_00576F54(idx, v);
+                          gvar_02536440.Add(DataModule2.Table1Name.AsString + '' + v); {00593925..6B}
+                        end;
+                        {005938AA/25 Arms Ende - jmp 0059397B}
+                      end;
+                      {0059397B [38]=0 + lfbh2-Marker/Scan/Restore (W)}
+                      eli := 0;                                    {0059397D [ebp-38]}
+                      gvar_02536454 := Form1.lfbh2.IndexName;      {00593980..A3}
+                      bmk := TBookmark(PChar(Form1.lfbh2.Bookmark)); {005939A8..BD vtbl+150}
+                      Form1.lfbh2.IndexName := 'Pro';              {005939C0..D2}
+                      Form1.lfbh2.First;                           {005939D7..E4}
+                      if gueltig then begin                        {005939E9 je->skip}
+                        u := '';
+                        sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005939ED..F6}
+                        if Form1.lfbh2.FindKey([u]) then begin    {00593A02 hopp else koerper}
+                          gvar_02536630 := gvar_02536630 + ' [' + IntToStr(Form1.lfbh2Nm.AsInteger) + ']'; {00593A44..7A CatN edx=4}
+                          eli := 1;                               {00593A7F}
+                        end;
+                        Form1.lfbh2.First;                         {00593A86..98}
+                        while not Form1.lfbh2.Eof do begin         {00593AA0 je->tail}
+                          u := '';
+                          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00593ACB..D6}
+                          u := u + '*';
+                          if Pos(u, Form1.lfbh2Eh.AsString) > 0 then begin {00593AF0 je->...}
+                            gvar_02536630 := gvar_02536630 + ' [oo ' + IntToStr(Form1.lfbh2Nm.AsInteger) + ']'; {00593B50..2F CatN edx=4}
+                            eli := 1;                             {00593B34}
+                          end;
+                          Form1.lfbh2.Next;                         {00593B39..48}
+                        end;
+                      end;                                        {00593B63..77}
+                      Form1.lfbh2.IndexName := gvar_02536454;      {00593B7D..90}
+                      Form1.lfbh2.GotoBookmark(bmk);               {00593BA5..B7 vtbl+1A0}
+                      if eli = 0 then begin                          {00593BB1..BE jne->0059439A}
+                        if gvar_02536404 = 1 then                  {00593BC0..E2 jne->00593C23}
+                        begin
+                          if Trim(DataModule2.Table1Religion.AsString) <> '' then {00593BC5..F0 jbe->3C23}
+                            gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Religion.AsString; {00593BF2..1E CatN ebx edx=3}
+                        end;
+                        if gvar_025363F0 = 1 then                  {00593C23..2A jne->00593CF6}
+                        begin
+                          if Trim(DataModule2.Table1Beruf.AsString) <> '' then {00593C30..60 jbe->3C93}
+                            gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Beruf.AsString; {00593C62..8E CatN ebx edx=3}
+                        end;
+                        if Trim(DataModule2.Table1Hausname.AsString) <> '' then {00593C93..FBC jbe->3CF6}
+                          gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Hausname.AsString; {00593CC5..F1 CatN ebx edx=3}
+                        if (Trim(DataModule2.Table1Gebjahr.AsString) <> '') or
+                           (Trim(DataModule2.Table1Gebort.AsString) <> '') then begin {00593CF6..D26 je->3D5E}
+                          gvar_02536630 := gvar_02536630 + ' * ' + Trim(DataModule2.Table1Gebtag.AsString) + '.' + Trim(DataModule2.Table1Gebmonat.AsString) + '.' + Trim(DataModule2.Table1Gebjahr.AsString); {00593F41..1C CatN ebx edx=3}
+                          sub_00576FF8(DataModule2.Table1Gebtag.AsString + '.' + DataModule2.Table1Gebmonat.AsString + '.' + DataModule2.Table1Gebjahr.AsString, v); {00593DF5..1A}
+                          gvar_02536630 := gvar_02536630 + v;
+                          if gvar_02536410 = 1 then begin          {00593DFC..03 jne->3E7C}
+                            if Trim(DataModule2.Table1Gebort.AsString) <> '' then begin {00593E05..35 jbe->F3D3}
+                              oabk(DataModule2.Table1Gebort.AsString, v); {00593E4B..62}
+                              gvar_02536664 := gvar_02536664 + v;
+                            end;
+                          end
+                        else
+                          gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Gebort.AsString;
+                        sub_00576F54(idx, v);                       {00593E9A..AA}
+                        gvar_02536444.Add(DataModule2.Table1Gebort.AsString + '' + v); {00593EAA..D2}
+                        end else begin
+                          if (Trim(DataModule2.Table1Taufjahr.AsString) <> '') or
+                             (Trim(DataModule2.Table1Taufort.AsString) <> '') then begin {00593ED7..F7 jbe->F3D3}
+                            gvar_02536630 := gvar_02536630 + ' ~ ' + Trim(DataModule2.Table1Tauftag.AsString) + '.' + Trim(DataModule2.Table1Taufmonat.AsString) + '.' + Trim(DataModule2.Table1Taufjahr.AsString); {00593F3F..E3 CatN ebx edx=5}
+                            sub_00576FF8(DataModule2.Table1Tauftag.AsString + '.' + DataModule2.Table1Taufmonat.AsString + '.' + DataModule2.Table1Taufjahr.AsString, v); {00593FCA..03}
+                            gvar_02536630 := gvar_02536630 + v + ' ' + DataModule2.Table1Taufort.AsString; {00593FFB..4B CatN ebx edx=5}
+                            if gvar_02536410 = 1 then begin       {00594000..07 jne->3DB5}
+                              if Trim(DataModule2.Table1Taufort.AsString) <> '' then begin {00594009..39 jbe->F3D3}
+                                oabk(DataModule2.Table1Taufort.AsString, v); {0059403F..56}
+                                gvar_02536664 := gvar_02536664 + v;
+                              end;
+                            end
+                          else
+                            gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Taufort.AsString;
+                        end;
+                        sub_00576F54(idx, v);                       {005940A0..B8}
+                        gvar_02536444.Add(DataModule2.Table1Taufort.AsString + '' + v); {005940B3..D1}
+                      end;
+                    if gvar_02536400 = 1 then                     {005940D3..DA jne->00594144}
+                    begin
+                      if Trim(DataModule2.Table1Taufpat.AsString) <> '' then {005940DC..0E0 jbe}
+                        gvar_02536630 := gvar_02536630 + ' (TP: ' + DataModule2.Table1Taufpat.AsString + ')'; {0059410E..3F CatN ebx edx=4}
+                    end;
+                    if (Trim(DataModule2.Table1Stjahr.AsString) <> '') or
+                       (Trim(DataModule2.Table1Stort.AsString) <> '') then begin {00594144..D26 je->AC}
+                      gvar_02536630 := gvar_02536630 + ' + ' + Trim(DataModule2.Table1Sttag.AsString) + '.' + Trim(DataModule2.Table1Stmonat.AsString) + '.' + Trim(DataModule2.Table1Stjahr.AsString); {005941AC..E3 CatN ebx edx=3}
+                      sub_00576FF8(DataModule2.Table1Sttag.AsString + '.' + DataModule2.Table1Stmonat.AsString + '.' + DataModule2.Table1Stjahr.AsString, v); {00594233..53}
+                      gvar_02536630 := gvar_02536630 + v;
+                      if gvar_02536410 = 1 then begin          {00594251..57 jne->3F9F}
+                        if Trim(DataModule2.Table1Stort.AsString) <> '' then begin {00594253..83 jbe->F4}
+                          oabk(DataModule2.Table1Stort.AsString, v); {00594285..AC}
+                          gvar_02536664 := gvar_02536664 + v;
+                        end;
+                      end
+                    else
+                      gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Stort.AsString;
+                    sub_00576F54(idx, v);                       {005942C3..DC}
+                    gvar_02536444.Add(DataModule2.Table1Stort.AsString + '' + v); {005942F4..12}
+                    end;                                        {0059434A jmp 0059439A}
+                  end;
+                    end;
+                    end
+                    else
+                  if DataModule2.Table1Vater.AsInteger = 0 then begin   {0059434C..60 jne->0059439A}
+                    u := '';
+                    sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594362..7D}
+                    s50 := s50 + u + '*';                           {00594382..95 CatN [ebp-50] edx=3}
+                  end;
+                  DataModule2.Table1.Next;                        {0059439A..A4}
+                  if DataModule2.Table1.Eof then Break;           {005943B3..BA jne->005943D7}
+                end;
+              end
+            end
+            else
+            begin
+              s4C := '';                                       {00591D42..1D45 LStrClr [ebp-4C]}
+              DataModule2.Table1.IndexName := 'vat';           {00591D4A..1D59}
+              DataModule2.Table1.First;                        {00591D5E..1D68}
+              if patn > 0 then                                 {00591D6D..1D71 jle->0059309D}
+              begin
+                DataModule2.Table1.FindKey([t1Num]);           {00591D77..1D99}
+                if DataModule2.Table1.Found then               {00591D9E..1DA0 je->0059309D}
+                begin
+                  while DataModule2.Table1Vater.AsInteger = t1Num do begin {00593082..897 je->00591DAB; jne->0059309D}
+                    if DataModule2.Table1Mutter.AsInteger = patn then begin {00591DB2..C0 je->Koerper; jne->00593012}
+                    begin
+                      Inc(n1C);                                 {00591DC6}
+                      Inc(n20);                                 {00591DC9}
+                      if n20 = 1 then                           {00591DCC..D0 jne->00591DEF}
+                        gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + 'Kind(er): '; {00591DD2..EA CatN ebx edx=4}
+                      if Form24.CheckBox14.Checked then       {00591DEF..E06 je->005921CB}
+                      begin
+                        gvar_0253643C := ' ';                   {00591E0C..16}
+                        if gvar_02536424 = 1 then              {00591E1B..22 jne->00591E9E}
+                          if Trim(DataModule2.Table1Namex.AsString) <> '' then {00591E24..4B jbe->00591E9E}
+                            gvar_0253643C := gvar_0253643C + ' (' + Trim(DataModule2.Table1Namex.AsString) + ') '; {00591E56..99 CatN 253643C edx=3}
+                        gvar_02536630 := gvar_02536630 + #13#10 + ' - ' + IntToStr(n1C) + '. ' + {00591E9E..F05 CatN ebx edx=8}
+                          DataModule2.Table1Name.AsString + gvar_0253643C + DataModule2.Table1Vornamen.AsString;
+                      end else
+                      begin
+                        gvar_0253643C := ' ';                   {005921CB..D5}
+                        if gvar_02536424 = 1 then              {005921DA..E1 jne->0059225D}
+                          if Trim(DataModule2.Table1Namex.AsString) <> '' then {005921E3..FB jbe->0059225D}
+                            gvar_0253643C := gvar_0253643C + ' (' + Trim(DataModule2.Table1Namex.AsString) + ') '; {00592215..58 CatN 253643C edx=3}
+                        gvar_02536630 := gvar_02536630 + ' - ' + IntToStr(n1C) + '. ' + {0059225D..BF CatN ebx edx=7}
+                          DataModule2.Table1Name.AsString + gvar_0253643C + DataModule2.Table1Vornamen.AsString;
+                      end;
+                      if Trim(DataModule2.Table1Name.AsString) <> '' then begin {00591F41 jbe->0059257D}
+                        if gvar_02536420 = 1 then              {00591F47..4E jne->00591F8B}
+                          gvar_02536630 := gvar_02536630 + ' [DS ' + IntToStr(DataModule2.Table1Nummer.AsInteger) + ']'; {00591F50..86 CatN ebx edx=4}
+                        if gvar_02536414 = 1 then              {00591F8B..92 jne->00592170}
+                        begin
+                          if gvar_02536418 = 1 then            {00591F98..9F jne->005920F2}
+                          begin
+                            if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then begin {00591FA5..CD jbe->00592074}
+                              sub_00576F54(idx, v);
+                              gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + ' * ' + DataModule2.Table1Gebjahr.AsString + v); {00591FD3..6C CatN ebp-704 edx=7}
+                            end else begin
+                              sub_00576F54(idx, v);
+                              gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + v); {00592074..EB edx=5}
+                            end;
+                          end else begin
+                            sub_00576F54(idx, v);
+                            gvar_02536440.Add(DataModule2.Table1Name.AsString + ' ' + DataModule2.Table1Vornamen.AsString + v); {005920F2..ED edx=5}
+                          end;
+                        end else begin
+                          sub_00576F54(idx, v);
+                          gvar_02536440.Add(DataModule2.Table1Name.AsString + '' + v); {00592170..C3 edx=3}
+                        end;
+                      end;                                      {005922C6 / 005920ED jmp -> 0059257D}
+                      { 0059257Dff [38]=0 + lfbh2-Marker/Scan/Restore + gesp. Haupt (M) }
+                      eli := 0;                                {0059257F [ebp-38]}
+                      gvar_02536454 := Form1.lfbh2.IndexName;   {00592582..A3}
+                      bmk := TBookmark(PChar(Form1.lfbh2.Bookmark)); {005925AA..BF vtbl+150}
+                      Form1.lfbh2.IndexName := 'Pro';           {005925C2..D4}
+                      Form1.lfbh2.First;                        {005925D9..E6}
+                      if gueltig then begin                    {005925EB je->skip 0059268B}
+                        u := '';
+                        sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005925F8..10}
+                        if Form1.lfbh2.FindKey([u]) then begin {00592607..43 je->skip}
+                          gvar_02536630 := gvar_02536630 + ' [' + IntToStr(Form1.lfbh2Nm.AsInteger) + ']'; {00592649..7F CatN edx=4}
+                          eli := 1;                           {00592684 [ebp-38]}
+                        end;
+                        Form1.lfbh2.First;                      {0059268B..98}
+                        while not Form1.lfbh2.Eof do begin    {tail 005926A4 je->0059278F; jmp 00592775}
+                          u := '';
+                          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005926C7..F6}
+                          u := u + '*';
+                          if Pos(u, Form1.lfbh2Eh.AsString) > 0 then begin {00592702 jle->0059274D}
+                            gvar_02536630 := gvar_02536630 + ' [oo ' + IntToStr(Form1.lfbh2Nm.AsInteger) + ']'; {0059270B..41 CatN edx=4}
+                            eli := 1;                          {00592746}
+                          end;
+                          Form1.lfbh2.Next;                      {0059274D..5A}
+                        end;
+                      end;                                     {E-Bel 0059269D..AA}
+                      Form1.lfbh2.IndexName := gvar_02536454;  {0059278F..A2}
+                      Form1.lfbh2.GotoBookmark(bmk);           {005927A7..B9 vtbl+1A0}
+                      if eli = 0 then begin                    {005927BF..C3 jne->00593012}
+                        if gvar_02536404 = 1 then              {005927C9..D0 jne->00592835}
+                        begin
+                          if Trim(DataModule2.Table1Religion.AsString) <> '' then {005927D2..02 jbe->00592835}
+                            gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Religion.AsString; {00592804..30CatN ebx edx=3}
+                        end;
+                        if gvar_025363F0 = 1 then              {00592835..3C jne->005928A5}
+                        begin
+                          if Trim(DataModule2.Table1Beruf.AsString) <> '' then {00592842..72 jbe->005928A5}
+                            gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Beruf.AsString; {00592874..A0 CatN ebx edx=3}
+                        end;
+                        if Trim(DataModule2.Table1Hausname.AsString) <> '' then {005928A5..D5 jbe->00592908}
+                          gvar_02536630 := gvar_02536630 + ', ' + DataModule2.Table1Hausname.AsString; {005928D7..03 CatN ebx edx=3}
+                        if (Trim(DataModule2.Table1Gebjahr.AsString) <> '') or
+                           (Trim(DataModule2.Table1Gebort.AsString) <> '') then begin {00592908..38 je->00592970}
+                          gvar_02536630 := gvar_02536630 + ' * ' + Trim(DataModule2.Table1Gebtag.AsString) + '.' + Trim(DataModule2.Table1Gebmonat.AsString) + '.' + Trim(DataModule2.Table1Gebjahr.AsString); {00592970..C9 CatN ebp-800 edx=5}
+                          sub_00576FF8(DataModule2.Table1Gebtag.AsString + '.' + DataModule2.Table1Gebmonat.AsString + '.' + DataModule2.Table1Gebjahr.AsString, v); {005929EB..23}
+                          gvar_02536630 := gvar_02536630 + v;
+                          if gvar_02536410 = 1 then begin     {00592A0E..15 jne->00592A87}
+                            if Trim(DataModule2.Table1Gebort.AsString) <> '' then begin {00592A17..47 jbe->00592AB8}
+                              oabk(DataModule2.Table1Gebort.AsString, v); {00592A49..62}
+                              gvar_02536664 := gvar_02536664 + v;
+                            end;
+                          end
+                        else
+                          gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Gebort.AsString; {00592A87..AF CatN ebx edx=3}
+                          sub_00576F54(idx, v);                 {00592ABD..CD}
+                          gvar_02536444.Add(DataModule2.Table1Gebort.AsString + '' + v); {00592AD6..E0}
+                        end else begin                          {St-Tag r 00592B13}
+                          if (Trim(DataModule2.Table1Taufjahr.AsString) <> '') or
+                             (Trim(DataModule2.Table1Taufort.AsString) <> '') then begin {00592B13..75 ja->00592B7B nein->00592D19}
+                            gvar_02536630 := gvar_02536630 + ' ~ ' + Trim(DataModule2.Table1Tauftag.AsString) + '.' + Trim(DataModule2.Table1Taufmonat.AsString) + '.' + Trim(DataModule2.Table1Taufjahr.AsString); {00592B7B..C0 CatN ebp-800 edx=5}
+                            sub_00576FF8(DataModule2.Table1Tauftag.AsString + '.' + DataModule2.Table1Taufmonat.AsString + '.' + DataModule2.Table1Taufjahr.AsString, v); {00592BF6..0D}
+                            gvar_02536630 := gvar_02536630 + v;
+                            if gvar_02536410 = 1 then begin   {00592C19..20 jne->00592C92}
+                              if Trim(DataModule2.Table1Taufort.AsString) <> '' then begin {00592C22..52 jbe->00592CC3}
+                                oabk(DataModule2.Table1Taufort.AsString, v); {00592C54..5D}
+                                gvar_02536664 := gvar_02536664 + v;
+                              end;
+                            end
+                          else
+                            gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Taufort.AsString; {00592C92..BA}
+                            sub_00576F54(idx, v);                 {00592CC3..D4}
+                            gvar_02536444.Add(DataModule2.Table1Taufort.AsString + '' + v); {00592CD6..08}
+                          end;
+                        end;
+                        if gvar_02536400 = 1 then                {00592D19..20 jne->00592D8A}
+                        begin
+                          if Trim(DataModule2.Table1Taufpat.AsString) <> '' then {00592D22..52 jbe->00592D8A}
+                            gvar_02536630 := gvar_02536630 + ' (TP: ' + DataModule2.Table1Taufpat.AsString + ')'; {00592D54..05 CatN ebx edx=4}
+                        end;
+                        if (Trim(DataModule2.Table1Stjahr.AsString) <> '') or
+                           (Trim(DataModule2.Table1Stort.AsString) <> '') then begin {00592D8A..FB ja->00592DEA nein->00592F90}
+                          gvar_02536630 := gvar_02536630 + ' + ' + Trim(DataModule2.Table1Sttag.AsString) + '.' + Trim(DataModule2.Table1Stmonat.AsString) + '.' + Trim(DataModule2.Table1Stjahr.AsString); {00592DEA..699 CatN ebp-894 edx=5}
+                          sub_00576FF8(DataModule2.Table1Sttag.AsString + '.' + DataModule2.Table1Stmonat.AsString + '.' + DataModule2.Table1Stjahr.AsString, v); {00592E6E..93}
+                          gvar_02536630 := gvar_02536630 + v;
+                          if gvar_02536410 = 1 then begin     {00592E9E..05}
+                            if Trim(DataModule2.Table1Stort.AsString) <> '' then begin {00592EAC..29 jbe->00592F3A}
+                              oabk(DataModule2.Table1Stort.AsString, v); {00592ED1..EE}
+                              gvar_02536664 := gvar_02536664 + v;
+                            end;
+                          end
+                        else
+                          gvar_02536630 := gvar_02536630 + ' ' + DataModule2.Table1Stort.AsString; {00592F83..A4}
+                          sub_00576F54(idx, v);                 {00592FB1..CB}
+                          gvar_02536444.Add(DataModule2.Table1Stort.AsString + '' + v); {00592FBE..34}
+                        end;
+                        if gvar_025363F4 = 1 then                {00592F98..A5 jne->00593012}
+                        begin
+                          if Trim(DataModule2.Table1Kommentar.AsString) <> '' then {00592FA5..C9 bJ->00593012}
+                            gvar_02536630 := gvar_02536630 + ' (' + DataModule2.Table1Kommentar.AsString + ')'; {00592FDB..041 CatN ebx edx=4}
+                        end;
+                      end;                                     {end if eli=0 (M)}
+                    end;                                         {end if Mutter=patn}
+                    end;                                         {end if Mutter=patn inner}
+                    if DataModule2.Table1Mutter.AsInteger = 0 then begin {00593024 eax=test jne->00593060}
+                      u := '';
+                      sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00593026..3D}
+                      s4C := s4C + u + '*';                   {00593048..5M CatN [ebp-4C] edx=3}
+                    end;
+                    DataModule2.Table1.Next;                   {00593060..6F}
+                    if DataModule2.Table1.Eof then Break;      {00593079 jne->0059309D}
                   end;
                 end;
-                { 0059309D..0059310A Post-Loop - Chunk 7d3. }
               end;
-            end; {temp 7d}
+              if Trim(s4C) <> '' then                          {0059309D..B2 [ebp-8D8] Trim jbe->005930E6}
+              begin
+                illki(s4C, idx, s);                           {005930C7..CFA}
+                gvar_02536630 := gvar_02536630 + #13#10 + 'Mutter nicht bekannt: ' + s; {005930D4..01 CatN ebx edx=4}
+              end;
+              DataModule2.Table1.IndexName := '';              {005930E6..F2}
+              DataModule2.Table1.First;                        {005930F7..01}
+            end;
+            end; {schließt if Copy=Epnum @3624}
             if Trim(s50) <> '' then                             {005943D7..43EC [ebp-50] Trim jbe->4420}
             begin
               illki(s50, idx, s);                               {005943EE..4409 eax=Self edx=s50 ecx=esi=idx}
@@ -3928,7 +4251,105 @@ begin
           Dec(i);                                                {005944C8 [ebp-64]}
         until i = 0;                                             {005944CB jne->005904B9}
       end;
-    end; { 005944D1: Table14-Zeilen-Schreibblock - Chunk 7e. }
+    end;
+    { 005944D1: Table14-Zeilen-Schreibblock - Chunk 7e.
+      Zeile mit dem bisherigen gvar_02536630 fuellen, je nach Geschlecht
+      den 'vat'- bzw. 'mut'-Index waehlen, die Kind(er)-Ehen ohne Mutter
+      bzw. Vater anhaengen, dann Post. Endet mit dem While-Bottom
+      (lfbh2.Next -> 00594B75/4B8B -> 0058F4DD bzw. 00594BA5). }
+    DataModule2.Table14Zeile.AsString := gvar_02536630;         {005944D1..44E2 [1E8]+0B0 edx=[ebx]}
+    DataModule2.Table1.IndexName := '';                         {005944E8..44F4 [5C] xor edx}
+    DataModule2.Table1.First;                                   {005944F9..4503}
+    DataModule2.Table1.FindKey([t1Num]);                        {00594508..452A [ebp-10] ohne Test}
+    if Trim(Form1.lfbh2Eh.AsString) = '000000*' then            {0059452F..568 [914]+60 jne->00594B26}
+    begin
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then begin {0059456E..5BD [548]}
+        DataModule2.Table1.IndexName := 'vat';                  {005945A9..5B8 [595430]}
+      end else
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then begin {005945BF..609}
+        DataModule2.Table1.IndexName := 'mut';                  {005945FA..609 [595424]}
+      end;
+      if DataModule2.Table1.IndexName = 'vat' then begin        {0059460E..633 jne->0059489A}
+        if DataModule2.Table1.FindKey([t1Num]) then             {00594639..662 je->0059489A}
+        begin
+          while DataModule2.Table1Vater.AsInteger = t1Num do begin {0059487F je->0059466D}
+            if DataModule2.Table1Mutter.AsInteger = 0 then begin    {0059466D..681 jne->0059485D}
+              eli := 0;                                          {00594687..689 [ebp-38]}
+              gvar_02536454 := Form1.lfbh2.IndexName;            {0059468C..6AF}
+              bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));     {005946C1..C9 vtbl+150 -> [ebp-34]}
+              Form1.lfbh2.IndexName := 'Pro';                    {005946D9..DE [595418]}
+              Form1.lfbh2.First;                                 {005946E3..F0}
+              sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005946F5..70E [534]+58}
+              if Form1.lfbh2.FindKey([u]) then                   {00594712..744 je->0059474D}
+                eli := 1;                                        {00594746}
+              Form1.lfbh2.IndexName := gvar_02536454;            {0059474D..760}
+              Form1.lfbh2.GotoBookmark(bmk);                     {00594765..77D vtbl+1A0}
+              if eli = 1 then                                    {0059477D..781 jne->0059485D}
+              begin
+                if Pos('Mutter nicht bekannt: ', gvar_02536630) = 0 then {00594787..795 jne->00594800}
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005947AF..7C7}
+                  u := u + '*';                                  {005947CC..7D7 @LStrCat [5953B8]}
+                  illki(u, idx, s);                              {005947DC..7E7 eax=[ebp-4] Self}
+                  gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + {00594797..7F9 CatN ebx edx=5}
+                    'Kind(er), Mutter nicht bekannt: - ' + s;    {005947A3 [595654]}
+                end else
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {0059480E..82B}
+                  u := u + '*';                                  {0059482B..836}
+                  illki(u, idx, s);                              {0059483B..846}
+                  gvar_02536630 := gvar_02536630 + ' - ' + s;    {00594800..858 CatN ebx edx=3 [5955D0]}
+                end;
+              end;
+            end;
+            DataModule2.Table1.Next;                             {0059485D..867}
+            if DataModule2.Table1.Eof then Break;                {0059486C..87D jne->0059489A}
+          end;
+        end;
+      end;
+      if DataModule2.Table1.IndexName = 'mut' then begin        {0059489A..8BF jne->00594B26}
+        if DataModule2.Table1.FindKey([t1Num]) then             {005948C5..8EE je->00594B26}
+        begin
+          while DataModule2.Table1Mutter.AsInteger = t1Num do begin {00594B0B je->005948F9}
+            if DataModule2.Table1Vater.AsInteger = 0 then begin    {005948F9..90D jne->00594AE9}
+              eli := 0;                                          {00594913..915 [ebp-38]}
+              gvar_02536454 := Form1.lfbh2.IndexName;            {00594918..93B}
+              bmk := TBookmark(PChar(Form1.lfbh2.Bookmark));     {00594940..955 vtbl+150 -> [ebp-34]}
+              Form1.lfbh2.IndexName := 'Pro';                    {00594958..96A}
+              Form1.lfbh2.First;                                 {0059496F..97C}
+              sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594981..99E}
+              if Form1.lfbh2.FindKey([u]) then                   {0059499E..9D0 je->005949D9}
+                eli := 1;                                        {005949D2}
+              Form1.lfbh2.IndexName := gvar_02536454;            {005949D9..9EC}
+              Form1.lfbh2.GotoBookmark(bmk);                     {005949F1..A03 vtbl+1A0}
+              if eli = 1 then                                    {00594A09..A0D jne->00594AE9}
+              begin
+                if Pos('Vater nicht bekannt: ', gvar_02536630) = 0 then {00594A13..A21 jne->00594A8C}
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594A23..A4A}
+                  u := u + '*';                                  {00594A58..A63}
+                  illki(u, idx, s);                              {00594A68..A73}
+                  gvar_02536630 := gvar_02536630 + #13#10 + #13#10 + {00594A23..A85 CatN ebx edx=5}
+                    'Kind(er), Vater nicht bekannt: - ' + s;    {00594A2F [595680]}
+                end else
+                begin
+                  sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {00594A9A..AB2}
+                  u := u + '*';                                  {00594AB7..AC2}
+                  illki(u, idx, s);                              {00594AC7..AD2}
+                  gvar_02536630 := gvar_02536630 + ' - ' + s;    {00594A8C..AE4 CatN ebx edx=3 [5955D0]}
+                end;
+              end;
+            end;
+            DataModule2.Table1.Next;                             {00594AE9..AF3}
+            if DataModule2.Table1.Eof then Break;                {00594AF8..B09 jne->00594B26}
+          end;
+        end;
+      end;
+    end;
+    DataModule2.Table14Zeile.AsString := gvar_02536630;         {00594B26..B37 [1E8]+0B0 edx=[ebx]}
+    DataModule2.Table14.Post;                                    {00594B3D..B4C [0E0]+248}
+    DataModule2.Table1.IndexName := '';                          {00594B52..B5E [5C] xor edx}
+    Form1.lfbh2.Next;                                            {00594B63..B70} {00594B75/4B8B = while-Bottom}
   end;
   { 00594BA5..: EnableControls + krg-FindKey + Cursor/Label19 +
     gvar_02536664-'ort_'-Sortierung + finally-Rumpf — Chunk 8. }
