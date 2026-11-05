@@ -7280,8 +7280,234 @@ begin
 end;
 
 procedure TForm3.gedausxv;
+var
+  krg: Integer;               {005B42DB [ebp-10] Table1Nummer-Restaurierung}
+  idx: Integer;               {005B42D9 [edi] Paar-Zaehler}
+  lfd: Integer;               {[esi] Table24Lfdn-Zwischenspeicher fuer dsn-Lauf}
+  s8: AnsiString;             {005B42D1 [ebp-8] Dedup-Nadel-Liste}
+  s0C: AnsiString;            {005B4342 [ebp-0C] Paar-Eintrag (12 Zeichen)}
+  s4: AnsiString;             {005B434A [ebp-4] Kinder-Teil ('*'+6stellig)}
+  u, v: AnsiString;           {00576EB0-Zwischenwerte (6-stellige Nummern)}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005B4288: gedausxv - baut gvar_02536448 (Paar-Eintraege) und
+    gvar_0253644C (Kinder-Eintraege) fuer den FAMS/FAMC-Export in gedausv.
+    Laeufert ueber Table24 ('lfn'), je Paar-Eintrag:
+      s0C(12) + s4(7*n Kinder) + idx(6)  =  18+7n Zeichen.
+    SEH-Rahmen/Prolog-Teardown (@LStrArrayClr 2F/3) - nicht transkribiert. }
+
+  gvar_02536448 := TStringList.Create;                            {005B42AF..42BB}
+  gvar_0253644C := TStringList.Create;                            {005B42C0..42CC}
+  s8 := '';                                                       {005B42D1..42D4 @LStrClr [ebp-8]}
+  idx := 0;                                                       {005B42D9 xor edi,edi}
+  krg := DataModule2.Table1Nummer.AsInteger;                      {005B42DB..42E8 [534]+58}
+  { DataModule2.Table24.RecordCount - toter Aufruf, Ergebnis ungenutzt }
+                                                                {005B42EB..42F5 vtbl+14C}
+  DataModule2.Table24.IndexName := 'lfn';                         {005B42FB..4308}
+  DataModule2.Table24.First;                                      {005B430D..4315}
+  while not DataModule2.Table24.Eof do                            {005B513D..514C je->005B431F}
+  begin
+    DataModule2.Table1.FindKey([DataModule2.Table24Nummer.AsInteger]); {005B431F..433D [5C] FindKey}
+    s0C := '';                                                    {005B4342..4345 @LStrClr [ebp-0C]}
+    s4 := '';                                                     {005B434A..434D @LStrClr [ebp-4]}
+    if DataModule2.Table5.RecordCount > 0 then                    {005B4352..4364 jle->005B4B84}
+    begin
+      DataModule2.Table5.First;                                   {005B436A..4372}
+      while not DataModule2.Table5.Eof do                         {005B4B6F..4B7E je->005B437C}
+      begin
+        sub_00576EB0(DataModule2.Table5Epnum.AsInteger, u);       {005B437C..438C [414]+58}
+        if Pos(u + '*', gvar_0253665C) > 0 then                   {005B4391..43AE jle->005B4B49}
+        begin
+          { Dedup-Nadel 1: '*'+Num2Str(Table1Nummer)+'*'+Num2Str(Table5Epnum) }
+          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u);    {005B43B4..43C9}
+          sub_00576EB0(DataModule2.Table5Epnum.AsInteger, v);     {005B43D6..43E6}
+          if Pos('*' + u + '*' + v, s8) = 0 then                  {005B43FB..4408 jne->005B4B49}
+          begin
+            { Dedup-Nadel 2 (umgekehrt) }
+            if Pos('*' + v + '*' + u, s8) = 0 then                {005B440E..4462 jne->005B4B49}
+            begin
+              s8 := s8 + '*' + u + '*' + v;                       {005B4468..44AD CatN5}
+              if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'M' then {005B44B2..44DA jne->005B47FC}
+              begin
+                {--- 005B44E0 M-Zweig ---}
+                lfd := DataModule2.Table24Lfdn.AsInteger;         {005B44E0..44ED [228]+58 -> esi}
+                sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005B44F1..44FF}
+                if Pos(u + '*', gvar_0253665C) > 0 then           {005B4504..4521 jle->005B4570}
+                begin
+                  DataModule2.Table24.IndexName := 'dsn';         {005B4523..4530}
+                  DataModule2.Table24.FindKey([DataModule2.Table1Nummer.AsInteger]); {005B4535..4556}
+                  sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, s0C); {005B455B..456B s0C :=}
+                end;
+                sub_00576EB0(DataModule2.Table5Epnum.AsInteger, u); {005B4570..4580}
+                if Pos(u + '*', gvar_0253665C) > 0 then           {005B4585..45A2 jle->005B45FC}
+                begin
+                  DataModule2.Table24.IndexName := 'dsn';         {005B45A4..45B1}
+                  DataModule2.Table24.FindKey([DataModule2.Table5Epnum.AsInteger]); {005B45B6..45D7}
+                  sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B45DC..45EC}
+                  s0C := s0C + v;                                 {005B45F1..45F7 @LStrCat}
+                end;
+                DataModule2.Table24.IndexName := 'lfn';           {005B45FC..4609}
+                DataModule2.Table24.FindKey([lfd]);               {005B460E..4622}
+                DataModule2.Table7.IndexFieldNames := 'Vater';    {005B4627..4634 SetIndexFieldNames}
+                if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4639..4661 je->005B47A9}
+                  while DataModule2.Table7Vater.AsInteger = DataModule2.Table1Nummer.AsInteger do {005B4785..47A3 je->005B466C}
+                  begin
+                    sub_00576EB0(DataModule2.Table7Nummer.AsInteger, u); {005B466C..467C [0A78]+58}
+                    if Pos(u + '*', gvar_0253665C) > 0 then       {005B4681..469E jle->005B4767}
+                      if DataModule2.Table7Mutter.AsInteger = DataModule2.Table5Epnum.AsInteger then {005B46A4..46C2 jne->005B4767}
+                      begin
+                        lfd := DataModule2.Table24Lfdn.AsInteger; {005B46C8..46D5}
+                        DataModule2.Table24.IndexName := 'dsn';   {005B46D7..46E4}
+                        DataModule2.Table24.FindKey([DataModule2.Table7Nummer.AsInteger]); {005B46E9..470A}
+                        sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B470F..4727}
+                        s4 := s4 + '*' + v;                       {005B472C..4737 CatN3}
+                        DataModule2.Table24.IndexName := 'lfn';   {005B473C..4749}
+                        DataModule2.Table24.FindKey([lfd]);       {005B474E..4762}
+                      end;
+                    DataModule2.Table7.Next;                      {005B4767..476F}
+                    if DataModule2.Table7.Eof then Break;         {005B4774..4783 jne->005B47A9}
+                  end;
+                Inc(idx);                                         {005B47A9}
+                sub_00576EB0(idx, u);                             {005B47AA..47B5}
+                s0C := s0C + s4 + u;                              {005B47BA..47C5 CatN3}
+                gvar_02536448.Add(s0C);                           {005B47CA..47D4 vtbl+38}
+                gvar_0253644C.Add(s4 + u);                        {005B47D7..47F9 Cat3+Add}
+              end;
+              {--- 005B47FC W-Zweig (sequenziell, kein else) ---}
+              if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'W' then {005B47FC..4824 jne->005B4B49}
+              begin
+                lfd := DataModule2.Table24Lfdn.AsInteger;         {005B482A..4837}
+                sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005B4839..4849}
+                if Pos(u + '*', gvar_0253665C) > 0 then           {005B484E..486B jle->005B48BA}
+                begin
+                  DataModule2.Table24.IndexName := 'dsn';         {005B486D..487A}
+                  DataModule2.Table24.FindKey([DataModule2.Table1Nummer.AsInteger]); {005B487F..48A0}
+                  sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, s0C); {005B48A5..48B5 s0C :=}
+                end;
+                sub_00576EB0(DataModule2.Table5Epnum.AsInteger, u); {005B48BA..48CA}
+                if Pos(u + '*', gvar_0253665C) > 0 then           {005B48CF..48EC jle->005B4937}
+                begin
+                  { Original setzt hier KEIN IndexName - Index bleibt von Vorblock ('dsn') }
+                  DataModule2.Table24.FindKey([DataModule2.Table5Epnum.AsInteger]); {005B48EE..490F}
+                  sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B4914..4924}
+                  s0C := v + s0C;                                 {005B4929..4932 Cat3 umgekehrt}
+                end;
+                DataModule2.Table24.IndexName := 'lfn';           {005B4937..4944}
+                DataModule2.Table24.FindKey([lfd]);               {005B4949..495D}
+                DataModule2.Table7.IndexFieldNames := 'Mutter';   {005B4962..496F}
+                if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4974..499C je->005B4AE4}
+                  while DataModule2.Table7Mutter.AsInteger = DataModule2.Table1Nummer.AsInteger do {005B4AC0..4ADE je->005B49A7}
+                  begin
+                    sub_00576EB0(DataModule2.Table7Nummer.AsInteger, u); {005B49A7..49B7}
+                    if Pos(u + '*', gvar_0253665C) > 0 then       {005B49BC..49D9 jle->005B4AA2}
+                      if DataModule2.Table7Vater.AsInteger = DataModule2.Table5Epnum.AsInteger then {005B49DF..49FD jne->005B4AA2}
+                      begin
+                        lfd := DataModule2.Table24Lfdn.AsInteger; {005B4A03..4A10}
+                        DataModule2.Table24.IndexName := 'dsn';   {005B4A12..4A1F}
+                        DataModule2.Table24.FindKey([DataModule2.Table7Nummer.AsInteger]); {005B4A24..4A45}
+                        sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B4A4A..4A62}
+                        s4 := s4 + '*' + v;                       {005B4A67..4A72 CatN3}
+                        DataModule2.Table24.IndexName := 'lfn';   {005B4A77..4A84}
+                        DataModule2.Table24.FindKey([lfd]);       {005B4A89..4A9D}
+                      end;
+                    DataModule2.Table7.Next;                      {005B4AA2..4AAA}
+                    if DataModule2.Table7.Eof then Break;         {005B4AAF..4ABE jne->005B4AE4}
+                  end;
+                Inc(idx);                                         {005B4AE4}
+                sub_00576EB0(idx, u);                             {005B4AE5..4AF3}
+                s0C := s0C + s4 + u;                              {005B4AF8..4B06 CatN3}
+                gvar_02536448.Add(s0C);                           {005B4B0B..4B15}
+                gvar_0253644C.Add(s4 + u);                        {005B4B18..4B46 Cat3+Add}
+              end;
+            end;
+          end;
+        end;
+        s4 := '';                                                 {005B4B49..4B4C @LStrClr [ebp-4]}
+        DataModule2.Table5.Next;                                  {005B4B51..4B59}
+      end;
+    end;
+    {--- 005B4B84 zweites Paar (ohne Table5-Partner) ---}
+    s4 := '';                                                     {005B4B84..4B87}
+    s0C := '';                                                    {005B4B8C..4B8F}
+    if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'M' then {005B4B94..4BC8 jne->005B4E5C}
+    begin
+      DataModule2.Table7.IndexFieldNames := 'Vater';              {005B4BCE..4BDB}
+      if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4BE0..4C08 je->005B4D50}
+        while DataModule2.Table7Vater.AsInteger = DataModule2.Table1Nummer.AsInteger do {005B4D2C..4D4A je->005B4C13}
+        begin
+          if DataModule2.Table7Mutter.AsInteger = 0 then          {005B4C13..4C22 jne->005B4D0E}
+          begin
+            sub_00576EB0(DataModule2.Table7Nummer.AsInteger, u);  {005B4C28..4C3B}
+            if Pos(u + '*', gvar_0253665C) > 0 then               {005B4C40..4C63 jle->005B4D0E}
+            begin
+              lfd := DataModule2.Table24Lfdn.AsInteger;           {005B4C69..4C76}
+              DataModule2.Table24.IndexName := 'dsn';             {005B4C78..4C85}
+              DataModule2.Table24.FindKey([DataModule2.Table7Nummer.AsInteger]); {005B4C8A..4CAB}
+              sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B4CB0..4CCB}
+              s4 := s4 + '*' + v;                                 {005B4CD0..4CDE CatN3}
+              DataModule2.Table24.IndexName := 'lfn';             {005B4CE3..4CF0}
+              DataModule2.Table24.FindKey([lfd]);                 {005B4CF5..4D09}
+            end;
+          end;
+          DataModule2.Table7.Next;                                {005B4D0E..4D16}
+          if DataModule2.Table7.Eof then Break;                   {005B4D1B..4D2A jne->005B4D50}
+        end;
+      if s4 <> '' then                                            {005B4D50..4D54 jbe->005B511F}
+      begin
+        Inc(idx);                                                 {005B4D5A}
+        lfd := DataModule2.Table24Lfdn.AsInteger;                 {005B4D5B..4D68}
+        DataModule2.Table24.IndexName := 'dsn';                   {005B4D6A..4D77}
+        DataModule2.Table24.FindKey([DataModule2.Table1Nummer.AsInteger]); {005B4D7C..4D9D}
+        sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, u);       {005B4DA2..4DB5}
+        sub_00576EB0(idx, v);                                     {005B4DCE..4DD0}
+        gvar_02536448.Add(u + '000000' + s4 + v);                 {005B4DBA..4DF8 CatN4+Add}
+        gvar_0253644C.Add(s4 + v);                                {005B4DFB..4E29 Cat3+Add}
+        DataModule2.Table24.IndexName := 'lfn';                   {005B4E2C..4E39}
+        DataModule2.Table24.FindKey([lfd]);                       {005B4E3E..4E52}
+      end;
+    end
+    else if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'W' then {005B4E5C..4E90 jne->005B511F}
+    begin
+      DataModule2.Table7.IndexFieldNames := 'Mutter';             {005B4E96..4EA3}
+      if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4EA8..4ED0 je->005B5018}
+        while DataModule2.Table7Mutter.AsInteger = DataModule2.Table1Nummer.AsInteger do {005B4FF4..5012 je->005B4EDB}
+        begin
+          if DataModule2.Table7Vater.AsInteger = 0 then           {005B4EDB..4EEA jne->005B4FD6}
+          begin
+            sub_00576EB0(DataModule2.Table7Nummer.AsInteger, u);  {005B4EF0..4F03}
+            if Pos(u + '*', gvar_0253665C) > 0 then               {005B4F08..4F2B jle->005B4FD6}
+            begin
+              lfd := DataModule2.Table24Lfdn.AsInteger;           {005B4F31..4F3E}
+              DataModule2.Table24.IndexName := 'dsn';             {005B4F40..4F4D}
+              DataModule2.Table24.FindKey([DataModule2.Table7Nummer.AsInteger]); {005B4F52..4F73}
+              sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, v); {005B4F78..4F93}
+              s4 := s4 + '*' + v;                                 {005B4F98..4FA6 CatN3}
+              DataModule2.Table24.IndexName := 'lfn';             {005B4FAB..4FB8}
+              DataModule2.Table24.FindKey([lfd]);                 {005B4FBD..4FD1}
+            end;
+          end;
+          DataModule2.Table7.Next;                                {005B4FD6..4FDE}
+          if DataModule2.Table7.Eof then Break;                   {005B4FE3..4FF2 jne->005B5018}
+        end;
+      if s4 <> '' then                                            {005B5018..501C jbe->005B511F}
+      begin
+        Inc(idx);                                                 {005B5022}
+        lfd := DataModule2.Table24Lfdn.AsInteger;                 {005B5023..5030}
+        DataModule2.Table24.IndexName := 'dsn';                   {005B5032..503F}
+        DataModule2.Table24.FindKey([DataModule2.Table1Nummer.AsInteger]); {005B5044..5065}
+        sub_00576EB0(DataModule2.Table24Lfdn.AsInteger, u);       {005B506F..5082}
+        sub_00576EB0(idx, v);                                     {005B5090..5098}
+        gvar_02536448.Add('000000' + u + s4 + v);                 {005B506A..50C0 CatN4+Add}
+        gvar_0253644C.Add(s4 + v);                                {005B50C3..50F1 Cat3+Add}
+        DataModule2.Table24.IndexName := 'lfn';                   {005B50F4..5101}
+        DataModule2.Table24.FindKey([lfd]);                       {005B5106..511A}
+      end;
+    end;
+    DataModule2.Table24.Next;                                     {005B511F..5127}
+  end;
+  {--- 005B5152 Epilog ---}
+  DataModule2.Table24.IndexName := 'dsn';                         {005B5152..515F}
+  DataModule2.Table1.FindKey([krg]);                              {005B5164..5178 [5C] FindKey}
+  { SEH-Teardown + @LStrArrayClr [ebp-0D4],2F / [ebp-0C],3 - nicht transkribiert }
 end;
 
 procedure TForm3.gedausv;
