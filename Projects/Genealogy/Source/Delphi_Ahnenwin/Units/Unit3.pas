@@ -7275,8 +7275,110 @@ begin
 end;
 
 procedure TForm3.adrschreib;
+var
+  f: TextFile;                {005B3B59 [ebp-1D8] Ausgabedatei (Text)}
+  lfd: Integer;                {005B3C85 [esi] Datensatz-Zaehler ab 1}
+  anz: Integer;                {005B3C8A [edi] geschriebene Adressen}
+  s0C: AnsiString;             {005B3CAB [ebp-0C] Ort aus Table13, sonst ''}
+  s4: AnsiString;              {005B3E0E [ebp-4] Adress-Anrede 'Herrn'/'Frau'}
+  s8: AnsiString;              {005B3E16 [ebp-8] Brief-Anrede 'Herr'/'Frau'}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005B3A3C: adrschreib - schreibt die als lebend markierten Personen
+    (Table17Lebt='j') als Tab-getrennte Textdatei mit 9 Spalten; der Ort
+    wird ueber Table13 nachgeschlagen. Quelle: Table17, Index 'namgeb',
+    optional gefiltert auf gebjahr/taufjahr <= gvar_02536BA0.
+    SEH-Rahmen/Prolog-Teardown (@LStrArrayClr 13/5/4/3, @HandleFinally) -
+    nicht transkribiert. }
+
+  {005B3A3C..5B3A4E Prolog: ecx=4A, je Iteration 2x push 0 -> 0x250 Bytes
+   Lokalspeicher (tiefster Platz [ebp-250]), ebx := Self}
+  {005B3A50..5B3A5E SEH-Rahmen fs:[0] -> Handler 005B40D6}
+  Form1.SaveDialog1.DefaultExt := 'txt';                            {005B3A5E..5B3A73 [3FC]+74}
+  Form1.SaveDialog1.Filter := 'Text-Dateien (*.txt)|*.txt';         {005B3A78..5B3A8D [3FC]+60}
+  if not Form1.SaveDialog1.Execute then                             {005B3A92..5B3AA6 vtbl+3C -> 5B408B}
+    Exit;
+  if Form1.SaveDialog1.FileName = '' then                           {005B3AAC..5B3ACB GetFileName -> 5B408B}
+    Exit;
+  if Pos('.txt', Form1.SaveDialog1.FileName) = 0 then               {005B3AD1..5B3AFB LStrPos}
+    Form1.SaveDialog1.FileName :=                                  {005B3AFD..5B3B30 [3FC]+78 LStrCat3}
+      Form1.SaveDialog1.FileName + '.txt';
+  AssignFile(f, Form1.SaveDialog1.FileName);                        {005B3B35..5B3B59 @Assign}
+  Rewrite(f);                                                       {005B3B5E..5B3B64 @RewritText}
+  if IOResult <> 0 then                                             {005B3B69..5B3B70 -> 5B408B}
+    Exit;
+
+  if gvar_02536BA0 > 1 then                                         {005B3B76..5B3B7E jle -> 5B3C17}
+  begin
+    DataModule2.Table17.Filter := 'gebjahr<=' +                     {005B3B84..5B3BC9 CatN edx=4}
+      IntToStr(gvar_02536BA0) +                                     {005B3B89..5B3B9B erster IntToStr}
+      ' and taufjahr<=' + IntToStr(gvar_02536BA0);                  {005B3BA6..5B3BB8; 5B3BCE vtbl+198}
+    DataModule2.Table17.Filtered := True;                           {005B3BE9..5B3BFA [13C] vtbl+190 dl=1}
+    Form1.DBText1.Color := $FFFF;                                   {005B3C00..5B3C12 [7B4] SetColor 0FFFF}
+  end;
+  DataModule2.Table17.Open;                                         {005B3C17..5B3C24}
+  DataModule2.Table17.IndexName := 'namgeb';                        {005B3C29..5B3C3B}
+  Screen.Cursor := crHourGlass;                                     {005B3C40..5B3C4B 0FFF5 = -11}
+  DataModule2.Table17.First;                                        {005B3C50..5B3C5D}
+  Form1.Label19.Caption := 'Adressen schreiben';                    {005B3C62..5B3C74 [404] SetText}
+  Form1.lab18ein;                                                   {005B3C79..5B3C80}
+  lfd := 1;                                                         {005B3C85 mov esi,1}
+  anz := 0;                                                         {005B3C8A xor edi,edi}
+  WriteLn(f, 'Brf_Anr' + #9 + 'Adr_Anr' + #9 + 'Vorname' + #9 +     {005B3C8C..5B3CA1 WriteLn}
+    'Nachname' + #9 + 'Anschrift1' + #9 + 'Anschrift2' + #9 +
+    'PLZ' + #9 + 'Ort' + #9 + 'Adrzus');
+    {005B4184: Die Konstante ist im IDR-Listing nach 'Anschrift2'
+     abgeschnitten (...); die letzten 3 Spaltennamen sind aus den 9
+     Ausgabespalten abgeleitet - Verifizierung erst mit Original-Binary.}
+  while not DataModule2.Table17.Eof do                              {005B3CA6 jmp -> 5B3FF2;
+    5B3FF2..4006 [13C]+0A1=0 -> 5B3CAB}
+  begin
+    s0C := '';                                                      {005B3CAB..5B3CAE @LStrClr}
+    Form1.Label18.Caption := IntToStr(lfd);                         {005B3CB3..5B3CD3 [400]}
+    Form1.Label18.Refresh;                                          {005B3CD8..5B3CE5}
+    if DataModule2.Table17Lebt.AsString = 'j' then                  {005B3CEA..5B3D12 -> 5B3FDF}
+    begin
+      if DataModule2.Table13.FindKey([                             {005B3D18..5B3D5F [9E8] -> [CC]}
+        DataModule2.Table17Ort.AsString]) then
+        s0C := DataModule2.Table13Ort.AsString;                     {005B3D61..5B3D73 [0A44]}
+      if DataModule2.Table17Adr1.AsString +                         {005B3D76..5B3DFC CatN edx=5}
+        DataModule2.Table17Adr2.AsString +
+        DataModule2.Table17PLZ.AsString + s0C +
+        DataModule2.Table17Adrzus.AsString <> '' then               {005B3E01..5B3E08 -> 5B3FDF}
+      begin
+        s4 := '';                                                   {005B3E0E..5B3E11}
+        s8 := '';                                                   {005B3E16..5B3E19}
+        if ucase(DataModule2.Table17Geschlecht.AsString) = 'M' then {005B3E1E..5B3E59}
+        begin
+          s4 := 'Herrn';                                            {005B3E5B..5B3E63}
+          s8 := 'Herr';                                             {005B3E68..5B3E70}
+        end
+        else if ucase(DataModule2.Table17Geschlecht.AsString) = 'W' then {005B3E77..5B3EB2}
+        begin
+          s4 := 'Frau';                                             {005B3EB4..5B3EBC}
+          s8 := 'Frau';                                             {005B3EC1..5B3EC9}
+        end;
+        WriteLn(f, s8 + #9 + s4 + #9 +                              {005B3ECE..5B3FBE CatN edx=0x11=17}
+          DataModule2.Table17Vornamen.AsString + #9 +
+          DataModule2.Table17Name.AsString + #9 +
+          DataModule2.Table17Adr1.AsString + #9 +
+          DataModule2.Table17Adr2.AsString + #9 +
+          DataModule2.Table17PLZ.AsString + #9 +
+          s0C + #9 +
+          DataModule2.Table17Adrzus.AsString);                      {005B3FC3..5B3FD9 Write+Ln+IOTest}
+        Inc(anz);                                                   {005B3FDE inc edi}
+      end;
+    end;
+    DataModule2.Table17.Next;                                       {005B3FDF..5B3FEC}
+    Inc(lfd);                                                       {005B3FF1 inc esi}
+  end;
+  CloseFile(f);                                                     {005B400C..5B4017 @Close+IOTest}
+  Form1.Label18.Hide;                                               {005B401C..5B4029 [400]}
+  Form1.Label19.Hide;                                               {005B402E..5B403B [404]}
+  Screen.Cursor := crDefault;                                       {005B4040..5B4049 xor edx,edx}
+  ShowMessage(IntToStr(anz) + ' Adresse(n) geschrieben.' +          {005B404E..5B407B CatN edx=4}
+    #13#10 + '(Nur lebende Personen !)');                            {005B4080..5B4086}
+  {005B408B..5B40E3 Epilog: SEH-Unload + 4x @LStrArrayClr (13/5/4/3) +
+   ret - nicht transkribiert}
 end;
 
 procedure TForm3.gedausxv;
@@ -7326,7 +7428,7 @@ begin
             if Pos('*' + v + '*' + u, s8) = 0 then                {005B440E..4462 jne->005B4B49}
             begin
               s8 := s8 + '*' + u + '*' + v;                       {005B4468..44AD CatN5}
-              if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'M' then {005B44B2..44DA jne->005B47FC}
+              if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then {005B44B2..44DA jne->005B47FC}
               begin
                 {--- 005B44E0 M-Zweig ---}
                 lfd := DataModule2.Table24Lfdn.AsInteger;         {005B44E0..44ED [228]+58 -> esi}
@@ -7373,7 +7475,7 @@ begin
                 gvar_0253644C.Add(s4 + u);                        {005B47D7..47F9 Cat3+Add}
               end;
               {--- 005B47FC W-Zweig (sequenziell, kein else) ---}
-              if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'W' then {005B47FC..4824 jne->005B4B49}
+              if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then {005B47FC..4824 jne->005B4B49}
               begin
                 lfd := DataModule2.Table24Lfdn.AsInteger;         {005B482A..4837}
                 sub_00576EB0(DataModule2.Table1Nummer.AsInteger, u); {005B4839..4849}
@@ -7428,7 +7530,7 @@ begin
     {--- 005B4B84 zweites Paar (ohne Table5-Partner) ---}
     s4 := '';                                                     {005B4B84..4B87}
     s0C := '';                                                    {005B4B8C..4B8F}
-    if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'M' then {005B4B94..4BC8 jne->005B4E5C}
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then {005B4B94..4BC8 jne->005B4E5C}
     begin
       DataModule2.Table7.IndexFieldNames := 'Vater';              {005B4BCE..4BDB}
       if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4BE0..4C08 je->005B4D50}
@@ -7465,7 +7567,7 @@ begin
         DataModule2.Table24.FindKey([lfd]);                       {005B4E3E..4E52}
       end;
     end
-    else if UpperCase(DataModule2.Table5Geschlecht.AsString) = 'W' then {005B4E5C..4E90 jne->005B511F}
+    else if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then {005B4E5C..4E90 jne->005B511F}
     begin
       DataModule2.Table7.IndexFieldNames := 'Mutter';             {005B4E96..4EA3}
       if DataModule2.Table7.FindKey([DataModule2.Table1Nummer.AsInteger]) then {005B4EA8..4ED0 je->005B5018}
@@ -8159,15 +8261,15 @@ begin
     if u <> '000000' then                                         {005B8D34..8D3E}
       WriteLn(gvar_02536458, '1 WIFE @I' +                        {005B8D40..8DB9 CatN3}
         IntToStr(StrToInt(Copy(gvar_02536448[famI], 7, 6))) + '@');
-    {---- CHIL - Kinder ab Position 14, je 7 Zeichen + '*'-Separator}
-    if Length(gvar_02536448[famI]) > 12 then                      {005B8DBE..8DDE LStrLen cmp 12}
+    {---- CHIL - Kinder ab Position 13 ('*'-Separator), Ziffern ab 14, je 7 Zeichen}
+    if Length(gvar_02536448[famI]) > 18 then                      {005B8DBE..8DDE LStrLen cmp 12 = 0x12=18 (Hex-Radix)}
     begin
-      u := Copy(gvar_02536448[famI], 13, Length(gvar_02536448[famI]) - 12);  {005B8DE4..8E2A LStrCopy edx=0D}
+      u := Copy(gvar_02536448[famI], 13, Length(gvar_02536448[famI]) - 18);  {005B8DE4..8E2A LStrCopy edx=0D=13, ecx=sub 12=0x12=18}
       childCount := Round(Length(u) / 7);                         {005B8E2F..8E51 fild/fdiv 7:Single/ROUND [ebp-34]}
       childIdx := 1;                                              {005B8E5C [ebp-0C] personNr-Slot wird recycelt}
       for childIdx := 1 to childCount do                          {005B8E63..8F3D incl. dec/jne}
         WriteLn(gvar_02536458, '1 CHIL @I' +                      {005B8E63..8EE8 CatN3}
-          IntToStr(StrToInt(Copy(gvar_02536448[famI], 13 + 7 * childIdx, 6))) + '@');
+          IntToStr(StrToInt(Copy(gvar_02536448[famI], 7 * (childIdx - 1) + 14, 6))) + '@');  {005B8E81..8E9D dec/shl3/sub/add 0C=12/add 2 -> 7*(n-1)+14}
     end;
     {--- C5 (005B8EF9..005BA1B8): Paar-Positionierung, MARR-RELI, MARR-CIVIL, DIV, not-marr ---}
     u := Copy(gvar_02536448[famI], 1, 6);                     {005B8EF9..8F32}
