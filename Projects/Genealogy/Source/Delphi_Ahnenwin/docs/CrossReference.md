@@ -302,7 +302,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit3
 
-- methods: 72, reconstructed: 54, open: 18
+- methods: 72, reconstructed: 63, open: 9
 
   - done `sub_00576EB0`  @`00576EB0`
   - done `sub_00576F54`  @`00576F54`
@@ -329,7 +329,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `Note`  @`0057CF58`
   - done `famn`  @`0057D560`
   - open `gedein_neu`  @`0057EDEC`
-  - open `sub_00582C24`  @`00582C24`
+  - done `sub_00582C24`  @`00582C24`
   - done `ansl`  @`005832F8`
   - done `ans`  @`005836E8`
   - done `ucase`  @`00583788`
@@ -346,10 +346,10 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `Edit2KeyPress`  @`00584224`
   - done `FormKeyDown`  @`00584254`
   - done `FormCreate`  @`0058426C`
-  - open `illki`  @`00584350`
+  - done `illki`  @`00584350`
   - done `oabk`  @`00584EBC`
-  - open `ofb3`  @`00585048`
-  - open `ofb2`  @`0058CB84`
+  - done `ofb3`  @`00585048`
+  - done `ofb2`  @`0058CB84`
   - done `NList`  @`00595720`
   - done `OList`  @`00595FB4`
   - done `indi`  @`005967C8`
@@ -362,8 +362,8 @@ Legend: **done** = the body was reconstructed from the listing,
   - open `osbein`  @`005B229C`
   - open `adrschreib`  @`005B3A3C`
   - open `gedausxv`  @`005B4288`
-  - open `gedausv`  @`005B5224`
-  - open `sub_005BC604`  @`005BC604`
+  - done `gedausv`  @`005B5224`
+  - done `sub_005BC604`  @`005BC604`
   - done `sub_005BD73C`  @`005BD73C`
   - done `sub_005BD88C`  @`005BD88C`
   - done `sub_005BDAFC`  @`005BDAFC`
@@ -372,10 +372,10 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `sub_005BE104`  @`005BE104`
   - done `sub_005BE340`  @`005BE340`
   - done `sub_005BE418`  @`005BE418`
-  - open `sub_005BE4B8`  @`005BE4B8`
-  - open `sub_005BEF5C`  @`005BEF5C`
+  - done `sub_005BE4B8`  @`005BE4B8`
+  - done `sub_005BEF5C`  @`005BEF5C`
   - done `sour`  @`005BF434`
-  - open `gedein_5`  @`005BFB94`
+  - done `gedein_5`  @`005BFB94`
 
 ## Unit4
 
@@ -483,36 +483,36 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit13
 
-- methods: 53, reconstructed: 19, open: 34
+- methods: 53, reconstructed: 52, open: 1
 
   - done `sub_005637C4`  @`005637C4`
   - done `sub_00563868`  @`00563868`
   - done `sub_00563A0C`  @`00563A0C`
-  - open `Vorf_erm1`  @`00563CF8`
-  - open `nachf_neu`  @`00564668`
+  - done `Vorf_erm1`  @`00563CF8`
+  - done `nachf_neu`  @`00564668`
   - done `UpDown1Click`  @`005661E8`
-  - open `memein`  @`00566220`
-  - open `Vorf_erm`  @`00567A30`
-  - open `schieb_vm1`  @`00568528`
-  - open `schieb_vm`  @`0056862C`
-  - open `kek_ord`  @`005686F0`
-  - open `kek_ord_2`  @`00568774`
-  - open `Symm`  @`00568834`
-  - open `sub_0056897C`  @`0056897C`
-  - open `sub_00568B04`  @`00568B04`
-  - open `sub_00568C9C`  @`00568C9C`
-  - open `sub_00568E3C`  @`00568E3C`
-  - open `sub_00568FD4`  @`00568FD4`
-  - open `sub_00569010`  @`00569010`
-  - open `Vr2`  @`0056904C`
-  - open `vz2`  @`00569504`
-  - open `Nach_erm`  @`0056A970`
-  - open `nr1`  @`0056C0D4`
-  - open `nr2`  @`0056CB30`
-  - open `nz1`  @`0056D6B4`
-  - open `nz2`  @`0056EB10`
+  - done `memein`  @`00566220`
+  - done `Vorf_erm`  @`00567A30`
+  - done `schieb_vm1`  @`00568528`
+  - done `schieb_vm`  @`0056862C`
+  - done `kek_ord`  @`005686F0`
+  - done `kek_ord_2`  @`00568774`
+  - done `Symm`  @`00568834`
+  - done `sub_0056897C`  @`0056897C`
+  - done `sub_00568B04`  @`00568B04`
+  - done `sub_00568C9C`  @`00568C9C`
+  - done `sub_00568E3C`  @`00568E3C`
+  - done `sub_00568FD4`  @`00568FD4`
+  - done `sub_00569010`  @`00569010`
+  - done `Vr2`  @`0056904C`
+  - done `vz2`  @`00569504`
+  - done `Nach_erm`  @`0056A970`
+  - done `nr1`  @`0056C0D4`
+  - done `nr2`  @`0056CB30`
+  - done `nz1`  @`0056D6B4`
+  - done `nz2`  @`0056EB10`
   - done `FormShow`  @`00570294`
-  - open `SpeedButton1Click`  @`005704A8`
+  - done `SpeedButton1Click`  @`005704A8`
   - done `SpeedButton12Click`  @`00570694`
   - done `FormClose`  @`00570728`
   - done `FormCreate`  @`00570740`
@@ -520,24 +520,24 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `SpeedButton2Click`  @`0057082C`
   - done `Button2Click`  @`00570838`
   - done `Button3Click`  @`00570854`
-  - open `Button4Click`  @`00570890`
-  - open `PaintBox1Paint`  @`00570C14`
-  - open `vr1`  @`00570D1C`
-  - open `vz1`  @`005711D4`
+  - done `Button4Click`  @`00570890`
+  - done `PaintBox1Paint`  @`00570C14`
+  - done `vr1`  @`00570D1C`
+  - done `vz1`  @`005711D4`
   - done `Button5Click`  @`00572404`
   - done `Button6Click`  @`00572448`
   - done `SpeedButton13Click`  @`00572478`
   - done `ScrollBar1Change`  @`00572484`
   - done `ScrollBar2Change`  @`00572490`
-  - open `Verwandtschaft1Click`  @`0057249C`
-  - open `Proband1Click`  @`005729E4`
-  - open `vorf_erm2`  @`00572A78`
-  - open `sam2`  @`00572D98`
+  - done `Verwandtschaft1Click`  @`0057249C`
+  - done `Proband1Click`  @`005729E4`
+  - done `vorf_erm2`  @`00572A78`
+  - done `sam2`  @`00572D98`
   - done `Button8Click`  @`005730D4`
   - done `Button7Click`  @`00573120`
   - open `sub_0057316C`  @`0057316C`
-  - open `sub_00573314`  @`00573314`
-  - open `SpeedButton3Click`  @`00573450`
+  - done `sub_00573314`  @`00573314`
+  - done `SpeedButton3Click`  @`00573450`
 
 ## Unit14
 
@@ -588,13 +588,13 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit17
 
-- methods: 10, reconstructed: 4, open: 6
+- methods: 10, reconstructed: 7, open: 3
 
-  - open `nam2`  @`0053CC38`
-  - open `sub_0053D06C`  @`0053D06C`
+  - done `nam2`  @`0053CC38`
+  - done `sub_0053D06C`  @`0053D06C`
   - open `gebstvn`  @`0053D358`
   - open `gebst`  @`0053E878`
-  - open `fambeltern`  @`0053FD18`
+  - done `fambeltern`  @`0053FD18`
   - done `BitBtn2Click`  @`005405A0`
   - open `BitBtn1Click`  @`005405C4`
   - done `RadioButton1Click`  @`00545014`
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 572, open: 87
+- methods: 659, reconstructed: 617, open: 42
