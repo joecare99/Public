@@ -8754,8 +8754,199 @@ begin
 end;
 
 procedure TForm3.osbein;
+var
+  i, cnt, maxnum: Integer;
+  s, sg: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Imports the OSB file kibu.dbf (directory taken from OpenDialog1.FileName,
+    file name is stripped by 8 characters) into Table1; up to 4 marriages go
+    into Table5. New record numbers are offset by gvar_02536940 (the last
+    existing Table1.Nummer), afterwards gvar_02536944 is refreshed.
+    Label18 shows the progress in %, Label19 the text "OSB lesen". }
+  DataModule2.Table29.Open;                                    //005B22BD
+  DataModule2.Table29.IndexName := 'qu';                       //005B22CF
+  DataModule2.Table29.First;                                   //005B22E6
+  gvar_02536648 := 1;                                          //005B22F8
+  if DataModule2.Table1.RecordCount > 0 then                   //005B2302..16
+  begin
+    DataModule2.Table1.IndexName := '';                        //005B2318
+    DataModule2.Table1.Last;                                   //005B2329
+    gvar_02536940 := DataModule2.Table1Nummer.AsInteger;       //005B2338..50
+  end;
+  Form1.Refresh;                                               //005B2352
+  DataModule2.Table23.Close;                                   //005B235E
+  DataModule2.Table23.DatabaseName :=                          //005B2370..C8
+    Copy(Form1.OpenDialog1.FileName, 1, Length(Form1.OpenDialog1.FileName) - 8);
+  DataModule2.Table23.TableName := 'kibu.dbf';                 //005B23CD
+  DataModule2.Table23.Open;                                    //005B23E4
+  DataModule2.Table23.Last;                                    //005B23F6
+  maxnum := DataModule2.Table23.FieldByName('num').AsInteger;  //005B2408..24
+  DataModule2.Table23.First;                                   //005B2427
+  cnt := 0;                                                    //005B2439
+  Form1.Label18.Visible := True;                               //005B243E
+  Form1.Label18.Caption := '0 %';                              //005B2452
+  Form1.Label18.Refresh;                                       //005B2469
+  Form1.Label19.Visible := True;                               //005B247B
+  Form1.Label19.Caption := 'OSB lesen          ';              //005B248F
+  Form1.Label19.Refresh;                                       //005B24A6
+  while not DataModule2.Table23.Eof do                         //005B3651 -> 005B24BD
+  begin
+    Form1.Label18.Caption := IntToStr(Round(cnt / maxnum * 100)) + ' %';
+    Form1.Label18.Refresh;                                     //005B24BD..09
+    DataModule2.Table1.Append;                                 //005B250E
+    DataModule2.Table1Nummer.AsInteger :=
+      DataModule2.Table23.FieldByName('num').AsInteger + gvar_02536940;
+    if DataModule2.Table23.FieldByName('vater').AsString > '0' then //005B2557..83
+      DataModule2.Table1Vater.AsInteger :=
+        StrToInt(DataModule2.Table23.FieldByName('vater').AsString) + gvar_02536940;
+    if DataModule2.Table23.FieldByName('mutter').AsString > '0' then //005B25CA..F6
+      DataModule2.Table1Mutter.AsInteger :=
+        StrToInt(DataModule2.Table23.FieldByName('mutter').AsString) + gvar_02536940;
+    DataModule2.Table1Name.AsString :=
+      DataModule2.Table23.FieldByName('name').AsString;        //005B263D..74
+    DataModule2.Table1Vornamen.AsString :=
+      DataModule2.Table23.FieldByName('vornamen').AsString;    //005B2674..AB
+    DataModule2.Table1Beruf.AsString :=
+      DataModule2.Table23.FieldByName('beruf').AsString;       //005B26AB..E2
+    DataModule2.Table1Geschlecht.AsString :=
+      LowerCase(DataModule2.Table23.FieldByName('geschlecht').AsString); //005B26E2..24
+    Form1.ucase(DataModule2.Table1Geschlecht.AsString, sg);    //005B2724..46
+    if sg = 'F' then                                           //005B274B..58
+      DataModule2.Table1Geschlecht.AsString := 'w';            //005B275A..74
+    DataModule2.Table1Religion.AsString :=
+      DataModule2.Table23.FieldByName('religion').AsString;    //005B2774..AB
+    DataModule2.Table1Lebensort.AsString :=
+      DataModule2.Table23.FieldByName('herkunft').AsString;    //005B27AB..DC
+    DataModule2.Table1Gebtag.AsString :=
+      DataModule2.Table23.FieldByName('gebtag').AsString;      //005B27E2..19
+    DataModule2.Table1Gebmonat.AsString :=
+      DataModule2.Table23.FieldByName('gebmonat').AsString;    //005B2819..50
+    DataModule2.Table1Gebjahr.AsString :=
+      DataModule2.Table23.FieldByName('gebjahr').AsString;     //005B2850..87
+    DataModule2.Table1Gebort.AsString :=
+      DataModule2.Table23.FieldByName('gebort').AsString;      //005B2887..BE
+    DataModule2.Table1Quelleg.AsString := '';                  //005B28BE..D5
+    DataModule2.Table1Tauftag.AsString :=
+      Copy(DataModule2.Table23.FieldByName('tauftag').AsString, 1, 2);  //005B28D5..1C
+    DataModule2.Table1Taufmonat.AsString :=
+      Copy(DataModule2.Table23.FieldByName('tauftag').AsString, 4, 2);  //005B2922..69
+    DataModule2.Table1Taufjahr.AsString :=
+      Copy(DataModule2.Table23.FieldByName('tauftag').AsString, 7, 4);  //005B296F..B6
+    DataModule2.Table1Taufort.AsString :=
+      DataModule2.Table23.FieldByName('taufort').AsString;     //005B29BC..ED
+    DataModule2.Table1Taufpat.AsString :=
+      DataModule2.Table23.FieldByName('taufpat').AsString;     //005B29F3..2A
+    DataModule2.Table1Quellet.AsString := '';                  //005B2A30..47
+    DataModule2.Table1Sttag.AsString :=
+      DataModule2.Table23.FieldByName('sttag').AsString;       //005B2A47..7E
+    DataModule2.Table1Stmonat.AsString :=
+      DataModule2.Table23.FieldByName('stmonat').AsString;     //005B2A84..BB
+    DataModule2.Table1Stjahr.AsString :=
+      DataModule2.Table23.FieldByName('stjahr').AsString;      //005B2AC1..F8
+    DataModule2.Table1Stort.AsString :=
+      DataModule2.Table23.FieldByName('stort').AsString;       //005B2AFE..35
+    DataModule2.Table1Quelles.AsString := '';                  //005B2B3B..52
+    DataModule2.Table1Todesurs.AsString :=
+      DataModule2.Table23.FieldByName('todesurs').AsString;    //005B2B52..89
+    DataModule2.Table1Begtag.AsString :=
+      Copy(DataModule2.Table23.FieldByName('begrtag').AsString, 1, 2);  //005B2B8F..E2
+    DataModule2.Table1Begmonat.AsString :=
+      Copy(DataModule2.Table23.FieldByName('begrtag').AsString, 4, 2);  //005B2BE8..3B
+    DataModule2.Table1Begjahr.AsString :=
+      Copy(DataModule2.Table23.FieldByName('begrtag').AsString, 7, 4);  //005B2C41..94
+    DataModule2.Table1Begort.AsString :=
+      DataModule2.Table23.FieldByName('begrort').AsString;     //005B2C9A..D1
+    DataModule2.Table1Quelleb.AsString := '';                  //005B2CD7..E8
+    Form1.Memo1.Clear;                                        //005B2CEE vtbl+0DC
+    Form1.Memo1.Lines.Assign(                                 //005B2D03..34 vtbl+8
+      DataModule2.Table23.FieldByName('kommentar'));
+    { Strips a trailing #$EC (listing shows the raw byte 0xEC at 005B3944)
+      from every comment line - a leftover of the OSB export format. }
+    for i := 0 to Form1.Memo1.Lines.Count - 1 do             //005B2D34..51
+      if Copy(Form1.Memo1.Lines[i], Length(Form1.Memo1.Lines[i]), 1) = #$EC then
+        Form1.Memo1.Lines[i] :=                              //005B2DCE..56 vtbl+20
+          Copy(Form1.Memo1.Lines[i], 1, Length(Form1.Memo1.Lines[i]) - 1);
+    DataModule2.Table1Kommentar.Assign(Form1.Memo1.Lines);   //005B2E61..86 vtbl+8
+    if Trim(DataModule2.Table1Kommentar.AsString) <> '' then //005B2E9E..B6
+      DataModule2.Table1Kommentar.AsString :=                //005B2EB8..11 CatN edx=5
+        DataModule2.Table1Kommentar.AsString + #13 + #10 + #13 + #10;
+    s := '';                                                  //005B2F11..14
+    if DataModule2.Table23.FieldByName('quelle').AsString <> '' then //005B2F19..42
+      s := s + 'Qu.: ' +                                     //005B2F44..86 CatN edx=5
+        DataModule2.Table23.FieldByName('quelle').AsString + #13 + #10;
+    if DataModule2.Table23.FieldByName('sonstiges').AsString <> '' then //005B2F8B..B4
+      s := s + 'Bemerk.: ' +                                 //005B2FB6..EE CatN edx=3
+        DataModule2.Table23.FieldByName('sonstiges').AsString;
+    DataModule2.Table1Kommentar.AsString :=                  //005B2FF3..2A
+      DataModule2.Table1Kommentar.AsString + s;
+    DataModule2.Table1Lebt.AsString := 'n';                  //005B3030..4A
+    if DataModule2.Table1Gebjahr.AsString <> '' then         //005B304A..69
+    begin
+      DataModule2.Table1Indj.AsString := DataModule2.Table1Gebjahr.AsString;  //005B306F..9C
+      DataModule2.Table1Indm.AsString := DataModule2.Table1Gebmonat.AsString; //005B30A2..CF
+      DataModule2.Table1Indt.AsString := DataModule2.Table1Gebtag.AsString;   //005B30D5..102
+    end
+    else
+    begin
+      DataModule2.Table1Indj.AsString := DataModule2.Table1Taufjahr.AsString;  //005B310D..3A
+      DataModule2.Table1Indm.AsString := DataModule2.Table1Taufmonat.AsString; //005B3140..6D
+      DataModule2.Table1Indt.AsString := DataModule2.Table1Tauftag.AsString;   //005B3173..A0
+    end;
+    try                                                       //005B31A6 SEH-Rahmen
+      DataModule2.Table1.Post;
+    except                                                    //005B31D0 jmp @HandleAnyException
+    end;                                                      //005B31D5 call @DoneExcept
+    for i := 1 to 4 do                                       //005B31DA..3636 i=1..4
+      if Copy(DataModule2.Table23.FieldByName('ehen').AsString,
+              (i - 1) * 6 + 1, 5) > '00000' then             //005B31E1..238
+      begin
+        DataModule2.Table5.Append;                           //005B323E..4B
+        DataModule2.Table5Nummer.AsInteger :=
+          DataModule2.Table23.FieldByName('num').AsInteger + gvar_02536940;
+        DataModule2.Table5Epnum.AsInteger :=                 //005B328A..2E8
+          StrToInt(Copy(DataModule2.Table23.FieldByName('ehen').AsString,
+                         (i - 1) * 6 + 1, 5)) + gvar_02536940;
+        DataModule2.Table5Htag.AsString :=                   //005B32EE..34A Cat3 edx='htag'
+          DataModule2.Table23.FieldByName('htag' + IntToStr(i)).AsString;
+        DataModule2.Table5Hmonat.AsString :=                 //005B3350..3AC
+          DataModule2.Table23.FieldByName('hmonat' + IntToStr(i)).AsString;
+        DataModule2.Table5Hjahr.AsString :=                  //005B33B2..40E
+          DataModule2.Table23.FieldByName('hjahr' + IntToStr(i)).AsString;
+        DataModule2.Table5Hort.AsString :=                   //005B3414..470
+          DataModule2.Table23.FieldByName('hort' + IntToStr(i)).AsString;
+        DataModule2.Table5Hqu.AsString := '';                //005B3476..48D
+        DataModule2.Table5Trauz.AsString :=                  //005B348D..4E9
+          DataModule2.Table23.FieldByName('trauz' + IntToStr(i)).AsString;
+        DataModule2.Table5Verbind.AsString := 'Eheschliessung'; //005B34EF..503
+        if DataModule2.Table5Hjahr.AsString <> '' then       //005B3509..528
+        begin
+          DataModule2.Table5Indj.AsString := DataModule2.Table5Hjahr.AsString;  //005B352A..557
+          DataModule2.Table5Indm.AsString := DataModule2.Table5Hmonat.AsString; //005B355D..58A
+        end
+        else
+        begin
+          DataModule2.Table5Indj.AsString := DataModule2.Table5Sajahr.AsString;  //005B3592..5BF
+          DataModule2.Table5Indm.AsString := DataModule2.Table5Samonat.AsString; //005B35C5..5F2
+        end;
+        try                                                   //005B35F8 SEH-Rahmen
+          DataModule2.Table5.Post;
+        except                                                //005B3625 jmp @HandleAnyException
+        end;                                                  //005B362A call @DoneExcept
+      end;
+    Inc(cnt);                                                 //005B363C
+    DataModule2.Table23.Next;                                 //005B363F
+  end;                                                        //005B3651 Eof -> 005B24BD
+  DataModule2.Table23.Close;                                  //005B366B
+  Form1.listen_akt;                                           //005B367D
+  Form1.Label18.Hide;                                         //005B3689
+  Form1.Label19.Hide;                                         //005B369B
+  DataModule2.Table1.Last;                                    //005B36AD
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;        //005B36BC..6D4
+  DataModule2.Table1.First;                                   //005B36D6
+  { Epilogue: the outer SEH frame is unwound and the string temporaries are
+    released - compiler generated, not transcribed:
+      @LStrArrayClr 0x54 slots from [ebp-16C], 3 slots from [ebp-1C],
+      @LStrClr [ebp-10] }                                     //005B36E5..3717
 end;
 
 procedure TForm3.ahndosein;
