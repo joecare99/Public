@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object MainForm: TMainTodoForm
   Left = 241
   Top = 179
   BorderStyle = bsSingle
@@ -295,13 +295,5 @@ object MainForm: TMainForm
     Options = [ofOverwritePrompt, ofPathMustExist, ofCreatePrompt, ofNoReadOnlyReturn]
     Left = 88
     Top = 144
-  end
-  object PrintDialog1: TPrintDialog
-    Left = 32
-    Top = 32
-  end
-  object PrinterSetupDialog1: TPrinterSetupDialog
-    Left = 136
-    Top = 32
   end
 end

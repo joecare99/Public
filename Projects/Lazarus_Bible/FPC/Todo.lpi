@@ -21,8 +21,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Todo"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-            <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -54,8 +54,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Todo"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-            <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -88,7 +88,7 @@
         <PackageName Value="Printer4Lazarus"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Todo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -103,10 +103,14 @@
       <Unit2>
         <Filename Value="../source/TODO/TODO_Frm_ABOUT.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="../source/_core/services/PortablePrintDialog.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -115,8 +119,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Todo"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-      <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
+      <IncludeFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/TODO;../source/_core/services;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>

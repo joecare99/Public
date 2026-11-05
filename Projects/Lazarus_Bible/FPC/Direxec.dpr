@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DirExecMAIN in '..\source\DIREXEC\Frm_DirExecMAIN.pas' {MainForm},
-  Frm_DIRDLG in '..\source\DIREX\Frm_DIRDLG.pas' {DirDlgForm};
+  Frm_DirExecMAIN in '..\source\DIREXEC\Frm_DirExecMAIN.PAS' {MainForm},
+  Frm_DIRDLG in '..\source\DIREX\Frm_DIRDLG.PAS' {DirDlgForm};
 
 {$R *.res}
 {$IFNDEF FPC} {$E EXE}   {$ENDIF}

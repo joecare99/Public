@@ -11,7 +11,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.pas' {MainForm};
+  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.PAS' {MainForm};
 
 
 begin

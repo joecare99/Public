@@ -12,9 +12,9 @@ uses
   Forms,
   DefaultTranslator,
 {$ifdef linux}
-   Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas',
+   Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.PAS',
 {$else}
-  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas',
+  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.PAS',
 {$endif}
 AboutEx_Frm_ABOUT in '..\source\AboutEx\AboutEx_Frm_ABOUT.pas';
 

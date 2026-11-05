@@ -16,7 +16,7 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Keyinfo';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TMainKeyInfoForm, MainForm);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
     MainForm.Show;

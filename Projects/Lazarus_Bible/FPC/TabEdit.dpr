@@ -1,8 +1,8 @@
 program TabEdit; 
 uses 
   Forms, 
-  Frm_AboutTabedit in '..\source\TABEDIT\Frm_AboutTabedit.pas' {frmAboutForm}, 
-  Frm_TabeditMain in '..\source\TABEDIT\Frm_TabeditMain.pas' {frmMainForm}; 
+  Frm_AboutTabedit in '..\source\TABEDIT\Frm_AboutTabedit.PAS' {frmAboutForm}, 
+  Frm_TabeditMain in '..\source\TABEDIT\Frm_TabeditMain.PAS' {frmMainForm}; 
 {$R *.res} 
 begin 
   Application.Initialize; 

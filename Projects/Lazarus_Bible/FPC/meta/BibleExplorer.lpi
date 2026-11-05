@@ -12,6 +12,7 @@
       <Title Value="BibleExplorer"/>
       <Scaled Value="True"/>
       <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
     </General>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -19,11 +20,11 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer$(ExeExt)"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../meta/units"/>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+            <IncludeFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources"/>
+            <OtherUnitFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/POLYFLOW;../../source/ONTOP;../../source/TODO;../../source/CharGrid;../../source/KEYINFO;../../source/StaticDemo;../../source/_core/services;../../source/_core/tools"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -38,11 +39,11 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer$(ExeExt)"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="../meta/units"/>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+            <IncludeFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources"/>
+            <OtherUnitFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/POLYFLOW;../../source/ONTOP;../../source/TODO;../../source/CharGrid;../../source/KEYINFO;../../source/StaticDemo;../../source/_core/services;../../source/_core/tools"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
@@ -59,7 +60,7 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
@@ -69,44 +70,47 @@
       <Item3>
         <PackageName Value="SynEdit"/>
       </Item3>
+      <Item4>
+        <PackageName Value="Printer4Lazarus"/>
+      </Item4>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="23">
       <Unit0>
         <Filename Value="BibleExplorer.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="units/BibleExplorerMain.pas"/>
+        <Filename Value="../../source/BibleExplorer/view/BibleExplorerMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="units/BibleCodeView.pas"/>
+        <Filename Value="../../source/BibleExplorer/view/BibleCodeView.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="units/BibleCodeHighlighter.pas"/>
+        <Filename Value="../../source/BibleExplorer/resources/BibleExplorerEmbeddedData.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="units/BibleDemoInfo.pas"/>
+        <Filename Value="../../source/BibleExplorer/model/BibleDemoInfo.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="units/BibleIndex.pas"/>
+        <Filename Value="../../source/BibleExplorer/model/BibleIndex.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="units/BibleShowcase.pas"/>
+        <Filename Value="../../source/BibleExplorer/services/BibleShowcase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="units/BibleShowcaseRegistry.pas"/>
+        <Filename Value="../../source/BibleExplorer/services/BibleShowcaseRegistry.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="units/BibleResources.pas"/>
+        <Filename Value="../../source/BibleExplorer/services/BibleResources.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="BibleResources"/>
       </Unit8>
@@ -140,16 +144,70 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit14>
+      <Unit15>
+        <Filename Value="../../source/POLYFLOW/Frm_PolyflowMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../../source/ONTOP/Frm_OntopMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_OntopMAIN"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../../source/TODO/Frm_TodoMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_TodoMAIN"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../../source/TODO/TODO_Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="TODO_Frm_ABOUT"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../../source/CharGrid/Frm_CharGridMAIN.pas"/>
+        <UnitName Value="Frm_CharGridMAIN"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../../source/CharGrid/Frm_CharGridABOUT.pas"/>
+        <UnitName Value="Frm_CharGridABOUT"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../../source/KEYINFO/Frm_KeyInfoMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_KeyInfoMAIN"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../source/_core/services/PortablePrintDialog.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+      <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer$(ExeExt)"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="../meta/units;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+      <IncludeFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources;$(ProjOutDir)"/>
+      <OtherUnitFiles Value="../../source/BibleExplorer/view;../../source/BibleExplorer/model;../../source/BibleExplorer/services;../../source/BibleExplorer/resources;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TELNAME/model;../../source/TELNAME/viewmodel;../../source/_core/mvvm;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/POLYFLOW;../../source/ONTOP;../../source/TODO;../../source/CharGrid;../../source/KEYINFO;../../source/StaticDemo;../../source/_core/services;../../source/_core/tools"/>
       <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
