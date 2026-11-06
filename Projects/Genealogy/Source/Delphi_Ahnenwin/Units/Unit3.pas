@@ -5181,9 +5181,9 @@ begin
   skipHeder := 0;
   startnr := DataModule2.Table1Nummer.AsInteger;  {//534 [edx+58]}
   DataModule2.Table1.Open;  {//[5C]}
-  gvar_02536860 := TTable.Create(nil);  {005BFC05: Create mit ecx=[ebp-4], dl=1}
+  gvar_02536860 := TTable.Create(Self);  {005BFC05: AOwner=Self in ecx=[ebp-4], dl=1}
   gvar_02536860.DatabaseName := ExtractFilePath(ParamStr(0));  {005BFBF2}
-  gvar_02536860.TableType := ttDefault;  {dl=1: ttDefault}
+  gvar_02536860.TableType := ttParadox;  {dl=1 -> TTableType: 0=ttDefault, 1=ttParadox}
   gvar_02536860.TableName := 'fsc';  {005BFC4F}
   gvar_02536860.FieldDefs.Clear;  {005BFC54}
   gvar_02536860.FieldDefs.Add('Nr', ftAutoInc, 0, True);  {005BFC70}
@@ -8950,8 +8950,359 @@ begin
 end;
 
 procedure TForm3.ahndosein;
+var
+  i, cnt, maxnum: Integer;
+  s, t: AnsiString;
+  local: TTable;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Imports the AHNEN-DOS export ahnen.dbf (directory taken from
+    OpenDialog1.FileName, file name stripped by 9 characters). The records
+    are first copied into a locally created Paradox table 'ahntab'
+    (TableType ttParadox, 43 field defs, primary index on 'n', working
+    index 'ein'), afterwards every record is transferred to Table1; up to
+    3 marriages, read from positions 13/18/23 of the 'code' key, go into
+    Table5 ('00000' = no marriage). 19 string copies run through
+    sub_005AFB14, the record numbers are offset by gvar_02536940 (the last
+    existing Table1.Nummer), afterwards gvar_02536944 is refreshed.
+    Label18 shows the progress in %, Label19 the text "AHNEN DOS lesen".
+    SEH-Rahmen/Prolog-Teardown (@LStrArrayClr 0x64/0x35/3, @LStrClr,
+    @HandleFinally) - nicht transkribiert. }
+  DataModule2.Table29.Open;                                    //005AFBCC
+  DataModule2.Table29.IndexName := 'qu';                       //005AFBD1..E3
+  DataModule2.Table29.First;                                   //005AFBE8..F5
+  gvar_02536648 := 1;                                          //005AFBFA
+  { 005AFC04..5AFF3B: Hilfstabelle 'ahntab' lokal anlegen - TTable.Create
+    mit AOwner=Self (ecx=[ebp-4], dl=1), danach 43 FieldDefs. }
+  local := TTable.Create(Self);                                //005AFC04..13
+  local.TableType := ttParadox;                                //005AFC16..1B
+  local.TableName := 'ahntab';                                 //005AFC20..28
+  local.FieldDefs.Clear;                                       //005AFC2D..35
+  local.FieldDefs.Add('n', ftAutoInc, 0, True);                //005AFC47
+  local.FieldDefs.Add('num', ftInteger, 0, True);              //005AFC59
+  local.FieldDefs.Add('name', ftString, 30, False);            //005AFC6B
+  local.FieldDefs.Add('vornamen', ftString, 30, False);        //005AFC7D
+  local.FieldDefs.Add('code', ftString, 30, False);            //005AFC8F
+  local.FieldDefs.Add('geschlecht', ftString, 1, False);       //005AFCA1
+  local.FieldDefs.Add('religion', ftString, 2, False);         //005AFCB3
+  local.FieldDefs.Add('beruf', ftString, 30, False);           //005AFCC5
+  local.FieldDefs.Add('Lebensorte', ftString, 80, False);      //005AFCD7
+  local.FieldDefs.Add('gebtag', ftString, 2, False);           //005AFCE9
+  local.FieldDefs.Add('gebmonat', ftString, 2, False);         //005AFCFB
+  local.FieldDefs.Add('gebjahr', ftString, 4, False);          //005AFD0D
+  local.FieldDefs.Add('gebort', ftString, 40, False);          //005AFD1F
+  local.FieldDefs.Add('tauftag', ftString, 10, False);         //005AFD31
+  local.FieldDefs.Add('taufort', ftString, 40, False);         //005AFD43
+  local.FieldDefs.Add('taufpat', ftString, 55, False);         //005AFD55
+  local.FieldDefs.Add('htag1', ftString, 2, False);            //005AFD67
+  local.FieldDefs.Add('hmonat1', ftString, 2, False);          //005AFD79
+  local.FieldDefs.Add('hjahr1', ftString, 4, False);           //005AFD8B
+  local.FieldDefs.Add('hort1', ftString, 40, False);           //005AFD9D
+  local.FieldDefs.Add('trauz1', ftString, 55, False);          //005AFDAF
+  local.FieldDefs.Add('htag2', ftString, 2, False);            //005AFDC1
+  local.FieldDefs.Add('hmonat2', ftString, 2, False);          //005AFDD3
+  local.FieldDefs.Add('hjahr2', ftString, 4, False);           //005AFDE5
+  local.FieldDefs.Add('hort2', ftString, 40, False);           //005AFDF7
+  local.FieldDefs.Add('trauz2', ftString, 55, False);          //005AFE09
+  local.FieldDefs.Add('htag3', ftString, 2, False);            //005AFE1B
+  local.FieldDefs.Add('hmonat3', ftString, 2, False);          //005AFE2D
+  local.FieldDefs.Add('hjahr3', ftString, 4, False);           //005AFE3F
+  local.FieldDefs.Add('hort3', ftString, 40, False);           //005AFE51
+  local.FieldDefs.Add('trauz3', ftString, 55, False);          //005AFE63
+  local.FieldDefs.Add('sttag', ftString, 2, False);            //005AFE75
+  local.FieldDefs.Add('stmonat', ftString, 2, False);          //005AFE87
+  local.FieldDefs.Add('stjahr', ftString, 4, False);           //005AFE99
+  local.FieldDefs.Add('stort', ftString, 40, False);           //005AFEAB
+  local.FieldDefs.Add('stalter', ftString, 3, False);          //005AFEBD
+  local.FieldDefs.Add('todesurs', ftString, 15, False);        //005AFECF
+  local.FieldDefs.Add('begrtag', ftString, 10, False);         //005AFEE1
+  local.FieldDefs.Add('begrort', ftString, 40, False);         //005AFEF3
+  local.FieldDefs.Add('quelle', ftString, 60, False);          //005AFF05
+  local.FieldDefs.Add('sonstiges', ftString, 60, False);       //005AFF17
+  local.FieldDefs.Add('kommentar', ftMemo, 10, False);         //005AFF29
+  local.FieldDefs.Add('tx', ftString, 1, False);               //005AFF3B
+  { 005AFF40..5AFF76: IndexDefs - Primverzeichnis auf 'n', Arbeits-
+    verzeichnis 'ein' auf name;gebjahr;gebmonat;gebtag. }
+  local.IndexDefs.Clear;                                       //005AFF40..4B
+  local.IndexDefs.Add('', 'n', [ixPrimary]);                   //005AFF50..5F
+  local.IndexDefs.Add('ein', 'name;gebjahr;gebmonat;gebtag',
+    [ixCaseInsensitive]);                                      //005AFF64..76
+  local.CreateTable;                                           //005AFF7B..7E
+  local.IndexName := 'ein';                                    //005AFF83..8B
+  local.Open;                                                  //005AFF90..93
+  DataModule2.Table23.Close;                                   //005AFF98..A5
+  DataModule2.Table23.DatabaseName :=                          //005AFFAA..005B0002
+    Copy(Form1.OpenDialog1.FileName, 1, Length(Form1.OpenDialog1.FileName) - 9);
+  DataModule2.Table23.TableName := 'ahnen.dbf';                //005B0007..19
+  DataModule2.Table23.Open;                                    //005B001E..2B
+  DataModule2.Table23.First;                                   //005B0030..3D
+  { 005B0047..5B0B6F: Schleife ueber ahnen.dbf - 42 Feldkopien von
+    Table23 in die Hilfstabelle, 19 davon mit sub_005AFB14. }
+  while not DataModule2.Table23.Eof do                         //005B0042..B6F
+  begin
+    local.Append;                                              //005B0047..4A
+    local.FieldByName('num').AsInteger :=
+      DataModule2.Table23.FieldByName('num').AsInteger;        //005B004F..7C
+    local.FieldByName('code').AsString :=
+      DataModule2.Table23.FieldByName('code').AsString;        //005B0082..B5
+    sub_005AFB14(DataModule2.Table23.FieldByName('name').AsString, t); //005B00BB..E0
+    local.FieldByName('name').AsString := t;                   //005B00E5..F9
+    sub_005AFB14(DataModule2.Table23.FieldByName('vornamen').AsString, t); //005B00FF..124
+    local.FieldByName('vornamen').AsString := t;               //005B0129..3D
+    local.FieldByName('geschlecht').AsString :=
+      DataModule2.Table23.FieldByName('geschlecht').AsString;  //005B0143..76
+    local.FieldByName('religion').AsString :=
+      DataModule2.Table23.FieldByName('religion').AsString;    //005B017C..AF
+    sub_005AFB14(DataModule2.Table23.FieldByName('beruf').AsString, t); //005B01B5..DA
+    local.FieldByName('beruf').AsString := t;                  //005B01DF..F3
+    sub_005AFB14(DataModule2.Table23.FieldByName('lebensorte').AsString, t); //005B01F9..21E
+    local.FieldByName('lebensorte').AsString := t;             //005B0223..37
+    local.FieldByName('gebtag').AsString :=
+      DataModule2.Table23.FieldByName('gebtag').AsString;      //005B023D..70
+    local.FieldByName('gebmonat').AsString :=
+      DataModule2.Table23.FieldByName('gebmonat').AsString;    //005B0276..A9
+    local.FieldByName('gebjahr').AsString :=
+      DataModule2.Table23.FieldByName('gebjahr').AsString;     //005B02AF..E2
+    sub_005AFB14(DataModule2.Table23.FieldByName('gebort').AsString, t); //005B02E8..30D
+    local.FieldByName('gebort').AsString := t;                 //005B0312..26
+    local.FieldByName('tauftag').AsString :=
+      DataModule2.Table23.FieldByName('tauftag').AsString;     //005B032C..5F
+    sub_005AFB14(DataModule2.Table23.FieldByName('taufort').AsString, t); //005B0365..38A
+    local.FieldByName('taufort').AsString := t;                //005B038F..A3
+    sub_005AFB14(DataModule2.Table23.FieldByName('taufpat').AsString, t); //005B03A9..3CE
+    local.FieldByName('taufpat').AsString := t;                //005B03D3..E7
+    local.FieldByName('htag1').AsString :=
+      DataModule2.Table23.FieldByName('htag1').AsString;       //005B03ED..420
+    local.FieldByName('hmonat1').AsString :=
+      DataModule2.Table23.FieldByName('hmonat1').AsString;     //005B0426..59
+    local.FieldByName('hjahr1').AsString :=
+      DataModule2.Table23.FieldByName('hjahr1').AsString;      //005B045F..98
+    sub_005AFB14(DataModule2.Table23.FieldByName('hort1').AsString, t); //005B049E..4CC
+    local.FieldByName('hort1').AsString := t;                  //005B04D1..E8
+    sub_005AFB14(DataModule2.Table23.FieldByName('trauz1').AsString, t); //005B04EE..51C
+    local.FieldByName('trauz1').AsString := t;                 //005B0521..38
+    local.FieldByName('htag2').AsString :=
+      DataModule2.Table23.FieldByName('htag2').AsString;       //005B053E..77
+    local.FieldByName('hmonat2').AsString :=
+      DataModule2.Table23.FieldByName('hmonat2').AsString;     //005B057D..B6
+    local.FieldByName('hjahr2').AsString :=
+      DataModule2.Table23.FieldByName('hjahr2').AsString;      //005B05BC..F5
+    sub_005AFB14(DataModule2.Table23.FieldByName('hort2').AsString, t); //005B05FB..629
+    local.FieldByName('hort2').AsString := t;                  //005B062E..45
+    sub_005AFB14(DataModule2.Table23.FieldByName('trauz2').AsString, t); //005B064B..679
+    local.FieldByName('trauz2').AsString := t;                 //005B067E..95
+    local.FieldByName('htag3').AsString :=
+      DataModule2.Table23.FieldByName('htag3').AsString;       //005B069B..D4
+    local.FieldByName('hmonat3').AsString :=
+      DataModule2.Table23.FieldByName('hmonat3').AsString;     //005B06DA..713
+    local.FieldByName('hjahr3').AsString :=
+      DataModule2.Table23.FieldByName('hjahr3').AsString;      //005B0719..52
+    sub_005AFB14(DataModule2.Table23.FieldByName('hort3').AsString, t); //005B0758..786
+    local.FieldByName('hort3').AsString := t;                  //005B078B..A2
+    sub_005AFB14(DataModule2.Table23.FieldByName('trauz3').AsString, t); //005B07A8..7D6
+    local.FieldByName('trauz3').AsString := t;                 //005B07DB..F2
+    local.FieldByName('sttag').AsString :=
+      DataModule2.Table23.FieldByName('sttag').AsString;       //005B07F8..831
+    local.FieldByName('stmonat').AsString :=
+      DataModule2.Table23.FieldByName('stmonat').AsString;     //005B0837..70
+    local.FieldByName('stjahr').AsString :=
+      DataModule2.Table23.FieldByName('stjahr').AsString;      //005B0876..AF
+    sub_005AFB14(DataModule2.Table23.FieldByName('stort').AsString, t); //005B08B5..8E3
+    local.FieldByName('stort').AsString := t;                  //005B08E8..FF
+    local.FieldByName('stalter').AsString :=
+      DataModule2.Table23.FieldByName('stalter').AsString;     //005B0905..3E
+    sub_005AFB14(DataModule2.Table23.FieldByName('todesurs').AsString, t); //005B0944..972
+    local.FieldByName('todesurs').AsString := t;               //005B0977..8E
+    local.FieldByName('begrtag').AsString :=
+      DataModule2.Table23.FieldByName('begrtag').AsString;     //005B0994..CD
+    sub_005AFB14(DataModule2.Table23.FieldByName('begrort').AsString, t); //005B09D3..A01
+    local.FieldByName('begrort').AsString := t;                //005B0A06..1D
+    sub_005AFB14(DataModule2.Table23.FieldByName('quelle').AsString, t); //005B0A23..A51
+    local.FieldByName('quelle').AsString := t;                 //005B0A56..6D
+    sub_005AFB14(DataModule2.Table23.FieldByName('sonstiges').AsString, t); //005B0A73..AA1
+    local.FieldByName('sonstiges').AsString := t;              //005B0AA6..BD
+    sub_005AFB14(DataModule2.Table23.FieldByName('kommentar').AsString, t); //005B0AC3..AF1
+    local.FieldByName('kommentar').AsString := t;              //005B0AF6..0B0D
+    local.FieldByName('tx').AsString :=
+      DataModule2.Table23.FieldByName('tx').AsString;          //005B0B13..4C
+    local.Post;                                                //005B0B52..57
+    DataModule2.Table23.Next;                                  //005B0B5D..6A
+  end;
+  if DataModule2.Table1.RecordCount > 0 then                   //005B0B89..9D
+  begin
+    DataModule2.Table1.IndexName := '';                        //005B0B9F..AB
+    DataModule2.Table1.Last;                                   //005B0BB0..BA
+    gvar_02536940 := DataModule2.Table1Nummer.AsInteger;       //005B0BBF..D7
+  end;
+  local.First;                                                 //005B0BD9..DC
+  maxnum := local.RecordCount;                                 //005B0BE1..EC
+  cnt := 0;                                                    //005B0BEF..F1
+  Form1.Label18.Caption := '0 %';                              //005B0BF4..C06
+  Form1.Label19.Refresh;                                       //005B0C0B..C18
+  Form1.Label19.Caption := 'AHNEN DOS lesen         ';         //005B0C1D..C2F
+  Form1.Label19.Refresh;                                       //005B0C34..C41
+  Form1.lab18ein;                                              //005B0C46..4D
+  { 005B0C57..5B1D70: Schleife ueber die Hilfstabelle - eine Person nach
+    Table1, Indizes aus Geb- oder Taufdatum, Kommentar aus dem Memo-
+    Feld und den Orten sonstiges/quelle, danach bis zu 3 Ehen nach
+    Table5. }
+  while not local.Eof do                                       //005B0C52..D66
+  begin
+    Form1.Label18.Caption := IntToStr(Round(cnt / maxnum * 100)) + ' %';
+    Form1.Label18.Refresh;                                     //005B0C57..CAC
+    DataModule2.Table1.Append;                                 //005B0CB1..BB
+    DataModule2.Table1Nummer.AsInteger :=
+      local.FieldByName('num').AsInteger + gvar_02536940;      //005B0CC0..CEA
+    if (Copy(local.FieldByName('code').AsString, 5, 4) > '00000') and
+       (Copy(local.FieldByName('code').AsString, 5, 4) <> '') then //005B0CF0..D75
+      DataModule2.Table1Vater.AsInteger :=
+        StrToInt(Trim(Copy(local.FieldByName('code').AsString, 5, 4))) +
+        gvar_02536940;                                         //005B0D77..DDF
+    if (Copy(local.FieldByName('code').AsString, 9, 4) > '00000') and
+       (Copy(local.FieldByName('code').AsString, 9, 4) <> '') then //005B0DE5..E6A
+      DataModule2.Table1Mutter.AsInteger :=
+        StrToInt(Trim(Copy(local.FieldByName('code').AsString, 9, 4))) +
+        gvar_02536940;                                         //005B0E6C..ED4
+    DataModule2.Table1Name.AsString :=
+      local.FieldByName('name').AsString;                      //005B0EDA..F07
+    DataModule2.Table1Vornamen.AsString :=
+      local.FieldByName('vornamen').AsString;                  //005B0F0D..F3A
+    DataModule2.Table1Beruf.AsString :=
+      local.FieldByName('beruf').AsString;                     //005B0F40..F6D
+    DataModule2.Table1Geschlecht.AsString :=
+      LowerCase(local.FieldByName('geschlecht').AsString);     //005B0F73..FB1
+    if ucase(DataModule2.Table1Geschlecht.AsString) = 'F' then //005B0FB7..1009
+      DataModule2.Table1Geschlecht.AsString := 'w';
+    DataModule2.Table1Religion.AsString :=
+      local.FieldByName('religion').AsString;                  //005B100F..103C
+    DataModule2.Table1Gebtag.AsString :=
+      local.FieldByName('gebtag').AsString;                    //005B1042..106F
+    DataModule2.Table1Gebmonat.AsString :=
+      local.FieldByName('gebmonat').AsString;                  //005B1075..10A2
+    DataModule2.Table1Gebjahr.AsString :=
+      local.FieldByName('gebjahr').AsString;                   //005B10A8..10D5
+    DataModule2.Table1Gebort.AsString :=
+      local.FieldByName('gebort').AsString;                    //005B10DB..1108
+    DataModule2.Table1Quelleg.AsString := '';                  //005B110E..111F
+    DataModule2.Table1Tauftag.AsString :=
+      Copy(local.FieldByName('tauftag').AsString, 1, 2);       //005B1125..116E
+    DataModule2.Table1Taufmonat.AsString :=
+      Copy(local.FieldByName('tauftag').AsString, 4, 2);       //005B1174..11BD
+    DataModule2.Table1Taufjahr.AsString :=
+      Copy(local.FieldByName('tauftag').AsString, 7, 4);       //005B11C3..120C
+    DataModule2.Table1Taufort.AsString :=
+      local.FieldByName('taufort').AsString;                   //005B1212..123F
+    DataModule2.Table1Taufpat.AsString :=
+      local.FieldByName('taufpat').AsString;                   //005B1245..1272
+    DataModule2.Table1Quellet.AsString := '';                  //005B1278..1289
+    DataModule2.Table1Sttag.AsString :=
+      local.FieldByName('sttag').AsString;                     //005B128F..12BC
+    DataModule2.Table1Stmonat.AsString :=
+      local.FieldByName('stmonat').AsString;                   //005B12C2..12EF
+    DataModule2.Table1Stjahr.AsString :=
+      local.FieldByName('stjahr').AsString;                    //005B12F5..1322
+    DataModule2.Table1Stort.AsString :=
+      local.FieldByName('stort').AsString;                     //005B1328..1355
+    DataModule2.Table1Quelles.AsString := '';                  //005B135B..136C
+    DataModule2.Table1Todesurs.AsString :=
+      local.FieldByName('todesurs').AsString;                  //005B1372..139F
+    DataModule2.Table1Begtag.AsString :=
+      Copy(local.FieldByName('begrtag').AsString, 1, 2);       //005B13A5..13EE
+    DataModule2.Table1Begmonat.AsString :=
+      Copy(local.FieldByName('begrtag').AsString, 4, 2);       //005B13F4..143D
+    DataModule2.Table1Begjahr.AsString :=
+      Copy(local.FieldByName('begrtag').AsString, 7, 4);       //005B1443..148C
+    DataModule2.Table1Begort.AsString :=
+      local.FieldByName('begrort').AsString;                   //005B1492..14BF
+    DataModule2.Table1Quelleb.AsString := '';                  //005B14C5..14D6
+    Form1.Memo1.Clear;                                         //005B14DC..14EB
+    Form1.Memo1.Lines.Assign(local.FieldByName('kommentar'));  //005B14F1..1515
+    { 005B1518..5B163F: Abschneiden eines abschliessenden #$EC aus jeder
+      Memo-Zeile (wahrscheinlich Rest des Zeilenumbruchs der DOS-Datei). }
+    for i := 0 to Form1.Memo1.Lines.Count - 1 do
+      if Copy(Form1.Memo1.Lines[i], Length(Form1.Memo1.Lines[i]), 1) = #$EC then
+        Form1.Memo1.Lines[i] :=
+          Copy(Form1.Memo1.Lines[i], 1, Length(Form1.Memo1.Lines[i]) - 1);
+    DataModule2.Table1Kommentar.Assign(Form1.Memo1.Lines);     //005B1645..1667
+    if Trim(DataModule2.Table1Kommentar.AsString) <> '' then   //005B166A..16EF
+      DataModule2.Table1Kommentar.AsString :=
+        DataModule2.Table1Kommentar.AsString + #13#10#13#10;
+    { 005B16F5..5B1745: Debug-Rest des Originals - meldet einen gefuellten
+      Kommentar per ShowMessage, bewusst uebernommen. }
+    if Trim(DataModule2.Table1Kommentar.AsString) <> '' then
+      ShowMessage(DataModule2.Table1Kommentar.AsString);
+    s := '';                                                   //005B174A..74D
+    if local.FieldByName('sonstiges').AsString <> '' then      //005B1752..17AB
+      s := s + 'Bemerk.: ' + local.FieldByName('sonstiges').AsString + #13#10;
+    if local.FieldByName('quelle').AsString <> '' then         //005B17B0..1809
+      s := s + 'Qu.: ' + local.FieldByName('quelle').AsString + #13#10;
+    DataModule2.Table1Kommentar.AsString :=
+      DataModule2.Table1Kommentar.AsString + s;                //005B180E..1845
+    DataModule2.Table1Lebensort.AsString :=
+      local.FieldByName('lebensorte').AsString;                //005B184B..1878
+    DataModule2.Table1Lebt.AsString := 'n';                    //005B187E..1892
+    if DataModule2.Table1Gebjahr.AsString <> '' then           //005B1898..1956
+    begin
+      DataModule2.Table1Indj.AsString :=
+        DataModule2.Table1Gebjahr.AsString;                    //005B18BD..18E8
+      DataModule2.Table1Indm.AsString :=
+        DataModule2.Table1Gebmonat.AsString;                   //005B18F0..191D
+      DataModule2.Table1Indt.AsString :=
+        DataModule2.Table1Gebtag.AsString;                     //005B1923..1950
+    end
+    else
+    begin
+      DataModule2.Table1Indj.AsString :=
+        DataModule2.Table1Taufjahr.AsString;                   //005B195B..1988
+      DataModule2.Table1Indm.AsString :=
+        DataModule2.Table1Taufmonat.AsString;                  //005B198E..19BB
+      DataModule2.Table1Indt.AsString :=
+        DataModule2.Table1Tauftag.AsString;                    //005B19C1..19EE
+    end;
+    try
+      DataModule2.Table1.Post;                                 //005B19F4..1A23
+    except
+    end;
+    for i := 1 to 3 do                                         //005B1A28..1D55
+      if Copy(local.FieldByName('code').AsString, (i - 1) * 5 + 13, 4) > '00000' then
+      begin
+        DataModule2.Table5.Append;                             //005B1A81..1A8E
+        DataModule2.Table5Nummer.AsInteger :=
+          local.FieldByName('num').AsInteger + gvar_02536940;  //005B1A93..ABD
+        DataModule2.Table5Epnum.AsInteger :=
+          StrToInt(Trim(Copy(local.FieldByName('code').AsString,
+            (i - 1) * 5 + 13, 4))) + gvar_02536940;           //005B1AC3..B28
+        DataModule2.Table5Htag.AsString :=
+          local.FieldByName('htag' + IntToStr(i)).AsString;    //005B1B2E..B80
+        DataModule2.Table5Hmonat.AsString :=
+          local.FieldByName('hmonat' + IntToStr(i)).AsString;  //005B1B86..BD8
+        DataModule2.Table5Hjahr.AsString :=
+          local.FieldByName('hjahr' + IntToStr(i)).AsString;   //005B1BDE..C30
+        DataModule2.Table5Hort.AsString :=
+          local.FieldByName('hort' + IntToStr(i)).AsString;    //005B1C36..C88
+        DataModule2.Table5Hqu.AsString := '';                  //005B1C8E..C9F
+        DataModule2.Table5Trauz.AsString :=
+          local.FieldByName('trauz' + IntToStr(i)).AsString;   //005B1CA5..CF7
+        DataModule2.Table5Verbind.AsString := 'Eheschliessung'; //005B1CFD..D11
+        try
+          DataModule2.Table5.Post;                             //005B1D17..D49
+        except
+        end;
+      end;
+    Inc(cnt);                                                  //005B1D5B
+    local.Next;                                                //005B1D5E..D61
+  end;
+  local.Close;                                                 //005B1D76..D79
+  local.Free;                                                  //005B1D7E..D81
+  Form1.listen_akt;                                            //005B1D86..D8D
+  Form1.Label18.Hide;                                          //005B1D92..D9F
+  Form1.Label19.Hide;                                          //005B1DA4..DB1
+  DataModule2.Table1.Last;                                     //005B1DB6..DC0
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;         //005B1DC5..DDD
+  DataModule2.Table1.First;                                    //005B1DDF..DE9
+  { Epilogue: the outer SEH frame is unwound and the string temporaries are
+    released - compiler generated, not transcribed:
+      @LStrArrayClr 0x64 slots from [ebp-288], 0x35 slots from [ebp-0F8],
+      3 slots from [ebp-24], @LStrClr [ebp-14] }               //005B1DEE..E30
 end;
 
 procedure TForm3.gedausx;
