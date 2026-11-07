@@ -9306,8 +9306,378 @@ begin
 end;
 
 procedure TForm3.gedausx;
+var
+  cnt: Integer;                 {005A63C3 [ebp-10] Zaehler (Fn-Nummer)}
+  anz: Integer;                 {005A63D5 [ebp-14] = Table1.RecordCount (Fortschritt)}
+  upd: Integer;                 {005A75FB [ebp-18] 1 = Table31-Eintrag aktualisiert}
+  vnr: Integer;                 {005A7615 [esi] Table31Av (Vater-Nummer)}
+  mnr: Integer;                 {005A7624 [edi] Table31Am (Mutter-Nummer)}
+  flag: Boolean;                {005A6529 [esi] Treffer-Flag des Table32-Scans}
+  t: AnsiString;                {005A64A2 [ebp-8] toter Reset (einziges Vorkommen)}
+  fk: AnsiString;               {005A64AA [ebp-4] Kinder-Liste im Table5-Lauf}
+  uk: AnsiString;               {005A71AC [ebp-0C] Kinder-Liste im Post-Loop}
+  n6, ep6, fn6: AnsiString;     {00576EB0-Temps: 6-stellige Nummer, Epnum, StrToInt(Fn)}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005A634C: gedausx - baut Table32 (Paar-Tabelle) auf:
+    pro Person (Table1) und pro Ehe (Table5) wird - falls nicht schon ueber
+    den Index v/m ein passender Eintrag existiert - ein Datensatz mit den
+    Ehe-, Scheidungs- und Verbindungsdaten angehaengt (Dedup-Scan auf
+    Table32, Kinder-Liste fk aus Table17 index vat/mut).
+    Nach dem Table1-Lauf werden die Table31-Adressen eingepflegt
+    (Edit mit Fk-Ergaenzung bzw. neuer Eintrag; gvar_02536660 sammelt
+    'Nummer*Fn#' fuer den Folgelauf) und Eintraege ohne Partner
+    (Table17 vat/mut ohne Gegennummer) nachgetragen.
+    Die Hilfsaufrufe sub_00576EB0 stehen vor der jeweiligen Aussage -
+    die Auswerte-Reihenfolge innerhalb der CatN-Ausdruecke weicht dadurch
+    geringfuegig ab (siehe Recon-Notizen).
+    SEH-Rahmen/Prolog-Teardown (@LStrArrayClr 64/F/2/3, @LStrClr) -
+    nicht transkribiert. }
+
+  DataModule2.Table31.Open;                                    //005A6373..637B
+  DataModule2.Table31.IndexName := '';                         //005A6380..638A
+  DataModule2.Table32.Open;                                    //005A638F..6397
+  DataModule2.Table32.Close;                                   //005A639C..63A4
+  DataModule2.Table32.EmptyTable;                              //005A63A9..63B1
+  DataModule2.Table32.Open;                                    //005A63B6..63BE
+  cnt := 0;                                                    //005A63C3 [ebp-10]
+  { toter Zugriff auf Table1Nummer.AsInteger - Ergebnis ungenutzt } //005A63C8..63D2
+  anz := DataModule2.Table1.RecordCount;                       //005A63D5..63E2 [ebp-14]
+  DataModule2.Table1.IndexName := '';                          //005A63E5..63EC
+  DataModule2.Table1.First;                                    //005A63F1..63F6
+  DataModule2.Table17.Open;                                    //005A63FB..6403
+  DataModule2.Table17.IndexName := '';                         //005A6408..6412
+  DataModule2.Table17.First;                                   //005A6417..641F
+  DataModule2.Table5.IndexName := 'num';                       //005A6424..6431
+
+  while not DataModule2.Table1.Eof do                          //005A6436 jmp / cond 005A75C2..75CE
+  begin
+    Form1.Label18.Caption :=                                   //005A643B..648B [400]
+      IntToStr(Round(DataModule2.Table1Nummer.AsInteger / anz * 100 / 2)) + ' %';
+    Form1.Label18.Refresh;                                     //005A6490..649D
+    t := '';                                                   //005A64A2..64A5 toter Reset
+    fk := '';                                                  //005A64AA..64AD
+    if DataModule2.Table5.RecordCount > 0 then                 //005A64B2..64C4 jle->005A71AC
+    begin
+      DataModule2.Table5.First;                                //005A64CA..64D2
+      while not DataModule2.Table5.Eof do                      //005A64D7 jmp / cond 005A7197..71A6
+      begin
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then //005A64DC..6504 jne->005A6AEB
+        begin
+          DataModule2.Table32.IndexName := 'v';                //005A650A..6517
+          DataModule2.Table32.First;                           //005A651C..6524
+          flag := False;                                       //005A6529 [esi]
+          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A652B..6546 [ebp-34]
+          if DataModule2.Table32.FindKey([n6]) then            //005A654A..655E je->005A65F7
+            while DataModule2.Table32Fv.AsString = n6 do       //005A6564 jmp / cond 005A65BF..65F1
+            begin
+              sub_00576EB0(DataModule2.Table5Epnum.AsInteger, ep6); //005A6566..658F [ebp-3C]
+              if DataModule2.Table32Fm.AsString = ep6 then     //005A6593..6598 jne->005A65A1
+              begin
+                flag := True;                                  //005A659A [esi]
+                Break;                                         //005A659F jmp->005A65F7
+              end;
+              DataModule2.Table32.Next;                        //005A65A1..65A9
+              if DataModule2.Table32.Eof then Break;           //005A65AE..65BD jne->005A65F7
+            end;
+          DataModule2.Table32.First;                           //005A65F7..65FF
+          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A6604..6619 [ebp-48]
+          if not (DataModule2.Table32.FindKey([n6]) and flag) then //005A6623..663B je->005A6641 / jne->005A7179
+          begin
+            Inc(cnt);                                          //005A6641
+            DataModule2.Table32.Append;                        //005A6644..664C
+            sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A6651..6666 [ebp-4C]
+            DataModule2.Table32Fv.AsString := n6;              //005A6669..6673 [2C4]
+            sub_00576EB0(DataModule2.Table5Epnum.AsInteger, ep6); //005A6679..668E [ebp-50]
+            DataModule2.Table32Fm.AsString := ep6;             //005A6691..669B [2C8]
+            DataModule2.Table32H.AsString :=                   //005A66A1..66F4 [2D4]
+              sub_00582C24(DataModule2.Table5Htag.AsString,    {418 Tag}
+                           DataModule2.Table5Hmonat.AsString,  {41C Monat}
+                           DataModule2.Table5Hjahr.AsString);  {420 Jahr}
+            DataModule2.Table32Ho.AsString :=
+              DataModule2.Table5Hort.AsString;                 //005A66FA..6717 [2D8]
+            DataModule2.Table32Htz.AsString :=
+              DataModule2.Table5Trauz.AsString;                //005A671D..673A [310]
+            DataModule2.Table32Hq.AsString :=
+              DataModule2.Table5Hqu.AsString;                  //005A6740..675D [2F8]
+            DataModule2.Table32S.AsString :=                   //005A6763..67B6 [2DC]
+              sub_00582C24(DataModule2.Table5Satag.AsString,   {42C Tag}
+                           DataModule2.Table5Samonat.AsString, {430 Monat}
+                           DataModule2.Table5Sajahr.AsString); {434 Jahr}
+            DataModule2.Table32So.AsString :=
+              DataModule2.Table5Saort.AsString;                //005A67BC..67D9 [2E0]
+            DataModule2.Table32Stz.AsString :=
+              DataModule2.Table5Satrauz.AsString;              //005A67DF..6802 [314]
+            DataModule2.Table32Sq.AsString :=
+              DataModule2.Table5Saqu.AsString;                 //005A6808..682B [2FC]
+            DataModule2.Table32Sch.AsString :=                 //005A6831..689C [2E4]
+              sub_00582C24(DataModule2.Table5Schtag.AsString,  {444 Tag}
+                           DataModule2.Table5Schmonat.AsString,{448 Monat}
+                           DataModule2.Table5Schjahr.AsString);{44C Jahr}
+            DataModule2.Table32Scho.AsString :=
+              DataModule2.Table5Schort.AsString;               //005A68A2..68C5 [2E8]
+            DataModule2.Table32Schq.AsString :=
+              DataModule2.Table5Schqu.AsString;                //005A68CB..68EE [300]
+            DataModule2.Table32Vb.AsString :=                  //005A68F4..6944 [2EC]
+              UpperCase(Copy(DataModule2.Table5Verbind.AsString, 1, 1));
+            DataModule2.Table32Fn.AsString := IntToStr(cnt);   //005A694A..6968 [2D0]
+            DataModule2.Table32Indj.AsString :=
+              DataModule2.Table5Indj.AsString;                 //005A696E..6991 [2F0]
+            DataModule2.Table32Indm.AsString :=
+              DataModule2.Table5Indm.AsString;                 //005A6997..69BA [2F4]
+            fk := '';                                          //005A69C0..69C3
+            DataModule2.Table17.IndexName := 'vat';            //005A69C8..69D5
+            DataModule2.Table17.First;                         //005A69DA..69E2
+            if DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger]) then //005A69E7..6A0F je->005A6AAC
+              while DataModule2.Table17Vater.AsInteger = DataModule2.Table1Nummer.AsInteger do //005A6A15 jmp / cond 005A6A88..6AA6
+              begin
+                if DataModule2.Table17Mutter.AsInteger = DataModule2.Table5Epnum.AsInteger then //005A6A17..6A35 jne->005A6A6A
+                begin
+                  sub_00576EB0(DataModule2.Table17Nummer.AsInteger, n6); //005A6A37..6A4D [ebp-0BC]
+                  fk := fk + n6 + '*';                         //005A6A52..6A65 CatN3
+                end;
+                DataModule2.Table17.Next;                      //005A6A6A..6A72
+                if DataModule2.Table17.Eof then Break;         //005A6A77..6A86 jne->005A6AAC
+              end;
+            if Trim(fk) <> '' then                             //005A6AAC..6AC1 jbe->005A6AD6
+              DataModule2.Table32Fk.AsString := fk;            //005A6AC3..6AD0 (ungetrimmt)
+            DataModule2.Table32.Post;                          //005A6AD6..6AE0 vtbl+248
+          end;                                                 //005A6AE6 jmp->005A7179
+        end
+        else if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then //005A6AEB..6B1F jne->005A7179
+        begin
+          DataModule2.Table32.IndexName := 'm';                //005A6B25..6B32
+          DataModule2.Table32.First;                           //005A6B37..6B3F
+          flag := False;                                       //005A6B44 [esi]
+          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A6B46..6B67 [ebp-0CC]
+          if DataModule2.Table32.FindKey([n6]) then            //005A6B6B..6B7F je->005A6C30
+            while DataModule2.Table32Fm.AsString = n6 do       //005A6B85 jmp / cond 005A6BEC..6C2A
+            begin
+              sub_00576EB0(DataModule2.Table5Epnum.AsInteger, ep6); //005A6B87..6BB4 [ebp-0D4]
+              if DataModule2.Table32Fv.AsString = ep6 then     //005A6BB9..6BC5 jne->005A6BCE
+              begin
+                flag := True;                                  //005A6BC7 [esi]
+                Break;                                         //005A6BCC jmp->005A6C30
+              end;
+              DataModule2.Table32.Next;                        //005A6BCE..6BD6
+              if DataModule2.Table32.Eof then Break;           //005A6BDB..6BEA jne->005A6C30
+            end;
+          DataModule2.Table32.First;                           //005A6C30..6C38
+          sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A6C3D..6C55 [ebp-0E0]
+          if not (DataModule2.Table32.FindKey([n6]) and flag) then //005A6C62..6C7A je->005A6C80 / jne->005A7179
+          begin
+            Inc(cnt);                                          //005A6C80
+            DataModule2.Table32.Append;                        //005A6C83..6C8B
+            sub_00576EB0(DataModule2.Table5Epnum.AsInteger, ep6); //005A6C90..6CA8 [ebp-0E4]
+            DataModule2.Table32Fv.AsString := ep6;             //005A6CAE..6CB8 [2C4]
+            sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6); //005A6CBE..6CD6 [ebp-0E8]
+            DataModule2.Table32Fm.AsString := n6;              //005A6CDC..6CE6 [2C8]
+            DataModule2.Table32H.AsString :=                   //005A6CEC..6D57 [2D4]
+              sub_00582C24(DataModule2.Table5Htag.AsString,    {418 Tag}
+                           DataModule2.Table5Hmonat.AsString,  {41C Monat}
+                           DataModule2.Table5Hjahr.AsString);  {420 Jahr}
+            DataModule2.Table32Ho.AsString :=
+              DataModule2.Table5Hort.AsString;                 //005A6D5D..6D80 [2D8]
+            DataModule2.Table32Htz.AsString :=
+              DataModule2.Table5Trauz.AsString;                //005A6D86..6DA9 [310]
+            DataModule2.Table32Hq.AsString :=
+              DataModule2.Table5Hqu.AsString;                  //005A6DAF..6DD2 [2F8]
+            DataModule2.Table32S.AsString :=                   //005A6DD8..6E43 [2DC]
+              sub_00582C24(DataModule2.Table5Satag.AsString,   {42C Tag}
+                           DataModule2.Table5Samonat.AsString, {430 Monat}
+                           DataModule2.Table5Sajahr.AsString); {434 Jahr}
+            DataModule2.Table32So.AsString :=
+              DataModule2.Table5Saort.AsString;                //005A6E49..6E6C [2E0]
+            DataModule2.Table32Stz.AsString :=
+              DataModule2.Table5Satrauz.AsString;              //005A6E72..6E95 [314]
+            DataModule2.Table32Sq.AsString :=
+              DataModule2.Table5Saqu.AsString;                 //005A6E9B..6EBE [2FC]
+            DataModule2.Table32Sch.AsString :=                 //005A6EC4..6F2F [2E4]
+              sub_00582C24(DataModule2.Table5Schtag.AsString,  {444 Tag}
+                           DataModule2.Table5Schmonat.AsString,{448 Monat}
+                           DataModule2.Table5Schjahr.AsString);{44C Jahr}
+            DataModule2.Table32Scho.AsString :=
+              DataModule2.Table5Schort.AsString;               //005A6F35..6F58 [2E8]
+            DataModule2.Table32Schq.AsString :=
+              DataModule2.Table5Schqu.AsString;                //005A6F5E..6F81 [300]
+            DataModule2.Table32Vb.AsString :=                  //005A6F87..6FD7 [2EC]
+              UpperCase(Copy(DataModule2.Table5Verbind.AsString, 1, 1));
+            DataModule2.Table32Fn.AsString := IntToStr(cnt);   //005A6FDD..6FFB [2D0]
+            DataModule2.Table32Indj.AsString :=
+              DataModule2.Table5Indj.AsString;                 //005A7001..7024 [2F0]
+            DataModule2.Table32Indm.AsString :=
+              DataModule2.Table5Indm.AsString;                 //005A702A..704D [2F4]
+            fk := '';                                          //005A7053..7056
+            DataModule2.Table17.IndexName := 'mut';            //005A705B..7068
+            DataModule2.Table17.First;                         //005A706D..7075
+            if DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger]) then //005A707A..70A2 je->005A713F
+              while DataModule2.Table17Mutter.AsInteger = DataModule2.Table1Nummer.AsInteger do //005A70A8 jmp / cond 005A711B..7139
+              begin
+                if DataModule2.Table17Vater.AsInteger = DataModule2.Table5Epnum.AsInteger then //005A70AA..70C8 jne->005A70FD
+                begin
+                  sub_00576EB0(DataModule2.Table17Nummer.AsInteger, n6); //005A70CA..70E0 [ebp-154]
+                  fk := fk + n6 + '*';                         //005A70E5..70F8 CatN3
+                end;
+                DataModule2.Table17.Next;                      //005A70FD..7105
+                if DataModule2.Table17.Eof then Break;         //005A710A..7119 jne->005A713F
+              end;
+            if Trim(fk) <> '' then                             //005A713F..7154 jbe->005A7169
+              DataModule2.Table32Fk.AsString := fk;            //005A7156..7163 (ungetrimmt)
+            DataModule2.Table32.Post;                          //005A7169..7173 vtbl+248
+          end;
+        end;
+        DataModule2.Table5.Next;                               //005A7179..7181
+        if DataModule2.Table5.Eof then Break;                  //005A7186..7195 jne->005A71AC
+      end;
+    end;
+    uk := '';                                                  //005A71AC..71AF
+    {--- 005A71B4 M-Post-Loop (sequenziell, kein else) ---}
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then //005A71B4..71E8 jne->005A73AF
+    begin
+      DataModule2.Table17.IndexName := 'vat';                  //005A71EE..71FB
+      DataModule2.Table17.First;                               //005A7200..7208
+      if DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger]) then //005A720D..7235 je->005A72C3
+        while DataModule2.Table17Vater.AsInteger = DataModule2.Table1Nummer.AsInteger do //005A723B jmp / cond 005A729F..72BD
+        begin
+          if DataModule2.Table17Mutter.AsInteger = 0 then      //005A723D..724C jne->005A7281
+          begin
+            sub_00576EB0(DataModule2.Table17Nummer.AsInteger, n6); //005A724E..7264 [ebp-164]
+            uk := uk + n6 + '*';                               //005A7269..727C CatN3
+          end;
+          DataModule2.Table17.Next;                            //005A7281..7289
+          if DataModule2.Table17.Eof then Break;               //005A728E..729D jne->005A72C3
+        end;
+      if Trim(uk) <> '' then                                   //005A72C3..72D8 jbe->005A73AF
+      begin
+        Inc(cnt);                                              //005A72DE
+        DataModule2.Table32.Append;                            //005A72E1..72E9
+        sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6);  //005A72EE..7306 [ebp-16C]
+        DataModule2.Table32Fv.AsString := n6;                  //005A730C..7316 [2C4]
+        sub_00576EB0(0, n6);                                   //005A731C..7329 [ebp-170] xor eax,eax
+        DataModule2.Table32Fm.AsString := n6;                  //005A732F..7339 [2C8]
+        DataModule2.Table32Fk.AsString := uk;                  //005A733F..734C [2CC]
+        DataModule2.Table32Fn.AsString := IntToStr(cnt);       //005A7352..7370 [2D0]
+        DataModule2.Table32Indj.AsString :=
+          DataModule2.Table5Indj.AsString;                     //005A7376..7399 [2F0]
+        DataModule2.Table32.Post;                              //005A739F..73A9 vtbl+248
+      end;
+    end;
+    {--- 005A73AF W-Post-Loop (sequenziell, kein else) ---}
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then //005A73AF..73E3 jne->005A75AA
+    begin
+      DataModule2.Table17.IndexName := 'mut';                  //005A73E9..73F6
+      DataModule2.Table17.First;                               //005A73FB..7403
+      if DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger]) then //005A7408..7430 je->005A74BE
+        while DataModule2.Table17Mutter.AsInteger = DataModule2.Table1Nummer.AsInteger do //005A7436 jmp / cond 005A749A..74B8
+        begin
+          if DataModule2.Table17Vater.AsInteger = 0 then       //005A7438..7447 jne->005A747C
+          begin
+            sub_00576EB0(DataModule2.Table17Nummer.AsInteger, n6); //005A7449..745F [ebp-184]
+            uk := uk + n6 + '*';                               //005A7464..7477 CatN3
+          end;
+          DataModule2.Table17.Next;                            //005A747C..7484
+          if DataModule2.Table17.Eof then Break;               //005A7489..7498 jne->005A74BE
+        end;
+      if Trim(uk) <> '' then                                   //005A74BE..74D3 jbe->005A75AA
+      begin
+        Inc(cnt);                                              //005A74D9
+        DataModule2.Table32.Append;                            //005A74DC..74E4
+        sub_00576EB0(0, n6);                                   //005A74E9..74F6 [ebp-18C]
+        DataModule2.Table32Fv.AsString := n6;                  //005A74FC..7506 [2C4]
+        sub_00576EB0(DataModule2.Table1Nummer.AsInteger, n6);  //005A750C..7524 [ebp-190]
+        DataModule2.Table32Fm.AsString := n6;                  //005A752A..7534 [2C8]
+        DataModule2.Table32Fk.AsString := uk;                  //005A753A..7547 [2CC]
+        DataModule2.Table32Fn.AsString := IntToStr(cnt);       //005A754D..756B [2D0]
+        DataModule2.Table32Indj.AsString :=
+          DataModule2.Table5Indj.AsString;                     //005A7571..7594 [2F0]
+        DataModule2.Table32.Post;                              //005A759A..75A4 vtbl+248
+      end;
+    end;
+    DataModule2.Table1.Next;                                   //005A75AA..75AF
+    if DataModule2.Table1.Eof then Break;                      //005A75B4..75C0 jne->005A75D4
+  end;
+  gvar_02536660 := '';                                         //005A75D4..75D9
+  if DataModule2.Table31.RecordCount > 0 then                  //005A75DE..75F0 jle->005A7B58
+  begin
+    while not DataModule2.Table31.Eof do                       //005A75F6 jmp / cond 005A7B43..7B52
+    begin
+      upd := 0;                                                //005A75FB..75FD [ebp-18]
+      if DataModule2.Table31Av.AsInteger > 0 then              //005A7600..760F jle->005A77E4
+      begin
+        vnr := DataModule2.Table31Av.AsInteger;                //005A7615..7622 [esi]
+        mnr := DataModule2.Table31Am.AsInteger;                //005A7624..7631 [edi]
+        DataModule2.Table32.IndexName := 'v';                  //005A7633..7640
+        sub_00576EB0(vnr, n6);                                 //005A7645..765B [ebp-19C]
+        if DataModule2.Table32.FindKey([n6]) then              //005A765F..7673 je->005A79BC
+          while StrToInt(DataModule2.Table32Fv.AsString) = vnr do //005A7679 jmp / cond 005A77B9..77DF
+          begin
+            if StrToInt(DataModule2.Table32Fm.AsString) = mnr then //005A767E..769E jne->005A7797
+            begin
+              DataModule2.Table32.Edit;                        //005A76A4..76AC
+              sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A76CC..76E4 [ebp-1AC]
+              DataModule2.Table32Fk.AsString :=                //005A76B1..7709 CatN3
+                DataModule2.Table32Fk.AsString + n6 + '*';
+              DataModule2.Table32.Post;                        //005A770F..7719 vtbl+248
+              sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A7725..773D [ebp-1B0]
+              sub_00576EB0(StrToInt(DataModule2.Table32Fn.AsString), fn6); //005A7748..7771 [ebp-1B4]
+              gvar_02536660 := gvar_02536660 + n6 + '*' + fn6 + '#'; //005A771F..7786 CatN5
+              upd := 1;                                        //005A778B [ebp-18]
+              Break;                                           //005A7792 jmp->005A79BC
+            end;
+            DataModule2.Table32.Next;                          //005A7797..779F
+            if DataModule2.Table32.Eof then Break;             //005A77A4..77B3 jne->005A79BC
+          end;
+      end
+      else if DataModule2.Table31Am.AsInteger > 0 then         //005A77E4..77F3 jle->005A79BC
+      begin
+        vnr := DataModule2.Table31Av.AsInteger;                //005A77F9..7806 [esi]
+        mnr := DataModule2.Table31Am.AsInteger;                //005A7808..7815 [edi]
+        DataModule2.Table32.IndexName := 'm';                  //005A7817..7824
+        sub_00576EB0(mnr, n6);                                 //005A7829..783F [ebp-1C0]
+        if DataModule2.Table32.FindKey([n6]) then              //005A7843..7857 je->005A79BC
+          while StrToInt(DataModule2.Table32Fm.AsString) = mnr do //005A785D jmp / cond 005A7996..79B6
+          begin
+            if StrToInt(DataModule2.Table32Fv.AsString) = vnr then //005A7862..7882 jne->005A7978
+            begin
+              DataModule2.Table32.Edit;                        //005A7888..7890
+              sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A78BD..78C8 [ebp-1D0]
+              DataModule2.Table32Fk.AsString :=                //005A7895..78ED CatN3
+                DataModule2.Table32Fk.AsString + n6 + '*';
+              DataModule2.Table32.Post;                        //005A78F3..78FD vtbl+248
+              sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A7909..7921 [ebp-1D4]
+              sub_00576EB0(StrToInt(DataModule2.Table32Fn.AsString), fn6); //005A792C..7955 [ebp-1D8]
+              gvar_02536660 := gvar_02536660 + n6 + '*' + fn6 + '#'; //005A7903..796A CatN5
+              upd := 1;                                        //005A796F [ebp-18]
+              Break;                                           //005A7976 jmp->005A79BC
+            end;
+            DataModule2.Table32.Next;                          //005A7978..7980
+            if DataModule2.Table32.Eof then Break;             //005A7985..7994 jne->005A79BC
+          end;
+      end;
+      if upd = 0 then                                          //005A79BC..79C0 jne->005A7B25
+      begin
+        Inc(cnt);                                              //005A79C6
+        DataModule2.Table32.Append;                            //005A79C9..79D1
+        sub_00576EB0(DataModule2.Table31Av.AsInteger, n6);     //005A79D6..79EE [ebp-1E4]
+        DataModule2.Table32Fv.AsString := n6;                  //005A79F4..79FE [2C4]
+        sub_00576EB0(DataModule2.Table31Am.AsInteger, n6);     //005A7A04..7A1C [ebp-1E8]
+        DataModule2.Table32Fm.AsString := n6;                  //005A7A22..7A2C [2C8]
+        sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A7A32..7A4A [ebp-1EC]
+        DataModule2.Table32Fk.AsString := n6 + '*';            //005A7A4A..7A6A LStrCat+Set [2CC]
+        DataModule2.Table32Fn.AsString := IntToStr(cnt);       //005A7A70..7A8E [2D0]
+        DataModule2.Table32Vb.AsString := 'A';                 //005A7A94..7AA3 [2EC]
+        DataModule2.Table32.Post;                              //005A7AA9..7AB3 vtbl+248
+        sub_00576EB0(DataModule2.Table31Nummer.AsInteger, n6); //005A7ABF..7AD7 [ebp-1F4]
+        sub_00576EB0(StrToInt(DataModule2.Table32Fn.AsString), fn6); //005A7AE2..7B0B [ebp-1F8]
+        gvar_02536660 := gvar_02536660 + n6 + '*' + fn6 + '#'; //005A7AB9..7B20 CatN5
+      end;
+      DataModule2.Table31.Next;                                //005A7B25..7B2D
+      if DataModule2.Table31.Eof then Break;                   //005A7B32..7B41 jne->005A7B58
+    end;
+  end;
+  { Epilogue: SEH-Rahmen abbauen und String-Temps freigeben - compiler
+    generated, nicht transkribiert:
+      @LStrArrayClr 0x64 ab [ebp-1FC], 0xF ab [ebp-6C], 2 ab [ebp-28],
+      @LStrClr [ebp-1C], 3 ab [ebp-0C], @HandleFinally }        //005A7B58..7BAA
 end;
 
 procedure TForm3.gedein;
