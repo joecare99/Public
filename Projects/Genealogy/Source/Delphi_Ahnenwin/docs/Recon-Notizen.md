@@ -201,3 +201,6 @@ zzg [ebp-38] (AnsiString) · unkMut [ebp-40] · unkVat [ebp-44] · kcount [ebp-1
 - **`@ FAM`-Init hat kein else**: `if Pos('@ FAM',line)>0 then <Init>` (jle->A437A) faellt im false-Fall direkt in den klist-Scan und das gesamte Dispatch durch — kein else-Zweig.
 - **`Inc()` auf Single-Globals nicht moeglich**: `gvar_02536668/666C/6644` sind `Single`, aber das Listing inkrementiert als dword (`inc dword ptr ds:[2536668]` + `fild`) — im Pascal `g := g + 1;` (Inc kompiliert nicht auf Single).
 - **Restliste: 3 Unit3-Stubs** — gedaus 005A7C40, gedein2 00596994, gedein_neu 0057EDEC; alle Listings liegen vor.
+
+## gedausv SaveDialog-Setup korrigiert (2026-11-11)
+- **L7665..7667 transkribierten falsche Setter**: `Title := 'ged'` / `Filter` / `FilterIndex := 2`. Das Listing 005B5348..5382 zeigt dagegen `+74 := 'ged'` (DefaultExt), `+60 := 'Gedcom-Dateien (*.ged)|*.ged'` (Filter) und `[+5C] := 2` (= `Options := [ofHideReadOnly]`) - korrigiert auf `DefaultExt`/`Filter`/`Options`, Annotationen `005B534B..5350`, `005B5365..536A`, `005B537C..5382`.

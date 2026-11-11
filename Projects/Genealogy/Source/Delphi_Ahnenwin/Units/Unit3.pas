@@ -7662,9 +7662,9 @@ begin
   end;
   st4 := Form1.SaveDialog1.FileName;                         {005B5323 GetFileName +3FC}
   System.Assign(gvar_02536458, st4);                         {005B5336 Assign Dateivariable}
-  Form1.SaveDialog1.Title := 'ged';                            {005B5350 vtbl+60}
-  Form1.SaveDialog1.Filter := 'Gedcom-Dateien (*.ged)|*.ged';   {005B536A vtbl+74}
-  Form1.SaveDialog1.FilterIndex := 2;                          {005B5382 dword +5C = 2}
+  Form1.SaveDialog1.DefaultExt := 'ged';                       {005B534B..5350 +74 @LStrAsg}
+  Form1.SaveDialog1.Filter := 'Gedcom-Dateien (*.ged)|*.ged';  {005B5365..536A +60 @LStrAsg}
+  Form1.SaveDialog1.Options := [ofHideReadOnly];               {005B537C..5382 dword +5C := 2}
   Rewrite(gvar_02536458);                                    {005B538A RewritText + IOTest}
   if Form27.RadioButton2.Checked then                        {005B53A3 UTF-8 -> BOM}
     WriteLn(gvar_02536458, #$EF#$BB#$BF'0 HEAD')             {005B53AD 5BBD30}
@@ -11624,6 +11624,14 @@ var
   tag, monat, jahr: AnsiString; {005A7F68..FEC Copy-Ergebnisse (Tag/Monat/Jahr)}
   dat: AnsiString;              {005A7FF1 [ebp-218] sub_00582C24-Ergebnis}
   u: AnsiString;                {005A7FFE [ebp-214] '1 DATE '-Zeile}
+  anz: Integer;                 {005A891C [ebp-10] Table1.RecordCount}
+  krg: Integer;                 {005A892C [ebp-20] Start-Record (Table1Nummer)}
+  kz: Integer;                  {005A8E04 [ebp-8] Person-Zaehler (Start 1)}
+  gef: Integer;                 {005A8A26 [edi] 1 = Paar in Table10 gefunden}
+  locList: AnsiString;          {005A8E44 [ebp-30] '*'-Liste der _LOC-Nummern}
+  notiz: Integer;               {005A8EE0 [ebp-14] Merker pro Person (Start 0; gedausv haelt ihn in edi)}
+  nm: AnsiString;               {005A8F45 [ebp-38] Vornamen getrimmt, '!' entfernt}
+  plac: AnsiString;             {005A9887 [ebp-1C] '2 PLAC '-String (Ort,Lkr,Bland,Land)}
 begin
   { 005A7C40: gedaus - GEDCOM-Export (5.5.1) in die ueber SaveDialog1
     gewaehlte Datei. Zuerst wertet die Form26-Radiogruppe die Sortierung aus
@@ -11803,7 +11811,227 @@ begin
     end;
   end;
   Form27.Visible := False;                                 //005A8894..889D SetVisible(0)
-{CHUNK3}
+  Form1.Label18.Visible := True;                        //005A88A2..88B1 SetVisible(1)
+  Form1.Label18.Caption := ' ';                         //005A88B6..88C8 SetText
+  Form1.Label18.Refresh;                                //005A88CD..88DA
+  Form1.Label19.Visible := True;                        //005A88DF..88EE
+  Form1.Label19.Caption := 'Gedcom schreiben';          //005A88F3..8905
+  Form1.Label19.Refresh;                                //005A890A..8917
+  anz := DataModule2.Table1.RecordCount;                //005A891C..8929 vtbl+14C [ebp-10]
+  krg := DataModule2.Table1Nummer.AsInteger;            //005A892C..8939 vtbl+58 [ebp-20]
+  DataModule2.Table1.IndexName := '';                   //005A893C..8943 xor edx
+  DataModule2.Table1.First;                             //005A8948
+  DataModule2.Table10.Open;                             //005A8952 [0A4]
+  DataModule2.Table10.IndexName := 'num';               //005A895F..896C
+  DataModule2.Table10.First;                            //005A8971
+  { 005A897E..8C74: Vorlauf ueber alle Personen - fehlende "andere
+    Beziehung"-Eintraege in Table10 nachtragen (beide Richtungen). }
+  while not DataModule2.Table1.Eof do                   //005A8C74..C80 je->8983 (Vorsprung 897E)
+  begin
+    Form1.Label18.Caption :=                            //005A8983..8990 IntToStr [ebp-330]
+      IntToStr(DataModule2.Table1Nummer.AsInteger);
+    Form1.Label18.Refresh;                              //005A89B3..89C0
+    if (DataModule2.Table1Vater.AsInteger > 0) and      //005A89C5..89D4 jle->8C5C
+       (DataModule2.Table1Mutter.AsInteger > 0) then    //005A89DA..89E9 jle->8C5C
+    begin
+      if DataModule2.Table10.FindKey(                   //005A89EF..8A20 je->8B7C
+           [DataModule2.Table1Vater.AsInteger]) then
+      begin
+        gef := 0;                                       //005A8A26 xor edi
+        { 005A8A28..8A8D: innere Suche in Table10 (Index 'num') - bricht ab,
+          sobald Nummer <> Vater ist (Ende der Treffergruppe). }
+        while True do                                   //005A8A28 jmp->8A6F (Ruecklauf 8A8D)
+        begin
+          if DataModule2.Table10Nummer.AsInteger <>     //005A8A6F..8A8D je->8A2A
+             DataModule2.Table1Vater.AsInteger then
+            Break;                                      //   -> 005A8A8F
+          if DataModule2.Table10Epnum.AsInteger =       //005A8A2A..8A48 jne->8A51
+             DataModule2.Table1Mutter.AsInteger then
+          begin
+            gef := 1;                                   //005A8A4A
+            Break;                                      //005A8A4F jmp->8A8F
+          end;
+          DataModule2.Table10.Next;                     //005A8A51
+          if DataModule2.Table10.Eof then Break;        //005A8A5E..8A6D jne->8A8F
+        end;
+        if gef = 0 then                                 //005A8A8F..8A91 jne->8C5C
+        begin
+          { 005A8A97..8B77: Zahn 1 (Vater->Mutter) und Zahn 2 (Mutter->Vater) }
+          DataModule2.Table10.Append;                   //005A8A97
+          DataModule2.Table10Nummer.AsInteger :=        //005A8AA4..8AB1 [3B4]
+            DataModule2.Table1Vater.AsInteger;          //   <- [538]
+          DataModule2.Table10Epnum.AsInteger :=         //005A8AC3..8AD0 [3B8]
+            DataModule2.Table1Mutter.AsInteger;         //   <- [53C]
+          DataModule2.Table10Verbind.AsString :=        //005A8AE2 [3E4]
+            'andere Beziehung';
+          DataModule2.Table10.Post;                     //005A8AF7
+          DataModule2.Table10.Append;                   //005A8B07
+          DataModule2.Table10Nummer.AsInteger :=        //005A8B14..8B21
+            DataModule2.Table1Mutter.AsInteger;
+          DataModule2.Table10Epnum.AsInteger :=         //005A8B33..8B40
+            DataModule2.Table1Vater.AsInteger;
+          DataModule2.Table10Verbind.AsString :=        //005A8B52
+            'andere Beziehung';
+          DataModule2.Table10.Post;                     //005A8B67
+        end;
+      end
+      else
+      begin
+        { 005A8B7C..8C4C: Paar nicht vorhanden - beide Zaehne anlegen }
+        DataModule2.Table10.Append;                     //005A8B7C
+        DataModule2.Table10Nummer.AsInteger :=          //005A8B89..8B96
+          DataModule2.Table1Vater.AsInteger;
+        DataModule2.Table10Epnum.AsInteger :=           //005A8BA8..8BB5
+          DataModule2.Table1Mutter.AsInteger;
+        DataModule2.Table10Verbind.AsString :=          //005A8BC7
+          'andere Beziehung';
+        DataModule2.Table10.Post;                       //005A8BDC
+        DataModule2.Table10.Append;                     //005A8BEC
+        DataModule2.Table10Nummer.AsInteger :=          //005A8BF9..8C06
+          DataModule2.Table1Mutter.AsInteger;
+        DataModule2.Table10Epnum.AsInteger :=           //005A8C18..8C25
+          DataModule2.Table1Vater.AsInteger;
+        DataModule2.Table10Verbind.AsString :=          //005A8C37
+          'andere Beziehung';
+        DataModule2.Table10.Post;                       //005A8C4C
+      end;
+    end;
+    DataModule2.Table1.Next;                            //005A8C5C
+  end;
+  DataModule2.Table1.IndexName := '';                   //005A8C86..8C8D
+  DataModule2.Table1.First;                             //005A8C92
+  if gvar_02536BA0 > 1 then                             //005A8C9C..CA4 jle->8D9F
+  begin
+    { Jahresfilter: nur Personen bis zum eingestellten Jahr }
+    DataModule2.Table1.Filter := 'gebjahr<=' +          //005A8CAA..8CF4 CatN4
+      IntToStr(gvar_02536BA0) + ' and taufjahr<=' +
+      IntToStr(gvar_02536BA0);
+    DataModule2.Table1.Filtered := True;                //005A8D07..8D10 vtbl+190
+    DataModule2.Table9.Filter := 'gebjahr<=' +          //005A8D16..8D5B CatN4
+      IntToStr(gvar_02536BA0) + ' and taufjahr<=' +
+      IntToStr(gvar_02536BA0);
+    DataModule2.Table9.Filtered := True;                //005A8D76..8D82 vtbl+190
+    Form1.DBText1.Color := clYellow;                    //005A8D88..8D9A $0000FFFF
+  end;
+  DataModule2.Table1.FindKey([krg]);                    //005A8D9F..8DBC [ebp-20]
+  Form1.Label18.Caption := ' ';                         //005A8DC1..8DD3 SetText
+  Form1.Label18.Update;                                 //005A8DD8..8DE7 vtbl+88
+  Form1.Label18.Caption := '0 %';                       //005A8DED..8DFF
+  kz := 1;                                              //005A8E04 [ebp-8]
+  dead2 := '';                                          //005A8E0B [ebp-24] toter String
+  gedausx;                                              //005A8E13..8E16 Self
+  DataModule2.Table13.Open;                             //005A8E1B [0CC]
+  DataModule2.Table13.IndexName := 'ort_';              //005A8E28
+  DataModule2.Table1.First;                             //005A8E3A
+  locList := '';                                        //005A8E44 [ebp-30]
+  dead3 := '';                                          //005A8E4C [ebp-34] toter String
+  DataModule2.Table38.Open;                             //005A8E54 [530]
+  DataModule2.Table38.IndexName := 'tit';               //005A8E61
+  { 005A8E73: Sprung zur Schleifenbedingung am Blockende (005ABEEC) -
+    Personenschleife ueber Table1 (Kopf = Fortschrittsanzeige). }
+  while not DataModule2.Table1.Eof do                   //005A8E73 jmp->ABEEC
+  begin
+    u := IntToStr(Round(kz / anz * 100 / 2) + 50) + ' %'; //005A8E78..8EA4 fild/fdiv/fmul100/fdiv2 ROUND +32(=50)
+    Form1.Label18.Caption := u;                          //005A8EB4 [400] SetText
+    Form1.Label18.Refresh;                               //005A8ECC
+    notiz := 0;                                          //005A8EDE..8EE0 [ebp-14]
+    WriteLn(f, '0 @I' + IntToStr(DataModule2.Table1Nummer.AsInteger) + //005A8EE3..8EFB CatN3
+      '@ INDI');                                         //   push '0 @I', IntToStr, '@ INDI'
+    nm := Trim(DataModule2.Table1Vornamen.AsString);     //005A8F32..8F45 +544
+    if Pos('!', nm) > 0 then                             //005A8F53..8F62 jle->8F96
+      { zweite Pos liest den Vornamen erneut (ungetrimmt) - Indizes koennen
+        um fuehrende Leerzeichen abweichen, 1:1 aus dem Listing }
+      Delete(nm, Pos('!', DataModule2.Table1Vornamen.AsString), 1); //005A8F64..8F91 LStrDelete
+    if gvar_02536650 = 1 then                            //005A8F96..8F9D jne->902A
+      WriteLn(f, '1 NAME ' + AnsiToUtf8(                 //005A8FA3..9011 CatN4
+        nm + ' /' + Trim(DataModule2.Table1Name.AsString) + '/'))
+    else                                                 //005A9028 jmp->908D / 902A
+      WriteLn(f, '1 NAME ' + nm + ' /' +                 //005A902A..9076 CatN5
+        Trim(DataModule2.Table1Name.AsString) + '/');
+    if Trim(DataModule2.Table1Namex.AsString) <> '' then //005A908D..90B8 jbe->9184
+    begin
+      if gvar_02536650 = 1 then                          //005A90BE..90C5 jne->9124
+        WriteLn(f, '1 NAME /' + AnsiToUtf8(              //005A90C7..910B CatN3
+          DataModule2.Table1Namex.AsString) + '/')
+      else                                               //005A9122 jmp->916E / 9124
+        WriteLn(f, '1 NAME /' +                          //005A9124..9157 CatN3
+          DataModule2.Table1Namex.AsString + '/');
+      WriteLn(f, '2 TYPE variant');                      //005A916E
+    end;
+    if Trim(DataModule2.Table1Rufname.AsString) <> '' then //005A9184..91AF jbe->91F1
+      WriteLn(f, '2 _RUFNAME ' +                         //005A91B1..91DA CatN3
+        DataModule2.Table1Rufname.AsString);             {KEINE Utf8-Variante}
+    if Trim(DataModule2.Table1Hausname.AsString) <> '' then //005A91F1..921C jbe->92E8
+    begin
+      if gvar_02536650 = 1 then                          //005A9222..9229 jne->9288
+        WriteLn(f, '1 NAME /' + AnsiToUtf8(              //005A922B..926F CatN3
+          DataModule2.Table1Hausname.AsString) + '/')
+      else                                               //005A9286 jmp->92D2 / 9288
+        WriteLn(f, '1 NAME /' +                          //005A9288..92BB CatN3
+          DataModule2.Table1Hausname.AsString + '/');
+      WriteLn(f, '2 TYPE estate');                       //005A92D2
+    end;
+    if ucase(DataModule2.Table1Geschlecht.AsString) = 'W' then //005A92E8..9323 jne->9340
+      WriteLn(f, '1 SEX F')                              //005A9325
+    else if ucase(DataModule2.Table1Geschlecht.AsString) = 'M' then //005A9340..937B jne->9398
+      WriteLn(f, '1 SEX M')                              //005A937D
+    else if (ucase(DataModule2.Table1Geschlecht.AsString) = 'X') or //005A9398..93D3 je->9402
+       (Trim(DataModule2.Table1Geschlecht.AsString) = '') then //005A93D5..9400 jne->9418
+      WriteLn(f, '1 SEX U');                             //005A9402
+    if Trim(DataModule2.Table1Beruf.AsString) <> '' then //005A9418..9443 jbe->94E5
+    begin
+      if gvar_02536650 = 1 then                          //005A9449..9450 jne->94A5
+        WriteLn(f, '1 OCCU ' + AnsiToUtf8(               //005A9452..948C CatN3
+          DataModule2.Table1Beruf.AsString))
+      else                                               //005A94A3 jmp->94E5 / 94A5
+        WriteLn(f, '1 OCCU ' + DataModule2.Table1Beruf.AsString); //005A94A5..94CE
+    end;
+    if Trim(DataModule2.Table1Religion.AsString) <> '' then //005A94E5..9510 jbe->9552
+      WriteLn(f, '1 RELI ' + DataModule2.Table1Religion.AsString); //005A9512..953B CatN3 {KEINE Utf8-Variante}
+    if Trim(DataModule2.Table1IDNR.AsString) <> '' then  //005A9552..957D jbe->95BF
+      WriteLn(f, '1 IDNO ' + DataModule2.Table1IDNR.AsString); //005A957F..95A8 CatN3 {KEINE Utf8-Variante}
+    if Trim(DataModule2.Table1Quelle.AsString) <> '' then //005A95BF..95EA jbe->9681
+      if DataModule2.Table38.FindKey(                    //005A95F0..962D je->9681
+        [DataModule2.Table1Quelle.AsString]) then
+        WriteLn(f, '1 SOUR @S' +
+          IntToStr(DataModule2.Table38.RecNo) + '@');    //005A962F..966A CatN3 (v150 = GetRecNo)
+    if (Trim(DataModule2.Table1Gebjahr.AsString) <> '') or //005A9681..96AC ja->96DF
+       (Trim(DataModule2.Table1Gebort.AsString) <> '') then //005A96AE..96D9 jbe->9AD1
+    begin
+      WriteLn(f, '1 BIRT');                              //005A96DF
+      if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //005A96F5..9720 jbe->97AE
+        WriteLn(f, '2 DATE ' + sub_00582C24(             //005A9726..9797 CatN3
+          DataModule2.Table1Gebtag.AsString,              //   554 Tag
+          DataModule2.Table1Gebmonat.AsString,            //   558 Monat
+          DataModule2.Table1Gebjahr.AsString));           //   55C Jahr
+      if Trim(DataModule2.Table1Gebort.AsString) <> '' then //005A97AE..97D9 jbe->9A02
+      begin
+        DataModule2.Table13.FindKey(                      //005A97DF..9805 ohne Result-Test
+          [DataModule2.Table1Gebort.AsString]);
+        plac := DataModule2.Table1Gebort.AsString + ',' + //005A981A..9887 CatN7 [ebp-1C]
+          DataModule2.Table13Lkr.AsString + ',' +         //   0A64 Landkreis
+          DataModule2.Table13Bland.AsString + ',' +       //   0A58 Bundesland
+          DataModule2.Table13Land.AsString;               //   0A4C Land
+        if gvar_02536650 = 1 then                         //005A989A..98A1 jne->98E0
+          WriteLn(f, '2 PLAC ' + AnsiToUtf8(plac));       //005A98A3..98C7
+        else                                              //005A98DE jmp->990A / 98E0
+          WriteLn(f, '2 PLAC ' + plac);                   //005A98E0..98F3 Cat3
+        if DataModule2.Table13.FindKey(                   //005A990A..9947 je->9A02
+          [DataModule2.Table1Gebort.AsString]) then
+        begin
+          WriteLn(f, '3 _LOC @P' +
+            IntToStr(DataModule2.Table13.RecNo) + '@');   //005A994D..9988 CatN3 (v150 = GetRecNo)
+          sub_00576EB0(DataModule2.Table13.RecNo, u);     //005A999F..99B5 6-stellig
+          if Pos(u, locList) = 0 then                     //005A99BA..99CA jne->9A02
+          begin
+            sub_00576EB0(DataModule2.Table13.RecNo, u);   //005A99CF..99E5 (erneut)
+            locList := locList + u + '*';                 //005A99EA CatN3 [ebp-30]
+          end;
+        end;
+      end;
+    end;
+    DataModule2.Table38.First;                            //005A9A02
+{CHUNK5}
 end;
 
 procedure TForm3.gedein_neu;
