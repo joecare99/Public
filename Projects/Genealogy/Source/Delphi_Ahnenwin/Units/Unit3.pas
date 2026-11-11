@@ -11612,8 +11612,198 @@ begin
 end;
 
 procedure TForm3.gedaus;
+var
+  f: TextFile;                  {005A7C5B [ebp-20C] Export-Textdatei (lokal, nicht gvar_02536458)}
+  fname: AnsiString;            {005A7D73 [ebp-210] SaveDialog1.FileName}
+  tbl: TTable;                  {005A7CB0 [edi] Tabelle der Form26-Radiogruppe (uninitialisiert, wenn nur Radio2)}
+  sektion: AnsiString;          {005A7CA1 [ebp-18] toter Merker 'nummer'/'nn' (4x geschrieben, nie gelesen)}
+  dead1: AnsiString;            {005A7EF9 [ebp-2C] toter String (einziges Vorkommen := '')}
+  dead2: AnsiString;            {005A8E0B [ebp-24] toter String (einziges Vorkommen := '')}
+  dead3: AnsiString;            {005A8E4C [ebp-34] toter String (einziges Vorkommen := '')}
+  st4, st5: AnsiString;         {005A7F51..FD7 DateToStr-Zwischenspeicher}
+  tag, monat, jahr: AnsiString; {005A7F68..FEC Copy-Ergebnisse (Tag/Monat/Jahr)}
+  dat: AnsiString;              {005A7FF1 [ebp-218] sub_00582C24-Ergebnis}
+  u: AnsiString;                {005A7FFE [ebp-214] '1 DATE '-Zeile}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005A7C40: gedaus - GEDCOM-Export (5.5.1) in die ueber SaveDialog1
+    gewaehlte Datei. Zuerst wertet die Form26-Radiogruppe die Sortierung aus
+    (Table24/Index 'dsn', Table1 ohne Index), dann folgen der
+    SaveDialog-Dialog-Setup (DefaultExt/Filter/Options) mit Rewrite(f), der
+    HEAD-/CHAR-Block (Form27-Radios steuern gvar_02536654/6650), die
+    Kopfzeilen SOUR/VERS/DEST/DATE/FILE/SUBM/GEDC/PLAC/LANG und der
+    SUBM-Adressblock aus den Form27-Edits (UTF-8-Zweig via AnsiToUtf8).
+    Danach UI-Status, Vorbereitung ("andere Beziehung"-Vorlauf ueber
+    Table10, optionaler Jahresfilter) und der Personenschleifen-Lauf.
+    SEH-Rahmen/Prolog-Teardown (@LStrArrayClr/@LStrClr ab 005AE7B3) - nicht
+    transkribiert. }
+
+  //005A7C6F..C79 DataModule2.Table1Nummer.AsInteger - Ergebnis ungenutzt
+  Form1.Invalidate;                                  //005A7C7C..C85 TControl.Invalidate vtbl+7C
+  if Form26.RadioButton1.Checked then                //005A7C88..C9F Checked vtbl+0C4
+  begin
+    sektion := 'nummer';                             //005A7CA1 [ebp-18]
+    tbl := DataModule2.Table24;                      //005A7CAE..CB0 [1D0]
+    tbl.IndexName := 'dsn';                          //005A7CB6..CBD
+  end;
+  if Form26.RadioButton2.Checked then                //005A7CC2..CD9
+    sektion := 'nummer';                             //005A7CDB [ebp-18] tbl bleibt unveraendert
+  if Form26.RadioButton3.Checked then                //005A7CE8..CFF
+  begin
+    sektion := 'nummer';                             //005A7D01 [ebp-18]
+    tbl := DataModule2.Table1;                       //005A7D0E..D10 [5C]
+    tbl.IndexName := '';                             //005A7D13..D17 xor edx = ''
+  end;
+  Form26.Hide;                                       //005A7D1C..D23 TCustomForm.Hide
+  Form26.ModalResult := 2;                           //005A7D28..D2F [24C] FModalResult
+  Form1.Refresh;                                     //005A7D39..D40 TControl.Refresh
+  if gvar_0253692C = 'Over' then                     //005A7D45..D56
+    sektion := 'nn';                                 //005A7D58 [ebp-18]
+  if tbl = DataModule2.Table5 then                   //005A7D65..D6D je->005AE7B3
+    Exit;                                            //   Epilog (Abbruch ohne Export)
+  fname := Form1.SaveDialog1.FileName;               //005A7D73..D86 GetFileName +3FC
+  System.Assign(f, fname);                           //005A7D8B..D93 @Assign auf [ebp-20C]
+  Form1.SaveDialog1.DefaultExt := 'ged';             //005A7D98..DAD [74]
+  Form1.SaveDialog1.Filter := 'Gedcom-Dateien (*.ged)|*.ged'; //005A7DB2..DC7 [60]
+  Form1.SaveDialog1.Options := [ofHideReadOnly];     //005A7DCC..DDF [5C] := 2
+  Rewrite(f);                                        //005A7DE2..DE9 @RewritText + @_IOTest
+  if Form27.RadioButton2.Checked then                //005A7DEE..E05
+    WriteLn(f, #$EF#$BB#$BF'0 HEAD')                 //005A7E07 BOM + '0 HEAD'
+  else
+    WriteLn(f, '0 HEAD');                            //005A7E1F
+  gvar_02536654 := 0;                                //005A7E35..E37
+  gvar_02536650 := 0;                                //005A7E3C..E3E
+  gvar_02536658 := 0;                                //005A7E43..E45
+  if Form27.RadioButton1.Checked then                //005A7E4A..E61
+  begin
+    gvar_02536654 := 1;                              //005A7E63
+    WriteLn(f, '1 CHAR ANSI');                       //005A7E6D
+  end
+  else if Form27.RadioButton2.Checked then           //005A7E85..E9C
+  begin
+    gvar_02536650 := 1;                              //005A7E9E
+    WriteLn(f, '1 CHAR UTF-8');                      //005A7EA8
+  end
+  else if Form27.RadioButton3.Checked then           //005A7EC0..ED7
+  begin
+    gvar_02536650 := 1;                              //005A7ED9
+    WriteLn(f, '1 CHAR Unicode');                    //005A7EE3
+  end;
+  dead1 := '';                                       //005A7EF9 [ebp-2C] toter String
+  WriteLn(f, '1 SOUR AHNENWIN');                     //005A7F01
+  WriteLn(f, '2 VERS 5.1');                          //005A7F17
+  WriteLn(f, '1 DEST OTHER');                        //005A7F2D
+  st4 := DateToStr(Date);                            //005A7F43..F63
+  jahr := Copy(st4, 7, 4);                           //005A7F68..F78 [ebp-21C]
+  st5 := DateToStr(Date);                            //005A7F7D..F9D
+  monat := Copy(st5, 4, 2);                          //005A7FA2..FB2 [ebp-224]
+  st4 := DateToStr(Date);                            //005A7FB7..FD7
+  tag := Copy(st4, 1, 2);                            //005A7FDC..FEC [ebp-22C]
+  dat := sub_00582C24(tag, monat, jahr);             //005A7FF1..FF9 [ebp-218]
+  u := '1 DATE ' + dat;                              //005A7FFE..800F Cat3 [ebp-214]
+  WriteLn(f, u);                                     //005A8014..8026
+  if gvar_02536650 = 1 then                                 //005A802B..8032 jne->809D
+  begin
+    u := '1 FILE ' + AnsiToUtf8(                           //005A8034..806E CatN3
+      ExtractFileName(Form1.SaveDialog1.FileName));        //   [ebp-240/23C/238]
+    WriteLn(f, u);                                         //005A8084
+  end
+  else
+  begin
+    u := '1 FILE ' + ExtractFileName(                      //005A809D..80C6 CatN3
+      Form1.SaveDialog1.FileName);                         //   [ebp-24C/248]
+    WriteLn(f, u);                                         //005A80DC
+  end;
+  WriteLn(f, '1 SUBM @S0@');                               //005A80F3
+  WriteLn(f, '1 GEDC');                                    //005A8109
+  WriteLn(f, '2 VERS 5.5.1');                              //005A811F
+  WriteLn(f, '2 FORM LINEAGE-LINKED');                     //005A8135
+  WriteLn(f, '1 PLAC');                                    //005A814B
+  WriteLn(f, '2 FORM place, county, state, country');      //005A8161
+  { SUBM-Block: Adressdaten aus den Form27-Edits, im UTF-8-Zweig konvertiert }
+  if gvar_02536650 = 1 then                                 //005A8177..817E jne->8556
+  begin
+    WriteLn(f, '1 LANG German');                           //005A8184
+    if Trim(Form27.Edit1.Text) <> '' then                  //005A819A..81CA jbe->8514
+    begin
+      WriteLn(f, AnsiToUtf8('0 @S0@ SUBM'));               //005A81D0..81E0
+      WriteLn(f, '1 ADDR');                                //005A81F7
+      u := '2 ADR1 ' + AnsiToUtf8(Form27.Edit1.Text);      //005A820D..8236 CatN3
+      WriteLn(f, u);                                       //005A824C
+      if Trim(Form27.Edit2.Text) <> '' then                //005A8263..8293 jbe->82EB
+      begin
+        u := '2 ADR2 ' + AnsiToUtf8(Form27.Edit2.Text);    //005A8295..82BE CatN3
+        WriteLn(f, u);                                     //005A82D4
+      end;
+      if Trim(Form27.Edit3.Text) <> '' then                //005A82EB..831B jbe->8373
+      begin
+        u := '1 POST ' + AnsiToUtf8(Form27.Edit3.Text);    //005A831D..8346 CatN3
+        WriteLn(f, u);                                     //005A835C
+      end;
+      if Trim(Form27.Edit5.Text) <> '' then                //005A8373..83A3 jbe->83FB
+      begin
+        u := '1 CITY ' + AnsiToUtf8(Form27.Edit5.Text);    //005A83A5..83CE CatN3
+        WriteLn(f, u);                                     //005A83E4
+      end;
+      if Trim(Form27.Edit4.Text) <> '' then                //005A83FB..842B jbe->8483
+      begin
+        u := '1 PHON ' + AnsiToUtf8(Form27.Edit4.Text);    //005A842D..8456 CatN3
+        WriteLn(f, u);                                     //005A846C
+      end;
+      if Trim(Form27.Edit6.Text) <> '' then                //005A8483..84B3 jbe->8894
+      begin
+        u := '1 EMAIL ' + AnsiToUtf8(Form27.Edit6.Text);   //005A84B9..84E2 CatN3
+        WriteLn(f, u);                                     //005A84F8
+      end;
+    end
+    else
+    begin
+      WriteLn(f, AnsiToUtf8('0 @S0@ SUBM'));               //005A8514..8524
+      WriteLn(f, '1 NAME UNKNOWN');                        //005A853B
+    end;
+  end
+  else
+  begin
+    WriteLn(f, '1 LANG German');                           //005A8556
+    if Trim(Form27.Edit1.Text) <> '' then                  //005A856C..859C jbe->8868
+    begin
+      WriteLn(f, '0 @S0@ SUBM');                           //005A85A2
+      WriteLn(f, '1 ADDR');                                //005A85B8
+      u := '2 ADR1 ' + Form27.Edit1.Text;                  //005A85CE..85E6 CatN2
+      WriteLn(f, u);                                       //005A85FC
+      if Trim(Form27.Edit2.Text) <> '' then                //005A8613..8643 jbe->868A
+      begin
+        u := '2 ADR2 ' + Form27.Edit2.Text;                //005A8645..865D CatN2
+        WriteLn(f, u);                                     //005A8673
+      end;
+      if Trim(Form27.Edit3.Text) <> '' then                //005A868A..86BA jbe->8701
+      begin
+        u := '1 POST ' + Form27.Edit3.Text;                //005A86BC..86D4 CatN2
+        WriteLn(f, u);                                     //005A86EA
+      end;
+      if Trim(Form27.Edit5.Text) <> '' then                //005A8701..8731 jbe->8778
+      begin
+        u := '1 CITY ' + Form27.Edit5.Text;                //005A8733..874B CatN2
+        WriteLn(f, u);                                     //005A8761
+      end;
+      if Trim(Form27.Edit4.Text) <> '' then                //005A8778..87A8 jbe->87EF
+      begin
+        u := '1 PHON ' + Form27.Edit4.Text;                //005A87AA..87C2 CatN2
+        WriteLn(f, u);                                     //005A87D8
+      end;
+      if Trim(Form27.Edit6.Text) <> '' then                //005A87EF..881F jbe->8894
+      begin
+        u := '1 EMAIL ' + Form27.Edit6.Text;               //005A8821..8839 CatN2
+        WriteLn(f, u);                                     //005A884F
+      end;
+    end
+    else
+    begin
+      WriteLn(f, '0 @S0@ SUBM');                           //005A8868
+      WriteLn(f, '1 NAME UNKNOWN');                        //005A887E
+    end;
+  end;
+  Form27.Visible := False;                                 //005A8894..889D SetVisible(0)
+{CHUNK3}
 end;
 
 procedure TForm3.gedein_neu;
