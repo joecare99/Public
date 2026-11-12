@@ -7,6 +7,7 @@ Technische Merkhilfen für die methodische Rekonstruktion. Doku des Fortschritts
 - Marker-Technik: offene Blöcke mit `end; {temp}` provisorisch schließen; jeder Chunk ersetzt den `{0058.... - naechster Anlauf (Cxx: ...)}`-Marker; jeder Zwischenstand baut.
 - **Assy-`jmp X;`-Zeilen** niemals als Pascal schreiben — nur als `{ jmp X; }`-Kommentar (sonst E2003/E2029).
 - **E2029 `'.' erwartet`** an der Procedure-Ende heißt fast immer: ein `end;` zu viel irgendwo vorher (Block-Balance prüfen).
+- **Ausnahme E2029 (2026-11-11, gedaus)**: eine noch offene `while`-Schleife am Prozedurenende erzeugt ebenfalls E2029 (Person-Loop-Eintrag `005A897E`, schließt erst im letzten Chunk). **Build: nur noch erwarteter E2029 (offene while-Schleife bis zum letzten Chunk) + Kaskade F2063** — ausdrücklich NICHT „rot".
 - `je Label` → Loop-Top ohne `Next` = Endlosschleife im Original → Pascal: `Next; Continue;` (Terminierungssicherheit).
 - Sprünge `je X` / `jne Y` aus Loop-Tails auf Loop-Köpfe als `Continue`, auf Loop-Ende als `Break` / Fallthrough übersetzen.
 
@@ -18,7 +19,7 @@ Technische Merkhilfen für die methodische Rekonstruktion. Doku des Fortschritts
 | `call dword [ecx+0B0]` mit edx=Str | `TField.AsString :=` (Setter) auf TField-Objekt |
 | `call dword [ecx+2C4]` | `TDataSet.FindKey` (test al → je) |
 | `call dword [ecx+248]` | `TDataSet.Post` |
-| `call dword [ecx+150]` | **kontextabhängig**: auf lfbh2 = Bookmark-getter (bmk); auf Table13 [0CC] = **RecNo** (bestätigt: oabk L2802 `sub_00576EB0(Table13.RecNo,u)`, L5872) |
+| `call dword [ecx+150]` | **GetRecNo** (Slot +150 auf TDataSet-Nachfolgern, NICHT GetBookmark — das ist Slot **21C**; Beweis: `Projects_AhnenWin\_Unit65.pas` L278 `function GetRecNo:Integer; virtual;//v150` in `TBDEDataSet`, DBClient.pas L191 `TCustomClientDataSet`, DB.pas L1224; bestätigt: oabk L2802 `sub_00576EB0(Table13.RecNo,u)`, L5872) |
 | `call dword [ecx+1A0]` | `GotoBookmark` (edx=bmk) |
 | `call dword [edx+0C4]` | `TCheckBox.Checked` |
 | `call @LStrCatN` edx=N | `concat` aus N Strings (Pushs in umgekehrter Reihenfolge) |
@@ -200,7 +201,26 @@ zzg [ebp-38] (AnsiString) · unkMut [ebp-40] · unkVat [ebp-44] · kcount [ebp-1
 - **In-Body-TRLR-Test vs. While-Bedingung**: 005A4D7E prueft `Copy(ucase(Trim(line)),1,6)='0 TRLR'` **im Body** (mit FAM-Flush), die While-Bedingung A571D..A5771 prueft dasselbe und springt `jne->EFC7`. Beide Faelle enden auf Epilog A5777 — im Pascal faellt der Flush auf die While-Bedingung durch, die dann exitet (semantisch identisch).
 - **`@ FAM`-Init hat kein else**: `if Pos('@ FAM',line)>0 then <Init>` (jle->A437A) faellt im false-Fall direkt in den klist-Scan und das gesamte Dispatch durch — kein else-Zweig.
 - **`Inc()` auf Single-Globals nicht moeglich**: `gvar_02536668/666C/6644` sind `Single`, aber das Listing inkrementiert als dword (`inc dword ptr ds:[2536668]` + `fild`) — im Pascal `g := g + 1;` (Inc kompiliert nicht auf Single).
-- **Restliste: 3 Unit3-Stubs** — gedaus 005A7C40, gedein2 00596994, gedein_neu 0057EDEC; alle Listings liegen vor.
+- **Restliste: 3 Unit3-Arbeiten** — gedaus 005A7C40 (**in Arbeit, Chunks 1–6, Rest bis 005AF0FA**), gedein2 00596994, gedein_neu 0057EDEC; alle Listings liegen vor. (gedausx 005A634C ist DONE, s. Abschnitt oben.)
 
 ## gedausv SaveDialog-Setup korrigiert (2026-11-11)
 - **L7665..7667 transkribierten falsche Setter**: `Title := 'ged'` / `Filter` / `FilterIndex := 2`. Das Listing 005B5348..5382 zeigt dagegen `+74 := 'ged'` (DefaultExt), `+60 := 'Gedcom-Dateien (*.ged)|*.ged'` (Filter) und `[+5C] := 2` (= `Options := [ofHideReadOnly]`) - korrigiert auf `DefaultExt`/`Filter`/`Options`, Annotationen `005B534B..5350`, `005B5365..536A`, `005B537C..5382`.
+
+## VMT-Slot +150 = GetRecNo / alle bmk-Stubs ersetzt (2026-11-11)
+- **Slot +150 auf TDataSet-Nachfolgern ist `GetRecNo`, NICHT `GetBookmark`.** Beweis: `Projects_AhnenWin\_Unit65.pas` L278 `function GetRecNo:Integer; virtual;//v150` in `TBDEDataSet`; DBClient.pas L191 (`TCustomClientDataSet`); DB.pas L1224 zeigt `GetBookmark` = Slot **21C**. Konsequenz für die Assembler-Muster-Tabelle oben: `call dword [ecx+150]` = RecNo — die alte Lesart „Bookmark-getter auf lfbh2" war falsch (die RecNo-Bestätigung über oabk L2802/L5872 bleibt gültig).
+- Alle **17** `bmk := -1`-Recon-Stubs ersetzt: 1× illki (`Form1.lfbh.RecNo`, roher Zugriff 005845E0), 16× gedausv. Grep-Stand danach: `bmk := -1` = **0**, `bmk := .*RecNo;` = **16**.
+- Veraltete Annotations-Adressen auf die realen `call dword ptr [edx+150]`-Stellen korrigiert: 005B94D6, 005B96A4, 005B9A29, 005B9BF7, 005B9F63, 005BA05E.
+
+## gedaus Chunks 1–6 + BIRT-Fix (2026-11-11) — IN ARBEIT
+- **gedaus (TForm3.gedaus, 005A7C40..005AF0FA) in Arbeit: Chunks 1–6 transkribiert, Chunk 7 läuft gerade** (Marker `{CHUNK7}` an 005AA960). Extrakt: `C:\Users\Mir\AppData\Local\Temp\opencode\gedaus.txt` (6549 Listing-Zeilen, roh 005A7C40..005AF0FA aus Projects_AhnenWin\Unit3.pas). Rest ab 005AA960: RESI/Adr-Block, FAMS/FAMC (Table32), FAM-Loop MARR/DIV, Notes via `Form1.Memo1` (Form1+40C), PLAC/locList, Table38-SOUR-Loop, `0 TRLR`, CloseFile, UI-Reset, Form1.anzeigen, Prozedurenende — ~2 Chunks bis 005AF0FA.
+- Chunks 1–4 (vorher): Loop offen, notiz, INDI/NAME/NAMEx/RUFNAME/Hausname/SEX/OCCU/RELI/IDNO, Quelle → `1 SOUR @S`, BIRT mit Date/PLAC/_LOC + locList.
+- **Chunk 5 (005A9A0F..005AA374)**: Quelleg → `2 SOUR @S` INNERHALB BIRT; CHR-Guard + `1 CHR` + `2 DATE` + Taufort PLAC/_LOC; `Table38.IndexName := 'tit'` (005A9E52) innerhalb CHR; Quellet → `2 SOUR @S`; Taufpat → `2 _GODP` (außerhalb CHR); DEAT-Guard + `1 DEAT` + `2 DATE` + Stort PLAC/_LOC; `Table38.First` (005AA374) innerhalb DEAT.
+- **BIRT-Struktur-Fix (Chunk 5)**: `Table38.First` (005A9A02) + Quelleg-Block gehören INNERHALB von BIRT — Beweis: Guard-Skip `005A96D9 jbe→005A9AD1`. Chunk 4 hatte BIRT vor `First` faelschlich geschlossen; korrigiert.
+- **Chunk 6 (005AA374..005AA960)**: Quelles (`Table1Quelles` //5A8) → `2 SOUR @S` und CAUS (`Table1Todesurs` //58C) → `2 CAUS`, beide INNERHALB DEAT (Skip `005AA04B jbe→005AA510`); DEAT `end;` vor 005AA510; BURI-Guard (Begjahr//598 oder Begort//59C, Skip→005AA891) + `1 BURI` + `2 DATE` (sub_00582C24(Begtag,Begmonat,Begjahr)) + Begort PLAC/_LOC; `Table38.First` (005AA891) AUSSERHALB BURI; Quelleb (`Table1Quelleb` //5AC) → `2 SOUR @S`.
+- **Build-Fixes in Units\Unit3.pas (2026-11-11)**: E2003 `clYellow` (Jahresfilter-Block //005A8D88) → `Graphics,` in die uses (Muster Unit10.pas //Controls, Graphics, Windows; Unit26.pas mit gleichem `Form1.DBText1.Color := clYellow`); E2153 ×4 — je ein überschüssiges `;` vor `else` in den vier PLAC-then-Zweigen entfernt (Annotationen //005A98A3..98C7, //005A9CF3..9D17, //005AA215..A239, //005AA732..A768). **Build: nur noch erwarteter E2029 (offene while-Schleife bis zum letzten Chunk) + Kaskade F2063** — nicht „rot".
+
+## Tooling + Annotations-Checks gedaus (2026-11-11)
+- Temp-Verzeichnis `C:\Users\Mir\AppData\Local\Temp\opencode` neu erzeugt: `extract_gedaus.py` → `gedaus.txt` (6549 Zeilen roh 005A7C40..005AF0FA), `dumpg.py` (Range-Dump), `gedaus-jumps.txt` (336 Branches), `chk8_gedaus.py`.
+- `chk8` prüft: Annotation-Existenz + Adressbereich, 4-Hex-Range-Tails, Auflösung der Sprungziele, Fehl-Region (005B…) und Monotonie mit Ausnahme für Rücksprünge auf bekannte Sprungziele. Stand: **`bad annotations: 0 / order warnings: 0`**.
+- Zwei über die Order-Prüfung gefundene Annotations-Fehler, beide BEHOBEN: Personen-Loop-`while` (Entry `005A897E jmp→8C74`, Cond `005A8C74..C80 je→8983`, redundant Exit-Test `005A8C66..C72 jne→8C86`) und inneres `while True` (`005A8A28 jmp→8A6F`).
+- **SVN-Commit weiterhin ausstehend** (Diskstation 192.168.0.98 nicht erreichbar).

@@ -5,6 +5,7 @@ program is listed with the address it had in the AHNENWIN 5.1 binary
 and with its reconstruction state.
 
 Legend: **done** = the body was reconstructed from the listing, 
+**in Arbeit** = partially reconstructed (work in progress), 
 **open** = the body is still a placeholder.
 
 ## Unit1
@@ -302,7 +303,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit3
 
-- methods: 72, reconstructed: 63, open: 9
+- methods: 72, reconstructed: 69, in Arbeit: 1, open: 2
 
   - done `sub_00576EB0`  @`00576EB0`
   - done `sub_00576F54`  @`00576F54`
@@ -354,14 +355,14 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `OList`  @`00595FB4`
   - done `indi`  @`005967C8`
   - open `gedein2`  @`00596994`
-  - open `gedein`  @`0059D218`
-  - open `gedausx`  @`005A634C`
-  - open `gedaus`  @`005A7C40`
+  - done `gedein`  @`0059D218`
+  - done `gedausx`  @`005A634C`
+  - in Arbeit (Chunks 1–6) `gedaus`  @`005A7C40`
   - done `sub_005AFB14`  @`005AFB14`
-  - open `ahndosein`  @`005AFB9C`
-  - open `osbein`  @`005B229C`
-  - open `adrschreib`  @`005B3A3C`
-  - open `gedausxv`  @`005B4288`
+  - done `ahndosein`  @`005AFB9C`
+  - done `osbein`  @`005B229C`
+  - done `adrschreib`  @`005B3A3C`
+  - done `gedausxv`  @`005B4288`
   - done `gedausv`  @`005B5224`
   - done `sub_005BC604`  @`005BC604`
   - done `sub_005BD73C`  @`005BD73C`
@@ -868,4 +869,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 617, open: 42
+- methods: 659, reconstructed: 623, in Arbeit: 1, open: 35
