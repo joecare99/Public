@@ -357,7 +357,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - open `gedein2`  @`00596994`
   - done `gedein`  @`0059D218`
   - done `gedausx`  @`005A634C`
-  - in Arbeit (Chunks 1–6) `gedaus`  @`005A7C40`
+  - done `gedaus`  @`005A7C40`
   - done `sub_005AFB14`  @`005AFB14`
   - done `ahndosein`  @`005AFB9C`
   - done `osbein`  @`005B229C`

@@ -11621,6 +11621,7 @@ var
   dead2: AnsiString;            {005A8E0B [ebp-24] toter String (einziges Vorkommen := '')}
   dead3: AnsiString;            {005A8E4C [ebp-34] toter String (einziges Vorkommen := '')}
   st4, st5: AnsiString;         {005A7F51..FD7 DateToStr-Zwischenspeicher}
+  stVon: AnsiString;            {005ADC86 [ebp-3C] '3 DATE '-Zeitraum FROM/TO (gedausv: stVon [ebp-24])}
   tag, monat, jahr: AnsiString; {005A7F68..FEC Copy-Ergebnisse (Tag/Monat/Jahr)}
   dat: AnsiString;              {005A7FF1 [ebp-218] sub_00582C24-Ergebnis}
   u: AnsiString;                {005A7FFE [ebp-214] '1 DATE '-Zeile}
@@ -12696,9 +12697,146 @@ begin
           WriteLn(f, '1 _FCTRY ' +                        //005AD7AF..D7EA Cat3
             DataModule2.Table13Land.AsString);
       end;
-      // Loop-Rest ab 005AD7EF (_GOV u.a.) bis 005ADC32 folgt in Chunk9 -
+      if (Trim(DataModule2.Table13Ort.AsString) <> '') and //005AD7EF..D81A jbe->D8ED
+         (Trim(DataModule2.Table13Maid.AsString) <> '') then //005AD820..D84B jbe->D8ED
+        if gvar_02536650 = 1 then                         //005AD851..D858 jne->D8AD
+          WriteLn(f, '1 _GOV ' + AnsiToUtf8(              //005AD85A..D8A6 CatN3
+            DataModule2.Table13Gov.AsString))
+        else                                              //005AD8AB jmp->D8ED
+          WriteLn(f, '1 _GOV ' +                          //005AD8AD..D8E8 Cat3
+            DataModule2.Table13Gov.AsString);
+      if (Trim(DataModule2.Table13Bg.AsString) <> '') or  //005AD8ED..D918 ja->D947
+         (Trim(DataModule2.Table13Lg.AsString) <> '') then //005AD91A..D945 jbe->D95D
+        WriteLn(f, '1 MAP');                              //005AD947..D958
+      if (Trim(DataModule2.Table13Ort.AsString) <> '') and //005AD95D..D988 jbe->DA5B
+         (Trim(DataModule2.Table13Lg.AsString) <> '') then //005AD98E..D9B9 jbe->DA5B
+        if gvar_02536650 = 1 then                         //005AD9BF..D9C6 jne->DA1B
+          WriteLn(f, '2 LONG ' + AnsiToUtf8(              //005AD9C8..DA14 CatN3
+            DataModule2.Table13Lg.AsString))
+        else                                              //005ADA19 jmp->DA5B
+          WriteLn(f, '2 LONG ' +                          //005ADA1B..DA56 Cat3
+            DataModule2.Table13Lg.AsString);
+      if (Trim(DataModule2.Table13Ort.AsString) <> '') and //005ADA5B..DA86 jbe->DB59
+         (Trim(DataModule2.Table13Bg.AsString) <> '') then //005ADA8C..DAB7 jbe->DB59
+        if gvar_02536650 = 1 then                         //005ADABD..DAC4 jne->DB19
+          WriteLn(f, '2 LATI ' + AnsiToUtf8(              //005ADAC6..DB12 CatN3
+            DataModule2.Table13Bg.AsString))
+        else                                              //005ADB17 jmp->DB59
+          WriteLn(f, '2 LATI ' +                          //005ADB19..DB54 Cat3
+            DataModule2.Table13Bg.AsString);
+      if Trim(DataModule2.Table13Maid.AsString) <> '' then //005ADB59..DB84 jbe->DBC6
+        WriteLn(f, '1 _MAIDENHEAD ' +                     //005ADB86..DBC1 Cat3
+          DataModule2.Table13Maid.AsString);
+      if Trim(DataModule2.Table13Gov.AsString) <> '' then //005ADBC6..DBF1 jbe->DC33
+        WriteLn(f, '1 _GOV ' +                            //005ADBF3..DC2E Cat3
+          DataModule2.Table13Gov.AsString);
     end;                                                  //005ADC33..DC37 jne->D331 (Danach 005ADC3D)
-{CHUNK9}
+  DataModule2.Table38.Open;                                //005ADC3D..DC45 TDataSet.Open
+  DataModule2.Table38.IndexName := 'tit';                  //005ADC4A..DC57 SetIndexName 'tit'
+  DataModule2.Table38.First;                               //005ADC5C..DC64 TDataSet.First
+  if DataModule2.Table38.RecordCount > 0 then              //005ADC69..DC7B jle->E727 v14C GetRecordCount
+    while not DataModule2.Table38.Eof do                   //005ADC81 jmp->E712
+    begin
+      stVon := '';                                         //005ADC86..DC89 LStrClr [ebp-3C]
+      WriteLn(f, '0 @S' +                                  //005ADC8E..DCD5 CatN3 (edx=3)
+        IntToStr(DataModule2.Table38.RecNo) + '@ SOUR');    //   v150 GetRecNo
+      if Trim(DataModule2.Table38Titel.AsString) <> '' then //005ADCDA..DD05 jbe->DDA7
+        if gvar_02536650 = 1 then                          //005ADD0B..DD12 jne->DD67
+          WriteLn(f, '1 TITL ' + AnsiToUtf8(               //005ADD14..DD60 CatN3
+            DataModule2.Table38Titel.AsString))
+        else                                               //005ADD65 jmp->DDA7
+          WriteLn(f, '1 TITL ' +                           //005ADD67..DDA2 Cat3
+            DataModule2.Table38Titel.AsString);
+      if Trim(DataModule2.Table38Abk.AsString) <> '' then  //005ADDA7..DDD2 jbe->DE74
+        if gvar_02536650 = 1 then                          //005ADDD8..DDDF jne->DE34
+          WriteLn(f, '1 ABBR ' + AnsiToUtf8(               //005ADDE1..DE2D CatN3
+            DataModule2.Table38Abk.AsString))
+        else                                               //005ADE32 jmp->DE74
+          WriteLn(f, '1 ABBR ' +                           //005ADE34..DE6F Cat3
+            DataModule2.Table38Abk.AsString);
+      if Trim(DataModule2.Table38Ereig.AsString) <> '' then //005ADE74..DE9F jbe->DF41
+        if gvar_02536650 = 1 then                          //005ADEA5..DEAC jne->DF01
+          WriteLn(f, '2 EVEN ' + AnsiToUtf8(               //005ADEAE..DEFA CatN3
+            DataModule2.Table38Ereig.AsString))
+        else                                               //005ADEFF jmp->DF41
+          WriteLn(f, '2 EVEN ' +                           //005ADF01..DF3C Cat3
+            DataModule2.Table38Ereig.AsString);
+      if Trim(DataModule2.Table38Von.AsString) <> '' then  //005ADF41..DF6C jbe->DF94
+        stVon := 'FROM ' + DataModule2.Table38Von.AsString; //005ADF6E..DF8F Cat3
+      if Trim(DataModule2.Table38Bis.AsString) <> '' then  //005ADF94..DFBF jbe->DFEF
+        stVon := stVon + ' TO ' +                          //005ADFC1..DFEA CatN3
+          DataModule2.Table38Bis.AsString;
+      if Trim(DataModule2.Table38Von.AsString +            //005ADFEF..E040 jbe->E0B2
+        DataModule2.Table38Bis.AsString) <> '' then
+        if gvar_02536650 = 1 then                          //005AE042..E049 jne->E088
+          WriteLn(f, '3 DATE ' + AnsiToUtf8(stVon))        //005AE04B..E086 jmp->E0B2
+        else                                               //005AE088..E0AD
+          WriteLn(f, '3 DATE ' + stVon);
+      if Trim(DataModule2.Table38Standort.AsString) <> '' then //005AE0B2..E0DD jbe->E17F
+        if gvar_02536650 = 1 then                          //005AE0E3..E0EA jne->E13F
+          WriteLn(f, '3 PLAC ' + AnsiToUtf8(               //005AE0EC..E138 CatN3
+            DataModule2.Table38Standort.AsString))
+        else                                               //005AE13D jmp->E17F
+          WriteLn(f, '3 PLAC ' +                           //005AE13F..E17A Cat3
+            DataModule2.Table38Standort.AsString);
+      if Trim(DataModule2.Table38Publ.AsString) <> '' then //005AE17F..E1AA jbe->E24C
+        if gvar_02536650 = 1 then                          //005AE1B0..E1B7 jne->E20C
+          WriteLn(f, '1 PUBL ' + AnsiToUtf8(               //005AE1B9..E205 CatN3
+            DataModule2.Table38Publ.AsString))
+        else                                               //005AE20A jmp->E24C
+          WriteLn(f, '1 PUBL ' +                           //005AE20C..E247 Cat3
+            DataModule2.Table38Publ.AsString);
+      if Trim(DataModule2.Table38Bestand.AsString) <> '' then //005AE24C..E277 jbe->E319
+        if gvar_02536650 = 1 then                          //005AE27D..E284 jne->E2D9
+          WriteLn(f, '2 CALN ' + AnsiToUtf8(               //005AE286..E2D2 CatN3
+            DataModule2.Table38Bestand.AsString))
+        else                                               //005AE2D7 jmp->E319
+          WriteLn(f, '2 CALN ' +                           //005AE2D9..E314 Cat3
+            DataModule2.Table38Bestand.AsString);
+      if Length(DataModule2.Table38Bem.AsString) + 7 < 253 then //005AE319..E33F jge->E3E9
+      begin
+        if gvar_02536650 = 1 then                          //005AE345..E34C jne->E3A4
+          WriteLn(f, '2 NOTE ' + AnsiToUtf8(               //005AE34E..E39F jmp->E627
+            DataModule2.Table38Bem.AsString))
+        else                                               //005AE3A4..E3E4 jmp->E627
+          WriteLn(f, '2 NOTE ' +
+            DataModule2.Table38Bem.AsString);
+      end
+      else if gvar_02536650 = 1 then                       //005AE3E9..E3F0 jne->E524
+      begin
+        WriteLn(f, '2 NOTE ' + AnsiToUtf8(Copy(            //005AE3F6..E45E CatN3
+          DataModule2.Table38Bem.AsString, 1, 245)));
+        for kz := 1 to                                    //005AE463..E49C jle->E627
+          Round(Length(DataModule2.Table38Bem.AsString) / 245) do //   kz-Reuse [ebp-8]
+          WriteLn(f, '3 CONC ' + AnsiToUtf8(Copy(         //005AE519..E51D jne->E4A9
+            DataModule2.Table38Bem.AsString, 245 * kz + 1, 245)));
+      end
+      else                                                 //005AE51F jmp->E627
+      begin
+        WriteLn(f, '2 NOTE ' + Copy(                      //005AE524..E57B Cat3
+          DataModule2.Table38Bem.AsString, 1, 245));
+        for kz := 1 to                                    //005AE580..E5B9 jle->E627
+          Round(Length(DataModule2.Table38Bem.AsString) / 245) do //   kz-Reuse [ebp-8]
+          WriteLn(f, '3 CONC ' + Copy(                    //005AE621..E625 jne->E5C2
+            DataModule2.Table38Bem.AsString, 245 * kz + 1, 245));
+      end;
+      if Trim(DataModule2.Table38Med.AsString) <> '' then //005AE627..E652 jbe->E6F4
+        if gvar_02536650 = 1 then                          //005AE658..E65F jne->E6B4
+          WriteLn(f, '3 MEDI ' + AnsiToUtf8(               //005AE661..E6B2 jmp->E6F4
+            DataModule2.Table38Med.AsString))
+        else                                               //005AE6B4..E6EF
+          WriteLn(f, '3 MEDI ' +
+            DataModule2.Table38Med.AsString);
+      DataModule2.Table38.Next;                            //005AE6F4..E6FC TDataSet.Next
+    end;                                                   //005AE701..E710 jne->E727 //005AE712..E721 je->DC86 (Kopf)
+  Form1.Label18.Hide;                                     //005AE727..E734 [400] TControl.Hide
+  Form1.Label19.Hide;                                     //005AE739..E746 [404] TControl.Hide
+  WriteLn(f, '0 TRLR');                                   //005AE74B..E75C
+  CloseFile(f);                                           //005AE761..E768 @Close + @_IOTest
+  Form1.Refresh;                                          //005AE76D..E774 TControl.Refresh
+  DataModule2.Table1.IndexName := '';                     //005AE779..E780 [5C] xor edx = ''
+  DataModule2.Table1.FindKey([krg]);                      //005AE785..E7A2 [5C] offener Array-Index 0, Result ungenutzt
+  Form1.anzeigen;                                         //005AE7A7..E7AE
 end;
 
 procedure TForm3.gedein_neu;
