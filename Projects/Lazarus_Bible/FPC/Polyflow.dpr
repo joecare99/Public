@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PolyflowMain in '..\Source\POLYFLOW\Frm_PolyflowMain.pas' {MainForm}; 
+  Frm_PolyflowMain in '..\source\POLYFLOW\Frm_PolyflowMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

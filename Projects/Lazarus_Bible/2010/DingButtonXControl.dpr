@@ -1,10 +1,10 @@
 library DingButtonXControl;
 uses
   ComServ,
-  DingButtonXControl_TLB in '..\Source\DingX\DingButtonXControl_TLB.pas',
-  DingButtonImpl1 in '..\Source\DingX\DingButtonImpl1.pas' {DingButtonX: CoClass},
-  Frm_DingAbout in '..\Source\DingX\Frm_DingAbout.pas' {DingButtonXAbout},
-  Ctrl_DingButton in '..\Source\Ding\Ctrl_DingButton.pas';
+  DingButtonXControl_TLB in '..\source\DingX\DingButtonXControl_TLB.pas',
+  DingButtonImpl1 in '..\source\DingX\DingButtonImpl1.pas' {DingButtonX: CoClass},
+  Frm_DingAbout in '..\source\DingX\Frm_DingAbout.pas' {DingButtonXAbout},
+  Ctrl_DingButton in '..\source\DING\Ctrl_DingButton.pas';
 
 {$E ocx}
 exports 

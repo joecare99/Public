@@ -20,13 +20,14 @@ TYPE
     btnProcessPo2Pas: TSpeedButton;
     btnSelectDir: TSpeedButton;
     edtSourceDir: TLabeledEdit;
-    fraPoFile1:  TfraPoFile;
+    fraPoFile1: TfraPoFile;
     fraXmlFile1: TfraXmlFile;
     pnlLeft:     TPanel;
     pnlProcessing: TPanel;
     pnlTop:      TPanel;
     pnlTopRight: TPanel;
     dlgSelectDirectory: TSelectDirectoryDialog;
+    Splitter1: TSplitter;
     PROCEDURE actXmlProcessPo2XExecute(Sender: TObject);
     PROCEDURE actXmlProcessX2PoExecute(Sender: TObject);
     PROCEDURE btnSelectDirClick(Sender: TObject);
@@ -106,10 +107,16 @@ VAR
   lPhraseStumb: String;
 
 BEGIN
+  if Phrase.Contains(#$0A) then
+    exit;
   lPhraseStumb := AnalyzePhrase(Phrase, exc);
   SetLength(lTrans, 4);
   lTrans[0] := lPhraseStumb;
   lTrans[1] := lPhraseStumb;
+  if length(lPhraseStumb.Trim())=0 then
+     exit;
+  if (Length(lPhraseStumb) > 30) and (lPhraseStumb.CountChar(' ')=0) then
+     exit;
   fraPoFile1.AppendData(path, lTrans);
 END;
 
@@ -175,10 +182,13 @@ VAR
             lNode := XMLNodes[i].Attributes.GetNamedItem('text:style-name');
             IF assigned(lNode) THEN
               lStyle := Ansistring(lNode.TextContent);
-            IF lStyle <> 'T1' THEN
-              ParsePhrase(
-                LNewNode, trim(Ansistring(XMLNodes[i].TextContent)), Chapter);
-            LSpanText := LSpanText + Ansistring(XMLNodes[i].TextContent);
+            if not assigned(XMLNodes[i].ChildNodes) then
+             begin
+              IF (lStyle <> 'T1') THEN
+                ParsePhrase(
+                  LNewNode, trim(Ansistring(XMLNodes[i].TextContent)), Chapter);
+              LSpanText := LSpanText + Ansistring(XMLNodes[i].TextContent);
+            end;
             Continue;
           END;
           IF assigned(XMLNodes[i].ChildNodes) and
@@ -292,12 +302,15 @@ VAR
             lNode := XMLNodes[i].Attributes.GetNamedItem('text:style-name');
             IF assigned(lNode) THEN
               lStyle := Ansistring(lNode.TextContent);
+            if not assigned(XMLNodes[i].ChildNodes) then
+            begin
             IF lStyle <> 'T1' THEN
               XMLNodes[i].TextContent :=
                 SetNewPhrase(LNewNode, XMLNodes[i].TextContent, Chapter);
             LSpanText := LSpanText + Ansistring(XMLNodes[i].TextContent);
             setlength(lSpanArr, high(lSpanArr) + 2);
             lSpanArr[high(lSpanArr)] := XMLNodes[i];
+            end;
             Continue;
           END
           ELSE IF lBailout or lBailout2b THEN

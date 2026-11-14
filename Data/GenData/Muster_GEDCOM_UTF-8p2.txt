@@ -1,5 +1,6 @@
 Australien, , , Sydney, 
 Deutsches Reich, Danzig-Westpreussen, Bromberg, Kulm, Brosowo, 
+Deutschland, , , Berlin (West), 
 Deutschland, , , Berlin, 
 Deutschland, Baden-Württemberg, Stuttgart, Stuttgart, 
 Deutschland, Bayern, München, München, 

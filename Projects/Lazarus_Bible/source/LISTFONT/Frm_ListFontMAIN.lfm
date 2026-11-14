@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmListfontMain: TfrmListfontMain
   Left = 243
   Height = 210
   Top = 119

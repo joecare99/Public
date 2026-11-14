@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, Menus;
 
 type
-  TMainForm = class(TForm)
+  TfrmMultiWayMain = class(TForm)
     MainMenu1: TMainMenu;
     File1: TMenuItem;
     Exit1: TMenuItem;
@@ -38,7 +38,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmMultiWayMain: TfrmMultiWayMain;
 
 implementation
 
@@ -48,7 +48,7 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TfrmMultiWayMain.Exit1Click(Sender: TObject);
 begin
   Close;
 end;

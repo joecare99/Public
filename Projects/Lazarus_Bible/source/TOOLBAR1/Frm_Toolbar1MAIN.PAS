@@ -1,13 +1,33 @@
 unit Frm_Toolbar1MAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+ ExtCtrls,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmToolbar1Main = class(TForm)
     Panel1: TPanel;
     PromptSB: TSpeedButton;
     ExitSB: TSpeedButton;
@@ -23,13 +43,16 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmToolbar1Main: TfrmToolbar1Main;
 
 implementation
 
-{$R *.DFM}
-
-procedure TMainForm.ExitSBClick(Sender: TObject);
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
+procedure TfrmToolbar1Main.ExitSBClick(Sender: TObject);
 begin
   if not PromptSB.Down then
     Close
@@ -38,7 +61,7 @@ begin
     Close;
 end;
 
-procedure TMainForm.FormActivate(Sender: TObject);
+procedure TfrmToolbar1Main.FormActivate(Sender: TObject);
 begin
   ExitSB.Glyph := CloseBitBtn.Glyph;
 end;

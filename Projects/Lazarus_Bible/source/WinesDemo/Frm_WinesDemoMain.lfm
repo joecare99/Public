@@ -1,0 +1,7 @@
+object MainForm: TMainForm
+  Caption = 'Wines Database Demonstration'
+  ClientHeight = 267
+  ClientWidth = 630
+  OnCreate = FormCreate
+  OnShow = FormShow
+end

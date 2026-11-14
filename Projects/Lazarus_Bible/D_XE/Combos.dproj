@@ -54,7 +54,7 @@
 			<DelphiCompile Include="Combos.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\COMBOS\Frm_CombosMAIN.PAS">
+			<DCCReference Include="..\source\COMBOS\Frm_CombosMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

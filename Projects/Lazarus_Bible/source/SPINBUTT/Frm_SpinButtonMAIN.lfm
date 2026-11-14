@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmSpinButtonMain: TfrmSpinButtonMain
   Left = 200
   Height = 158
   Top = 100

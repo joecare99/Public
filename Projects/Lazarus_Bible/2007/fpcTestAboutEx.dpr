@@ -4,9 +4,9 @@ program fpcTestAboutEx;
 
   Delphi DUnit-Testprojekt
   -------------------------
-  Dieses Projekt enthält das DUnit-Test-Framework und die GUI/Konsolen-Test-Runner.
-  Fügen Sie den Bedingungen in den Projektoptionen "CONSOLE_TESTRUNNER" hinzu,
-  um den Konsolen-Test-Runner zu verwenden.  Ansonsten wird standardmäßig der
+  Dieses Projekt enthï¿½lt das DUnit-Test-Framework und die GUI/Konsolen-Test-Runner.
+  Fï¿½gen Sie den Bedingungen in den Projektoptionen "CONSOLE_TESTRUNNER" hinzu,
+  um den Konsolen-Test-Runner zu verwenden.  Ansonsten wird standardmï¿½ï¿½ig der
   GUI-Test-Runner verwendet.
 
 }
@@ -29,8 +29,8 @@ uses
   GuiTestRunner,
   TextTestRunner,
   tst_AboutEx in '..\source\tests\tst_AboutEx.pas',
-  frm_About in '..\source\AboutEx\frm_About.PAS' {frmAbout},
-  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.PAS' {frmAboutMain};
+  frm_About in '..\source\AboutEx\Frm_ABOUT.pas' {frmAbout},
+  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas' {frmAboutMain};
 
 {$R *.res}
 

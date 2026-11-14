@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Multimen.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MULTIMEN\Frm_MultiWayMAIN.PAS">
+			<DCCReference Include="..\source\MULTIMEN\Frm_MultiWayMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

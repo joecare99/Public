@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmFileMenuMain: TfrmFileMenuMain
   Left = 199
   Top = 99
   Caption = 'Dynamic File Menu'
@@ -11,7 +11,6 @@ object MainForm: TMainForm
   Font.Name = 'System'
   Font.Style = []
   Menu = MainMenu1
-  PixelsPerInch = 96
   object OpenButton: TButton
     Left = 72
     Top = 24

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="VideoPlayer.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\VideoPlayer\frm_VideoPlayerMain.pas">
+			<DCCReference Include="..\source\VideoPlayer\Frm_VideoPlayerMain.pas">
 				<Form>Form1</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

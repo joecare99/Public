@@ -1,0 +1,1308 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{1095c35b-e91a-4019-b5f9-6520cde92065}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="2009\Actions.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Addpage.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Animator.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\BARCHART\BarTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\BITVIEW\Bitview.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\BITVIEW2\Bitview2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CALC32\Calc32.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CAPSLOCK\Capslock2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CAPSLOCK\Capslock.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDECOLOR\Cclient.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDECOLOR\Cserver.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CHARGRID\Chargrid.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CHECKS\Checks.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDE1\Client1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDE1\Server1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDE2\Client2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\COLORDLL\Colorlib.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\COLORDLL\Testdll.dproj">
+				<Dependencies>source\COLORDLL\Colorlib.dproj</Dependencies>
+			</Projects>
+			<Projects Include="source\COMBOS\Combos.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\COMPSTRM\Compstrm.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\Constraint\Constraint.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CONTCOMP\Contcomp.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\Cooldemo\CoolDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DCLOCK\Dclock.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DDE2\Server2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DING\DingPkg.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DING\TestDing.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DingX\DingButtonXControl.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DIREX\Direx.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DIREXEC\Direxec.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DMTest\DMTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\COLORDLG\TestCDlg.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DRAGME\Dragme.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\DROPFILE\Dropfile.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\ENUMFON\Enumfon.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\ENUMWIN\Enumwin.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\EXCEPT1\Except1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\EXCEPT2\Except2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\EXCEPT3\Except3.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\EXLIST\Exlist.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FANCY\Fancy.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FILEMENU\Filemenu.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FINDREPL\Findrepl.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FISHY\Fishy.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FISHY\Fishy2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\FONTSAMP\Fontsamp.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\GLYPHLST\Glyphlst.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\HELLO\Hello.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\KEYCOUNT\Keycount.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\CALC32\Calc32_2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\KEYINFO\Keyinfo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\LISTER\Lister.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\LISTFONT\Listfont.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\LISTTEXT\Listtext.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="source\MASTER\Master.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Aboutex.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\MayTemp.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Mdidemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Mdidemo2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\MemInfo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Memopad.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Metamore.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\MouseExcept.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Msgdlg.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Multimen.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Nonclien.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Objlist.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\OleCont.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\OleWord1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\OleWord2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Ontop.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Options.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\PageTab.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\PageTabOD.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Palette.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\PicDialogs.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Polyflow.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\PowerTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Printgr.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Prninfo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Readme.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Runme.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Report1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Sketch.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Spinbutt.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Splashin.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Sqlplay.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\StaticDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Status.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\StatusOD.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Strlist.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Strres.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Syscolor.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Sysmenu.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\ConsSysMen.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\YesNoTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\WinesEntry.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\WinesChart.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\WinesCalc.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\VideoPlayer.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\UpDownDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Toolbar3.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Toolbar2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Toolbar1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Todo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Telname.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2009\Tabs.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="Actions">
+			<MSBuild Projects="2009\Actions.dproj"/>
+		</Target>
+		<Target Name="Actions:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Actions.dproj"/>
+		</Target>
+		<Target Name="Actions:Make">
+			<MSBuild Targets="Make" Projects="2009\Actions.dproj"/>
+		</Target>
+		<Target Name="Addpage">
+			<MSBuild Projects="2009\Addpage.dproj"/>
+		</Target>
+		<Target Name="Addpage:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Addpage.dproj"/>
+		</Target>
+		<Target Name="Addpage:Make">
+			<MSBuild Targets="Make" Projects="2009\Addpage.dproj"/>
+		</Target>
+		<Target Name="Animator">
+			<MSBuild Projects="2009\Animator.dproj"/>
+		</Target>
+		<Target Name="Animator:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Animator.dproj"/>
+		</Target>
+		<Target Name="Animator:Make">
+			<MSBuild Targets="Make" Projects="2009\Animator.dproj"/>
+		</Target>
+		<Target Name="BarTest">
+			<MSBuild Projects="source\BARCHART\BarTest.dproj"/>
+		</Target>
+		<Target Name="BarTest:Clean">
+			<MSBuild Targets="Clean" Projects="source\BARCHART\BarTest.dproj"/>
+		</Target>
+		<Target Name="BarTest:Make">
+			<MSBuild Targets="Make" Projects="source\BARCHART\BarTest.dproj"/>
+		</Target>
+		<Target Name="Bitview">
+			<MSBuild Projects="source\BITVIEW\Bitview.dproj"/>
+		</Target>
+		<Target Name="Bitview:Clean">
+			<MSBuild Targets="Clean" Projects="source\BITVIEW\Bitview.dproj"/>
+		</Target>
+		<Target Name="Bitview:Make">
+			<MSBuild Targets="Make" Projects="source\BITVIEW\Bitview.dproj"/>
+		</Target>
+		<Target Name="Bitview2">
+			<MSBuild Projects="source\BITVIEW2\Bitview2.dproj"/>
+		</Target>
+		<Target Name="Bitview2:Clean">
+			<MSBuild Targets="Clean" Projects="source\BITVIEW2\Bitview2.dproj"/>
+		</Target>
+		<Target Name="Bitview2:Make">
+			<MSBuild Targets="Make" Projects="source\BITVIEW2\Bitview2.dproj"/>
+		</Target>
+		<Target Name="Calc32">
+			<MSBuild Projects="source\CALC32\Calc32.dproj"/>
+		</Target>
+		<Target Name="Calc32:Clean">
+			<MSBuild Targets="Clean" Projects="source\CALC32\Calc32.dproj"/>
+		</Target>
+		<Target Name="Calc32:Make">
+			<MSBuild Targets="Make" Projects="source\CALC32\Calc32.dproj"/>
+		</Target>
+		<Target Name="Capslock2">
+			<MSBuild Projects="source\CAPSLOCK\Capslock2.dproj"/>
+		</Target>
+		<Target Name="Capslock2:Clean">
+			<MSBuild Targets="Clean" Projects="source\CAPSLOCK\Capslock2.dproj"/>
+		</Target>
+		<Target Name="Capslock2:Make">
+			<MSBuild Targets="Make" Projects="source\CAPSLOCK\Capslock2.dproj"/>
+		</Target>
+		<Target Name="Capslock">
+			<MSBuild Projects="source\CAPSLOCK\Capslock.dproj"/>
+		</Target>
+		<Target Name="Capslock:Clean">
+			<MSBuild Targets="Clean" Projects="source\CAPSLOCK\Capslock.dproj"/>
+		</Target>
+		<Target Name="Capslock:Make">
+			<MSBuild Targets="Make" Projects="source\CAPSLOCK\Capslock.dproj"/>
+		</Target>
+		<Target Name="Cclient">
+			<MSBuild Projects="source\DDECOLOR\Cclient.dproj"/>
+		</Target>
+		<Target Name="Cclient:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDECOLOR\Cclient.dproj"/>
+		</Target>
+		<Target Name="Cclient:Make">
+			<MSBuild Targets="Make" Projects="source\DDECOLOR\Cclient.dproj"/>
+		</Target>
+		<Target Name="Cserver">
+			<MSBuild Projects="source\DDECOLOR\Cserver.dproj"/>
+		</Target>
+		<Target Name="Cserver:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDECOLOR\Cserver.dproj"/>
+		</Target>
+		<Target Name="Cserver:Make">
+			<MSBuild Targets="Make" Projects="source\DDECOLOR\Cserver.dproj"/>
+		</Target>
+		<Target Name="Chargrid">
+			<MSBuild Projects="source\CHARGRID\Chargrid.dproj"/>
+		</Target>
+		<Target Name="Chargrid:Clean">
+			<MSBuild Targets="Clean" Projects="source\CHARGRID\Chargrid.dproj"/>
+		</Target>
+		<Target Name="Chargrid:Make">
+			<MSBuild Targets="Make" Projects="source\CHARGRID\Chargrid.dproj"/>
+		</Target>
+		<Target Name="Checks">
+			<MSBuild Projects="source\CHECKS\Checks.dproj"/>
+		</Target>
+		<Target Name="Checks:Clean">
+			<MSBuild Targets="Clean" Projects="source\CHECKS\Checks.dproj"/>
+		</Target>
+		<Target Name="Checks:Make">
+			<MSBuild Targets="Make" Projects="source\CHECKS\Checks.dproj"/>
+		</Target>
+		<Target Name="Client1">
+			<MSBuild Projects="source\DDE1\Client1.dproj"/>
+		</Target>
+		<Target Name="Client1:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDE1\Client1.dproj"/>
+		</Target>
+		<Target Name="Client1:Make">
+			<MSBuild Targets="Make" Projects="source\DDE1\Client1.dproj"/>
+		</Target>
+		<Target Name="Server1">
+			<MSBuild Projects="source\DDE1\Server1.dproj"/>
+		</Target>
+		<Target Name="Server1:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDE1\Server1.dproj"/>
+		</Target>
+		<Target Name="Server1:Make">
+			<MSBuild Targets="Make" Projects="source\DDE1\Server1.dproj"/>
+		</Target>
+		<Target Name="Client2">
+			<MSBuild Projects="source\DDE2\Client2.dproj"/>
+		</Target>
+		<Target Name="Client2:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDE2\Client2.dproj"/>
+		</Target>
+		<Target Name="Client2:Make">
+			<MSBuild Targets="Make" Projects="source\DDE2\Client2.dproj"/>
+		</Target>
+		<Target Name="Colorlib">
+			<MSBuild Projects="source\COLORDLL\Colorlib.dproj"/>
+		</Target>
+		<Target Name="Colorlib:Clean">
+			<MSBuild Targets="Clean" Projects="source\COLORDLL\Colorlib.dproj"/>
+		</Target>
+		<Target Name="Colorlib:Make">
+			<MSBuild Targets="Make" Projects="source\COLORDLL\Colorlib.dproj"/>
+		</Target>
+		<Target DependsOnTargets="Colorlib" Name="Testdll">
+			<MSBuild Projects="source\COLORDLL\Testdll.dproj"/>
+		</Target>
+		<Target DependsOnTargets="Colorlib:Clean" Name="Testdll:Clean">
+			<MSBuild Targets="Clean" Projects="source\COLORDLL\Testdll.dproj"/>
+		</Target>
+		<Target DependsOnTargets="Colorlib:Make" Name="Testdll:Make">
+			<MSBuild Targets="Make" Projects="source\COLORDLL\Testdll.dproj"/>
+		</Target>
+		<Target Name="Combos">
+			<MSBuild Projects="source\COMBOS\Combos.dproj"/>
+		</Target>
+		<Target Name="Combos:Clean">
+			<MSBuild Targets="Clean" Projects="source\COMBOS\Combos.dproj"/>
+		</Target>
+		<Target Name="Combos:Make">
+			<MSBuild Targets="Make" Projects="source\COMBOS\Combos.dproj"/>
+		</Target>
+		<Target Name="Compstrm">
+			<MSBuild Projects="source\COMPSTRM\Compstrm.dproj"/>
+		</Target>
+		<Target Name="Compstrm:Clean">
+			<MSBuild Targets="Clean" Projects="source\COMPSTRM\Compstrm.dproj"/>
+		</Target>
+		<Target Name="Compstrm:Make">
+			<MSBuild Targets="Make" Projects="source\COMPSTRM\Compstrm.dproj"/>
+		</Target>
+		<Target Name="Constraint">
+			<MSBuild Projects="source\Constraint\Constraint.dproj"/>
+		</Target>
+		<Target Name="Constraint:Clean">
+			<MSBuild Targets="Clean" Projects="source\Constraint\Constraint.dproj"/>
+		</Target>
+		<Target Name="Constraint:Make">
+			<MSBuild Targets="Make" Projects="source\Constraint\Constraint.dproj"/>
+		</Target>
+		<Target Name="Contcomp">
+			<MSBuild Projects="source\CONTCOMP\Contcomp.dproj"/>
+		</Target>
+		<Target Name="Contcomp:Clean">
+			<MSBuild Targets="Clean" Projects="source\CONTCOMP\Contcomp.dproj"/>
+		</Target>
+		<Target Name="Contcomp:Make">
+			<MSBuild Targets="Make" Projects="source\CONTCOMP\Contcomp.dproj"/>
+		</Target>
+		<Target Name="CoolDemo">
+			<MSBuild Projects="source\Cooldemo\CoolDemo.dproj"/>
+		</Target>
+		<Target Name="CoolDemo:Clean">
+			<MSBuild Targets="Clean" Projects="source\Cooldemo\CoolDemo.dproj"/>
+		</Target>
+		<Target Name="CoolDemo:Make">
+			<MSBuild Targets="Make" Projects="source\Cooldemo\CoolDemo.dproj"/>
+		</Target>
+		<Target Name="Dclock">
+			<MSBuild Projects="source\DCLOCK\Dclock.dproj"/>
+		</Target>
+		<Target Name="Dclock:Clean">
+			<MSBuild Targets="Clean" Projects="source\DCLOCK\Dclock.dproj"/>
+		</Target>
+		<Target Name="Dclock:Make">
+			<MSBuild Targets="Make" Projects="source\DCLOCK\Dclock.dproj"/>
+		</Target>
+		<Target Name="Server2">
+			<MSBuild Projects="source\DDE2\Server2.dproj"/>
+		</Target>
+		<Target Name="Server2:Clean">
+			<MSBuild Targets="Clean" Projects="source\DDE2\Server2.dproj"/>
+		</Target>
+		<Target Name="Server2:Make">
+			<MSBuild Targets="Make" Projects="source\DDE2\Server2.dproj"/>
+		</Target>
+		<Target Name="DingPkg">
+			<MSBuild Projects="source\DING\DingPkg.dproj"/>
+		</Target>
+		<Target Name="DingPkg:Clean">
+			<MSBuild Targets="Clean" Projects="source\DING\DingPkg.dproj"/>
+		</Target>
+		<Target Name="DingPkg:Make">
+			<MSBuild Targets="Make" Projects="source\DING\DingPkg.dproj"/>
+		</Target>
+		<Target Name="TestDing">
+			<MSBuild Projects="source\DING\TestDing.dproj"/>
+		</Target>
+		<Target Name="TestDing:Clean">
+			<MSBuild Targets="Clean" Projects="source\DING\TestDing.dproj"/>
+		</Target>
+		<Target Name="TestDing:Make">
+			<MSBuild Targets="Make" Projects="source\DING\TestDing.dproj"/>
+		</Target>
+		<Target Name="DingButtonXControl">
+			<MSBuild Projects="source\DingX\DingButtonXControl.dproj"/>
+		</Target>
+		<Target Name="DingButtonXControl:Clean">
+			<MSBuild Targets="Clean" Projects="source\DingX\DingButtonXControl.dproj"/>
+		</Target>
+		<Target Name="DingButtonXControl:Make">
+			<MSBuild Targets="Make" Projects="source\DingX\DingButtonXControl.dproj"/>
+		</Target>
+		<Target Name="Direx">
+			<MSBuild Projects="source\DIREX\Direx.dproj"/>
+		</Target>
+		<Target Name="Direx:Clean">
+			<MSBuild Targets="Clean" Projects="source\DIREX\Direx.dproj"/>
+		</Target>
+		<Target Name="Direx:Make">
+			<MSBuild Targets="Make" Projects="source\DIREX\Direx.dproj"/>
+		</Target>
+		<Target Name="Direxec">
+			<MSBuild Projects="source\DIREXEC\Direxec.dproj"/>
+		</Target>
+		<Target Name="Direxec:Clean">
+			<MSBuild Targets="Clean" Projects="source\DIREXEC\Direxec.dproj"/>
+		</Target>
+		<Target Name="Direxec:Make">
+			<MSBuild Targets="Make" Projects="source\DIREXEC\Direxec.dproj"/>
+		</Target>
+		<Target Name="DMTest">
+			<MSBuild Projects="source\DMTest\DMTest.dproj"/>
+		</Target>
+		<Target Name="DMTest:Clean">
+			<MSBuild Targets="Clean" Projects="source\DMTest\DMTest.dproj"/>
+		</Target>
+		<Target Name="DMTest:Make">
+			<MSBuild Targets="Make" Projects="source\DMTest\DMTest.dproj"/>
+		</Target>
+		<Target Name="TestCDlg">
+			<MSBuild Projects="source\COLORDLG\TestCDlg.dproj"/>
+		</Target>
+		<Target Name="TestCDlg:Clean">
+			<MSBuild Targets="Clean" Projects="source\COLORDLG\TestCDlg.dproj"/>
+		</Target>
+		<Target Name="TestCDlg:Make">
+			<MSBuild Targets="Make" Projects="source\COLORDLG\TestCDlg.dproj"/>
+		</Target>
+		<Target Name="Dragme">
+			<MSBuild Projects="source\DRAGME\Dragme.dproj"/>
+		</Target>
+		<Target Name="Dragme:Clean">
+			<MSBuild Targets="Clean" Projects="source\DRAGME\Dragme.dproj"/>
+		</Target>
+		<Target Name="Dragme:Make">
+			<MSBuild Targets="Make" Projects="source\DRAGME\Dragme.dproj"/>
+		</Target>
+		<Target Name="Dropfile">
+			<MSBuild Projects="source\DROPFILE\Dropfile.dproj"/>
+		</Target>
+		<Target Name="Dropfile:Clean">
+			<MSBuild Targets="Clean" Projects="source\DROPFILE\Dropfile.dproj"/>
+		</Target>
+		<Target Name="Dropfile:Make">
+			<MSBuild Targets="Make" Projects="source\DROPFILE\Dropfile.dproj"/>
+		</Target>
+		<Target Name="Enumfon">
+			<MSBuild Projects="source\ENUMFON\Enumfon.dproj"/>
+		</Target>
+		<Target Name="Enumfon:Clean">
+			<MSBuild Targets="Clean" Projects="source\ENUMFON\Enumfon.dproj"/>
+		</Target>
+		<Target Name="Enumfon:Make">
+			<MSBuild Targets="Make" Projects="source\ENUMFON\Enumfon.dproj"/>
+		</Target>
+		<Target Name="Enumwin">
+			<MSBuild Projects="source\ENUMWIN\Enumwin.dproj"/>
+		</Target>
+		<Target Name="Enumwin:Clean">
+			<MSBuild Targets="Clean" Projects="source\ENUMWIN\Enumwin.dproj"/>
+		</Target>
+		<Target Name="Enumwin:Make">
+			<MSBuild Targets="Make" Projects="source\ENUMWIN\Enumwin.dproj"/>
+		</Target>
+		<Target Name="Except1">
+			<MSBuild Projects="source\EXCEPT1\Except1.dproj"/>
+		</Target>
+		<Target Name="Except1:Clean">
+			<MSBuild Targets="Clean" Projects="source\EXCEPT1\Except1.dproj"/>
+		</Target>
+		<Target Name="Except1:Make">
+			<MSBuild Targets="Make" Projects="source\EXCEPT1\Except1.dproj"/>
+		</Target>
+		<Target Name="Except2">
+			<MSBuild Projects="source\EXCEPT2\Except2.dproj"/>
+		</Target>
+		<Target Name="Except2:Clean">
+			<MSBuild Targets="Clean" Projects="source\EXCEPT2\Except2.dproj"/>
+		</Target>
+		<Target Name="Except2:Make">
+			<MSBuild Targets="Make" Projects="source\EXCEPT2\Except2.dproj"/>
+		</Target>
+		<Target Name="Except3">
+			<MSBuild Projects="source\EXCEPT3\Except3.dproj"/>
+		</Target>
+		<Target Name="Except3:Clean">
+			<MSBuild Targets="Clean" Projects="source\EXCEPT3\Except3.dproj"/>
+		</Target>
+		<Target Name="Except3:Make">
+			<MSBuild Targets="Make" Projects="source\EXCEPT3\Except3.dproj"/>
+		</Target>
+		<Target Name="Exlist">
+			<MSBuild Projects="source\EXLIST\Exlist.dproj"/>
+		</Target>
+		<Target Name="Exlist:Clean">
+			<MSBuild Targets="Clean" Projects="source\EXLIST\Exlist.dproj"/>
+		</Target>
+		<Target Name="Exlist:Make">
+			<MSBuild Targets="Make" Projects="source\EXLIST\Exlist.dproj"/>
+		</Target>
+		<Target Name="Fancy">
+			<MSBuild Projects="source\FANCY\Fancy.dproj"/>
+		</Target>
+		<Target Name="Fancy:Clean">
+			<MSBuild Targets="Clean" Projects="source\FANCY\Fancy.dproj"/>
+		</Target>
+		<Target Name="Fancy:Make">
+			<MSBuild Targets="Make" Projects="source\FANCY\Fancy.dproj"/>
+		</Target>
+		<Target Name="Filemenu">
+			<MSBuild Projects="source\FILEMENU\Filemenu.dproj"/>
+		</Target>
+		<Target Name="Filemenu:Clean">
+			<MSBuild Targets="Clean" Projects="source\FILEMENU\Filemenu.dproj"/>
+		</Target>
+		<Target Name="Filemenu:Make">
+			<MSBuild Targets="Make" Projects="source\FILEMENU\Filemenu.dproj"/>
+		</Target>
+		<Target Name="Findrepl">
+			<MSBuild Projects="source\FINDREPL\Findrepl.dproj"/>
+		</Target>
+		<Target Name="Findrepl:Clean">
+			<MSBuild Targets="Clean" Projects="source\FINDREPL\Findrepl.dproj"/>
+		</Target>
+		<Target Name="Findrepl:Make">
+			<MSBuild Targets="Make" Projects="source\FINDREPL\Findrepl.dproj"/>
+		</Target>
+		<Target Name="Fishy">
+			<MSBuild Projects="source\FISHY\Fishy.dproj"/>
+		</Target>
+		<Target Name="Fishy:Clean">
+			<MSBuild Targets="Clean" Projects="source\FISHY\Fishy.dproj"/>
+		</Target>
+		<Target Name="Fishy:Make">
+			<MSBuild Targets="Make" Projects="source\FISHY\Fishy.dproj"/>
+		</Target>
+		<Target Name="Fishy2">
+			<MSBuild Projects="source\FISHY\Fishy2.dproj"/>
+		</Target>
+		<Target Name="Fishy2:Clean">
+			<MSBuild Targets="Clean" Projects="source\FISHY\Fishy2.dproj"/>
+		</Target>
+		<Target Name="Fishy2:Make">
+			<MSBuild Targets="Make" Projects="source\FISHY\Fishy2.dproj"/>
+		</Target>
+		<Target Name="Fontsamp">
+			<MSBuild Projects="source\FONTSAMP\Fontsamp.dproj"/>
+		</Target>
+		<Target Name="Fontsamp:Clean">
+			<MSBuild Targets="Clean" Projects="source\FONTSAMP\Fontsamp.dproj"/>
+		</Target>
+		<Target Name="Fontsamp:Make">
+			<MSBuild Targets="Make" Projects="source\FONTSAMP\Fontsamp.dproj"/>
+		</Target>
+		<Target Name="Glyphlst">
+			<MSBuild Projects="source\GLYPHLST\Glyphlst.dproj"/>
+		</Target>
+		<Target Name="Glyphlst:Clean">
+			<MSBuild Targets="Clean" Projects="source\GLYPHLST\Glyphlst.dproj"/>
+		</Target>
+		<Target Name="Glyphlst:Make">
+			<MSBuild Targets="Make" Projects="source\GLYPHLST\Glyphlst.dproj"/>
+		</Target>
+		<Target Name="Hello">
+			<MSBuild Projects="source\HELLO\Hello.dproj"/>
+		</Target>
+		<Target Name="Hello:Clean">
+			<MSBuild Targets="Clean" Projects="source\HELLO\Hello.dproj"/>
+		</Target>
+		<Target Name="Hello:Make">
+			<MSBuild Targets="Make" Projects="source\HELLO\Hello.dproj"/>
+		</Target>
+		<Target Name="Keycount">
+			<MSBuild Projects="source\KEYCOUNT\Keycount.dproj"/>
+		</Target>
+		<Target Name="Keycount:Clean">
+			<MSBuild Targets="Clean" Projects="source\KEYCOUNT\Keycount.dproj"/>
+		</Target>
+		<Target Name="Keycount:Make">
+			<MSBuild Targets="Make" Projects="source\KEYCOUNT\Keycount.dproj"/>
+		</Target>
+		<Target Name="Calc32_2">
+			<MSBuild Projects="source\CALC32\Calc32_2.dproj"/>
+		</Target>
+		<Target Name="Calc32_2:Clean">
+			<MSBuild Targets="Clean" Projects="source\CALC32\Calc32_2.dproj"/>
+		</Target>
+		<Target Name="Calc32_2:Make">
+			<MSBuild Targets="Make" Projects="source\CALC32\Calc32_2.dproj"/>
+		</Target>
+		<Target Name="Keyinfo">
+			<MSBuild Projects="source\KEYINFO\Keyinfo.dproj"/>
+		</Target>
+		<Target Name="Keyinfo:Clean">
+			<MSBuild Targets="Clean" Projects="source\KEYINFO\Keyinfo.dproj"/>
+		</Target>
+		<Target Name="Keyinfo:Make">
+			<MSBuild Targets="Make" Projects="source\KEYINFO\Keyinfo.dproj"/>
+		</Target>
+		<Target Name="Lister">
+			<MSBuild Projects="source\LISTER\Lister.dproj"/>
+		</Target>
+		<Target Name="Lister:Clean">
+			<MSBuild Targets="Clean" Projects="source\LISTER\Lister.dproj"/>
+		</Target>
+		<Target Name="Lister:Make">
+			<MSBuild Targets="Make" Projects="source\LISTER\Lister.dproj"/>
+		</Target>
+		<Target Name="Listfont">
+			<MSBuild Projects="source\LISTFONT\Listfont.dproj"/>
+		</Target>
+		<Target Name="Listfont:Clean">
+			<MSBuild Targets="Clean" Projects="source\LISTFONT\Listfont.dproj"/>
+		</Target>
+		<Target Name="Listfont:Make">
+			<MSBuild Targets="Make" Projects="source\LISTFONT\Listfont.dproj"/>
+		</Target>
+		<Target Name="Listtext">
+			<MSBuild Projects="source\LISTTEXT\Listtext.dproj"/>
+		</Target>
+		<Target Name="Listtext:Clean">
+			<MSBuild Targets="Clean" Projects="source\LISTTEXT\Listtext.dproj"/>
+		</Target>
+		<Target Name="Listtext:Make">
+			<MSBuild Targets="Make" Projects="source\LISTTEXT\Listtext.dproj"/>
+		</Target>
+		<Target Name="Master">
+			<MSBuild Projects="source\MASTER\Master.dproj"/>
+		</Target>
+		<Target Name="Master:Clean">
+			<MSBuild Targets="Clean" Projects="source\MASTER\Master.dproj"/>
+		</Target>
+		<Target Name="Master:Make">
+			<MSBuild Targets="Make" Projects="source\MASTER\Master.dproj"/>
+		</Target>
+		<Target Name="Aboutex">
+			<MSBuild Projects="2009\Aboutex.dproj"/>
+		</Target>
+		<Target Name="Aboutex:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Aboutex.dproj"/>
+		</Target>
+		<Target Name="Aboutex:Make">
+			<MSBuild Targets="Make" Projects="2009\Aboutex.dproj"/>
+		</Target>
+		<Target Name="MayTemp">
+			<MSBuild Projects="2009\MayTemp.dproj"/>
+		</Target>
+		<Target Name="MayTemp:Clean">
+			<MSBuild Targets="Clean" Projects="2009\MayTemp.dproj"/>
+		</Target>
+		<Target Name="MayTemp:Make">
+			<MSBuild Targets="Make" Projects="2009\MayTemp.dproj"/>
+		</Target>
+		<Target Name="Mdidemo">
+			<MSBuild Projects="2009\Mdidemo.dproj"/>
+		</Target>
+		<Target Name="Mdidemo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Mdidemo.dproj"/>
+		</Target>
+		<Target Name="Mdidemo:Make">
+			<MSBuild Targets="Make" Projects="2009\Mdidemo.dproj"/>
+		</Target>
+		<Target Name="Mdidemo2">
+			<MSBuild Projects="2009\Mdidemo2.dproj"/>
+		</Target>
+		<Target Name="Mdidemo2:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Mdidemo2.dproj"/>
+		</Target>
+		<Target Name="Mdidemo2:Make">
+			<MSBuild Targets="Make" Projects="2009\Mdidemo2.dproj"/>
+		</Target>
+		<Target Name="MemInfo">
+			<MSBuild Projects="2009\MemInfo.dproj"/>
+		</Target>
+		<Target Name="MemInfo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\MemInfo.dproj"/>
+		</Target>
+		<Target Name="MemInfo:Make">
+			<MSBuild Targets="Make" Projects="2009\MemInfo.dproj"/>
+		</Target>
+		<Target Name="Memopad">
+			<MSBuild Projects="2009\Memopad.dproj"/>
+		</Target>
+		<Target Name="Memopad:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Memopad.dproj"/>
+		</Target>
+		<Target Name="Memopad:Make">
+			<MSBuild Targets="Make" Projects="2009\Memopad.dproj"/>
+		</Target>
+		<Target Name="Metamore">
+			<MSBuild Projects="2009\Metamore.dproj"/>
+		</Target>
+		<Target Name="Metamore:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Metamore.dproj"/>
+		</Target>
+		<Target Name="Metamore:Make">
+			<MSBuild Targets="Make" Projects="2009\Metamore.dproj"/>
+		</Target>
+		<Target Name="MouseExcept">
+			<MSBuild Projects="2009\MouseExcept.dproj"/>
+		</Target>
+		<Target Name="MouseExcept:Clean">
+			<MSBuild Targets="Clean" Projects="2009\MouseExcept.dproj"/>
+		</Target>
+		<Target Name="MouseExcept:Make">
+			<MSBuild Targets="Make" Projects="2009\MouseExcept.dproj"/>
+		</Target>
+		<Target Name="Msgdlg">
+			<MSBuild Projects="2009\Msgdlg.dproj"/>
+		</Target>
+		<Target Name="Msgdlg:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Msgdlg.dproj"/>
+		</Target>
+		<Target Name="Msgdlg:Make">
+			<MSBuild Targets="Make" Projects="2009\Msgdlg.dproj"/>
+		</Target>
+		<Target Name="Multimen">
+			<MSBuild Projects="2009\Multimen.dproj"/>
+		</Target>
+		<Target Name="Multimen:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Multimen.dproj"/>
+		</Target>
+		<Target Name="Multimen:Make">
+			<MSBuild Targets="Make" Projects="2009\Multimen.dproj"/>
+		</Target>
+		<Target Name="Nonclien">
+			<MSBuild Projects="2009\Nonclien.dproj"/>
+		</Target>
+		<Target Name="Nonclien:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Nonclien.dproj"/>
+		</Target>
+		<Target Name="Nonclien:Make">
+			<MSBuild Targets="Make" Projects="2009\Nonclien.dproj"/>
+		</Target>
+		<Target Name="Objlist">
+			<MSBuild Projects="2009\Objlist.dproj"/>
+		</Target>
+		<Target Name="Objlist:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Objlist.dproj"/>
+		</Target>
+		<Target Name="Objlist:Make">
+			<MSBuild Targets="Make" Projects="2009\Objlist.dproj"/>
+		</Target>
+		<Target Name="OleCont">
+			<MSBuild Projects="2009\OleCont.dproj"/>
+		</Target>
+		<Target Name="OleCont:Clean">
+			<MSBuild Targets="Clean" Projects="2009\OleCont.dproj"/>
+		</Target>
+		<Target Name="OleCont:Make">
+			<MSBuild Targets="Make" Projects="2009\OleCont.dproj"/>
+		</Target>
+		<Target Name="OleWord1">
+			<MSBuild Projects="2009\OleWord1.dproj"/>
+		</Target>
+		<Target Name="OleWord1:Clean">
+			<MSBuild Targets="Clean" Projects="2009\OleWord1.dproj"/>
+		</Target>
+		<Target Name="OleWord1:Make">
+			<MSBuild Targets="Make" Projects="2009\OleWord1.dproj"/>
+		</Target>
+		<Target Name="OleWord2">
+			<MSBuild Projects="2009\OleWord2.dproj"/>
+		</Target>
+		<Target Name="OleWord2:Clean">
+			<MSBuild Targets="Clean" Projects="2009\OleWord2.dproj"/>
+		</Target>
+		<Target Name="OleWord2:Make">
+			<MSBuild Targets="Make" Projects="2009\OleWord2.dproj"/>
+		</Target>
+		<Target Name="Ontop">
+			<MSBuild Projects="2009\Ontop.dproj"/>
+		</Target>
+		<Target Name="Ontop:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Ontop.dproj"/>
+		</Target>
+		<Target Name="Ontop:Make">
+			<MSBuild Targets="Make" Projects="2009\Ontop.dproj"/>
+		</Target>
+		<Target Name="Options">
+			<MSBuild Projects="2009\Options.dproj"/>
+		</Target>
+		<Target Name="Options:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Options.dproj"/>
+		</Target>
+		<Target Name="Options:Make">
+			<MSBuild Targets="Make" Projects="2009\Options.dproj"/>
+		</Target>
+		<Target Name="PageTab">
+			<MSBuild Projects="2009\PageTab.dproj"/>
+		</Target>
+		<Target Name="PageTab:Clean">
+			<MSBuild Targets="Clean" Projects="2009\PageTab.dproj"/>
+		</Target>
+		<Target Name="PageTab:Make">
+			<MSBuild Targets="Make" Projects="2009\PageTab.dproj"/>
+		</Target>
+		<Target Name="PageTabOD">
+			<MSBuild Projects="2009\PageTabOD.dproj"/>
+		</Target>
+		<Target Name="PageTabOD:Clean">
+			<MSBuild Targets="Clean" Projects="2009\PageTabOD.dproj"/>
+		</Target>
+		<Target Name="PageTabOD:Make">
+			<MSBuild Targets="Make" Projects="2009\PageTabOD.dproj"/>
+		</Target>
+		<Target Name="Palette">
+			<MSBuild Projects="2009\Palette.dproj"/>
+		</Target>
+		<Target Name="Palette:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Palette.dproj"/>
+		</Target>
+		<Target Name="Palette:Make">
+			<MSBuild Targets="Make" Projects="2009\Palette.dproj"/>
+		</Target>
+		<Target Name="PicDialogs">
+			<MSBuild Projects="2009\PicDialogs.dproj"/>
+		</Target>
+		<Target Name="PicDialogs:Clean">
+			<MSBuild Targets="Clean" Projects="2009\PicDialogs.dproj"/>
+		</Target>
+		<Target Name="PicDialogs:Make">
+			<MSBuild Targets="Make" Projects="2009\PicDialogs.dproj"/>
+		</Target>
+		<Target Name="Polyflow">
+			<MSBuild Projects="2009\Polyflow.dproj"/>
+		</Target>
+		<Target Name="Polyflow:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Polyflow.dproj"/>
+		</Target>
+		<Target Name="Polyflow:Make">
+			<MSBuild Targets="Make" Projects="2009\Polyflow.dproj"/>
+		</Target>
+		<Target Name="PowerTest">
+			<MSBuild Projects="2009\PowerTest.dproj"/>
+		</Target>
+		<Target Name="PowerTest:Clean">
+			<MSBuild Targets="Clean" Projects="2009\PowerTest.dproj"/>
+		</Target>
+		<Target Name="PowerTest:Make">
+			<MSBuild Targets="Make" Projects="2009\PowerTest.dproj"/>
+		</Target>
+		<Target Name="Printgr">
+			<MSBuild Projects="2009\Printgr.dproj"/>
+		</Target>
+		<Target Name="Printgr:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Printgr.dproj"/>
+		</Target>
+		<Target Name="Printgr:Make">
+			<MSBuild Targets="Make" Projects="2009\Printgr.dproj"/>
+		</Target>
+		<Target Name="Prninfo">
+			<MSBuild Projects="2009\Prninfo.dproj"/>
+		</Target>
+		<Target Name="Prninfo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Prninfo.dproj"/>
+		</Target>
+		<Target Name="Prninfo:Make">
+			<MSBuild Targets="Make" Projects="2009\Prninfo.dproj"/>
+		</Target>
+		<Target Name="Readme">
+			<MSBuild Projects="2009\Readme.dproj"/>
+		</Target>
+		<Target Name="Readme:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Readme.dproj"/>
+		</Target>
+		<Target Name="Readme:Make">
+			<MSBuild Targets="Make" Projects="2009\Readme.dproj"/>
+		</Target>
+		<Target Name="Runme">
+			<MSBuild Projects="2009\Runme.dproj"/>
+		</Target>
+		<Target Name="Runme:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Runme.dproj"/>
+		</Target>
+		<Target Name="Runme:Make">
+			<MSBuild Targets="Make" Projects="2009\Runme.dproj"/>
+		</Target>
+		<Target Name="Report1">
+			<MSBuild Projects="2009\Report1.dproj"/>
+		</Target>
+		<Target Name="Report1:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Report1.dproj"/>
+		</Target>
+		<Target Name="Report1:Make">
+			<MSBuild Targets="Make" Projects="2009\Report1.dproj"/>
+		</Target>
+		<Target Name="Sketch">
+			<MSBuild Projects="2009\Sketch.dproj"/>
+		</Target>
+		<Target Name="Sketch:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Sketch.dproj"/>
+		</Target>
+		<Target Name="Sketch:Make">
+			<MSBuild Targets="Make" Projects="2009\Sketch.dproj"/>
+		</Target>
+		<Target Name="Spinbutt">
+			<MSBuild Projects="2009\Spinbutt.dproj"/>
+		</Target>
+		<Target Name="Spinbutt:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Spinbutt.dproj"/>
+		</Target>
+		<Target Name="Spinbutt:Make">
+			<MSBuild Targets="Make" Projects="2009\Spinbutt.dproj"/>
+		</Target>
+		<Target Name="Splashin">
+			<MSBuild Projects="2009\Splashin.dproj"/>
+		</Target>
+		<Target Name="Splashin:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Splashin.dproj"/>
+		</Target>
+		<Target Name="Splashin:Make">
+			<MSBuild Targets="Make" Projects="2009\Splashin.dproj"/>
+		</Target>
+		<Target Name="Sqlplay">
+			<MSBuild Projects="2009\Sqlplay.dproj"/>
+		</Target>
+		<Target Name="Sqlplay:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Sqlplay.dproj"/>
+		</Target>
+		<Target Name="Sqlplay:Make">
+			<MSBuild Targets="Make" Projects="2009\Sqlplay.dproj"/>
+		</Target>
+		<Target Name="StaticDemo">
+			<MSBuild Projects="2009\StaticDemo.dproj"/>
+		</Target>
+		<Target Name="StaticDemo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\StaticDemo.dproj"/>
+		</Target>
+		<Target Name="StaticDemo:Make">
+			<MSBuild Targets="Make" Projects="2009\StaticDemo.dproj"/>
+		</Target>
+		<Target Name="Status">
+			<MSBuild Projects="2009\Status.dproj"/>
+		</Target>
+		<Target Name="Status:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Status.dproj"/>
+		</Target>
+		<Target Name="Status:Make">
+			<MSBuild Targets="Make" Projects="2009\Status.dproj"/>
+		</Target>
+		<Target Name="StatusOD">
+			<MSBuild Projects="2009\StatusOD.dproj"/>
+		</Target>
+		<Target Name="StatusOD:Clean">
+			<MSBuild Targets="Clean" Projects="2009\StatusOD.dproj"/>
+		</Target>
+		<Target Name="StatusOD:Make">
+			<MSBuild Targets="Make" Projects="2009\StatusOD.dproj"/>
+		</Target>
+		<Target Name="Strlist">
+			<MSBuild Projects="2009\Strlist.dproj"/>
+		</Target>
+		<Target Name="Strlist:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Strlist.dproj"/>
+		</Target>
+		<Target Name="Strlist:Make">
+			<MSBuild Targets="Make" Projects="2009\Strlist.dproj"/>
+		</Target>
+		<Target Name="Strres">
+			<MSBuild Projects="2009\Strres.dproj"/>
+		</Target>
+		<Target Name="Strres:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Strres.dproj"/>
+		</Target>
+		<Target Name="Strres:Make">
+			<MSBuild Targets="Make" Projects="2009\Strres.dproj"/>
+		</Target>
+		<Target Name="Syscolor">
+			<MSBuild Projects="2009\Syscolor.dproj"/>
+		</Target>
+		<Target Name="Syscolor:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Syscolor.dproj"/>
+		</Target>
+		<Target Name="Syscolor:Make">
+			<MSBuild Targets="Make" Projects="2009\Syscolor.dproj"/>
+		</Target>
+		<Target Name="Sysmenu">
+			<MSBuild Projects="2009\Sysmenu.dproj"/>
+		</Target>
+		<Target Name="Sysmenu:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Sysmenu.dproj"/>
+		</Target>
+		<Target Name="Sysmenu:Make">
+			<MSBuild Targets="Make" Projects="2009\Sysmenu.dproj"/>
+		</Target>
+		<Target Name="ConsSysMen">
+			<MSBuild Projects="2009\ConsSysMen.dproj"/>
+		</Target>
+		<Target Name="ConsSysMen:Clean">
+			<MSBuild Targets="Clean" Projects="2009\ConsSysMen.dproj"/>
+		</Target>
+		<Target Name="ConsSysMen:Make">
+			<MSBuild Targets="Make" Projects="2009\ConsSysMen.dproj"/>
+		</Target>
+		<Target Name="YesNoTest">
+			<MSBuild Projects="2009\YesNoTest.dproj"/>
+		</Target>
+		<Target Name="YesNoTest:Clean">
+			<MSBuild Targets="Clean" Projects="2009\YesNoTest.dproj"/>
+		</Target>
+		<Target Name="YesNoTest:Make">
+			<MSBuild Targets="Make" Projects="2009\YesNoTest.dproj"/>
+		</Target>
+		<Target Name="WinesEntry">
+			<MSBuild Projects="2009\WinesEntry.dproj"/>
+		</Target>
+		<Target Name="WinesEntry:Clean">
+			<MSBuild Targets="Clean" Projects="2009\WinesEntry.dproj"/>
+		</Target>
+		<Target Name="WinesEntry:Make">
+			<MSBuild Targets="Make" Projects="2009\WinesEntry.dproj"/>
+		</Target>
+		<Target Name="WinesChart">
+			<MSBuild Projects="2009\WinesChart.dproj"/>
+		</Target>
+		<Target Name="WinesChart:Clean">
+			<MSBuild Targets="Clean" Projects="2009\WinesChart.dproj"/>
+		</Target>
+		<Target Name="WinesChart:Make">
+			<MSBuild Targets="Make" Projects="2009\WinesChart.dproj"/>
+		</Target>
+		<Target Name="WinesCalc">
+			<MSBuild Projects="2009\WinesCalc.dproj"/>
+		</Target>
+		<Target Name="WinesCalc:Clean">
+			<MSBuild Targets="Clean" Projects="2009\WinesCalc.dproj"/>
+		</Target>
+		<Target Name="WinesCalc:Make">
+			<MSBuild Targets="Make" Projects="2009\WinesCalc.dproj"/>
+		</Target>
+		<Target Name="VideoPlayer">
+			<MSBuild Projects="2009\VideoPlayer.dproj"/>
+		</Target>
+		<Target Name="VideoPlayer:Clean">
+			<MSBuild Targets="Clean" Projects="2009\VideoPlayer.dproj"/>
+		</Target>
+		<Target Name="VideoPlayer:Make">
+			<MSBuild Targets="Make" Projects="2009\VideoPlayer.dproj"/>
+		</Target>
+		<Target Name="UpDownDemo">
+			<MSBuild Projects="2009\UpDownDemo.dproj"/>
+		</Target>
+		<Target Name="UpDownDemo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\UpDownDemo.dproj"/>
+		</Target>
+		<Target Name="UpDownDemo:Make">
+			<MSBuild Targets="Make" Projects="2009\UpDownDemo.dproj"/>
+		</Target>
+		<Target Name="Toolbar3">
+			<MSBuild Projects="2009\Toolbar3.dproj"/>
+		</Target>
+		<Target Name="Toolbar3:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Toolbar3.dproj"/>
+		</Target>
+		<Target Name="Toolbar3:Make">
+			<MSBuild Targets="Make" Projects="2009\Toolbar3.dproj"/>
+		</Target>
+		<Target Name="Toolbar2">
+			<MSBuild Projects="2009\Toolbar2.dproj"/>
+		</Target>
+		<Target Name="Toolbar2:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Toolbar2.dproj"/>
+		</Target>
+		<Target Name="Toolbar2:Make">
+			<MSBuild Targets="Make" Projects="2009\Toolbar2.dproj"/>
+		</Target>
+		<Target Name="Toolbar1">
+			<MSBuild Projects="2009\Toolbar1.dproj"/>
+		</Target>
+		<Target Name="Toolbar1:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Toolbar1.dproj"/>
+		</Target>
+		<Target Name="Toolbar1:Make">
+			<MSBuild Targets="Make" Projects="2009\Toolbar1.dproj"/>
+		</Target>
+		<Target Name="Todo">
+			<MSBuild Projects="2009\Todo.dproj"/>
+		</Target>
+		<Target Name="Todo:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Todo.dproj"/>
+		</Target>
+		<Target Name="Todo:Make">
+			<MSBuild Targets="Make" Projects="2009\Todo.dproj"/>
+		</Target>
+		<Target Name="Telname">
+			<MSBuild Projects="2009\Telname.dproj"/>
+		</Target>
+		<Target Name="Telname:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Telname.dproj"/>
+		</Target>
+		<Target Name="Telname:Make">
+			<MSBuild Targets="Make" Projects="2009\Telname.dproj"/>
+		</Target>
+		<Target Name="Tabs">
+			<MSBuild Projects="2009\Tabs.dproj"/>
+		</Target>
+		<Target Name="Tabs:Clean">
+			<MSBuild Targets="Clean" Projects="2009\Tabs.dproj"/>
+		</Target>
+		<Target Name="Tabs:Make">
+			<MSBuild Targets="Make" Projects="2009\Tabs.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="Actions;Addpage;Animator;BarTest;Bitview;Bitview2;Calc32;Capslock2;Capslock;Cclient;Cserver;Chargrid;Checks;Client1;Server1;Client2;Colorlib;Testdll;Combos;Compstrm;Constraint;Contcomp;CoolDemo;Dclock;Server2;DingPkg;TestDing;DingButtonXControl;Direx;Direxec;DMTest;TestCDlg;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Fancy;Filemenu;Findrepl;Fishy;Fishy2;Fontsamp;Glyphlst;Hello;Keycount;Calc32_2;Keyinfo;Lister;Listfont;Listtext;Master;Aboutex;MayTemp;Mdidemo;Mdidemo2;MemInfo;Memopad;Metamore;MouseExcept;Msgdlg;Multimen;Nonclien;Objlist;OleCont;OleWord1;OleWord2;Ontop;Options;PageTab;PageTabOD;Palette;PicDialogs;Polyflow;PowerTest;Printgr;Prninfo;Readme;Runme;Report1;Sketch;Spinbutt;Splashin;Sqlplay;StaticDemo;Status;StatusOD;Strlist;Strres;Syscolor;Sysmenu;ConsSysMen;YesNoTest;WinesEntry;WinesChart;WinesCalc;VideoPlayer;UpDownDemo;Toolbar3;Toolbar2;Toolbar1;Todo;Telname;Tabs"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="Actions:Clean;Addpage:Clean;Animator:Clean;BarTest:Clean;Bitview:Clean;Bitview2:Clean;Calc32:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Cserver:Clean;Chargrid:Clean;Checks:Clean;Client1:Clean;Server1:Clean;Client2:Clean;Colorlib:Clean;Testdll:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;CoolDemo:Clean;Dclock:Clean;Server2:Clean;DingPkg:Clean;TestDing:Clean;DingButtonXControl:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;TestCDlg:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Fancy:Clean;Filemenu:Clean;Findrepl:Clean;Fishy:Clean;Fishy2:Clean;Fontsamp:Clean;Glyphlst:Clean;Hello:Clean;Keycount:Clean;Calc32_2:Clean;Keyinfo:Clean;Lister:Clean;Listfont:Clean;Listtext:Clean;Master:Clean;Aboutex:Clean;MayTemp:Clean;Mdidemo:Clean;Mdidemo2:Clean;MemInfo:Clean;Memopad:Clean;Metamore:Clean;MouseExcept:Clean;Msgdlg:Clean;Multimen:Clean;Nonclien:Clean;Objlist:Clean;OleCont:Clean;OleWord1:Clean;OleWord2:Clean;Ontop:Clean;Options:Clean;PageTab:Clean;PageTabOD:Clean;Palette:Clean;PicDialogs:Clean;Polyflow:Clean;PowerTest:Clean;Printgr:Clean;Prninfo:Clean;Readme:Clean;Runme:Clean;Report1:Clean;Sketch:Clean;Spinbutt:Clean;Splashin:Clean;Sqlplay:Clean;StaticDemo:Clean;Status:Clean;StatusOD:Clean;Strlist:Clean;Strres:Clean;Syscolor:Clean;Sysmenu:Clean;ConsSysMen:Clean;YesNoTest:Clean;WinesEntry:Clean;WinesChart:Clean;WinesCalc:Clean;VideoPlayer:Clean;UpDownDemo:Clean;Toolbar3:Clean;Toolbar2:Clean;Toolbar1:Clean;Todo:Clean;Telname:Clean;Tabs:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="Actions:Make;Addpage:Make;Animator:Make;BarTest:Make;Bitview:Make;Bitview2:Make;Calc32:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Cserver:Make;Chargrid:Make;Checks:Make;Client1:Make;Server1:Make;Client2:Make;Colorlib:Make;Testdll:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;CoolDemo:Make;Dclock:Make;Server2:Make;DingPkg:Make;TestDing:Make;DingButtonXControl:Make;Direx:Make;Direxec:Make;DMTest:Make;TestCDlg:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Fancy:Make;Filemenu:Make;Findrepl:Make;Fishy:Make;Fishy2:Make;Fontsamp:Make;Glyphlst:Make;Hello:Make;Keycount:Make;Calc32_2:Make;Keyinfo:Make;Lister:Make;Listfont:Make;Listtext:Make;Master:Make;Aboutex:Make;MayTemp:Make;Mdidemo:Make;Mdidemo2:Make;MemInfo:Make;Memopad:Make;Metamore:Make;MouseExcept:Make;Msgdlg:Make;Multimen:Make;Nonclien:Make;Objlist:Make;OleCont:Make;OleWord1:Make;OleWord2:Make;Ontop:Make;Options:Make;PageTab:Make;PageTabOD:Make;Palette:Make;PicDialogs:Make;Polyflow:Make;PowerTest:Make;Printgr:Make;Prninfo:Make;Readme:Make;Runme:Make;Report1:Make;Sketch:Make;Spinbutt:Make;Splashin:Make;Sqlplay:Make;StaticDemo:Make;Status:Make;StatusOD:Make;Strlist:Make;Strres:Make;Syscolor:Make;Sysmenu:Make;ConsSysMen:Make;YesNoTest:Make;WinesEntry:Make;WinesChart:Make;WinesCalc:Make;VideoPlayer:Make;UpDownDemo:Make;Toolbar3:Make;Toolbar2:Make;Toolbar1:Make;Todo:Make;Telname:Make;Tabs:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>

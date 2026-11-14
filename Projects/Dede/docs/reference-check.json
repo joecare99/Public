@@ -1,0 +1,2866 @@
+{
+  "exe": "C:\\install\\Development\\DeDe.3.50.02.1619.bin\\DeDe.exe",
+  "sha256": "5d65b528574b9e2211f2721292fcd4979604e62b2b8a27afc7f89c52e68be134",
+  "size": 2211840,
+  "machine": "014C",
+  "timestamp_raw": 708992537,
+  "characteristics": 33166,
+  "image_base": "00400000",
+  "entry_rva": "001A54A8",
+  "entry_va": "005A54A8",
+  "sections": [
+    {
+      "name": "CODE",
+      "rva": 4096,
+      "virtual_size": 1722464,
+      "raw_size": 1722880,
+      "raw_offset": 1024
+    },
+    {
+      "name": "DATA",
+      "rva": 1728512,
+      "virtual_size": 28660,
+      "raw_size": 28672,
+      "raw_offset": 1723904
+    },
+    {
+      "name": "BSS",
+      "rva": 1757184,
+      "virtual_size": 10213,
+      "raw_size": 0,
+      "raw_offset": 1752576
+    },
+    {
+      "name": ".idata",
+      "rva": 1769472,
+      "virtual_size": 11914,
+      "raw_size": 12288,
+      "raw_offset": 1752576
+    },
+    {
+      "name": ".tls",
+      "rva": 1781760,
+      "virtual_size": 16,
+      "raw_size": 0,
+      "raw_offset": 1764864
+    },
+    {
+      "name": ".rdata",
+      "rva": 1785856,
+      "virtual_size": 24,
+      "raw_size": 512,
+      "raw_offset": 1764864
+    },
+    {
+      "name": ".reloc",
+      "rva": 1789952,
+      "virtual_size": 110908,
+      "raw_size": 111104,
+      "raw_offset": 1765376
+    },
+    {
+      "name": ".rsrc",
+      "rva": 1904640,
+      "virtual_size": 335360,
+      "raw_size": 335360,
+      "raw_offset": 1876480
+    }
+  ],
+  "resource_directory_size": 335360,
+  "resources": [
+    {
+      "path": [
+        1,
+        1,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1885204,
+      "sha256": "8f52f998c91c485971d6572b0c6e75bd7acaa0eac79ca8a536a4bd28b9d4f357"
+    },
+    {
+      "path": [
+        1,
+        2,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1885512,
+      "sha256": "ce19ace18e87b572e6912306776226af5b8e63959c61cde70a8ff05b3bbdcc41"
+    },
+    {
+      "path": [
+        1,
+        3,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1885820,
+      "sha256": "ee1c9c194199c320c893b367602ccc7ee7270bd4395d029f727e097634f47f8c"
+    },
+    {
+      "path": [
+        1,
+        4,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1886128,
+      "sha256": "9d9edf87ca203ecc60b246cc783d54218dd0ce77d3a025d0bafc580995a4abd8"
+    },
+    {
+      "path": [
+        1,
+        5,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1886436,
+      "sha256": "99676c52310db365580965ea646ece86c62951bfd97ec0aae9f738a202a90593"
+    },
+    {
+      "path": [
+        1,
+        6,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1886744,
+      "sha256": "11726dcf1eebe23a1df5eb0ee2af39196b702eddd69083d646e4475335130b28"
+    },
+    {
+      "path": [
+        1,
+        7,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1887052,
+      "sha256": "6f938aab0a03120de4ef8b27aff6ba5146226c92a056a6f04e5ec8d513ce5f9d"
+    },
+    {
+      "path": [
+        1,
+        8,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1887360,
+      "sha256": "478928c2c498d82aa1f6b8da5e3d483d058c071d74c6e85ee0073e53042d0f57"
+    },
+    {
+      "path": [
+        1,
+        9,
+        0
+      ],
+      "size": 308,
+      "codepage": 0,
+      "offset": 1887668,
+      "sha256": "b8e6fc93d423931acbddae3c27dd3c4eb2a394005d746951a971cb700e0ee510"
+    },
+    {
+      "path": [
+        2,
+        "BBABORT",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1887976,
+      "sha256": "c0ede68a98bd2bc58c78564dfb42f1640dc29766d3ab2782ab8b5ed28c6fd414"
+    },
+    {
+      "path": [
+        2,
+        "BBALL",
+        0
+      ],
+      "size": 484,
+      "codepage": 0,
+      "offset": 1888440,
+      "sha256": "46cfc44afa8ab31ae3da35fa8346e4c085c441659d9992b09fc8ad517f2b289a"
+    },
+    {
+      "path": [
+        2,
+        "BBCANCEL",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1888924,
+      "sha256": "c0ede68a98bd2bc58c78564dfb42f1640dc29766d3ab2782ab8b5ed28c6fd414"
+    },
+    {
+      "path": [
+        2,
+        "BBCLOSE",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1889388,
+      "sha256": "f8e1696801fe89b88936ac4226cea03bfa5aa345aa33ca982822ae7fbc6557e2"
+    },
+    {
+      "path": [
+        2,
+        "BBHELP",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1889852,
+      "sha256": "cb7421b5c6af74c3159c361f3bb78bba8a488d8979d1250e106fa96cbf928789"
+    },
+    {
+      "path": [
+        2,
+        "BBIGNORE",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1890316,
+      "sha256": "41f05a4df5f42d92b879493d51941de342d36460fe15c0f3b63b2b706b928fef"
+    },
+    {
+      "path": [
+        2,
+        "BBNO",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1890780,
+      "sha256": "81265e63c89ee5c2e5126452e22f84e9be9452449f3e5959ab6d346cb58b2bde"
+    },
+    {
+      "path": [
+        2,
+        "BBOK",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1891244,
+      "sha256": "6b97877cdd547e6ba6467f86055f1fc7b06660b034439f0da4c137538ef14a83"
+    },
+    {
+      "path": [
+        2,
+        "BBRETRY",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1891708,
+      "sha256": "c925e4a8cbf6d42dbb1220a510614df725558f8d843338982bab8c4e020f6429"
+    },
+    {
+      "path": [
+        2,
+        "BBYES",
+        0
+      ],
+      "size": 464,
+      "codepage": 0,
+      "offset": 1892172,
+      "sha256": "6b97877cdd547e6ba6467f86055f1fc7b06660b034439f0da4c137538ef14a83"
+    },
+    {
+      "path": [
+        2,
+        "CDROM",
+        0
+      ],
+      "size": 192,
+      "codepage": 0,
+      "offset": 1892636,
+      "sha256": "4f72c53f3bac49ce0b7c248152479a14e383a90c9fe95edbddec9f03784ca698"
+    },
+    {
+      "path": [
+        2,
+        "CHECK_IMAGES",
+        0
+      ],
+      "size": 1976,
+      "codepage": 0,
+      "offset": 1892828,
+      "sha256": "3b783dc61f88e266dd105baf3c154036675219725ee2991e5c074271b32e8e37"
+    },
+    {
+      "path": [
+        2,
+        "CLOSEDFOLDER",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1894804,
+      "sha256": "d20c1e7cdff419e1efe08e1b91b4c0d772f7436de618045f7e0fdb3afb662849"
+    },
+    {
+      "path": [
+        2,
+        "CURRENTFOLDER",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1895028,
+      "sha256": "0f5248f16fe2b1e73aa9be760a6f0bef933dc09e3cc6d8a8958eae1ce0bd0f97"
+    },
+    {
+      "path": [
+        2,
+        "DBEDIT",
+        0
+      ],
+      "size": 92,
+      "codepage": 0,
+      "offset": 1895252,
+      "sha256": "bc41740b9320d0955fc1646ca9e47f3b1448408a93091e25b8cd407c626b0e44"
+    },
+    {
+      "path": [
+        2,
+        "DBGARROW",
+        0
+      ],
+      "size": 92,
+      "codepage": 0,
+      "offset": 1895344,
+      "sha256": "3c2736eb81c4429dc0468b99e04715506d1fc38af9150d89530fde182b02f444"
+    },
+    {
+      "path": [
+        2,
+        "DBINSERT",
+        0
+      ],
+      "size": 92,
+      "codepage": 0,
+      "offset": 1895436,
+      "sha256": "0fa7786a1c4cf42e01f08aa8c5f8a9b93b7c3c5d7e9f995f966c0896704bcd22"
+    },
+    {
+      "path": [
+        2,
+        "DBMULTIARROW",
+        0
+      ],
+      "size": 92,
+      "codepage": 0,
+      "offset": 1895528,
+      "sha256": "1b33242df13655b7267b96e33fbfbe8e47286dd1035166d7b172275eddf34faa"
+    },
+    {
+      "path": [
+        2,
+        "DBMULTIDOT",
+        0
+      ],
+      "size": 92,
+      "codepage": 0,
+      "offset": 1895620,
+      "sha256": "cef683e3b60d8e5f4bc1de19de087f44c8afcc7db445d7e955f64aae6a93140d"
+    },
+    {
+      "path": [
+        2,
+        "DBN_CANCEL",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1895712,
+      "sha256": "c8bbf55b62157560e4ec92e2d84c40a8c1a0dbe37d2801488d0062a411b33ae7"
+    },
+    {
+      "path": [
+        2,
+        "DBN_DELETE",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1896024,
+      "sha256": "9c1dd1039d15645d4953fbc64859eea24749555784a129eb2a0921d76949b347"
+    },
+    {
+      "path": [
+        2,
+        "DBN_EDIT",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1896336,
+      "sha256": "236aacf465f12fbea60cd329070c1b0f92fc6d131324895af1bbf005505c1d3c"
+    },
+    {
+      "path": [
+        2,
+        "DBN_FIRST",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1896648,
+      "sha256": "d693797e8b41c94629f579096afbbaf161cdd326a9f5f5f380255ee591a52e1d"
+    },
+    {
+      "path": [
+        2,
+        "DBN_INSERT",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1896960,
+      "sha256": "0abb5e9814fedfbf8b481cf7e4e447bc40788acbbe87d3872b596930a0305722"
+    },
+    {
+      "path": [
+        2,
+        "DBN_LAST",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1897272,
+      "sha256": "48383fe3651419567a4ff7098bc09b5c31f924eecb9adee51ff7d74fd614a199"
+    },
+    {
+      "path": [
+        2,
+        "DBN_NEXT",
+        0
+      ],
+      "size": 260,
+      "codepage": 0,
+      "offset": 1897584,
+      "sha256": "ced2423aa4d3a9c68a6757eb70a260e0ff4edf74a6527c086da8134fd601e2b1"
+    },
+    {
+      "path": [
+        2,
+        "DBN_POST",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1897844,
+      "sha256": "f5dafef55098f34d098f87641cba44376a422e333ba3639dea2ea57825ceb415"
+    },
+    {
+      "path": [
+        2,
+        "DBN_PRIOR",
+        0
+      ],
+      "size": 260,
+      "codepage": 0,
+      "offset": 1898156,
+      "sha256": "eadc46c79bfe0ed0b0aeed5750ac0bb64af4897a96875fa474ef43b7deefa306"
+    },
+    {
+      "path": [
+        2,
+        "DBN_REFRESH",
+        0
+      ],
+      "size": 312,
+      "codepage": 0,
+      "offset": 1898416,
+      "sha256": "e48ec1ff84e0be504dd8aea3e205e94e462208436dfccb4b29800c0af8a2c9ee"
+    },
+    {
+      "path": [
+        2,
+        "DEDITBMP",
+        0
+      ],
+      "size": 296,
+      "codepage": 0,
+      "offset": 1898728,
+      "sha256": "e34faef498677b5f5478bdb4c9b2d7913bfd73ab6d9da7f1f78f232c953eb300"
+    },
+    {
+      "path": [
+        2,
+        "EXECUTABLE",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1899024,
+      "sha256": "4a217ca811d9c29363ead1d67b7ffa0f6e8b8e1d1a068730f4f7d557c3710b44"
+    },
+    {
+      "path": [
+        2,
+        "FEDITBMP",
+        0
+      ],
+      "size": 200,
+      "codepage": 0,
+      "offset": 1899248,
+      "sha256": "8fb2d5cd36a140e57ed9a17339de1df78215a1e194bd8f4e0f36d0ca55e0bdf9"
+    },
+    {
+      "path": [
+        2,
+        "FLOPPY",
+        0
+      ],
+      "size": 192,
+      "codepage": 0,
+      "offset": 1899448,
+      "sha256": "2cb60d7d674640457497f54b82b42afaa8a2cbd7c28a1aae35f128b4471cfaaa"
+    },
+    {
+      "path": [
+        2,
+        "HARD",
+        0
+      ],
+      "size": 192,
+      "codepage": 0,
+      "offset": 1899640,
+      "sha256": "a36fee3ac0a24b86169997e112d55de38ae2080815d2104c73bc90ad4eff5cbe"
+    },
+    {
+      "path": [
+        2,
+        "KNOWNFILE",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1899832,
+      "sha256": "d8444a0e4c91df51a151d4c64256e5d5f62a3e4a5b17ccb9778422f0e01223c3"
+    },
+    {
+      "path": [
+        2,
+        "NETWORK",
+        0
+      ],
+      "size": 192,
+      "codepage": 0,
+      "offset": 1900056,
+      "sha256": "caf10784d936136cddde6b4489d7ffdc6098f8050a81c7e02d1ebdd9878cff15"
+    },
+    {
+      "path": [
+        2,
+        "NEXT1",
+        0
+      ],
+      "size": 72,
+      "codepage": 0,
+      "offset": 1900248,
+      "sha256": "7825151698677076b0073f9af559598e7258540dec8b66169e05aadfd53713ff"
+    },
+    {
+      "path": [
+        2,
+        "NEXT2",
+        0
+      ],
+      "size": 72,
+      "codepage": 0,
+      "offset": 1900320,
+      "sha256": "2a58182854f7d6a3ea7f16fdcaf9ddd8f4b000e5f5928de4e1078d22f8bcf182"
+    },
+    {
+      "path": [
+        2,
+        "OPENFOLDER",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1900392,
+      "sha256": "e086586402b8c51192766a01a37dd2f2b4b657bbd4d5b721f1eed692678f6ef6"
+    },
+    {
+      "path": [
+        2,
+        "PREV1",
+        0
+      ],
+      "size": 72,
+      "codepage": 0,
+      "offset": 1900616,
+      "sha256": "8a84b08771b553b93576731d33bde8bd1d77e9132a93039e7910477a2d709b89"
+    },
+    {
+      "path": [
+        2,
+        "PREV2",
+        0
+      ],
+      "size": 72,
+      "codepage": 0,
+      "offset": 1900688,
+      "sha256": "4af81f3208fa3b46155f7ed4d2a16c75f6d15046fbf1575c1b176590372fad76"
+    },
+    {
+      "path": [
+        2,
+        "PREVIEWGLYPH",
+        0
+      ],
+      "size": 232,
+      "codepage": 0,
+      "offset": 1900760,
+      "sha256": "78507a772de646626b196a743cee75b298a68c33a0fd482842071519d59037b2"
+    },
+    {
+      "path": [
+        2,
+        "RAM",
+        0
+      ],
+      "size": 192,
+      "codepage": 0,
+      "offset": 1900992,
+      "sha256": "5bea8ae9edb158f767d478703ce5153b8773e1e0390fa2c4af83f063c6c2f1fa"
+    },
+    {
+      "path": [
+        2,
+        "SEDITBMP",
+        0
+      ],
+      "size": 200,
+      "codepage": 0,
+      "offset": 1901184,
+      "sha256": "a3de1d72b7397501aeff801f3f7b948ccdb305642d44d479f5fcb9f14f6d322c"
+    },
+    {
+      "path": [
+        2,
+        "SPINDOWN",
+        1033
+      ],
+      "size": 152,
+      "codepage": 0,
+      "offset": 1901384,
+      "sha256": "1d66fd6a469d10a5674582dd5b438f5e1a0cf0082e524caa2bfcd29dd3f0ea4e"
+    },
+    {
+      "path": [
+        2,
+        "SPINUP",
+        1033
+      ],
+      "size": 152,
+      "codepage": 0,
+      "offset": 1901536,
+      "sha256": "d2829ee569905c1b546c1323f3ff585ecb613f6dbdb5ce10c0dd2cb4b10bfcbb"
+    },
+    {
+      "path": [
+        2,
+        "UNKNOWNFILE",
+        0
+      ],
+      "size": 224,
+      "codepage": 0,
+      "offset": 1901688,
+      "sha256": "6af26f85073e8fce3b9ab49acbde0b702f68ec078be72e8aeca66086947a885e"
+    },
+    {
+      "path": [
+        3,
+        1,
+        1026
+      ],
+      "size": 744,
+      "codepage": 0,
+      "offset": 1901912,
+      "sha256": "737b8214c53f88e9f52175ae0b5e411af00bc2f4f9cd5b0b5c4c3b3904651e35"
+    },
+    {
+      "path": [
+        5,
+        "DLGTEMPLATE",
+        0
+      ],
+      "size": 82,
+      "codepage": 0,
+      "offset": 1902656,
+      "sha256": "771f64afb45a9edc8c4f6c5b2039f9b32623cea53bf0cab5bf1f371cc5d1abe4"
+    },
+    {
+      "path": [
+        6,
+        12,
+        0
+      ],
+      "size": 942,
+      "codepage": 0,
+      "offset": 1902740,
+      "sha256": "79d3aa39cb7814089bd5ccd0c6f048e6d3823cded8f01620f2a64d4b08b9ccc8"
+    },
+    {
+      "path": [
+        6,
+        13,
+        0
+      ],
+      "size": 902,
+      "codepage": 0,
+      "offset": 1903684,
+      "sha256": "b041852921ab2b581494c834bff6f43d9e85004973975866b32a0da0ab008a9d"
+    },
+    {
+      "path": [
+        6,
+        3819,
+        0
+      ],
+      "size": 548,
+      "codepage": 0,
+      "offset": 1904588,
+      "sha256": "495a7d8187ac3b3eb41285c2db1aa8f1087d5ada5b68ce17d8996ea4b3554289"
+    },
+    {
+      "path": [
+        6,
+        3824,
+        0
+      ],
+      "size": 822,
+      "codepage": 0,
+      "offset": 1905136,
+      "sha256": "d97c33c757de3e336cd010d12adbc9b2226c7ee852251b827c470456f42d446e"
+    },
+    {
+      "path": [
+        6,
+        3825,
+        0
+      ],
+      "size": 634,
+      "codepage": 0,
+      "offset": 1905960,
+      "sha256": "67e80e9f97490047998f653dcb00cbb8fabbeefc966f8e0b6834e7e923bef48d"
+    },
+    {
+      "path": [
+        6,
+        3826,
+        0
+      ],
+      "size": 814,
+      "codepage": 0,
+      "offset": 1906596,
+      "sha256": "97dbf99bc64399da6f20f04ec243ac54df67f6e96dbae800348c3c72b27451ed"
+    },
+    {
+      "path": [
+        6,
+        3829,
+        0
+      ],
+      "size": 472,
+      "codepage": 0,
+      "offset": 1907412,
+      "sha256": "6293155e951ec61f5a82fcaa864932ab0635f708a5da3329c4b98a1bfdce271e"
+    },
+    {
+      "path": [
+        6,
+        3830,
+        0
+      ],
+      "size": 44,
+      "codepage": 0,
+      "offset": 1907884,
+      "sha256": "ff7e17cea4027adc5c2e9ffe8e22abaee9547e4acb5a8b54795c3c65f332450a"
+    },
+    {
+      "path": [
+        6,
+        4074,
+        0
+      ],
+      "size": 340,
+      "codepage": 0,
+      "offset": 1907928,
+      "sha256": "86e9a33a517878aca1a25e20154a9d59623014003643b9b8ab4b09a8498b9236"
+    },
+    {
+      "path": [
+        6,
+        4075,
+        0
+      ],
+      "size": 616,
+      "codepage": 0,
+      "offset": 1908268,
+      "sha256": "eebb5b72199e94798157ef6449e767bacf491f2ccd8a5fcc3b6647cff656da0d"
+    },
+    {
+      "path": [
+        6,
+        4076,
+        0
+      ],
+      "size": 1024,
+      "codepage": 0,
+      "offset": 1908884,
+      "sha256": "3c3ff5adaecb4617b6b4b5a76a865960bc9a240845c8ee30cf72346c7e21626e"
+    },
+    {
+      "path": [
+        6,
+        4077,
+        0
+      ],
+      "size": 1472,
+      "codepage": 0,
+      "offset": 1909908,
+      "sha256": "98ee9e495b2c754c9d4cfe54373a4368271d40bdabd181616123f1912f07821c"
+    },
+    {
+      "path": [
+        6,
+        4078,
+        0
+      ],
+      "size": 1068,
+      "codepage": 0,
+      "offset": 1911380,
+      "sha256": "3de9277c740a32fa8d6c91b27d7c047dfd65dedf8337a3c1fe963d4bc7ddca56"
+    },
+    {
+      "path": [
+        6,
+        4079,
+        0
+      ],
+      "size": 1108,
+      "codepage": 0,
+      "offset": 1912448,
+      "sha256": "6f4028de748b2e92a1631a1e30c663168795b49ff7f674a2b4e4786a17dc2002"
+    },
+    {
+      "path": [
+        6,
+        4080,
+        0
+      ],
+      "size": 860,
+      "codepage": 0,
+      "offset": 1913556,
+      "sha256": "f3e9c0e1f100c30f40ecd9707efdcfb3b41e2a518c342071f2fbd0a691a3553b"
+    },
+    {
+      "path": [
+        6,
+        4081,
+        0
+      ],
+      "size": 472,
+      "codepage": 0,
+      "offset": 1914416,
+      "sha256": "dd4337c73ebe71bb63dce9828dc7cd6c1685380d410ebdc468a2b4ce1f08cf99"
+    },
+    {
+      "path": [
+        6,
+        4082,
+        0
+      ],
+      "size": 220,
+      "codepage": 0,
+      "offset": 1914888,
+      "sha256": "19c0ee380ecf5900102d22103000770990a0d26f1eca530d38e4f9a592ebe643"
+    },
+    {
+      "path": [
+        6,
+        4083,
+        0
+      ],
+      "size": 396,
+      "codepage": 0,
+      "offset": 1915108,
+      "sha256": "c9028e38e162fe1234e2f787a874a05a67c37f543fcce6af87e309ba04729fc9"
+    },
+    {
+      "path": [
+        6,
+        4084,
+        0
+      ],
+      "size": 548,
+      "codepage": 0,
+      "offset": 1915504,
+      "sha256": "921b69c6ab217e399ba60a9748221ae1c2e64fc092d9d89339df94804c927082"
+    },
+    {
+      "path": [
+        6,
+        4085,
+        0
+      ],
+      "size": 1020,
+      "codepage": 0,
+      "offset": 1916052,
+      "sha256": "dd79ed903e91196d22e1a4178b8cc60ad736960b1a63ec10a178c65267ef2561"
+    },
+    {
+      "path": [
+        6,
+        4086,
+        0
+      ],
+      "size": 896,
+      "codepage": 0,
+      "offset": 1917072,
+      "sha256": "d577f0c2fa43843ad422db93d9f12c76ece1244ba25e1be0dd1cbe46cce58ffb"
+    },
+    {
+      "path": [
+        6,
+        4087,
+        0
+      ],
+      "size": 944,
+      "codepage": 0,
+      "offset": 1917968,
+      "sha256": "c49608de60226093b510b06beec7dbe9474fd55465f1be0a0dbdcfafc9edfa25"
+    },
+    {
+      "path": [
+        6,
+        4088,
+        0
+      ],
+      "size": 892,
+      "codepage": 0,
+      "offset": 1918912,
+      "sha256": "c418c14c9738eb29e5c3f7897e938e7538aa0a0ff45b4d82c1705f5f399dab7e"
+    },
+    {
+      "path": [
+        6,
+        4089,
+        0
+      ],
+      "size": 900,
+      "codepage": 0,
+      "offset": 1919804,
+      "sha256": "a2d8cc6f1b2578f4967e048eb411b61c843ec61382b9f33eb267a165fef2c7c9"
+    },
+    {
+      "path": [
+        6,
+        4090,
+        0
+      ],
+      "size": 900,
+      "codepage": 0,
+      "offset": 1920704,
+      "sha256": "2e42d1fdb0cf46c19f656187a43b84c4070a4b256a7c740d3502c6f69e355438"
+    },
+    {
+      "path": [
+        6,
+        4091,
+        0
+      ],
+      "size": 228,
+      "codepage": 0,
+      "offset": 1921604,
+      "sha256": "21e5d0e9ad97e712f845942dfa558cb7186ce160e8586e743a96610fcd7790cf"
+    },
+    {
+      "path": [
+        6,
+        4092,
+        0
+      ],
+      "size": 188,
+      "codepage": 0,
+      "offset": 1921832,
+      "sha256": "7723a1a9d4c6bb26e866699606b976646714de2cf376f33ff22e17017af53cec"
+    },
+    {
+      "path": [
+        6,
+        4093,
+        0
+      ],
+      "size": 972,
+      "codepage": 0,
+      "offset": 1922020,
+      "sha256": "0023662baad45870387747d72fd41cc663c9480a447d4fac910f12c49fffffb0"
+    },
+    {
+      "path": [
+        6,
+        4094,
+        0
+      ],
+      "size": 996,
+      "codepage": 0,
+      "offset": 1922992,
+      "sha256": "374b3adbfb39a0cb33f374a34c0425fcd0e953553aaac13928918b358b090113"
+    },
+    {
+      "path": [
+        6,
+        4095,
+        0
+      ],
+      "size": 764,
+      "codepage": 0,
+      "offset": 1923988,
+      "sha256": "28168a14d2c7df69821cdd1fe01212c19e64d4fd6671cc147ebebfe99b21288c"
+    },
+    {
+      "path": [
+        6,
+        4096,
+        0
+      ],
+      "size": 856,
+      "codepage": 0,
+      "offset": 1924752,
+      "sha256": "c47064939eea7c8d8f8ad3e366199fc4c65d3bf9d07d5fdd847bea11f800eb11"
+    },
+    {
+      "path": [
+        10,
+        "DVCLAL",
+        0
+      ],
+      "size": 16,
+      "codepage": 0,
+      "offset": 1925608,
+      "sha256": "88d14cc6638af8a0836f6d868dfab60df92907a2d7becaefbbd7e007acb75610"
+    },
+    {
+      "path": [
+        10,
+        "PACKAGEINFO",
+        0
+      ],
+      "size": 2392,
+      "codepage": 0,
+      "offset": 1925624,
+      "sha256": "df2016e08f0a40eb6338fba7ba72d9e2f30850186a62f4afda28b1c539d64f28"
+    },
+    {
+      "path": [
+        10,
+        "TABOUTBOX",
+        0
+      ],
+      "size": 41678,
+      "codepage": 0,
+      "offset": 1928016,
+      "sha256": "541fa2e69747916d11a5db58ece0a6eb1d5cd5e6d1d6bc791fa0e481b84c415a"
+    },
+    {
+      "path": [
+        10,
+        "TADDCLSMEMDTAFORM",
+        0
+      ],
+      "size": 1106,
+      "codepage": 0,
+      "offset": 1969696,
+      "sha256": "d3cb3b8df9f67b7993687af1cb2439a7331d21062068d2c0f8aa151443229774"
+    },
+    {
+      "path": [
+        10,
+        "TANALYZFORM",
+        0
+      ],
+      "size": 1709,
+      "codepage": 0,
+      "offset": 1970804,
+      "sha256": "ff7d75b1d1ad4b0d6b5236dff560360cfa14602cbee8f2ad31bd2f3c76061ea2"
+    },
+    {
+      "path": [
+        10,
+        "TASM2PASFORM",
+        0
+      ],
+      "size": 1227,
+      "codepage": 0,
+      "offset": 1972516,
+      "sha256": "a45e14d311e8e15faee26054ce3f91b4c94c88a2dd5d618ac34e786e36896cc6"
+    },
+    {
+      "path": [
+        10,
+        "TASMFORM",
+        0
+      ],
+      "size": 1291,
+      "codepage": 0,
+      "offset": 1973744,
+      "sha256": "b339cdcc02f09cae62735accd118aa50e8eee99656351600d328877eeb2b488a"
+    },
+    {
+      "path": [
+        10,
+        "TASMSHOWFORM",
+        0
+      ],
+      "size": 18288,
+      "codepage": 0,
+      "offset": 1975036,
+      "sha256": "4eb6f30d53a43367bc6ac569eb1376d86ddd36db90e9f21e03c6f33dca841599"
+    },
+    {
+      "path": [
+        10,
+        "TBPL",
+        0
+      ],
+      "size": 6852,
+      "codepage": 0,
+      "offset": 1993324,
+      "sha256": "de6935664853be8037b49e0ea268a209cb2e874a9544b0b9befddb246c6135aa"
+    },
+    {
+      "path": [
+        10,
+        "TCHOOSEMEMLOCFORM",
+        0
+      ],
+      "size": 934,
+      "codepage": 0,
+      "offset": 2000176,
+      "sha256": "7672f524f37b69946e55171bf2144d69ddf654be007a72c67a91e42d6429fd58"
+    },
+    {
+      "path": [
+        10,
+        "TCLASSINFOFORM",
+        0
+      ],
+      "size": 7209,
+      "codepage": 0,
+      "offset": 2001112,
+      "sha256": "4983e32923daf89887bb2ea3dd4cf41914bae38d491b76f68dd4900c2388416b"
+    },
+    {
+      "path": [
+        10,
+        "TCONVERTERFORM",
+        0
+      ],
+      "size": 1556,
+      "codepage": 0,
+      "offset": 2008324,
+      "sha256": "bed72ad6718f6f772185b8f1e45b08f53100ae68bc04b7281818c19aafc997aa"
+    },
+    {
+      "path": [
+        10,
+        "TDCUFORM",
+        0
+      ],
+      "size": 2238,
+      "codepage": 0,
+      "offset": 2009880,
+      "sha256": "005265d4cf0dc62daff645232475431aeb9e5087e72547a23c937628a059b59a"
+    },
+    {
+      "path": [
+        10,
+        "TDCUOPTIONFORM",
+        0
+      ],
+      "size": 1599,
+      "codepage": 0,
+      "offset": 2012120,
+      "sha256": "dc2c9639a7d72175986b7dbcedcf02446e0720ceefe7e6e47367f9748c8da8ad"
+    },
+    {
+      "path": [
+        10,
+        "TDEDEMAINFORM",
+        0
+      ],
+      "size": 53019,
+      "codepage": 0,
+      "offset": 2013720,
+      "sha256": "15fccc8422571310bbc231a4233333039068b2348fba93e83479de62bfb02cbd"
+    },
+    {
+      "path": [
+        10,
+        "TDOIADDDATAFORM",
+        0
+      ],
+      "size": 912,
+      "codepage": 0,
+      "offset": 2066740,
+      "sha256": "4dc8a02df7e7f75549a9115126d3b05b27adcd6acba290fb2db8f50ab429d34a"
+    },
+    {
+      "path": [
+        10,
+        "TDOIBFORM",
+        0
+      ],
+      "size": 4369,
+      "codepage": 0,
+      "offset": 2067652,
+      "sha256": "4605cc258e30a9bbeaf68870d6dba121bd3fef9894fa9d8b48c723c185316d6c"
+    },
+    {
+      "path": [
+        10,
+        "TDOIPARSFRM",
+        0
+      ],
+      "size": 1770,
+      "codepage": 0,
+      "offset": 2072024,
+      "sha256": "6f86a89ebd3438ae551a4cd5a5e41874c39dd623ae2d45084386e1cba733e311"
+    },
+    {
+      "path": [
+        10,
+        "TEDITEXPRFORM",
+        0
+      ],
+      "size": 447,
+      "codepage": 0,
+      "offset": 2073796,
+      "sha256": "77be69f721e9bc168dfa271ef53f75fc736ddd696b832110d7d17a214a749414"
+    },
+    {
+      "path": [
+        10,
+        "TEDITPROPFORM",
+        0
+      ],
+      "size": 4583,
+      "codepage": 0,
+      "offset": 2074244,
+      "sha256": "5e656b2d3dbef245a08d1d1efbd31a124a805276b5815e8df7184f25d735c04f"
+    },
+    {
+      "path": [
+        10,
+        "TEDITTEXTFORM",
+        0
+      ],
+      "size": 514,
+      "codepage": 0,
+      "offset": 2078828,
+      "sha256": "47d89d0c4d16bc6b6d84bc952c3982f39418b51c7c8fe40488c8c93b736c0ce0"
+    },
+    {
+      "path": [
+        10,
+        "TEPFINDFORM",
+        0
+      ],
+      "size": 2608,
+      "codepage": 0,
+      "offset": 2079344,
+      "sha256": "764d3c32c298b1e8cb4cf84f532303d45363a5da1b808607d0d02224dab37f06"
+    },
+    {
+      "path": [
+        10,
+        "TFLAGSEDITFORM",
+        0
+      ],
+      "size": 3071,
+      "codepage": 0,
+      "offset": 2081952,
+      "sha256": "da90913073cd5823cc1d7bab1bf9c7d6f9c2623e39ec2199dc83c73953d7503c"
+    },
+    {
+      "path": [
+        10,
+        "TLOGINDIALOG",
+        0
+      ],
+      "size": 1172,
+      "codepage": 0,
+      "offset": 2085024,
+      "sha256": "4ced9507eb8afb32e0a8c3bb98492876cabadbda831202a629e84f4de35cac8d"
+    },
+    {
+      "path": [
+        10,
+        "TLOGOFORM",
+        0
+      ],
+      "size": 39425,
+      "codepage": 0,
+      "offset": 2086196,
+      "sha256": "f3a242d872fef1d4572a346d9f2de4b1b61e57027a38dbcde12270e59614cd1e"
+    },
+    {
+      "path": [
+        10,
+        "TLSFORM",
+        0
+      ],
+      "size": 1913,
+      "codepage": 0,
+      "offset": 2125624,
+      "sha256": "4ed6a9cecb441e234d1dd15ec259478bda9332c8d5fead0b16d68ed20f43e0a0"
+    },
+    {
+      "path": [
+        10,
+        "TMAKEPEHFORM",
+        0
+      ],
+      "size": 2187,
+      "codepage": 0,
+      "offset": 2127540,
+      "sha256": "e85e1195b5e4326d0d3e31433cddd609653d27bb3f67bcaabe8238823f66afd2"
+    },
+    {
+      "path": [
+        10,
+        "TMEMDMPFORM",
+        0
+      ],
+      "size": 1796,
+      "codepage": 0,
+      "offset": 2129728,
+      "sha256": "f574a8608c672c203865764e2a44b3d60c3f539bb5baeb2bdcfc97030f34cc73"
+    },
+    {
+      "path": [
+        10,
+        "TNMSHOW",
+        0
+      ],
+      "size": 7654,
+      "codepage": 0,
+      "offset": 2131524,
+      "sha256": "001426e916a4b2fb76b0ef56a05bb0bef0b4cbec46934c8a82045f7e576d64ec"
+    },
+    {
+      "path": [
+        10,
+        "TPASSWORDDIALOG",
+        0
+      ],
+      "size": 964,
+      "codepage": 0,
+      "offset": 2139180,
+      "sha256": "4e5728d0faff235d9b94df07cfb963dfa005d1481835331448b88fc3873eb6a5"
+    },
+    {
+      "path": [
+        10,
+        "TPEIFORM",
+        0
+      ],
+      "size": 32897,
+      "codepage": 0,
+      "offset": 2140144,
+      "sha256": "13084b881dd898a034dd128cdfd33de7de229b701dd4ba9b3c67aacd06af9ff8"
+    },
+    {
+      "path": [
+        10,
+        "TPREFSFORM",
+        0
+      ],
+      "size": 6005,
+      "codepage": 0,
+      "offset": 2173044,
+      "sha256": "a1b74d105492e22ee648a03db72fe50bb7e11672206f74c7d054776e295eb394"
+    },
+    {
+      "path": [
+        10,
+        "TSHOWPLUGINFORM",
+        0
+      ],
+      "size": 521,
+      "codepage": 0,
+      "offset": 2179052,
+      "sha256": "2030d43f9bb9e86a54192cce1e4882847b69c2791ab6c40319cc71fe9858ccf7"
+    },
+    {
+      "path": [
+        10,
+        "TSPYDEBUGFORM",
+        0
+      ],
+      "size": 541,
+      "codepage": 0,
+      "offset": 2179576,
+      "sha256": "f8d443eee6fb9e8ac55fa0bd5681591fb399baed9881655ec74301448e4b5e6b"
+    },
+    {
+      "path": [
+        10,
+        "TSTATSFORM",
+        0
+      ],
+      "size": 823,
+      "codepage": 0,
+      "offset": 2180120,
+      "sha256": "754eaf6f18f8e25d357a1b915d7e60711eaed5a6c492c0ab6bc88fb7d8f0ff9b"
+    },
+    {
+      "path": [
+        10,
+        "TSYMBOLSFORM",
+        0
+      ],
+      "size": 15171,
+      "codepage": 0,
+      "offset": 2180944,
+      "sha256": "f62e05554be09692e60bd8ccb4809cc060503cdaa8f110832e9e9c72bdf53b41"
+    },
+    {
+      "path": [
+        10,
+        "TTREEVIEWFORM",
+        0
+      ],
+      "size": 11734,
+      "codepage": 0,
+      "offset": 2196116,
+      "sha256": "b7eebe0f53e75439f1302a5f8395f97a4abd66b98608dd77c67c37c5ac235129"
+    },
+    {
+      "path": [
+        10,
+        "TW32CUSTSETFORM",
+        0
+      ],
+      "size": 2871,
+      "codepage": 0,
+      "offset": 2207852,
+      "sha256": "f9e49e66019d93ddf5a3501469e3dcdf103ac3953468eb733606cc85d64713da"
+    },
+    {
+      "path": [
+        12,
+        "RX_DRAGCUR",
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210724,
+      "sha256": "c53efa8085835ba129c1909beaff8a67b45f50837707f22dfff0f24d8cd26710"
+    },
+    {
+      "path": [
+        12,
+        "RX_HANDCUR",
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210744,
+      "sha256": "ec26c438d10e3e84ec855c47f07a176e6c11bbfae1557d526490711b80f087fe"
+    },
+    {
+      "path": [
+        12,
+        32761,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210764,
+      "sha256": "9c17b4621412d6ded24a76aed74d4425ae61f86b6d4092ca1e28ca66b7c71399"
+    },
+    {
+      "path": [
+        12,
+        32762,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210784,
+      "sha256": "b07e022f8ef0a8e5fd3f56986b2e5bf06df07054e9ea9177996b0a6c27d74d7c"
+    },
+    {
+      "path": [
+        12,
+        32763,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210804,
+      "sha256": "43f40dd5140804309a4c901ec3c85b54481316e67a6fe18beb9d5c0ce3a42c3a"
+    },
+    {
+      "path": [
+        12,
+        32764,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210824,
+      "sha256": "ff47a48c11c234903a7d625cb8b62101909f735ad84266c98dd4834549452c39"
+    },
+    {
+      "path": [
+        12,
+        32765,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210844,
+      "sha256": "a0adcedb82b57089f64e2857f97cefd6cf25f4d27eefc6648bda83fd5fef66bb"
+    },
+    {
+      "path": [
+        12,
+        32766,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210864,
+      "sha256": "6e1e7738a1b6373d8829f817915822ef415a1727bb5bb7cfe809e31b3c143ac5"
+    },
+    {
+      "path": [
+        12,
+        32767,
+        0
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210884,
+      "sha256": "326c048595bbc72e3f989cb3b95fbf09dc83739ced3cb13eb6f03336f95d74f1"
+    },
+    {
+      "path": [
+        14,
+        "MAINICON",
+        1026
+      ],
+      "size": 20,
+      "codepage": 0,
+      "offset": 2210904,
+      "sha256": "a0c9d012e2bf6b2fe05c2d97cb5594d97cf2f539e97935c12abd7a3562f4d9bf"
+    },
+    {
+      "path": [
+        16,
+        1,
+        1049
+      ],
+      "size": 716,
+      "codepage": 0,
+      "offset": 2210924,
+      "sha256": "70ddd0dfc7b8af676f690b6996fe690e5a4c52da70b5b62ac2c9cbbb537cd283"
+    }
+  ],
+  "opcode_comparisons": [
+    {
+      "file": "AboutUnit.pas",
+      "instructions": 73,
+      "bytes": 201,
+      "matched": 73,
+      "failures": []
+    },
+    {
+      "file": "AddClsMemDtaUnit.pas",
+      "instructions": 0,
+      "bytes": 0,
+      "matched": 0,
+      "failures": []
+    },
+    {
+      "file": "AnalizUnit.pas",
+      "instructions": 92,
+      "bytes": 259,
+      "matched": 92,
+      "failures": []
+    },
+    {
+      "file": "ASMConvertUnit.pas",
+      "instructions": 97,
+      "bytes": 305,
+      "matched": 97,
+      "failures": []
+    },
+    {
+      "file": "ASMShow.pas",
+      "instructions": 6031,
+      "bytes": 20533,
+      "matched": 6031,
+      "failures": []
+    },
+    {
+      "file": "BPLUnit.pas",
+      "instructions": 1787,
+      "bytes": 6615,
+      "matched": 1787,
+      "failures": []
+    },
+    {
+      "file": "ClassInfoUnit.pas",
+      "instructions": 443,
+      "bytes": 1597,
+      "matched": 443,
+      "failures": []
+    },
+    {
+      "file": "ConverterUnit.pas",
+      "instructions": 336,
+      "bytes": 1132,
+      "matched": 336,
+      "failures": []
+    },
+    {
+      "file": "custsetunit.pas",
+      "instructions": 390,
+      "bytes": 1155,
+      "matched": 390,
+      "failures": []
+    },
+    {
+      "file": "DBLogDlg.pas",
+      "instructions": 21,
+      "bytes": 70,
+      "matched": 21,
+      "failures": []
+    },
+    {
+      "file": "DBPWDlg.pas",
+      "instructions": 169,
+      "bytes": 476,
+      "matched": 169,
+      "failures": []
+    },
+    {
+      "file": "DCUOptionUnit.pas",
+      "instructions": 137,
+      "bytes": 506,
+      "matched": 137,
+      "failures": []
+    },
+    {
+      "file": "DCUUnit.pas",
+      "instructions": 205,
+      "bytes": 641,
+      "matched": 205,
+      "failures": []
+    },
+    {
+      "file": "DeDe.dpr",
+      "instructions": 195,
+      "bytes": 880,
+      "matched": 195,
+      "failures": []
+    },
+    {
+      "file": "DeDeEditText.pas",
+      "instructions": 312,
+      "bytes": 1031,
+      "matched": 312,
+      "failures": []
+    },
+    {
+      "file": "DOIAddDtaUnit.pas",
+      "instructions": 0,
+      "bytes": 0,
+      "matched": 0,
+      "failures": []
+    },
+    {
+      "file": "DOIBUnit.pas",
+      "instructions": 1805,
+      "bytes": 6076,
+      "matched": 1805,
+      "failures": []
+    },
+    {
+      "file": "DOIParsr.pas",
+      "instructions": 1296,
+      "bytes": 4393,
+      "matched": 1296,
+      "failures": []
+    },
+    {
+      "file": "EditExprUnit.pas",
+      "instructions": 25,
+      "bytes": 74,
+      "matched": 25,
+      "failures": []
+    },
+    {
+      "file": "EditPropUnit.pas",
+      "instructions": 1037,
+      "bytes": 3506,
+      "matched": 1037,
+      "failures": []
+    },
+    {
+      "file": "EPFindUnit.pas",
+      "instructions": 111,
+      "bytes": 385,
+      "matched": 111,
+      "failures": []
+    },
+    {
+      "file": "LAUnit.pas",
+      "instructions": 72,
+      "bytes": 206,
+      "matched": 72,
+      "failures": []
+    },
+    {
+      "file": "LodoUnit.pas",
+      "instructions": 0,
+      "bytes": 0,
+      "matched": 0,
+      "failures": []
+    },
+    {
+      "file": "MainUnit.pas",
+      "instructions": 20396,
+      "bytes": 71680,
+      "matched": 20396,
+      "failures": []
+    },
+    {
+      "file": "MemLocUnit.pas",
+      "instructions": 307,
+      "bytes": 1092,
+      "matched": 307,
+      "failures": []
+    },
+    {
+      "file": "PreferencesUnit.pas",
+      "instructions": 788,
+      "bytes": 2660,
+      "matched": 788,
+      "failures": []
+    },
+    {
+      "file": "SectionEditUnit.pas",
+      "instructions": 149,
+      "bytes": 408,
+      "matched": 149,
+      "failures": []
+    },
+    {
+      "file": "SelProcessUnit.pas",
+      "instructions": 1060,
+      "bytes": 3654,
+      "matched": 1060,
+      "failures": []
+    },
+    {
+      "file": "ShowPEUnit.pas",
+      "instructions": 3521,
+      "bytes": 13228,
+      "matched": 3521,
+      "failures": []
+    },
+    {
+      "file": "ShowPluginUnit.pas",
+      "instructions": 0,
+      "bytes": 0,
+      "matched": 0,
+      "failures": []
+    },
+    {
+      "file": "SpyDebugUnit.pas",
+      "instructions": 124,
+      "bytes": 414,
+      "matched": 124,
+      "failures": []
+    },
+    {
+      "file": "StatsUnit.pas",
+      "instructions": 113,
+      "bytes": 321,
+      "matched": 113,
+      "failures": []
+    },
+    {
+      "file": "SymbolsUnit.pas",
+      "instructions": 3879,
+      "bytes": 12549,
+      "matched": 3879,
+      "failures": []
+    },
+    {
+      "file": "TreeViewUnit.pas",
+      "instructions": 253,
+      "bytes": 805,
+      "matched": 253,
+      "failures": []
+    }
+  ],
+  "binary_form_comparisons": [
+    {
+      "file": "AboutUnit.dfm",
+      "stream_offset": 19,
+      "payload_size": 41682,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TABOUTBOX",
+            0
+          ],
+          "resource_size": 41678,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a005441424f5554424f58003010cfa20000"
+    },
+    {
+      "file": "AddClsMemDtaUnit.dfm",
+      "stream_offset": 27,
+      "payload_size": 1110,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TADDCLSMEMDTAFORM",
+            0
+          ],
+          "resource_size": 1106,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a0054414444434c534d454d445441464f524d00301053040000"
+    },
+    {
+      "file": "AnalizUnit.dfm",
+      "stream_offset": 21,
+      "payload_size": 2942,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TANALYZFORM",
+            0
+          ],
+          "resource_size": 1709,
+          "trailing_bytes": 1233
+        }
+      ],
+      "prefix_hex": "ff0a0054414e414c595a464f524d0030107b0b0000"
+    },
+    {
+      "file": "ASMConvertUnit.dfm",
+      "stream_offset": 18,
+      "payload_size": 1294,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TASMFORM",
+            0
+          ],
+          "resource_size": 1291,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a005441534d464f524d0030100b050000"
+    },
+    {
+      "file": "ASMShow.dfm",
+      "stream_offset": 22,
+      "payload_size": 18290,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TASMSHOWFORM",
+            0
+          ],
+          "resource_size": 18288,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a005441534d53484f57464f524d0030106f470000"
+    },
+    {
+      "file": "BPLUnit.dfm",
+      "stream_offset": 14,
+      "payload_size": 6854,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TBPL",
+            0
+          ],
+          "resource_size": 6852,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a005442504c003010c31a0000"
+    },
+    {
+      "file": "ClassInfoUnit.dfm",
+      "stream_offset": 24,
+      "payload_size": 7214,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TCLASSINFOFORM",
+            0
+          ],
+          "resource_size": 7209,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a0054434c415353494e464f464f524d0030102b1c0000"
+    },
+    {
+      "file": "ConverterUnit.dfm",
+      "stream_offset": 24,
+      "payload_size": 1558,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TCONVERTERFORM",
+            0
+          ],
+          "resource_size": 1556,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a0054434f4e564552544552464f524d00301013060000"
+    },
+    {
+      "file": "custsetunit.dfm",
+      "stream_offset": 25,
+      "payload_size": 3990,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TW32CUSTSETFORM",
+            0
+          ],
+          "resource_size": 2871,
+          "trailing_bytes": 1119
+        }
+      ],
+      "prefix_hex": "ff0a005457333243555354534554464f524d003010930f0000"
+    },
+    {
+      "file": "DBLogDlg.dfm",
+      "stream_offset": 22,
+      "payload_size": 1174,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TLOGINDIALOG",
+            0
+          ],
+          "resource_size": 1172,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a00544c4f47494e4449414c4f4700301093040000"
+    },
+    {
+      "file": "DBPWDlg.dfm",
+      "stream_offset": 25,
+      "payload_size": 966,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TPASSWORDDIALOG",
+            0
+          ],
+          "resource_size": 964,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a005450415353574f52444449414c4f47003010c3030000"
+    },
+    {
+      "file": "DCUOptionUnit.dfm",
+      "stream_offset": 24,
+      "payload_size": 1602,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDCUOPTIONFORM",
+            0
+          ],
+          "resource_size": 1599,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a00544443554f5054494f4e464f524d0030103f060000"
+    },
+    {
+      "file": "DCUUnit.dfm",
+      "stream_offset": 18,
+      "payload_size": 2242,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDCUFORM",
+            0
+          ],
+          "resource_size": 2238,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a0054444355464f524d003010bf080000"
+    },
+    {
+      "file": "DeDeEditText.dfm",
+      "stream_offset": 23,
+      "payload_size": 518,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TEDITTEXTFORM",
+            0
+          ],
+          "resource_size": 514,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a00544544495454455854464f524d00301003020000"
+    },
+    {
+      "file": "DOIAddDtaUnit.dfm",
+      "stream_offset": 25,
+      "payload_size": 914,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDOIADDDATAFORM",
+            0
+          ],
+          "resource_size": 912,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a0054444f4941444444415441464f524d0030108f030000"
+    },
+    {
+      "file": "DOIBUnit.dfm",
+      "stream_offset": 19,
+      "payload_size": 4374,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDOIBFORM",
+            0
+          ],
+          "resource_size": 4369,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a0054444f4942464f524d00301013110000"
+    },
+    {
+      "file": "DOIParsr.dfm",
+      "stream_offset": 21,
+      "payload_size": 1774,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDOIPARSFRM",
+            0
+          ],
+          "resource_size": 1770,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a0054444f495041525346524d003010eb060000"
+    },
+    {
+      "file": "EditExprUnit.dfm",
+      "stream_offset": 23,
+      "payload_size": 450,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TEDITEXPRFORM",
+            0
+          ],
+          "resource_size": 447,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a00544544495445585052464f524d003010bf010000"
+    },
+    {
+      "file": "EditPropUnit.dfm",
+      "stream_offset": 23,
+      "payload_size": 4586,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TEDITPROPFORM",
+            0
+          ],
+          "resource_size": 4583,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a00544544495450524f50464f524d003010e7110000"
+    },
+    {
+      "file": "EPFindUnit.dfm",
+      "stream_offset": 21,
+      "payload_size": 2610,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TEPFINDFORM",
+            0
+          ],
+          "resource_size": 2608,
+          "trailing_bytes": 2
+        }
+      ],
+      "prefix_hex": "ff0a0054455046494e44464f524d0030102f0a0000"
+    },
+    {
+      "file": "LAUnit.dfm",
+      "stream_offset": 17,
+      "payload_size": 4106,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TLSFORM",
+            0
+          ],
+          "resource_size": 1913,
+          "trailing_bytes": 2193
+        }
+      ],
+      "prefix_hex": "ff0a00544c53464f524d00301007100000"
+    },
+    {
+      "file": "LodoUnit.dfm",
+      "stream_offset": 19,
+      "payload_size": 39430,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TLOGOFORM",
+            0
+          ],
+          "resource_size": 39425,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a00544c4f474f464f524d003010039a0000"
+    },
+    {
+      "file": "MainUnit.dfm",
+      "stream_offset": 23,
+      "payload_size": 53022,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TDEDEMAINFORM",
+            0
+          ],
+          "resource_size": 53019,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a0054444544454d41494e464f524d0030101bcf0000"
+    },
+    {
+      "file": "MemLocUnit.dfm",
+      "stream_offset": 27,
+      "payload_size": 938,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TCHOOSEMEMLOCFORM",
+            0
+          ],
+          "resource_size": 934,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a005443484f4f53454d454d4c4f43464f524d003010a7030000"
+    },
+    {
+      "file": "PreferencesUnit.dfm",
+      "stream_offset": 20,
+      "payload_size": 6010,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TPREFSFORM",
+            0
+          ],
+          "resource_size": 6005,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a00545052454653464f524d00301077170000"
+    },
+    {
+      "file": "SectionEditUnit.dfm",
+      "stream_offset": 24,
+      "payload_size": 3074,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TFLAGSEDITFORM",
+            0
+          ],
+          "resource_size": 3071,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a0054464c41475345444954464f524d003010ff0b0000"
+    },
+    {
+      "file": "SelProcessUnit.dfm",
+      "stream_offset": 21,
+      "payload_size": 9454,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TMEMDMPFORM",
+            0
+          ],
+          "resource_size": 1796,
+          "trailing_bytes": 7658
+        }
+      ],
+      "prefix_hex": "ff0a00544d454d444d50464f524d003010eb240000"
+    },
+    {
+      "file": "ShowPEUnit.dfm",
+      "stream_offset": 18,
+      "payload_size": 32902,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TPEIFORM",
+            0
+          ],
+          "resource_size": 32897,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a0054504549464f524d00301083800000"
+    },
+    {
+      "file": "ShowPluginUnit.dfm",
+      "stream_offset": 25,
+      "payload_size": 526,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TSHOWPLUGINFORM",
+            0
+          ],
+          "resource_size": 521,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a005453484f57504c5547494e464f524d0030100b020000"
+    },
+    {
+      "file": "SpyDebugUnit.dfm",
+      "stream_offset": 23,
+      "payload_size": 546,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TSPYDEBUGFORM",
+            0
+          ],
+          "resource_size": 541,
+          "trailing_bytes": 5
+        }
+      ],
+      "prefix_hex": "ff0a00545350594445425547464f524d0030101f020000"
+    },
+    {
+      "file": "StatsUnit.dfm",
+      "stream_offset": 20,
+      "payload_size": 826,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TSTATSFORM",
+            0
+          ],
+          "resource_size": 823,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a00545354415453464f524d00301037030000"
+    },
+    {
+      "file": "SymbolsUnit.dfm",
+      "stream_offset": 22,
+      "payload_size": 15174,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TSYMBOLSFORM",
+            0
+          ],
+          "resource_size": 15171,
+          "trailing_bytes": 3
+        }
+      ],
+      "prefix_hex": "ff0a005453594d424f4c53464f524d003010433b0000"
+    },
+    {
+      "file": "TreeViewUnit.dfm",
+      "stream_offset": 23,
+      "payload_size": 11738,
+      "exact_resource_matches": [],
+      "wrapped_resource_matches": [
+        {
+          "resource": [
+            10,
+            "TTREEVIEWFORM",
+            0
+          ],
+          "resource_size": 11734,
+          "trailing_bytes": 4
+        }
+      ],
+      "prefix_hex": "ff0a00545452454556494557464f524d003010d72d0000"
+    }
+  ],
+  "idr_form_mapping": [
+    {
+      "file": "AboutBox.dfm",
+      "object": "AboutBox",
+      "class_name": "TAboutBox",
+      "resource_candidates": [
+        [
+          10,
+          "TABOUTBOX",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "AddClsMemDtaForm.dfm",
+      "object": "AddClsMemDtaForm",
+      "class_name": "TAddClsMemDtaForm",
+      "resource_candidates": [
+        [
+          10,
+          "TADDCLSMEMDTAFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "AnalyzForm.dfm",
+      "object": "AnalyzForm",
+      "class_name": "TAnalyzForm",
+      "resource_candidates": [
+        [
+          10,
+          "TANALYZFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "Asm2PasForm.dfm",
+      "object": "Asm2PasForm",
+      "class_name": "TAsm2PasForm",
+      "resource_candidates": [
+        [
+          10,
+          "TASM2PASFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ASMForm.dfm",
+      "object": "ASMForm",
+      "class_name": "TASMForm",
+      "resource_candidates": [
+        [
+          10,
+          "TASMFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ASMShowForm.dfm",
+      "object": "ASMShowForm",
+      "class_name": "TASMShowForm",
+      "resource_candidates": [
+        [
+          10,
+          "TASMSHOWFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "BPL.dfm",
+      "object": "BPL",
+      "class_name": "TBPL",
+      "resource_candidates": [
+        [
+          10,
+          "TBPL",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ChooseMemLocForm.dfm",
+      "object": "ChooseMemLocForm",
+      "class_name": "TChooseMemLocForm",
+      "resource_candidates": [
+        [
+          10,
+          "TCHOOSEMEMLOCFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ClassInfoForm.dfm",
+      "object": "ClassInfoForm",
+      "class_name": "TClassInfoForm",
+      "resource_candidates": [
+        [
+          10,
+          "TCLASSINFOFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ConverterForm.dfm",
+      "object": "ConverterForm",
+      "class_name": "TConverterForm",
+      "resource_candidates": [
+        [
+          10,
+          "TCONVERTERFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DCUForm.dfm",
+      "object": "DCUForm",
+      "class_name": "TDCUForm",
+      "resource_candidates": [
+        [
+          10,
+          "TDCUFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DCUOptionForm.dfm",
+      "object": "DCUOptionForm",
+      "class_name": "TDCUOptionForm",
+      "resource_candidates": [
+        [
+          10,
+          "TDCUOPTIONFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DeDeMainForm.dfm",
+      "object": "DeDeMainForm",
+      "class_name": "TDeDeMainForm",
+      "resource_candidates": [
+        [
+          10,
+          "TDEDEMAINFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DOIAddDataForm.dfm",
+      "object": "DOIAddDataForm",
+      "class_name": "TDOIAddDataForm",
+      "resource_candidates": [
+        [
+          10,
+          "TDOIADDDATAFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DOIBForm.dfm",
+      "object": "DOIBForm",
+      "class_name": "TDOIBForm",
+      "resource_candidates": [
+        [
+          10,
+          "TDOIBFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "DOIParsFrm.dfm",
+      "object": "DOIParsFrm",
+      "class_name": "TDOIParsFrm",
+      "resource_candidates": [
+        [
+          10,
+          "TDOIPARSFRM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "EditExprForm.dfm",
+      "object": "EditExprForm",
+      "class_name": "TEditExprForm",
+      "resource_candidates": [
+        [
+          10,
+          "TEDITEXPRFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "EditPropForm.dfm",
+      "object": "EditPropForm",
+      "class_name": "TEditPropForm",
+      "resource_candidates": [
+        [
+          10,
+          "TEDITPROPFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "EditTextForm.dfm",
+      "object": "EditTextForm",
+      "class_name": "TEditTextForm",
+      "resource_candidates": [
+        [
+          10,
+          "TEDITTEXTFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "EPFindForm.dfm",
+      "object": "EPFindForm",
+      "class_name": "TEPFindForm",
+      "resource_candidates": [
+        [
+          10,
+          "TEPFINDFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "FlagsEditForm.dfm",
+      "object": "FlagsEditForm",
+      "class_name": "TFlagsEditForm",
+      "resource_candidates": [
+        [
+          10,
+          "TFLAGSEDITFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "LoginDialog.dfm",
+      "object": "LoginDialog",
+      "class_name": "TLoginDialog",
+      "resource_candidates": [
+        [
+          10,
+          "TLOGINDIALOG",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "LogoForm.dfm",
+      "object": "LogoForm",
+      "class_name": "TLogoForm",
+      "resource_candidates": [
+        [
+          10,
+          "TLOGOFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "LSForm.dfm",
+      "object": "LSForm",
+      "class_name": "TLSForm",
+      "resource_candidates": [
+        [
+          10,
+          "TLSFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "MakePEHForm.dfm",
+      "object": "MakePEHForm",
+      "class_name": "TMakePEHForm",
+      "resource_candidates": [
+        [
+          10,
+          "TMAKEPEHFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "MemDmpForm.dfm",
+      "object": "MemDmpForm",
+      "class_name": "TMemDmpForm",
+      "resource_candidates": [
+        [
+          10,
+          "TMEMDMPFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "NMShow.dfm",
+      "object": "NMShow",
+      "class_name": "TNMShow",
+      "resource_candidates": [
+        [
+          10,
+          "TNMSHOW",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "PasswordDialog.dfm",
+      "object": "PasswordDialog",
+      "class_name": "TPasswordDialog",
+      "resource_candidates": [
+        [
+          10,
+          "TPASSWORDDIALOG",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "PEIForm.dfm",
+      "object": "PEIForm",
+      "class_name": "TPEIForm",
+      "resource_candidates": [
+        [
+          10,
+          "TPEIFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "PrefsForm.dfm",
+      "object": "PrefsForm",
+      "class_name": "TPrefsForm",
+      "resource_candidates": [
+        [
+          10,
+          "TPREFSFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "ShowPlugInForm.dfm",
+      "object": "ShowPlugInForm",
+      "class_name": "TShowPlugInForm",
+      "resource_candidates": [
+        [
+          10,
+          "TSHOWPLUGINFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "SpyDebugForm.dfm",
+      "object": "SpyDebugForm",
+      "class_name": "TSpyDebugForm",
+      "resource_candidates": [
+        [
+          10,
+          "TSPYDEBUGFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "StatsForm.dfm",
+      "object": "StatsForm",
+      "class_name": "TStatsForm",
+      "resource_candidates": [
+        [
+          10,
+          "TSTATSFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "SymbolsForm.dfm",
+      "object": "SymbolsForm",
+      "class_name": "TSymbolsForm",
+      "resource_candidates": [
+        [
+          10,
+          "TSYMBOLSFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "TreeViewForm.dfm",
+      "object": "TreeViewForm",
+      "class_name": "TTreeViewForm",
+      "resource_candidates": [
+        [
+          10,
+          "TTREEVIEWFORM",
+          0
+        ]
+      ]
+    },
+    {
+      "file": "w32CustSetForm.dfm",
+      "object": "w32CustSetForm",
+      "class_name": "Tw32CustSetForm",
+      "resource_candidates": [
+        [
+          10,
+          "TW32CUSTSETFORM",
+          0
+        ]
+      ]
+    }
+  ],
+  "inventory_files": 1037,
+  "limitations": [
+    "IDR text DFM matched by class name only, not by serialized properties.",
+    "Opcode equality covers emitted instructions, not omitted code or all EXE bytes.",
+    "SVN metadata excluded from inventory."
+  ]
+}

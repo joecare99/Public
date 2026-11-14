@@ -1,0 +1,1712 @@
+{
+  "catalogKind": "metadata-only",
+  "sourceManifest": "C:\\Projekte\\CSharp\\WinAhnenNew\\AhnenWin52Backup\\AhnWin52Backup.Core\\Resources\\StructureTemplate\\manifest.json",
+  "sourceSchemaVersion": 1,
+  "templateId": "ahnwin52-empty2-structure-v1",
+  "encoding": "Windows-1252",
+  "containsRecordData": false,
+  "relationshipsDeclared": false,
+  "indexKeySemantics": "indexedFields exclude the template primary-key suffix; the manifest generator uses the first table field as the primary field and appends it to each secondary index key",
+  "tables": [
+    {
+      "fileName": "adp.DB",
+      "tableVersion": 11,
+      "recordSize": 12,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3
+      ],
+      "primaryIndexFile": "adp.PX",
+      "templatePrimaryIndexField": "Nummer",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Nummer",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Av",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Am",
+          "typeCode": 4,
+          "length": 4
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "adp.XG0",
+          "ygFile": "adp.YG0",
+          "sortOrder": "intl",
+          "label": "Adopm",
+          "indexedFields": [
+            "Am"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 1,
+          "xgFile": "adp.XG1",
+          "ygFile": "adp.YG1",
+          "sortOrder": "intl",
+          "label": "Adopv",
+          "indexedFields": [
+            "Av"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        }
+      ]
+    },
+    {
+      "fileName": "AWD.DB",
+      "tableVersion": 11,
+      "recordSize": 1868,
+      "maximumTableSize": 16,
+      "databaseSortOrder": "intl850",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        27,
+        28,
+        11,
+        12,
+        29,
+        30,
+        13,
+        14,
+        15,
+        16,
+        31,
+        32,
+        17,
+        18,
+        19,
+        33,
+        34,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        36,
+        37,
+        38,
+        40,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "primaryIndexFile": "AWD.PX",
+      "templatePrimaryIndexField": "Nummer",
+      "memoFile": "AWD.MB",
+      "fields": [
+        {
+          "name": "Nummer",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Vater",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Mutter",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Name",
+          "typeCode": 1,
+          "length": 45
+        },
+        {
+          "name": "Vornamen",
+          "typeCode": 1,
+          "length": 45
+        },
+        {
+          "name": "Geschlecht",
+          "typeCode": 1,
+          "length": 1
+        },
+        {
+          "name": "Religion",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Beruf",
+          "typeCode": 1,
+          "length": 70
+        },
+        {
+          "name": "Gebtag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Gebmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Gebjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Gebort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Tauftag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Taufmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Taufjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Taufort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Taufpat",
+          "typeCode": 1,
+          "length": 120
+        },
+        {
+          "name": "Lebensort",
+          "typeCode": 1,
+          "length": 80
+        },
+        {
+          "name": "Sttag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Stmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Stjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Stort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Todesurs",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Begtag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Begmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Begjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Begort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Quelleg",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Quellet",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Quelles",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Quelleb",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Kommentar",
+          "typeCode": 12,
+          "length": 20
+        },
+        {
+          "name": "Lebt",
+          "typeCode": 1,
+          "length": 1
+        },
+        {
+          "name": "Bild",
+          "typeCode": 16,
+          "length": 10
+        },
+        {
+          "name": "Namex",
+          "typeCode": 1,
+          "length": 60
+        },
+        {
+          "name": "IDNR",
+          "typeCode": 1,
+          "length": 10
+        },
+        {
+          "name": "Kistat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Hausname",
+          "typeCode": 1,
+          "length": 70
+        },
+        {
+          "name": "Adr1",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Adr2",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "PLZ",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Ort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Adrzus",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Indj",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Indm",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Indt",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Alter",
+          "typeCode": 1,
+          "length": 15
+        },
+        {
+          "name": "Tel",
+          "typeCode": 1,
+          "length": 25
+        },
+        {
+          "name": "Ema",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Ur",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Quelle",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Rufname",
+          "typeCode": 1,
+          "length": 30
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "AWD.XG0",
+          "ygFile": "AWD.YG0",
+          "sortOrder": "intl850",
+          "label": "muto",
+          "indexedFields": [
+            "Mutter",
+            "Gebjahr",
+            "Gebmonat",
+            "Gebtag",
+            "Taufjahr",
+            "Taufmonat",
+            "Tauftag"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 1,
+          "xgFile": "AWD.XG1",
+          "ygFile": "AWD.YG1",
+          "sortOrder": "intl850",
+          "label": "vato",
+          "indexedFields": [
+            "Vater",
+            "Gebjahr",
+            "Gebmonat",
+            "Gebtag",
+            "Taufjahr",
+            "Taufmonat",
+            "Tauftag"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 2,
+          "xgFile": "AWD.XG2",
+          "ygFile": "AWD.YG2",
+          "sortOrder": "intl850",
+          "label": "namgeb",
+          "indexedFields": [
+            "Name",
+            "Vornamen",
+            "Gebjahr",
+            "Indj",
+            "Indm",
+            "Indt"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 3,
+          "xgFile": "AWD.XG3",
+          "ygFile": "AWD.YG3",
+          "sortOrder": "intl850",
+          "label": "geba",
+          "indexedFields": [
+            "Name",
+            "Vornamen",
+            "Gebjahr",
+            "Gebmonat",
+            "Gebtag",
+            "Taufjahr",
+            "Taufmonat",
+            "Tauftag"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 4,
+          "xgFile": "AWD.XG4",
+          "ygFile": "AWD.YG4",
+          "sortOrder": "intl850",
+          "label": "gebnam",
+          "indexedFields": [
+            "Indj",
+            "Indm",
+            "Indt",
+            "Name",
+            "Vornamen"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 5,
+          "xgFile": "AWD.XG5",
+          "ygFile": "AWD.YG5",
+          "sortOrder": "intl850",
+          "label": "mut",
+          "indexedFields": [
+            "Mutter",
+            "Indj",
+            "Indm",
+            "Indt"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 6,
+          "xgFile": "AWD.XG6",
+          "ygFile": "AWD.YG6",
+          "sortOrder": "intl850",
+          "label": "vat",
+          "indexedFields": [
+            "Vater",
+            "Indj",
+            "Indm",
+            "Indt"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        },
+        {
+          "number": 7,
+          "xgFile": "AWD.XG7",
+          "ygFile": "AWD.YG7",
+          "sortOrder": "intl850",
+          "label": "gebo",
+          "indexedFields": [
+            "Gebort"
+          ],
+          "templatePrimaryKeySuffix": "Nummer"
+        }
+      ]
+    },
+    {
+      "fileName": "chnt.DB",
+      "tableVersion": 11,
+      "recordSize": 33,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        4,
+        1,
+        2,
+        3
+      ],
+      "primaryIndexFile": "chnt.PX",
+      "templatePrimaryIndexField": "Nr",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Nr",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "FELD001",
+          "typeCode": 1,
+          "length": 25
+        },
+        {
+          "name": "FELD002",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "FELD003",
+          "typeCode": 1,
+          "length": 2
+        }
+      ],
+      "secondaryIndexes": []
+    },
+    {
+      "fileName": "ftab.DB",
+      "tableVersion": 12,
+      "recordSize": 1074,
+      "maximumTableSize": 4,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        15,
+        8,
+        9,
+        16,
+        10,
+        11,
+        17,
+        12,
+        13,
+        14,
+        18,
+        19
+      ],
+      "primaryIndexFile": "ftab.PX",
+      "templatePrimaryIndexField": "N",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "N",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Fv",
+          "typeCode": 1,
+          "length": 6
+        },
+        {
+          "name": "Fm",
+          "typeCode": 1,
+          "length": 6
+        },
+        {
+          "name": "Fk",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Fn",
+          "typeCode": 1,
+          "length": 15
+        },
+        {
+          "name": "H",
+          "typeCode": 1,
+          "length": 15
+        },
+        {
+          "name": "Ho",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Hq",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "S",
+          "typeCode": 1,
+          "length": 15
+        },
+        {
+          "name": "So",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Sq",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Sch",
+          "typeCode": 1,
+          "length": 15
+        },
+        {
+          "name": "Scho",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Schq",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Vb",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Indj",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Indm",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Htz",
+          "typeCode": 1,
+          "length": 120
+        },
+        {
+          "name": "Stz",
+          "typeCode": 1,
+          "length": 120
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "ftab.XG0",
+          "ygFile": "ftab.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "v",
+          "indexedFields": [
+            "Fv",
+            "Indj",
+            "Indm"
+          ],
+          "templatePrimaryKeySuffix": "N"
+        },
+        {
+          "number": 1,
+          "xgFile": "ftab.XG1",
+          "ygFile": "ftab.YG1",
+          "sortOrder": "ANSIINTL",
+          "label": "m",
+          "indexedFields": [
+            "Fm",
+            "Indj",
+            "Indm"
+          ],
+          "templatePrimaryKeySuffix": "N"
+        },
+        {
+          "number": 2,
+          "xgFile": "ftab.XG2",
+          "ygFile": "ftab.YG2",
+          "sortOrder": "ANSIINTL",
+          "label": "verb",
+          "indexedFields": [
+            "Vb"
+          ],
+          "templatePrimaryKeySuffix": "N"
+        }
+      ]
+    },
+    {
+      "fileName": "gedh.db",
+      "tableVersion": 11,
+      "recordSize": 12,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        3,
+        1,
+        2
+      ],
+      "primaryIndexFile": "gedh.PX",
+      "templatePrimaryIndexField": "Z",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Z",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "A",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "N",
+          "typeCode": 4,
+          "length": 4
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "gedh.XG0",
+          "ygFile": "gedh.YG0",
+          "sortOrder": "intl",
+          "label": "AA",
+          "indexedFields": [
+            "A"
+          ],
+          "templatePrimaryKeySuffix": "Z"
+        }
+      ]
+    },
+    {
+      "fileName": "lc.DB",
+      "tableVersion": 11,
+      "recordSize": 54,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        2,
+        1
+      ],
+      "primaryIndexFile": "lc.PX",
+      "templatePrimaryIndexField": "Nr",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Nr",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Ort",
+          "typeCode": 1,
+          "length": 50
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "lc.XG0",
+          "ygFile": "lc.YG0",
+          "sortOrder": "intl",
+          "label": "lo",
+          "indexedFields": [
+            "Ort"
+          ],
+          "templatePrimaryKeySuffix": "Nr"
+        }
+      ]
+    },
+    {
+      "fileName": "LOC.db",
+      "tableVersion": 11,
+      "recordSize": 470,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ascii",
+      "databaseFieldNumbers": [
+        1,
+        7,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "primaryIndexFile": "LOC.PX",
+      "templatePrimaryIndexField": "Ort",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Ort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "PLZ",
+          "typeCode": 1,
+          "length": 10
+        },
+        {
+          "name": "Land",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "RegBez",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Gov",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Bland",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Gde",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Pfr",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Lkr",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Abk",
+          "typeCode": 1,
+          "length": 20
+        },
+        {
+          "name": "Lg",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Bg",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Maid",
+          "typeCode": 1,
+          "length": 10
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "LOC.XG0",
+          "ygFile": "LOC.YG0",
+          "sortOrder": "ascii",
+          "label": "Ort_",
+          "indexedFields": [
+            "Ort"
+          ],
+          "templatePrimaryKeySuffix": "Ort"
+        }
+      ]
+    },
+    {
+      "fileName": "MRG.DB",
+      "tableVersion": 11,
+      "recordSize": 872,
+      "maximumTableSize": 4,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        18,
+        1,
+        2,
+        3,
+        12,
+        13,
+        4,
+        5,
+        6,
+        14,
+        15,
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        11,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "primaryIndexFile": "MRG.PX",
+      "templatePrimaryIndexField": "Numr",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Numr",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Nummer",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Epnum",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Htag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Hmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Hjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Hort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Trauz",
+          "typeCode": 1,
+          "length": 120
+        },
+        {
+          "name": "Satag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Samonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Sajahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Saort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Satrauz",
+          "typeCode": 1,
+          "length": 120
+        },
+        {
+          "name": "Verbind",
+          "typeCode": 1,
+          "length": 20
+        },
+        {
+          "name": "Schtag",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Schmonat",
+          "typeCode": 1,
+          "length": 2
+        },
+        {
+          "name": "Schjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Schort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Hqu",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Saqu",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Schqu",
+          "typeCode": 1,
+          "length": 150
+        },
+        {
+          "name": "Indj",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Indm",
+          "typeCode": 1,
+          "length": 2
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "MRG.XG0",
+          "ygFile": "MRG.YG0",
+          "sortOrder": "intl",
+          "label": "nm",
+          "indexedFields": [
+            "Nummer"
+          ],
+          "templatePrimaryKeySuffix": "Numr"
+        },
+        {
+          "number": 1,
+          "xgFile": "MRG.XG1",
+          "ygFile": "MRG.YG1",
+          "sortOrder": "intl",
+          "label": "epn",
+          "indexedFields": [
+            "Epnum",
+            "Indj",
+            "Indm"
+          ],
+          "templatePrimaryKeySuffix": "Numr"
+        },
+        {
+          "number": 2,
+          "xgFile": "MRG.XG2",
+          "ygFile": "MRG.YG2",
+          "sortOrder": "intl",
+          "label": "num",
+          "indexedFields": [
+            "Nummer",
+            "Indj",
+            "Indm"
+          ],
+          "templatePrimaryKeySuffix": "Numr"
+        },
+        {
+          "number": 3,
+          "xgFile": "MRG.XG3",
+          "ygFile": "MRG.YG3",
+          "sortOrder": "intl",
+          "label": "ep",
+          "indexedFields": [
+            "Epnum"
+          ],
+          "templatePrimaryKeySuffix": "Numr"
+        },
+        {
+          "number": 4,
+          "xgFile": "MRG.XG4",
+          "ygFile": "MRG.YG4",
+          "sortOrder": "intl",
+          "label": "mh",
+          "indexedFields": [
+            "Nummer",
+            "Hjahr",
+            "Hmonat",
+            "Htag",
+            "Sajahr",
+            "Samonat",
+            "Satag"
+          ],
+          "templatePrimaryKeySuffix": "Numr"
+        }
+      ]
+    },
+    {
+      "fileName": "ndh.db",
+      "tableVersion": 12,
+      "recordSize": 100,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1
+      ],
+      "primaryIndexFile": "ndh.PX",
+      "templatePrimaryIndexField": "Hofname",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Hofname",
+          "typeCode": 1,
+          "length": 100
+        }
+      ],
+      "secondaryIndexes": []
+    },
+    {
+      "fileName": "NM.db",
+      "tableVersion": 11,
+      "recordSize": 50,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ascii",
+      "databaseFieldNumbers": [
+        7
+      ],
+      "primaryIndexFile": "NM.PX",
+      "templatePrimaryIndexField": "Name",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Name",
+          "typeCode": 1,
+          "length": 50
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "NM.XG0",
+          "ygFile": "NM.YG0",
+          "sortOrder": "ascii",
+          "label": "Nam_",
+          "indexedFields": [
+            "Name"
+          ],
+          "templatePrimaryKeySuffix": "Name"
+        }
+      ]
+    },
+    {
+      "fileName": "nol.db",
+      "tableVersion": 12,
+      "recordSize": 74,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3
+      ],
+      "primaryIndexFile": "nol.PX",
+      "templatePrimaryIndexField": "Nr",
+      "memoFile": "nol.MB",
+      "fields": [
+        {
+          "name": "Nr",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "No",
+          "typeCode": 1,
+          "length": 50
+        },
+        {
+          "name": "Zus",
+          "typeCode": 12,
+          "length": 20
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "nol.XG0",
+          "ygFile": "nol.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "namort",
+          "indexedFields": [
+            "No"
+          ],
+          "templatePrimaryKeySuffix": "Nr"
+        }
+      ]
+    },
+    {
+      "fileName": "over.DB",
+      "tableVersion": 11,
+      "recordSize": 255,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        19,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        20
+      ],
+      "primaryIndexFile": "over.PX",
+      "templatePrimaryIndexField": "Nn",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Nn",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Nummer",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Name",
+          "typeCode": 1,
+          "length": 60
+        },
+        {
+          "name": "Gebtag",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Gebmonat",
+          "typeCode": 1,
+          "length": 3
+        },
+        {
+          "name": "Gebjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Gebort",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Sttag",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Stmonat",
+          "typeCode": 1,
+          "length": 3
+        },
+        {
+          "name": "Stjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Stort",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Htag",
+          "typeCode": 1,
+          "length": 7
+        },
+        {
+          "name": "Hmonat",
+          "typeCode": 1,
+          "length": 3
+        },
+        {
+          "name": "Hjahr",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Hort",
+          "typeCode": 1,
+          "length": 30
+        },
+        {
+          "name": "Hname",
+          "typeCode": 1,
+          "length": 60
+        },
+        {
+          "name": "Geschlecht",
+          "typeCode": 1,
+          "length": 1
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "over.XG0",
+          "ygFile": "over.YG0",
+          "sortOrder": "intl",
+          "label": "dsn",
+          "indexedFields": [
+            "Nummer"
+          ],
+          "templatePrimaryKeySuffix": "Nn"
+        },
+        {
+          "number": 1,
+          "xgFile": "over.XG1",
+          "ygFile": "over.YG1",
+          "sortOrder": "intl",
+          "label": "ngh",
+          "indexedFields": [
+            "Name",
+            "Gebjahr",
+            "Gebmonat",
+            "Gebtag",
+            "Hjahr",
+            "Hmonat",
+            "Htag"
+          ],
+          "templatePrimaryKeySuffix": "Nn"
+        }
+      ]
+    },
+    {
+      "fileName": "NUMRES.DB",
+      "tableVersion": 11,
+      "recordSize": 4,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "intl",
+      "databaseFieldNumbers": [
+        1
+      ],
+      "primaryIndexFile": "NUMRES.PX",
+      "templatePrimaryIndexField": "Num",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Num",
+          "typeCode": 4,
+          "length": 4
+        }
+      ],
+      "secondaryIndexes": []
+    },
+    {
+      "fileName": "occ.db",
+      "tableVersion": 12,
+      "recordSize": 74,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1,
+        2
+      ],
+      "primaryIndexFile": "occ.PX",
+      "templatePrimaryIndexField": "NN",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "NN",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Occ",
+          "typeCode": 1,
+          "length": 70
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "occ.XG0",
+          "ygFile": "occ.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "ber",
+          "indexedFields": [
+            "Occ"
+          ],
+          "templatePrimaryKeySuffix": "NN"
+        }
+      ]
+    },
+    {
+      "fileName": "OUTP.db",
+      "tableVersion": 12,
+      "recordSize": 103,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        2,
+        1,
+        3,
+        4,
+        5
+      ],
+      "primaryIndexFile": "OUTP.PX",
+      "templatePrimaryIndexField": "Nr",
+      "memoFile": "OUTP.MB",
+      "fields": [
+        {
+          "name": "Nr",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Zeile",
+          "typeCode": 12,
+          "length": 20
+        },
+        {
+          "name": "Nm",
+          "typeCode": 1,
+          "length": 25
+        },
+        {
+          "name": "Nm2",
+          "typeCode": 1,
+          "length": 4
+        },
+        {
+          "name": "Nm3",
+          "typeCode": 1,
+          "length": 50
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "OUTP.XG0",
+          "ygFile": "OUTP.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "Valf",
+          "indexedFields": [
+            "Nm3",
+            "Nm"
+          ],
+          "templatePrimaryKeySuffix": "Nr"
+        }
+      ]
+    },
+    {
+      "fileName": "repso.db",
+      "tableVersion": 11,
+      "recordSize": 313,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3,
+        5,
+        4
+      ],
+      "primaryIndexFile": "repso.PX",
+      "templatePrimaryIndexField": "Z",
+      "memoFile": "repso.MB",
+      "fields": [
+        {
+          "name": "Z",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Nr",
+          "typeCode": 4,
+          "length": 4
+        },
+        {
+          "name": "Inh",
+          "typeCode": 1,
+          "length": 255
+        },
+        {
+          "name": "Inh2",
+          "typeCode": 12,
+          "length": 20
+        },
+        {
+          "name": "Alt",
+          "typeCode": 1,
+          "length": 30
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "repso.XG0",
+          "ygFile": "repso.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "alt_",
+          "indexedFields": [
+            "Alt"
+          ],
+          "templatePrimaryKeySuffix": "Z"
+        },
+        {
+          "number": 1,
+          "xgFile": "repso.XG1",
+          "ygFile": "repso.YG1",
+          "sortOrder": "ANSIINTL",
+          "label": "nro",
+          "indexedFields": [
+            "Nr"
+          ],
+          "templatePrimaryKeySuffix": "Z"
+        },
+        {
+          "number": 2,
+          "xgFile": "repso.XG2",
+          "ygFile": "repso.YG2",
+          "sortOrder": "ANSIINTL",
+          "label": "ih",
+          "indexedFields": [
+            "Inh"
+          ],
+          "templatePrimaryKeySuffix": "Z"
+        }
+      ]
+    },
+    {
+      "fileName": "sour.DB",
+      "tableVersion": 12,
+      "recordSize": 154,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        4,
+        1
+      ],
+      "primaryIndexFile": "sour.PX",
+      "templatePrimaryIndexField": "Nn",
+      "memoFile": null,
+      "fields": [
+        {
+          "name": "Nn",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Quelle",
+          "typeCode": 1,
+          "length": 150
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "sour.XG0",
+          "ygFile": "sour.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "qu",
+          "indexedFields": [
+            "Quelle"
+          ],
+          "templatePrimaryKeySuffix": "Nn"
+        }
+      ]
+    },
+    {
+      "fileName": "sour2.DB",
+      "tableVersion": 12,
+      "recordSize": 424,
+      "maximumTableSize": 2,
+      "databaseSortOrder": "ANSIINTL",
+      "databaseFieldNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13
+      ],
+      "primaryIndexFile": "sour2.PX",
+      "templatePrimaryIndexField": "N",
+      "memoFile": "sour2.MB",
+      "fields": [
+        {
+          "name": "N",
+          "typeCode": 22,
+          "length": 4
+        },
+        {
+          "name": "Titel",
+          "typeCode": 1,
+          "length": 80
+        },
+        {
+          "name": "Abk",
+          "typeCode": 1,
+          "length": 80
+        },
+        {
+          "name": "Ereig",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Von",
+          "typeCode": 1,
+          "length": 10
+        },
+        {
+          "name": "Bis",
+          "typeCode": 1,
+          "length": 10
+        },
+        {
+          "name": "Standort",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Publ",
+          "typeCode": 12,
+          "length": 20
+        },
+        {
+          "name": "Rep",
+          "typeCode": 1,
+          "length": 60
+        },
+        {
+          "name": "Bem",
+          "typeCode": 12,
+          "length": 20
+        },
+        {
+          "name": "Bestand",
+          "typeCode": 1,
+          "length": 40
+        },
+        {
+          "name": "Med",
+          "typeCode": 1,
+          "length": 20
+        }
+      ],
+      "secondaryIndexes": [
+        {
+          "number": 0,
+          "xgFile": "sour2.XG0",
+          "ygFile": "sour2.YG0",
+          "sortOrder": "ANSIINTL",
+          "label": "tit",
+          "indexedFields": [
+            "Titel"
+          ],
+          "templatePrimaryKeySuffix": "N"
+        }
+      ]
+    }
+  ]
+}

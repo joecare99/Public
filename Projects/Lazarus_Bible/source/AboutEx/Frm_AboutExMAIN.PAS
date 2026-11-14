@@ -13,7 +13,7 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils,  Classes, Graphics, Controls,
-  Forms, Dialogs, Frm_ABOUT, StdCtrls;
+  Forms, Dialogs, AboutEx_Frm_ABOUT, StdCtrls;
 
 type
   TfrmAboutMain = class(TForm)

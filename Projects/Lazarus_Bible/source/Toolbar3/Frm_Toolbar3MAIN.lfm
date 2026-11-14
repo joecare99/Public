@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmToolbar3Main: TfrmToolbar3Main
   Left = 200
   Height = 162
   Top = 94
@@ -39,7 +39,6 @@ object MainForm: TMainForm
     BorderStyle = bsSingle
     ClientHeight = 117
     ClientWidth = 62
-    TabOrder = 0
     OnMouseDown = FloatingToolbarMouseDown
     object SpeedButton1: TSpeedButton
       Tag = 1

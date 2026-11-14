@@ -10,7 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_EnumWinMAIN in '..\Source\ENUMWIN\Frm_EnumWinMAIN.PAS' {MainForm}; 
+  Frm_EnumWinMAIN in '..\source\ENUMWIN\Frm_EnumWinMAIN.PAS' {MainForm},
+  unt_GetWindows in '..\source\ENUMWIN\unt_getwindows.pas'; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_MemInfoMain in '..\Source\MemInfo\frm_MemInfoMain.pas' {MainForm}; 
+  frm_MemInfoMain in '..\source\MemInfo\frm_MemInfoMain.pas' {MainForm}; 
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

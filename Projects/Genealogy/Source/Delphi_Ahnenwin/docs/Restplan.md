@@ -1,0 +1,1022 @@
+﻿# Remaining work plan (Restplan) â€” AHNENWIN 5.1 recon
+
+State: **572 / 659** methods reconstructed (87 open). Build is green.
+
+Method sizes below are the number of *disassembly* lines in the listing
+(the `{*procedure â€¦` block or the plain `procedure â€¦` body up to the next
+procedure). "Lines" therefore is *code*, not Delphi â€” a 500-line listing may
+become 100 lines of Pascal.
+
+---
+
+## Phase 1 â€” the small ones (< 250 disassembly lines)
+
+These are the only methods small enough to convert in one pass. They are
+scattered across all three major units (Unit1, Unit3, Unit13) and the two
+smaller ones (Unit17, Unit24, Unit26, Unit33).
+
+| # | Method | Unit | Lines |
+|---|--------|------|------:|
+| 1 | `sub_005D39D8`  | Unit1  | 46  |
+| 2 | `sub_0054F810`  | Unit26 | 60  |
+| 3 | `sub_00573314`  | Unit13 | 72  |
+| 4 | `symm`          | Unit13 | 95  |
+| 5 | `sub_0057316c`  | Unit13 | 117 |
+| 6 | `sub_0056897c`  | Unit13 | 117 |
+| 7 | `sub_00568c9c`  | Unit13 | 127 |
+| 8 | `sub_00568b04`  | Unit13 | 129 |
+| 9 | `sub_00568e3c`  | Unit13 | 175 |
+| 10| `vorf_erm2`     | Unit13 | 225 |
+| 11| `sub_005BEF5C`  | Unit3  | 308 |
+| 12| `sub_00582C24`  | Unit3  | 411 | **</br> COMPLETED 2026-10-29 (build green)** |
+| 13| `nam2`          | Unit17 | 486 | **</br> COMPLETED 2026-10-30 (build green)** |
+| 14| `fambeltern`    | Unit17 | 509 | **</br> COMPLETED 2026-10-30 (build green)** |
+| 15| `nr1`           | Unit13 | 658 |
+| 16| `nr2`           | Unit13 | 665 |
+| 17| `sub_005BC604`  | Unit3  | 1096 | **</br> COMPLETED 2026-10-29 (build green)** |
+| 18| `sub_005BE4B8`  | Unit3  | 645 | **</br> COMPLETED 2026-10-28 (build green)** |
+| 19| `illki`         | Unit3  | 687 | **</br> COMPLETED 2026-10-30 (build green)** |
+
+> **Note on Unit13 items (4â€“10, 15â€“16):** they touch the shared chart arrays.
+> The layout is now PINNED â€” see "Phase A findings" below.
+
+## Phase A findings (layout, pinned 2026-10-25)
+
+These are the chart row grids of Unit13. One row per person, **row size
+$198 = 408 bytes**, row count **$2710 = 10000** (matches the IDR annotation
+`array[10000] of ?`). Both facts close ONLY with hex constants: the
+`imul â€¦,33` scale is $33 = 51 and every row slot is 8 bytes (`51 Ã— 8 =
+408 = $198`); a decimal "33" would give 264 B and contradict the
+explicit `add/sub â€¦,198` row walks.
+
+Recon declarations (see `Units\AHNGlobals.pas`):
+
+- `TChartRow = array[0..101] of Integer` (408 B), `TChartRows = array[0..9999] of TChartRow`.
+- **Grid A** `gvar_011AE1C4` (labels inside: `011AE1CC` = row[r].dword[2],
+  `011AE35C` = row[r+1].dword[0], `011AE360` = dword[1], `011AE364` = dword[2]).
+- **Grid B** `gvar_019764C4` (labels inside: `019764C8` = dword[1],
+  `019764D8` = dword[5], `019764E0` = dword[7]; row r+1: `0197665C` = dword[0],
+  `01976664` = dword[1], `01976668` = dword[3], `01976670` = dword[5]).
+- **Grid C** `gvar_015924E4` â€” a second 10000Ã—$198 working copy (load/store
+  mirror of grid A, copied stride-$198 with count $2710 in the method at
+  005693Câ€¦0056943E).
+- **Person mirror** `gvar_0061F30C`: `TPersonRec = array[0..531] of Byte`
+  ($214 = 532 bytes), count `$13880 = 80000`; pinned fields: +0 num,
+  +4 flag, +8 kind, +$137/+$10E/+$160 = ShortString[28] (the Len byte
+  at +$137 is compared with 'W').
+
+All cell math in the listings is 4-byte (`fild dword ptr`, cmp dword), so
+the 8-byte slots are **array[0..1] of Integer pairs (lo = +0, hi = +4)** â€”
+not DateTime/Double (the listing's `fild` converts an Integer to double,
+it does not load floats).
+
+Converted against this layout so far:
+
+- `sub_00568FD4` / `sub_00569010` â€” scan rows while
+  `gridA[r].dword[2] > 0`, track the max of `gridA[r].dword[5]`, then call
+  `sub_00568C9C(max)` / `sub_00568E3C(max)` respectively (Unit13 recon,
+  build green).
+- `sub_00568C9C` / `sub_00568E3C` â€” converted (build green), see
+  "Phase B findings" below.
+- Stubs for `sub_0056897C(AValue)`, `sub_00568B04(AValue)` (called by
+  C9C/E3C); not yet converted.
+
+**Converted since (still Phase B, build green):**
+
+- `sub_0056897C` / `sub_00568B04` (grid-A pair *normalizers*): same
+  flat-index translation, BUT (a) they run `V` full passes over the
+  level loop (`[esp+8]` pass counter), (b) comparisons are
+  `jge`/`jl` (magnitude, not equality), (c) the propagation loop
+  continues while the level dword equals `lvl+1`, and (d) they only
+  act when the doubling-row value is BELOW (branch 1) / the row value
+  is ABOVE (branch 2) the neighbor value â€” sort-shift semantics,
+  versus the distribute semantics of C9C/E3C.
+- `TForm13.Symm` (00568834): two backward row walks over grid B from
+  row `gvar_011AE344` downto 1. Part 1 moves `gridB[esi][0]` to the
+  midpoint of `gridB[esi][7]`/`[8]` (via `ChartBFlat(102*d)` row-index
+  deref: term `[T*8 + 19764C4]` = flat dword `2*T`) when the pair
+  differs by more than `gvar_011AE334+gvar_0061F118`, then
+  `gvar_011AE31C := max(011AE31C, [esi][0] div sum âˆ’ 1)`. Part 2
+  monotonically raises `gridB[esi][0]` when `[esi][7]/[8]` are empty,
+  `[esi][5] < 011AE328` and equals `[esi-1][5]`, `[esi][3]` and
+  `[esi-1][3]` are positive and `[esi-1][0] >= [esi][0]`.
+- **Retype**: `gvar_011AE334`, `gvar_0061F118`, `gvar_011AE328` are INTEGERS
+  (every access is `add dword,0A`, `mov/cmp dword`, `fild dword`; the
+  IDR "Single" label is wrong). `AHNGlobals` exposes
+  `ChartBFlat/SetChartBFlat` for grid B's `[T*8+19764C4]` terms.
+- `TForm13.schieb_vm1` (00568528) / `schieb_vm` (0056862C): first find
+  the row dword[5] maximum (scan while `[r][2] > 0`; vm1 only), then
+  N outer passes; each pass walks rows 1..`gvar_011AE344` on the
+  1976668-anchor (`row[r][3]`; vm1 shifts `row[r][1]`, vm
+  `row[r][0]`): when ecx(=pass) = `[r][5]` copy the pointed value's
+  dword down (`ChartBFlat(102*val â†’ +1)`); else when both parents
+  `[r][6]/[r][7]` are 0 and the row is a level-equal successor,
+  place at previous row's position + the spacing constants
+  (`0253637C*011AE318 + 011AE318 + 61F118 + 011AE348` in vm1;
+  `011AE334 + 61F118` in vm).
+- `TForm13.kek_ord` (005686F0): 011AE328-1 passes; anchor 1976670 =
+  `row[r][5]`; when `[r][5] < 011AE328` and equals `[r-1][5]`, all
+  three dwords 3 of rows r/râˆ’1/r+1 positive, `[r][0] <= [r-1][0]` and
+  `[r][7] = [r][8] = 0`: `[r][0] := 2*(011AE334+61F118) + [r-1][0]`.
+- `TForm13.kek_ord_2` (00568774): counter trap gives EXACTLY two row
+  walks with ecx = Vâˆ’1 then Vâˆ’2; conditions keyed on ecx; then
+  `[r][0] := [r-1][0] + sum` and `[r-1][0]` gets +/- sum by the PARITY
+  of `[r][2]` (and $80000001 idiom = sign-corrected odd test).
+- `TForm13.Vr2` (0056904C) converted: screen/canvas metric setup
+  (`fScale` = `gvar_0253636C` = 1.0 normally, 1.13 when drawing
+  canvas <> PaintBox1.Canvas; 6.0 pen multiplier on the printer branch â€”
+  all Extended constants recovered from the mantissa/exp words).
+  Then: walks grid A rows (`while [r][2] > 0`, r starts 1), clears
+  20 slot strings (011AE2C8..011AE2F8 area) + 20 row-local string
+  slots (flat dword 102*row+19, ..., via new `ChartAAnsi` helper),
+  FindKey on DataModule2.Table17 with `[row][3]`, calls
+  `memein(gvar_011AE1C4[row-1][3])` and
+  `zerleg(011AE334, 011AE318, canvas)` â€” both still TODO stubs
+  (declared: `memein(AValue)` EDX, `zerleg` 3-register/stack args;
+  IDR lists zerleg as function, result unused here). Copies dwords
+  0..2 of each grid-C row (`gvar_015924E4`, 408-B rows) into the
+  FD4-family grid rows (flat 102r..102r+2 = gvar_011AE1C4 rows 1..),
+  calls sub_00569010, computes max `[r][0]` â†’ 011AE320 (then Dec),
+  sets ScrollBar1/2.LargeChange = PaintBox dims-5 and
+  SmallChange = 20 (IDR hex "14").
+- **IDR number bases**: printed numbers are HEX (e.g. `mov edi,14`
+  = 20, `imul x,33` = 0x33 = 51 row stride, `2710` = 10000).
+  Verified against recon cross-checks (FD4 scan terms = flat
+  102r+{2,5} with the 0x11AE35C anchored identity).
+- Additives: `ChartAFlat`/`SetChartAFlat`/`ChartAAnsi` (flat dword /
+  string-pointer slots over 011AE1C4), `ChartSlotAnsi` (011AE2C8+4i)
+  in AHNGlobals.
+- **Retype**: `gvar_011AE348` is an Integer too (same fild/add dword
+  pattern); `gvar_019764CC` (grid B row[r] dword[2]) pinned.
+
+## Phase B findings (2026-10-25)
+
+**The earlier "term-scaling inconsistency" is RESOLVED.** The walkers use
+three different T values in `[esi + T*8 + K]` terms (esi = 011AE35C =
+base + $198):
+
+- `T = 51*ebx` (from `imul eax,ebx,33`) â€” row ebx, dword (102 + K div 4).
+- `T = 66*ebx` (from `add eax,eax; imul â€¦,33`) â€” the "paired" row:
+  dword 132*ebx + (102 + K div 4); NOT a whole row multiple, but a
+  well-defined flat dword index.
+- `T = 33*eax` (propagation loops) â€” dword 66*eax + (102 + K div 4).
+
+Every term translates to the flat dword index `2*T + 102 + (K div 4)`
+of `gvar_011AE1C4`; no per-row "slot" interpretation is needed and all
+terms resolve to integers. AHNGlobals now exposes
+`ChartAFlat(I)/SetChartAFlat(I,V)` for literal access; recon keeps the
+old `[r][d]` expressions where they fit (FD4/9010 unchanged â€”
+`[r][2]` = flat 102*r+2, identical memory).
+
+**Power idiom semantics pinned** (empirically from the argument build
+order): the callee is called with Pascal-convention stack args built
+right-to-left â€” first push `80000000:$4000` = Extended **2.0** (the
+exponent), last assembled via `fild/fstp` = **N** (the base, N =
+level-1). So the call is `Power(2.0, lvl-1)` = `2^(lvl-1)`, and
+`ebx := Round(Power(2.0, lvl-1)) = 2^(lvl-1)`. (The Delphi heuristic
+"stack args are pushed left-to-right for the register convention"
+does not apply here; the balanced epilogue with no caller cleanup
+proves a calle-pops convention.) The BASM replica crash is moot.
+
+Both walkers (C9C and E3C, address-identical except one dword shift and
+the callee `5689 7C`â†’`568B04`) implement: for lvl := V-1 downto 1, start
+at row `2^(lvl-1)`, skip rows whose status dword is 0, then while the
+row's level dword equals lvl run the pair-normalization body (compare
+row ebx value against the "doubling row" 132*ebx value, propagate the
+delta through the 66*eax stride chain while the level dword matches)â€¦
+
+### vz2 (00569504) â€” converted, build green (2026-10-25)
+
+- Signature fixed: `procedure vz2(AValue: TCanvas);` (AValue = EDX,
+  listing `[ebp-8]`; `[ebp-4]` = Self). Draws the ancestor chart into
+  AValue, working entirely on a copy of grid A in grid B
+  (`gvar_019764C4[row][k]`, row-local `[esi+edi*8-X]` offsets resolved:
+  -194â†’d1, -19Câ†’d0, -190â†’d2, -18Câ†’d3, -184â†’d5, -17C/-178â†’d7/d8,
+  -170/-16Câ†’d10/d11, -160/-15Câ†’d14/d15, -158â†’low word of d16,
+  -0D7â†’ShortString@193 ('M'/'W' flag), -100â†’ShortString@152 (ID),
+  -56â†’ShortString@322 (photo), -150â†’20 AnsiString ptrs @72).
+- Head: crHourGlass; saves ScrollBar1/2.Position into 2536364/2536368
+  (zeroed when `PaintBox1.Canvas <> AValue`); fills PaintBox white;
+  `FindKey(Table17, [gvar_011AE368])` builds title
+  `'Vorfahren von ' + sub_00563868(Name) + ' ' + Vornamen`, TextOut at
+  `Round(f*30)-364-8 / Round(f*5)-368`.
+- Build loop copies Aâ†’B fields verbatim (incl. word copy of d16 low
+  half, 20 ChartAAnsiâ†’ChartBAnsi slots) and computes
+  `B[0] := (A[0]-1)*(334+118)+340-364`,
+  `B[1] := (A[1]-1)*(37C*318+318+348+114)+33C-368`.
+- Min-scan edx = min B[0] (B[3]>0, init $186A0=100000); shifting
+  `B[0] -= 364 + edx - 340` when edx > 340.
+- Loop 1: vertical line above each box (MoveTo (B0+334/2, B1),
+  LineTo (B0+334/2, B1-half), only when B5<328 and (B7>0 or B8>0));
+  'W' rows (row>1): line from bottom B1+cnt scaled (+348-1) down to
+  +half, cnt = 37C*318+318.
+- Loop 2: parent â†’ child lines for B[7] and B[8] (guard B5<328 and
+  child>0); LineTo bottom of child box; trailing PaintBox-equal/â‰ 
+  duplicate LineTo pair â€” [7] child: BOTH sides without inc; [8] child:
+  equal-branch without, inequal-branch with `inc eax` (y+1).
+- Loop 3: maximizes 331C = (B0-340+364) div (334+114) (identical asm
+  recompute transcribed) and 324 = max B5; FindKey([B3]); text
+  `wasSchon`: 'K: ' from a 10-byte Extended built via push order
+  d14=mant.lo, d15=mant.hi, low word of d16=exponent (recon uses an
+  `absolute` overlay: extOver.Lo=d14, Hi=d15, W=word(d16));
+  `if 2C4=1`: empty â†’ `'DS: '+IntToStr(B3)` else `wasSchon+' DS: '+â€¦`;
+  `if 2C8=1 and BShort(152) > ' '`: empty â†’ 'ID: '+ss truncated to 44
+  (@PStrNCat cl=$2C) else `wasSchon + ' ID: ' + ss`.
+- TextOut at (Round(B0*f)+2, Round(B1*f)+Font.Height-2) with
+  Font.Size = Round(120*9)-1, then Size restored to Round(120*9).
+- Photo (`if 2BC=1` and ss@322 > ' '): TImage.Create(Self),
+  LoadFromFile(ss@322), `if Graphic is TJPEGImage then` scale Image
+  width = Round(GraphicWidth * Image.Height/GraphicHeight)
+  (fdivrp â†’ ImageH/Gh); Rect((B0+4),(B1+2),(B0+Round(W/H*cnt*4/5)),
+  (B1+Round(cnt*4/5))) with cnt = 37C*318+318; `Proportional := True`;
+  `StretchDraw` â€” NOTE: TCanvas.StretchDraw(ARect, AGraphic) in Delphi
+  2006, rect comes FIRST (matches lea edx=[ebp-35]; ecx=Graphic); then
+  img.Free.
+- 20-string loop (slotI 0..19, slotRow y-counter): Font.Style := []
+  every slot, [fsBold] when slotI=0 and also after a rightmost '#'
+  strip (only slotI 0..3 do the '#' check â†’ the slot string is replaced
+  by Copy(s, 1, len-1)); TextWidth per slot; x offset
+  `Round((334*f - TextWidth)/2)` (fsubrp direction!) added to
+  Round(B0*f); y = Round((B1 + 3 + slotRow*318 + 348)*f); text = Trim
+  of ChartBAnsi(102*row+18+slotI)^.
+- Boxes: Pen.Color := 0, Brush.Style := bsClear (dl=1, NOT bsSolid!),
+  'M' â†’ Rectangle((B0,B1)-Round((B0+334, B1+cnt+348)) â€” the 348 is
+  ADDED in INTEGER space before scaling, i.e. Round((B1+cnt+348)*f);
+  'W' â†’ same Rect via RoundRect(..., 15, 15); Pen.Color := 0 again per
+  row.
+- Tail: `ScrollBar1.Max := (331C+1)*(334+118)+340`;
+  `ScrollBar2.Max := (37C*318+114+318+348)*324+33C`; crDefault.
+- Unit13 uses additions: `jpeg` (TJPEGImage) and `Types` (TRect) at
+  implementation level; helper `gvar_0061F114` retyped Singleâ†’Integer
+  in AHNGlobals (all reads are dword/ROUND).
+- Next in address order: vz1 (005711D4, listing L13489), then
+  Nach_erm (0056A970, L7311), nr1 (0056C0D4), nr2 (0056CB30),
+  nz1 (0056D6B4), nz2 (0056EB10).
+
+### vz1 (005711D4, listing L13489â€“14575) â€” converted, build green (2026-10-25)
+
+- Signature fixed: `procedure vz1(AValue: TCanvas);` (AValue = EDX,
+  `[ebp-8]`). Grid B access: listing keeps `edi = gvar_0197665C` (=
+  gvar_019764C4 + $198, the same frame vz2 calls esi) with
+  `esi = 51*row` â†’ `[edi + esi*8 + X]` maps IDENTICALLY to
+  `gvar_019764C4[row][d]` (same offset table as vz2; no new helper
+  needed).
+- Differences vs vz2 (otherwise structurally the same Aâ†’B copy, min
+  scan, shift, K:/DS:/ID: text with the same 10-byte Extended build,
+  JPEG photo with identical Rect math, 20-string '#' loop, M/W boxes,
+  identical ScrollBar1/2.Max tail):
+  - Head: PaintBox white fill FIRST; 2536364/2536368 := 0 ALWAYS, then
+    loaded from ScrollBar1/2.Position only when
+    `PaintBox1.Canvas = AValue` (vz2 is the inverse order).
+  - NO 'W' drop line, NO above-box connector loop.
+  - Child connectors ([7] and [8], guard B5<328 and child>0) are
+    orthogonal 3-segment lines: MoveTo((B0+334, Yp)) where
+    Yp = Round(f*(B1 + (348*f + (37C*318+318))/2)) â€” the 348*f term is
+    INSIDE the scaled expression; then LineTo to
+    ((B0+334+118/2), Yp) [the 118/2 is added inside Round,
+    X = Round((B0+334+118/2)*f)], then to (same X, childB1 variant of
+    Yp), then to (childB0*f, childY). No PaintBox eq/ne variants, no
+    âˆ’1/inc.
+  - Extrema swapped: gvar_011AE324 := max of
+    (B1-33C+368) div (37C*318+114+318+348) (idiv, duplicated asm
+    recompute transcribed); gvar_011AE31C := plain max of B5.
+- Next in address order: Nach_erm (0056A970, listing L7311), then
+  nr1 (0056C0D4), nr2 (0056CB30), nz1 (0056D6B4), nz2 (0056EB10).
+
+## Phase 2 â€” the mid-size ones (250 â€“ 1500 lines)
+
+These are single-purpose methods that need the DataModule2 tables or one or
+two of the Phase-1 helpers. Convert them one at a time; each should compile
+independently before the next.
+
+- Unit3  `sub_005BEF5C` 308, `sub_00582C24`  411, `sub_005BC604` 1096,
+         `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
+- Unit1  `datsich`, `Sikoein`, `spitzbas`, `listen_akt` (size unconfirmed)
+- Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
+         `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
+- Unit17 `gebstvn`      1281, `gebst`   1248
+- Unit13 `vz2`  1206, `Nach_ern` 1396, `nz1` 1437, `nchf_neu`  1682
+- Unit19 `Namgeb`, `Namgv`, `alphlist`, `nachf` (sizes unconfirmed)
+- Unit1  `ExcelExport1Click` 1931, `famblattx_daten` 2020,
+         `FamblHTML` 4172, `Vorlist` 4055, `Vettern1Click` 2543,
+         `Basen1Click` 2496, `geschachtelt1Click` 2106, `Pfen1Click` 2759
+- Unit11 `Fgr`  2484, `zeichen` 1822
+- Unit3  `gedein_neu`, `gedein2`, `gedein`, `gedaus`, `gedausx`,
+         `ahndosein`, `osbein`, `adrschreib`, `gedausxv`, `gedausv`,
+         `gedein_5`, `ofb3`, `ofb2` (sizes unconfirmed â€” the GEDCOM I/O chain)
+- Unit17 `BitBtn1Click` 4341
+- Single-`Click` handlers in Unit16, Unit18, Unit20, Unit22, Unit24, Unit33
+
+## Phase 3 â€” the GEDCOM I/O chain (Unit3, 13 methods)
+
+Do these **in order** (innermost helper first), each depending on the
+previous:
+
+```
+gedein_5  â†’  gedin2  â†’  gedin â†’ gedin_neu
+gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
+            (osbein, adrschreib, ahndosein are the non-GEDCOM I
+
+### nach_erm (0056A970, listing L7311ï¿½8706) ï¿½ converted, build green (2026-10-25)
+
+- `TForm13.Nach_erm` implemented in `Units\Unit13.pas` (head, zero-init, phase 1 BFS, phase 2 grid-A fill, phase 3 tail). `Unit1` added to the implementation uses (Form1.DBText1); `Unit12`/`Unit2`/`AHNGlobals` were already present.
+- Grid A zero-init fields: d0,d1,d2,d3,d5,d7,d8,d10,d11,d12 + in-row bytes 316/318/320/322. Grid B zero-init: d0..d3, d5, d7, d8, d9, d10, d11, d12 + same bytes (no d4/d6/d10 exceptions: d10 IS cleared for B). Loop `for edi := 10000 downto 1`.
+- Head: gvar_0253636C := 0 (3-part Extended store), 61F118 := Round(61F120*20), 61F114 := Round(61F120*30), 11AE344/31C := 0, 11AE334 += 10 if 61F2BC=1.
+- Setup: startNr := Table1Nummer.AsInteger; 61F2F0 := StrToInt(Form12.SpinEdit1.Text); birth filter when 02536BA0 > 1 ('gebjahr<=n and taufjahr<=n', Filtered := True, Form1.DBText1.Color := $FFFF); FindKey ignored; index 'vat' if Geschlecht(M) / 'mut' if (W); FindKey([startNr]) ï¿½ if the checked FindKey fails ? ShowMessage('Keine Nachfahren gefunden.') + Exit **without restoring the cursor** (original behavior); fonts/heights set on PaintBox1.Canvas.Font; 61F118/61F114 re-set (same values), 11AE33C := Round(61F120*45), 11AE340 := Round(61F120*20), 11AE318 := -PaintBox1.Canvas.Font.Height + 2; chain := Num2Str(Table17Nummer).
+- Phase 1 (chunk BFS over chain): markers/nextChain patterns as documented; per pnun: markers-dedup prepend on chain itself, Table18.IndexName 'num', FindKey([pnun]) then repeat while (not Eof) and (Table18Nummer = pnun); chain += Num2Str(Epnum) (markers-dedup); bmk := -1 (v150 GetBookmark stub); Table17 'index' reset, FindKey([Epnum]) ignored; **v1A0 GotoBookmark = no-op comment**; gender M ? Index 'vat', walk Vater = pnun (append nextChain when Mutter = Epnum or Mutter = 0, markers-dedup when gen < max); W ? Index 'mut', walk Mutter = pnun (Vater = Epnum or Vater = 0, symmetric). Then Index '', v1A0 no-op, Table18.Next; chain := nextChain after the chunk loop.
+- Phase 2 (grid A fill): person row edi gets d2 := edi, d3 := Nummer, d7 := Vater, d8 := Mutter (nulled when edi = 1), shortstrings: ID @152 (Copy(...,1,40)), sex uppercased @193, photo @322 ('_bitmap path gvar_02536B9C + '\bilder\b' + IntToStr(d3) + 'a.jpg', computed twice, only if 61F2BC = 1 and FileExists); d0/d1 per Nachgr1 (gen-1+ardy / colx) or Nachgr2 (swapped); 20 ChartSlotAnsi slots cleared; d5 := gen. Marriage row then: chain += Num2Str(Epnum); bmk := -1; d2..d12 filled; **d10 := ChartAFlat(102*(edi-1)+3)** (asm: [11AE038+408edi] = d3 of the previous row); pIdx (EDI/partner counter) into d12; slot trims into flat 102*edi+17 for slots 1..19 (slot order 1..19, slot 0 excluded; condition Length(Trim(slot)) > 0); 0056BA66-B82 is a **dead block** (cmp [ebp-0C],0 never 0 ï¿½ count is 20 from the clear loop), transcribed as a comment only. After the marriage loop: nextChain built with dup-check only in the *parent-without-marriage-parent* arm (Vater/Mutter = 0 uses Pos-dedup, = Epnum appends unconditionally, **no '*' markers in phase 2**). End per generation: chain := nextChain, colx := 1, gvar_011AE344 := edi.
+- Phase 3: cursor default, 11AE328 := max(d5) walking rows while d2 > 0, gvar_02522AD8[edi] := d0, gvar_0252C718[edi] := d1 (arrays[0..10499] of Integer, AHNGlobals); ShowMessage 'N Generationen / M-1 Personen gefunden'; gvar_011AE32C := PaintBox1.Canvas.
+- FindKey results are only Boolean-tested where the listing tests al; elsewhere the call is transcribed without using the result. FindKey([X]) transcribed as `DataModule2.TableXX.FindKey([X]);`
+
+### nr1 (0056C0D4, listing L8708â€“9325) â€” converted, build green (2026-10-25)
+
+- `TForm13.nr1` implemented in `Units\Unit13.pas` (replaces the stub). Locals: `row, child, i0, count, gen, esi` (esi = the listing's "last child row" chain variable, reused across the push loops).
+- Head: 011AE340 := Round(61F120*45); **011AE33C := 30 (immediate, not Round!)**; 61F118 := Round(61F120*30); 61F114 := Round(61F120*20); 011AE334 := Round(61F120*120) + 011AE338; crHourGlass; 02536364/365 := 0; if `PaintBox1.Canvas = gvar_011AE32C` then load them from ScrollBar1/2.Position (inverse of nz2). 011AE348/0253637C/011AE318 := 0; overlay-canvas Font 'Arial' Size Round(120*9), 011AE318 := -Font.Height + 2 (plain neg/add-2, no nested Round); PaintBox1.Canvas same Size and 318 recompute; 0253636C := 0.
+- Printer branch (`Printer.Canvas = gvar_011AE32C`): 0253636C := 0.6 (mantissa 9999999A/B9999999 exp 4001); Printer.Canvas 'Arial', Size Round(120*9); `count := PaintBox1.Canvas.Pen.Width` ([esp+18]); `Printer.Canvas.Pen.Width := Round(count * 0253636C)`. Screen branch: if `PaintBox1.Canvas <> gvar_011AE32C` then 0253636C := 0.1.
+- `DataModule2.Table17.IndexName := ''`. Row loop (while `ChartAFlat(102*row+2) > 0`): clear 20 ChartSlotAnsi(i0) + row slots `ChartAAnsi(102*row+18+i0)`; `Table17.FindKey([ChartAFlat(102*row+3)])`; `memein(ChartAFlat(102*row+11))` (EDX arg = d11); `zerleg(gvar_011AE334, gvar_011AE318, gvar_011AE32C)`; copy slots back into 102*row+18+i0.
+- `if gvar_0061F2BC = 1 then gvar_011AE348 := Round(((0253637C*011AE318)+011AE318)*4/5)` (imul/add/shl-2/fild/fdiv 5).
+- Marking pass 1 (0056C477â€“C52B): nested whiles over rows `row` and `child` (both cond `d2 > 0`); if `d7(child) = d3(row)`, `d7(child) > 0` and `ChartAShort(child,316)^ <> '*'` then `Set(â€¦+7, row); 316 := '*'` (`mov word ptr [â€¦-5C],2A01`). Pass 1b: d8/byte318 symmetric (same loop body).
+- Marking pass 2 (0056C52Bâ€“C599): d10/byte320: `Set(â€¦+10, child - 1)` (partner row = ebxâˆ’1!). `lea eax,[edi+â€¦-58]` = byte 320 âœ“ (408âˆ’88).
+- Alignment (anchor conversion: `lea eax,[edi+14]` = row(R+1) d5 anchor; d1-index = flat 102R+1, d7=+7, d8=+8, d5=+5; `[eax+198]` = next row d1, `[eax+1A8]` = next d5; `[edi+W-17C/-178/-194]` = row W d7/d8/d1):
+  - Loop A (0056C59Bâ€“C732, runs when 011AE328 â‰¥ 3, count = 328âˆ’3+1, gen = 3..): per level (esi reset to 0 each level): rows1: if d5(row) = gen and esi â‰  d7/d8 â†’ for d7/d8 > 0 with row(child).d7>0 or row(child).d8>0: child.d1 := row.d1, esi := child; rows2 push (if d5>1, = next d5, d1 â‰¥ next d1 â†’ next d1 := d1+1); rows3 (parent onto child: row.d1 := child.d1); rows4 push again. Inc gen; until count = 0.
+  - 0056C738â€“C7C7: if 328 â‰¥ 3 single scan gen = 3..(countâˆ’2): parent.d1 := child.d1.
+  - 0056C7C9â€“C805: one push pass over all rows.
+  - 0056C807â€“C8D1: if 328 â‰¥ 2, count = 328âˆ’2+1, gen = 2..: parent.d1 := child.d1 + push pass per level.
+  - 0056C8D7â€“C98C: esi := 0; gen := 328 downto 2 (repeat..until gen â‰¤ 1): child.d1 := parent.d1 (esi-guard last-child).
+  - 0056C992â€“C9CE: final push pass.
+- 0056C9D0â€“CA22: max scan while d2>0: 011AE320 := max(d1), 011AE324 := max(d1) (both same comparison â€” literal).
+- Tail: `gvar_011AE320 := gvar_011AE320 - 1` (06CA24); ScrollBar1.LargeChange := PaintBox1.Width âˆ’ 5; ScrollBar2.LargeChange := PaintBox1.Height âˆ’ 5 (Word-component offsets +48/+4C = TPaintBox.Width/Height, +222 = TScrollBar.LargeChange â€” IDR-labelled at sub_0056944D L6062â€“6079); SmallChange := 10 (0xA â€” note sub_0056944D uses 20/0x14); Screen.Cursor := crDefault.
+- Component-offset mapping mnemonic (established): PaintBox1+48=Width, +4C=Height, +160=Canvas; ScrollBar+20C=Position, +220=SmallChange, +222=LargeChange (TScrollBarInc word).
+- Next in address order: nz1 (0056D6B4), nz2 (0056EB10), nr2 (0056CB30) after nz-sibling helper sub_0056CAD4 is decoded (two-push variant of block B/D/F/J, called from nr2 at 0056D448/D510)..
+
+### sub_0056CAD4 (listing L9329-9365) - converted, build green (2026-10-25)
+
+- `TForm13.sub_0056CAD4` implemented (class decl added before nr2). Horizontal push variant for 'Nachgr2': anchors 11AE370 = row R d5 ([eax]=d5, [eax-14]=d0, eax+0x198 = next row d5, eax+0x184 = next d0); flat idx d5 = 102*R+5, d0 = 102*R. Guard `gvar_011AE328 < 2` exits; count = 328-2+1 passes, gen 2.., pushes next row d0 to d0+1 when same generation and d0 >= next d0. Row bound `gvar_011AE344 - 1` with repeat..until idiom.
+
+### nr2 (0056CB30, listing L9368-10030) - converted, build green (2026-10-25)
+
+- `TForm13.nr2` implemented in `Units\Unit13.pas` (replaces the stub). Locals: `row, child, i0, count, lvl, esi, gen, lastEsi, curGen, posIdx` + AnsiStrings `tmpS/tmpS2/tmpS3, marked, processed, tmpGenC, msg, pair1, pair2`. `esi` models the CPU register (persists across both alignment phases, init 0 at proc start).
+- Head swaps vs nr1: 011AE33C := Round(61F120*45); **011AE340 := 30 (immediate)**; 61F118 := Round(*30); **61F114 := Round(*30) (not *20)**; 011AE334 := Round(*120)+338. Rest of head scroll/zero/Arial/318/0253636C/Printer-0.6/else-0.1 chain identical to nr1.
+- Row loop: **SetChartAFlat(102*row, gvar_02522AD8[row]); SetChartAFlat(102*row+1, gvar_0252C718[row]);** first (editor x1/y1 preloads); d5(row) <> curGen ([ebp-38]) -> curGen := d5, posIdx ([ebp-3C]) := 1; clear 20 slots; FindKey([d3]); memein(d11); tmpS2 := Num2Str(d3)+'*'; if Pos(tmpS2, marked)=0 -> marked := marked + Num(d3)+'*'+RightStr('0'+IntToStr(curGen),2)+'*'+RightStr('00'+IntToStr(posIdx),3)+'*' (LStrCatN 7); else -> tmpGenC := Copy(marked, Pos(Num(d3),marked)+7, 2); posC := Copy(...,Pos+10,3); msg := '***'+#13#10+'s.a. Gen. '+IntToStr(StrToInt(tmpGenC))+' Pos. '+IntToStr(StrToInt(posC)); Memo1.Lines.Add(msg); processed += Num(d3)+'*'. Note: the first Pos search uses Num(d3)+'*' (with star), the else-branch Pos searches without star. zerleg + slot copy-back as nr1; per row Inc(posIdx).
+- 348 recompute as nr1 (20*4/5 pattern -> *4 div 5).
+- Marking pass 1 (0056D129-222): **outer bound for row := 1 to 344-1 (not while d2>0!)**, inner while d2(child) > 0: d7==d3(row) & b316<>'*' -> d7 := row; d8==d3(row) & b318<>'*' -> d8 := row.
+- Sync pass (0056D224-D4): for row := 1 to 344-1, if d2(row)>0 then child-scan d10==d3(row) & b320<>'*' -> d10 := child-1; then **gvar_02522AD8[row] := d0(row); gvar_0252C718[row] := d1(row)** ([edi-8]/[edi-4] with edi = 11AE364+408*(r-1)).
+- Alignment phase 1 (0056D2D5-46A): count := Round(328/2)+1, repeat; lvl := 328 downto 1 (repeat Dec(lvl)); per row (all rows incl. d5-mismatch!): pair1 := Num(d7)+'*'+Num(d8) built BEFORE the checks; if d5=lvl and Pos(Num(d3),processed)=0: esi := min(d7,d8); pair2 := Num(d7)+'*'+Num(d8); if CompareStr(pair2,pair1) <> 0 and esi > 0 and esi <> lastEsi: pair1 rebuilt, then max-swap d0(esi)/d0(row) (if d0(esi) > d0(row) then d0(row) := d0(esi) else d0(esi) := d0(row)), call sub_0056CAD4, lastEsi := esi. (pair1/pair2 are textually identical - faithful transcription.)
+- Alignment phase 2 (0056D46A-52B): count := 328-2+1, gen := 2..; per row: guard `if (esi+1 >= d7) and (esi+1 >= d8) then skip` (proceed iff esi+1 < d7 or < d8 - listing cmp/jl/jge chain); if d5=gen and Pos(Num(d3),processed)=0: esi := min(d7,d8); if esi>0 and esi<>lastEsi: same max-swap + sub_0056CAD4 + lastEsi := esi. No pair strings here.
+- Max scan: 011AE320 := max(d0), **011AE324 := max(d1) (different - nr1 used d1 for both)**. Tail: ScrollBar1/2.LargeChange := Width/Height-5, SmallChange := 10, crDefault.
+- Next in address order: nz1 (0056D6B4, listing from L10334), nz2 (0056EB10), sam2 (00572D98), vorf_erm2 (00572A78), vr1 (00570D1C), memein (00566220, L2802), zerleg (005675D8), nachf_neu (00564668), PaintBox1Paint (00570C14), FormShow/FormClose, buttons.
+
+### nz1 (0056D6B4, listing L10033-11178) - converted, build green (2026-10-25)
+
+- `TForm13.nz1(ACanvas: TCanvas)` (EDX = canvas) implemented; decl updated from `nz1;`. Draws the "Nachfahren" chart variant 1. Offset map (esi = $197665C = gvar_019764C4[1], verified against the green vz1 transcription): [esi + 408*row + X] -> gvar_019764C4[row][(408+X) div 4] byte-wise for ShortStrings; grid A side: [edi*8 + 11AE1CC + n] with edi = 51*row -> gvar_011AE1C4[row][k].
+- Local var keys: [ebp-10] = slotRow, [ebp-0C] = slotI, [ebp-14] = centered text x-corr, [ebp-24] = B-slot base ptr (+4 per name line), [ebp-1C] = wasSchon. Note [ebp-24] is NOT TImage - img is edi in the photo block.
+- Loop 1 (copy: while A[row][2] > 0): Table17.FindKey([A[row][3]]) EVERY row; copy d2,d3,d5; sex: `tmpS := UpperCase(ChartAShort(row,193)^); ChartBShort(row,193)^ := tmpS` (LStrFromString/UpperCase/LStrToString/PStrNCpy cl=28); d7,d8; ptrs (CopyArray 20 dwords = ChartBAnsi loop); @152 (cl=28); d9,d10,d11; @322 (cl=50); d12; B.d0 := (A.d0-1)*(334+61F118) + 340 - 364; B.d1 := (A.d1-1)*(37C*318+318+61F114+348) + 33C - 368; gvar_011AE320 := max(A.d0).
+- Title: FindKey([B[1][3]]); name = Table17Name.AsString via sub_00563868, vor = Table17Vornamen.AsString; 'Nachfahren von ' + tName + ' ' + tVor; TextOut(Round(6C*30)-364, Round(6C*5)-368, ...).
+- Connector loop (while B[row][2] > 0), only when B.d1 > 0:
+  - father elbow only when d5 < 11AE330 AND d5 > 1 AND d7 > 0 AND B[d7].d1 > B[d8].d1: MoveTo(Round(d0*6C), Round(6C*(d1+h/2))), then 3 LineTos: (d0-61F118/2, d1+h/2), (d0-61F118/2, B[f].d1+h/2), (d0-61F118-1, B[f].d1+h/2) with h = 37C*318+318+348.
+  - **mother elbow runs unconditionally for every row (both d5 guards jump into the mother block at 0056DC6B)**: guarded by d8 > 0 and B[m].d1 > B[f].d1, same 4 segments with B[m].d1.
+  - spouse drop line at 0056DE5B when d11 > 0: MoveTo((d0+334/2)*6C, d1*6C), LineTo((d0+334/2)*6C, (d1-61F114-1)*6C).
+- Extrema loop (while B[row][2] > 0): 11AE324 = max of (d1-33C+368) div (37C*318+61F114+318+348); 11AE31C = max of (d0-340+364) div (61F118+334) (different from vz1's plain d5!); skips if B[row][3] <= 0.
+- Per-person block: wasSchon: DS: (61F2C4=1, IntToStr(d3)); ID: (61F2C8=1 and len(BShort 152) > 0 - shortstring length byte cmp, NOT PStrCmp; 'ID: ' cl=2C concat); father/mother count suffixes: TWO sequential blocks (0056E0AD: if d7>0 {if d8=0 -> +B[f].d12; else if B[f].d12>1 ->} else-if B[f].d12>1; 0056E155: if d7=0 {if d8>0 -> +B[m].d12; else if B[m].d12>1 ->} else-if B[m].d12>1) - the d12 read is B[B[row][k]][12] (offset -168/4+... = d12 at row f/m).
+- Font sizes: size R(61F120*9)-1 for wasSchon, TextOut(Round(d0*6C)+2, Round((d1-318)*6C)+1); then size R(61F120*9); FindKey([d3]) after the wasSchon TextOut.
+- 20-name loop (slotI 0..19, repeat until slotI=20): Font.Style [] each line, [fsBold] when slotI=0; '#' strip blocks for slots 18/19/20/21 (slotI 0..3: BAnsi(102*row+18+k), RightStr=1 then LStrCopy(len-1), bold after strip); TextWidth(BAnsi(18+slotI)); ebp14 := Round((334*6C - tw)/2); TextOut(Round(d0*6C)+ebp14, Round((d1+slotRow*318+348)*6C)+3, raw slot string, NOT Trimmed).
+- Boxes: Brush bsClear + Pen 0; ChartBShort(row,193) = 'M' -> Rectangle, 'W' -> RoundRect(15,15), 'X' -> Pen 0 + RoundRect(15,15); then Pen.Color := 0 again; box = (d0,d1,d0+334,d1+37C*318+318+348) all *6C.
+- Photo (61F2BC=1, BShort(row,322) > ' '): TImage.Create(Self); LoadFromFile; `if Graphic is TJPEGImage` (IsClass -> byte flag): ratio := img.Height / Graphic.Height (fdivrp), img.Width := Round(Graphic.Width * ratio); q1 := Round((37C*318+318)*4/5); q2 := Round(Graphic.Width / img.Height * ((37C*318+318)*4/5)) (fdivp W/H then fmul with the shl-2/fdiv-5 term - NOT the rounded q1); aRect = Rect(Round((d0+4)*6C), Round((d1+2)*6C), Round((d0+q2)*6C), Round((d1+q1)*6C)); Proportional; StretchDraw; Free.
+- Tail: ScrollBar1.Max := (11AE31C+1)*(334+61F118) + 340; ScrollBar2.Max := (37C*318+61F114+318+348)*11AE324 + 33C; crDefault. Finally-frames free LStr clr blocks.
+- nz2 (0056EB10, L11180+) next; prologue is byte-identical to nz1 (same copy loop); draw part differs.
+
+### nz2 (0056EB10, listing L11180-12510) - converted, build green (2026-10-25)
+
+- `TForm13.nz2(ACanvas: TCanvas)` (EDX = canvas; decl updated) implemented. Copy/title/wasSchon/DS-ID/d7-d8-count-suffixes/font/names/'#' strips/'M'/'W'/'X' boxes/photo/tail are block-for-block IDENTICAL to nz1 (same Transkriptionshilfe applies). Only these differences:
+- Connector loop (while B[row][2] > 0, B.d1 > 0 required):
+  - Horizontal marriage line only when d5 < 11AE330 AND d5 > 1 AND (d7 > 0 OR d8 > 0): MoveTo(Round((d0+334/2)*6C), Round(d1*6C)) -> LineTo(same X, Round((d1-61F114/2)*6C)).
+  - 0056EF93 'W' drop line: row > 1; ChartBShort(row,193)^ = 'W'; d5 < 11AE330-1 (dec edx!); B[row][9] > 0 (the -174 dword). Then MoveTo(Round((d0+334/2)*6C), Round(6C*(d1+h))) -> LineTo(same X, Round(6C*(d1+h+61F114/2))) with h = 37C*318+318+348.
+  - No father/mother elbow segments at all (unlike nz1/vz1).
+- Extrema loop: first sets **ACanvas.Pen.Color := 0 once before the loop** (0056F0E8-F0); body starts with **gvar_011AE324 := max(d5)** (plain dword cmp, not the nz1 d1-division); then gvar_011AE31C := max of (d0-340+364) div (61F118+334) (same as nz1); guard d3 > 0.
+- Analyzer hint: pushes in Rectangle/RoundRect call sites confirm X2 = (d0+334)-scaled, Y2 = (d1+h)-scaled with W/H = 15 (established recon interpretation kept).
+- Next in address order: sam2 (00572D98), vorf_erm2 (00572A78), vr1 (00570D1C), memein (00566220, L2802), zerleg (005675D8), nachf_neu (00564668), PaintBox1Paint (00570C14), FormShow/FormClose (00570294/00570728), buttons.
+
+## vr1 (TForm13.vr1, 00570D1C) - DONE
+- "Vorgeneration 1" variant of Vr2 (0056904C): identical skeleton, only metric
+  constants differ: `011AE340 := 20` (same), **61F118 := Round(F120*30*scale),
+  61F114 := Round(F120*20*scale)** (Vr2: 20/30 swapped); 334/33C same as Vr2.
+- Bitmap gate: fScale := 1.0, := 1.13 when PaintBox1.Canvas <> gvar_011AE32C.
+- Scroll offsets 2536364/68 loaded from ScrollBar1/2.Position first, then
+  zeroed when the drawing canvas differs (order inverted vs Vr2 recon, same
+  semantics).
+- Printer branch (Printer.Canvas = 11AE32C): fScale := 7.0
+  (listing dword 0 / C0000000 / 4001 = mantissa 1.75 * 2^2 = 7.0; the Vr2
+  recon wrote 6.0 for the same bytes - likely should also be 7.0 there),
+  Font 9pt Arial, 11AE32C.Pen.Width := Round(PaintBox pen width * 7.0).
+- Main row loop while 011AE1C4[row][2] > 0: clear 20 slots
+  (ChartSlotAnsi(i), ChartAAnsi(102*row+19+i)), ebp14 := [row][3],
+  Table17.FindKey, memein([row-1][3]),
+  zerleg(011AE334, 011AE318, 011AE32C), ChartAAnsi(102*row+18) := slot 0,
+  then 13 Trim-guarded copies ChartAAnsi(102*row+19+i) := Trim(slot i+1),
+  i = 0..12.
+- Photo scale (61F2BC = 1): 011AE348 := Round((253637C*318+318) shl 2 / 5).
+- 10000-row copy: SetChartAFlat(102r+2, gvar_015924E4[row][2]),
+  (102r, [row][0]), (102r+1, [row][1]); then sub_00568FD4 (Vr2 called
+  sub_00569010 - the identical scan).
+- Extrema: 011AE320 := max([row][0]) - 1; scrollbars: LargeChange =
+  PaintBox1.Width/Height - 5, SmallChange = 20/20.
+- Build: [build] SUCCESS (existing hints only; byteFlag/fScale
+  "never used" hints are benign).
+- Remaining after vr1 (address order): memein (00566220, listing ~L2802),
+  zerleg (005675D8, ~L3800), PaintBox1Paint (00570C14), sam2 (00572D98),
+  vorf_erm2 (00572A78), nachf_neu, FormShow/FormClose, buttons.
+
+## memein (TForm13.memein(AValue: Integer), 00566220) - DONE
+- Fills Memo1 for the current Table17 person + marriage records of
+  Table18 (index 'num') where Epnum = AValue, for Vorgr/Nachgr modes.
+- DataModule2 field offsets (Unit2 map): 950 Name, 954 Vornamen,
+  944 Nummer (Integer), 95C Religion, 960 Beruf, 9D8 Hausname,
+  964/968/96C/970 Gebtag/Gebmonat/Gebjahr/Gebort,
+  974/978/97C/980 Tauftag/Taufmonat/Taufjahr/Taufort,
+  98C/990/994/998 Sttag/Stmonat/Stjahr/Stort,
+  9A0/9A4/9A8/9AC Begtag/Begmonat/Begjahr/Begort;
+  Table18 (//140): 4C8 Nummer, 4CC Epnum, 4D0/4D4/4D8/4DC
+  Htag/Hmonat/Hjahr/Hort, 4E4/4E8/4EC/4F0 Satag/Samonat/Sajahr/Saort,
+  4F8 Verbind.
+- Flags: 61F2D4=Religion line, 61F2CC=Beruf line, 61F2D0=Hausname.
+- Lines: Name' 'Vornamen + Copy(Religion+', ',1,5); Beruf/Hausname
+  line (Hausname appended with ' '); '* '/baptism '~ '/death '+ '/
+  burial '# ' date blocks: CatN(tag,'.',monat,'.',jahr) -> sub_00563A0C
+  -> ' ' + ort; each block gated by Trim(jahr) or Trim(ort) non-empty;
+  death block skips burial (0056678E jmp 005668B7).
+- Ancestor sections: if Pos(Vorgr/Nachgr, gvar_0253692C) > 0 and
+  AValue > 0: Table18.IndexName:='num', First, FindKey(Table17Nummer);
+  '--------'; while not Eof and Table18Nummer = Table17Nummer:
+    conn := 'o-o' (6F2D6F03) or 'oo' when Pos('Ehe', Verbind)>0
+    [ebp-0A]/6F2D6F03 are ShortString len bytes.
+    - Vorgr: conn='oo': SA fields first (Satag/Samonat/Sajahr/Saort),
+      else H fields (Htag/Hmonat/Hjahr/Hort), else plain conn;
+      conn='o-o': H fields. Prefix = conn + ' '.
+    - Nachgr: conn='oo': SA fields with prefix conn+' (S) '
+      (PStrNCat maxlen 9); else H fields where Htag='HK' -> plain
+      conn+' ', else conn+' (K) '; else plain conn; conn='o-o': plain
+      conn+' ' + H fields.
+  Then Table18.Next; head-false or EOF exits the section
+  (00566E19/0056744D fall into the section exit).
+- Build: [build] SUCCESS. Local names: relPrefix/conn: string,
+  ebp14/s/line: AnsiString.
+
+## Verwandtschaft1Click (0057249C) â€” implemented
+- Event handler: PageControl1.ActivePage := TabSheet2, Form1.aus1.Click, curNum := Table1Nummer.AsInteger.
+- Caption s := Name+' '+Vornamen; if Trim(Gebjahr)<>'' then s+=' * '+Gebjahr else if Trim(Taufjahr)<>'' then s+=' ~ '+Taufjahr; s+=' [DS: '+IntToStr(curNum)+']'.
+- esi copy of curNum (used for FindKey restores). An ini-style AnsiString [ebp-10] is cleared only - omitted.
+- gvar_011AE2C4 = second person number (set elsewhere, input dialog). If 0 -> Exit.
+- ebx try/except noise around ebx := gvar_011AE2C4 (handler 'Datensatz-Nummer ungueltig'); recon keeps plain assignment.
+- Table1.FindKey([gvar_011AE2C4]); if missing -> ShowMessage('Datensatz-Nummer nicht vorhanden'), FindKey([curNum]), Exit.
+- FindKey([curNum]); if second = curNum -> MessageDlg('Die beiden Personen sind identisch.', mtInformation(dl=2), [mbOK](), 0), Exit.
+- Otherwise gvar_02536B94 := 0; Screen hourly; Proband1Click(curNum, gvar_011AE2C4) [original pushes Sender as stack arg, ignored]; FindKey([gvar_011AE2C4]).
+- Caption s2 for the second person (Gebjahr/Taufjahr year strings appended raw). FindKey([curNum]) restore; Screen default; gvar_0253692C := ''.
+- Result message: ShowMessage(s+' und '+CRLF+s2+CRLF+('sind nicht blutsverwandt.' | 'sind blutsverwandt.')) by gvar_02536B94.
+
+## Proband1Click (005729E4) â€” implemented
+- Signature Proband1Click(ARoot, AOther: Integer); original passes (eax=Form13, edx=curNum, ecx=target, pushed stack param=Sender, ignored).
+- Form1.PageControl1.ActivePage := TabSheet2; Form1.aus1.Click; if Table1.RecordCount >= 2 ([edx+14C] = RecordCount getter, see Unit1 recon 'RecordCount < 2' precedent) then vorf_erm2(ARoot, AOther) else ShowMessage('Keine Daten verfuegbar.'), exit.
+
+## vorf_erm2 (00572A78) â€” implemented
+- Params (ARoot=curNum, AOther=target). gvar_011AE2BC := ''.
+- Table17.Open + IndexName := ''; Table18.Open + IndexName := 'num'.
+- If Table17.FindKey([ARoot]): 11AE2BC := Num2Str(Table17Nummer)+'*'.
+- Chunk loop i:=1.. while Length(11AE2BC) >= 7*i: chunk := Copy(11AE2BC, 7*i-6, 6).
+  - chunk Trim = '000000' -> sam2(AOther), Exit (strings NOT cleared on this path? note: sam2 clears them on exhaustion/find).
+  - n := StrToInt(chunk); if n<=0 or FindKey([n]) fails -> next block.
+  - if Table17Vater > 0: 11AE2BC += Num2Str(Vater)+'*'; if Mutter > 0: += Num2Str(Mutter)+'*' (no Pos dedup here).
+  - if n = ARoot -> next block; else Table18.FindKey([n]); while (Table18Nummer = ARoot): if Epnum>0 and Pos(Num2Str(Epnum),11AE2BC)=0 -> append Num2Str(Epnum)+'*'; Next; Eof breaks.
+    IMPORTANT: the head condition compares Table18Nummer against ARoot (original listing 'cmp eax,[ebp-8]'), and FindKey positions at n which differs from ARoot, so the body normally never runs - kept faithful.
+- End: sam2(AOther) [eax slot gets junk (original ebp-4 alias), ignored; edx=ecx param=AOther].
+
+## sam2 (00572D98) â€” implemented
+- sam2(AOther: Integer) (AOther in EDX). gvar_011AE2C0 := ''; Table17.Open/IndexName := ''; Table18.Open/'num'.
+- If Table17.FindKey([AOther]): tmpS := Num2Str(Table17Nummer)+'*'; if Pos(tmpS, gvar_011AE2BC) > 0 -> gvar_02536B94 := 1, Exit (both strings left intact); else 011AE2C0 := Num2Str+'*'.
+- Chunk loop over ~011AE2C0 identical to vorf_erm2, but Vater/Mutter each: numStr := Num2Str(field); if Pos(numStr+'*', 11AE2BC) > 0 -> flag := 1, Exit; else 011AE2C0 += numStr+'*'.
+- Termination chunk '000000' or too short: clear BOTH gvar_011AE2BC and gvar_011AE2C0, Exit. Match path never clears.
+- Original reads Vater/Mutter fields twice per append (test + numStr source + fresh append); recon collapses to one read per use - same values.
+
+## Next
+- Continue in address order: nachf_neu (00564668) is next among the kÐµÑˆ remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+- Continue in address order: nachf_neu (00564668) next among remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+## nachf_neu (00564668) - implemented
+- nachf_neu(AGen: Integer) (AGen in EDX, stored to gvar_0061F2F0; also sets gvar_0061F110 := 80).
+- New AHNGlobals type TNachfNode/TNachfNodes: BFS node grid at gvar_01044CE8, 10000 rows of $94 bytes. dwords +0 Nummer, +4 Row, +8 Col, +$0C Ref1 (father node), +$10 Ref2 (mother node), +$14 Flag1, +$18 Flag2 (spouse marker), +$1C Order, +$28 Flag3; ShortStrings: Raw[0..50] = Name (IDR label 01044D14, max 50 bytes = PStrNCpy cl=$32), Raw[51..101] = Partner (01044D47). IDR label 01044D7C = row 1 start.
+- gvar_0061F1F0 is now array[0..50] of AnsiString (slot n at 61F1F0+4n; IDR label 61F1F4 = slot 1). nachf_neu child appends via [edi*4+61F1F4] = slot GenIdx+1; spouse/parse chunks at slot GenIdx. FormClose finalize (0057391F) of 50 slots from 61F1F4 matches.
+- Structure: init (zero rows 1..10000, clear slots 1..50, build node 1 = start person from Table1 current record, list slot 1 = Num2Str(start)+Num2Str(0)+Num2Str(0)); root phase (Table10 'num' walk for spouses of StartNum: spouse nodes with Flag2=1, Name = OPPOSITE gender letter of root person, Partner line from Table10 Satag/Samonat/Sajahr/Saort 'ooS ...' / church fields 'ooK ...' / 'and' -> 'o-o '+Hjahr / 'Ehesch' -> 'oo' which is the 3-byte movs copy from 566178 = ShortString 'oo'); children of (root, spouse) and root-without-partner appended to slot 2 as [child][fatherIdx][motherIdx] chunks (18 chars = 3x Num2Str 6 digits, sub_005637C4).
+- Generation loop edi = 2..AGen: parse slot edi (Trim-empty -> statistics exit); Count = Round(Length/18); per chunk: node from Table1 (Nummer 534), Ref1/Ref2 from chunk fields 7..12/13..18 (StrToInt ignores spaces -> 0), Flag1=1, Order, Name = UpperCase(Geschlecht 548); P1=Buf; if Ref2 <> LastM (ebp-40) then Flag3 := 1, LastM := Ref2 (per generation); spouse scan like root phase but helper sub_00563A0C formats the date part before ' Saort/Hort'; children of (person, spouse) and person-without-partner appended to slot GenIdx+1 ([child][P1 father][P2 mother] order for male person, [child][P2][P1] for female).
+- Statistics: walk nodes while Order > 0: MaxRow = max Row (1044CEC), Pers = count Nummer > 0; ShowMessage(IntToStr(GenIdx-1) + ' Generation(en) / ' + IntToStr(Pers) + ' Personen gefunden'); Table1.EnableControls.
+- Deviations (documented): (a) clear loop zeroes whole $94 rows (original clears dwords 0..$28 + the two Len bytes only) - superset, safe; (b) gen-loop spouse 'partner line' CatN: IDR shows 2 pushes for CatN(edx=4) / 6 for edx=5 around sub_00563A0C; recon reconstructs 'ooS ' + Satag + '.' + Samonat + '.' + Sajahr -> helper -> + ' ' + Saort (space literal follows the root-phase CatN 8 pattern); (c) recon collapses repeated field reads.
+
+## Next
+- Continue in address order: PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+## PaintBox1Paint (00570C14) - implemented
+- Dispatcher: if gvar_0253692C = 'Vorgr1' -> vr1 + vz1(PaintBox1.Canvas); 'Vorgr2' -> Vr2 + vz2(...); 'Nachgr1' -> nr1 + nz1(...); 'Nachgr2' -> nr2 + nz2(...). Sequential ifs, not else-chains; nothing clears gvar_0253692C here.
+
+## FormShow (00570294) - correction to earlier implementation
+- Zoom constant at 00570306 is 0.63 (Extended mantissa 0xA147AE147AE147AE, exponent 0x3FFE -> mantissa 1.26 * 2^-1). The earlier "0.375" was a misread; fixed to gvar_0061F120 := 0.63. Same constant in SpeedButton3Click.
+
+## ScrollBar1/2Change (00572484/490) - verified
+- Both only call PaintBox1.Refresh.
+
+## SpeedButton3Click (00573450) - implemented
+- PDF export for the four graph modes. Saves gvar_0061F120, per mode sets gvar_0061F120 := 0.63, WPPDFPrinter1.Filename := 'VGr1/VGr2/NGr1/NGr2.pdf', calls vr1/Vr2/nr1/nr2 and computes a page total:
+  * modes 1/3: PageTotal := (gvar_011AE320 + 1) * (gvar_0253637C*gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) + gvar_011AE33C
+  * modes 2/4: PageTotal := (same factor) * gvar_0061F2F0 + gvar_011AE33C
+- WPPDFPrinter1.SetLicenseLibrary('Ahnw50.dll') (00537710, member); global WPPDFRegisterLicense('Heribert Reitmeier','A144arg6fm45afqf96d4@80B340EF') (00536D90).
+- WPPDFPrinter1.Field70 (byte f70, meaning unknown) tested 005736A3; only if True -> set False.
+- CanvasReference := wprefScreen (byte f64 := 0, 005736BB), StartDocument ([vmt+40]/005379E0).
+- try/finally: nested page builder sub_00573314 called once (005736DC); exit: if DrawFlag then EndDoc ([vmt+48]/00538C98) + FinishDocument ([vmt+54]/00538D00); restore zoom; gvar_011AE32C := PaintBox1.Canvas; PaintBox1.Refresh (all inside finally).
+- Nested procs in recon (original used the ebp+8 nested convention):
+  * WritePage (0057316C): if DrawFlag then EndDoc; WPPDFPrinter1.StartPage(PageContent, PageTotal, 0, $64, $64) ([vmt+4C], pushed 64/64/0, edx = caller [ebp-0C], ecx = caller [ebp-10]); canvas := printer canvas (005373F4) -> gvar_011AE32C; copies PaintBox1.Canvas.Font.Name; dispatches vz1/vz2/nz1/nz2(canvas); DrawFlag := True.
+  * sub_00573314 (called once): page content height (caller [ebp-0C]): 'Vorgr1'/'Nachgr1': (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 + gvar_011AE340; 'Vorgr2': (gvar_011AE320+1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; 'Nachgr2': (gvar_011AE334 + gvar_0061F118) * gvar_011AE320 + gvar_011AE340; then if (not DrawFlag) or overflow condition (005733DA-05 uses caller [ebp-14]+[ebp-18] vs [ebp-1C]) -> WritePage; followed by caller [ebp-14] += [ebp-18] (0057340A).
+- Deviations: (a) [ebp-14]/[ebp-18] are never initialized in the original (stale stack); first call draws unconditionally, so recon uses 0-initialized locals (DrawUsedY/DrawStep); (b) compat additions in Compat\WPPDF: WPPDFR1: SetLicenseLibrary (00537710), unit-level WPPDFRegisterLicense (00536D90), StartDocument (vmt+40), FinishDocument (vmt+54), Field70 property (byte +70); WPPDFR2 TWPPDFPrinter: Canvas (GetCanvas 005373F4, TBitmap-backed) and StartPage (vmt+4C). Real PDF rendering not in shell.
+
+## Next
+- Remaining Unit13 stubs: SpeedButton1Click (005704A8, print path, stub at recon 2527), remaining TODO at recon 2876 (Button3Click?), recon 4083 stub, FormClose (00570728). Then Finalization (00573848).
+
+## SpeedButton1Click (005704A8) - implemented
+- PrintDialog1.Execute; if not: gvar_0253636C := 1.0 (Extended 1.0: d0 0, d1 $80000000, exp $3FFF) and gvar_011AE32C := PaintBox1.Canvas, exit. Else gvar_011AE32C := Printer.Canvas, dispatch vr1/'Vorgr2'->Vr2/'Nachgr1'->nr1/'Nachgr2'->nr2, Printer.BeginDoc, dispatch vz1/vz2/nz1/nz2(Printer.Canvas), Printer.EndDoc in finally.
+
+## Button4Click (00570890) - implemented
+- JPG save: scans grid A rows (X = ChartAFlat(102*row), Y = ChartAFlat(102*row+1), used flag = ChartAFlat(102*row+2); offsets are hex: -0x198/-0x194/-0x190) computing maxima gvar_0253635C/02536360; TJPEGImage.Create; gvar_011AE358 := TBitmap.Create; Width := (gvar_011AE334+gvar_0061F118)*MaxX+gvar_011AE33C; Height := (gvar_0253637C*gvar_011AE318+gvar_011AE318+gvar_011AE348+gvar_0061F114)*MaxY+gvar_011AE340; canvas font size := Round(gvar_0061F120*7); gvar_011AE32C := bitmap canvas; dispatch vr/vz/nr/nz; then JPEG: Performance := jpBestSpeed, CompressionQuality := 90, Assign(bitmap); SaveDialog1 (FileName '': DefaultExt 'jpg'; Filter 'Grafik-Dateien (*.jpg)|*.jpg'; Options := 0x2 = [ofOverwritePrompt]); on Execute: fn := Trim(FileName), save guarded by LStrCmp(fn,'.jpg') + jbe -> recon writes `if fn > '.jpg'` (lexicographic guard, exact original flag usage; only bitmap stays alive as gvar, jpeg freed in finally).
+
+## Vorf_erm1 (00563CF8) - COMPLETED
+- Signature faked as `Vorf_erm1(AGens, AShift: Integer)` (AGens in EDX -> [ebp-8], AShift in ECX -> [ebp-0C], push ecx/xchg dance decoded).
+- Structure: person mirror BFS over TPersonRec rows (recon mapping row r = `AncestorRec(r)` = 61F30C + \*(r-1) = 61F0F8 + \*r).
+- Init loop \ = 80000 rows clears: +0, -\/-8 (prev row tail +\/+\; guarded t>1 in recon), +\ byte, +\, +8, +\, +\, +4, +\ byte.
+- Setup: Table1.Open, IndexName='', FindKey([StartNum]); Table10.Open, IndexName 'num'; row1 +8 := 1 ([61F314]); row1 num := Table1Nummer ([61F30C]); Screen crHourGlass.
+- Main loop: IterLeft = Round(Power(AGens, 2.0)) - 1, skip if <= 0; rows edi = 1..IterLeft.
+- Row body non-empty (num > 0): Table1.FindKey([num]); num re-read; Geschlecht -> Trim(UpperCase), PStrNCpy \ -> +\; IDNR -> +\; Religion (54C) -> +\ (all \); +8 := edi; +4 := 1 if Vater>0 or Mutter>0.
+- Empty row: +0 := 0, +8 := edi - still goes through partner + slot sections.
+- Partner part (Table10.First, only when row gender ShortStr = 'W'): FindKey([num]); loop while Nummer = num: only records with Epnum = prev-row num ([ebx-\], guarded edi>1); Textjoin via sub_00563A0C:
+  - Pos('Ehes', Table10Verbind) > 0: Trim(Sajahr) <> '' or Trim(Saort) <> '' (Mosso via earlier Trims; ja -> '+\'): 'ooS ' + Cat(PRDay.'.'PRplace'.'SaPlace) + ' ' + Saort, else 'oo ' + H-date + ' ' + Hort.
+  - else Pos('and') > 0: 'o-o ' + H-date + ' ' + Hort.
+  - always Break after one Epnum-matching record; Next only on Epnum mismatch.
+- After loop: gender 'W' and Trim(Partner) <> '' -> row (edi-1) +\ := PStrNCpy \ of Partner ([ebx-\]; guarded edi>1 in recon - underflow in original targets row0 tail over other gvars). Partner := ''.
+- Slot loop j = 0..\ (41x): if edi >= Round(j^2) and j > MaxSlot -> [row+\] := j+1, MaxSlot := j, and flag flip: ParentCount=0 -> TermFlag=1 else ParentCount=0.
+- TermFlag=1 -> break to tail (father/mother expansion skipped).
+- Slot calc (per row, not terminated): v := Round(MaxSlot^2) * AShift + (edi - Round(MaxSlot^2)) -> [row+\]; [row+\] := edi. (Round(Power(MaxSlot,2)) computed twice in listing, identical.)
+- Parents (per row, num > 0): Vater > 0 -> father-dword := Vater at AncestorRec(2*edi) (+0 = 61F0F8+\*edi), Inc(ParentCount); Mutter similarly at AncestorRec(2*edi+1).
+- Tail: MaxSlot+1 < GenLimit -> GenLimit := MaxSlot ([ebp-8] overwritten); Table1.FindKey([StartNum]); cursor crDefault; GenLimit > 3 -> Button1.Visible := True.
+- Helpers added to AHNGlobals: `AncestorNum(Row)`, `SetAncestorNum(Row, Value)`, `AncestorRec(Row): PByte` (all \ stride off gvar_0061F30C, row 1-based).
+- Documented deviations: init-loop prev-row tail clear guarded (t>1); edi=1 prev-partner/prev num reads skipped; intermediate GetText/UpperCase/Trim chains collapsed; original exception frame (LStrArrayClr 30 + LStrClr) replaced by automatic local cleanup.
+- Build: SUCCESS.
+
+### Batch: Vorf_erm (00567A30) + Vorf_erm1 Power-idiom correction
+- Corrected Vorf_erm1 (00563CF8) Power decoding: the pushed 2.0 constant is the
+  BASE, so all three idiom sites are Power(2.0, x) = 2^x (not x^2). Affects
+  iteration count (Power(2.0, GenLimit) - 1), slot-loop bound (edi >= Power(2.0, j))
+  and slot arithmetic (Round(Power(2.0, MaxSlot))). Matches binary-BFS tree sizes
+  1/2/4/8... and the boundary test Power(2.0, k) - 1 = edi.
+- Reconstructed Vorf_erm (00567A30) into Unit13.pas: chart A/B/C grid clearing
+  loop (t=1..$2710, ten A/B stores + three C stores per $198-stride row), setup
+  (gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text), gvar_011AE34C :=
+  StrToInt(Form12.SpinEdit2.Text), Table17 with no index, eA/eB tbyte Extended,
+  base code string ebp24 via sub_005637C4), main BFS loop while
+  edi < Power(2.0, gvar_0061F2F0): 6-char code decode per row, FindKey, father/
+  mother codes appended to ebp24, flat slots +3/+7/+8 in grid A and C-mirror
+  dword terms (102*edi-104/-103/-102), Vorgr1/Vorgr2 level numbering, Extended
+  accumulators eA/eB, picture path check (gvar_02536B9C\bilder\bNa.jpg into
+  ChartAShort(edi,$142)), PExtended slot +$38 = edi mod 2^(g-1) + gvar_011AE34C *
+  2^(g-1), gender word $4D01/'M' + $5701/'W' at +$C1, boundary loop ebxv
+  1..$14 (Power(2.0, ebxv) - 1 = edi -> eB := eA, generation increment), exit
+  when eB = 0; tail: ShowMessage ('Generationen/Personen gefunden', eB>0
+  distinguishes truncation), gvar_011AE328 := gvar_011AE330 - 1 or gvar_011AE330,
+  Vorgr1/Vorgr2 post-loops shifting flat +1 by gvar_011AE330 - gvar_011AE328
+  or + gvar_011AE330 - gvar_0061F2F0 while flat +2 / +5 guards, ending with
+  gvar_011AE32C := PaintBox1.Canvas and PaintBox1.Refresh.
+- Deviations documented: exception-frame LStrArrayClr dropped (compiler-managed
+  AnsiStrings), SSR-start/ssr-clr string work collapsed, FindKey structure args
+  inlined, PStrNCpy truncation via SetLength/Copy semantics, tbyte locals as
+  Extended assignments.
+- Converter fixes: ChartAFlat() assignments replaced with SetChartAFlat()
+  helper calls in Vorf_erm.
+Remaining Unit13 work: FormClose (00570728) verification, Finalization
+  (00573848, listing L15904+), SpeedButton12Click nil-check removal.
+
+### Batch: SpeedButton12Click fix, FormClose verified, Finalization (00573848)
+- SpeedButton12Click (00570694): removed the extra nil-check on
+  gvar_011AE32C; the listing assigns Font.Name directly.
+- FormClose (00570728): verified against listing L12803+ - recon already
+  matches (Form12.Close; form 13 hidden via gvar_0061F10C/Form13).
+- Finalization (00573848, listing L15904+): decoded and documented at the
+  unit end of Unit13.pas as a doc-stamp block. Listing mechanics:
+  refcount guard [253638C] (inc ; jne skip), @FinalizeArray over the
+  five 10000-element chart grids (0213E95C, 01D5A7DC, 0197665C, 015924DC,
+  011AE35C; element stripper 'vor' @5637A0), @FinalizeArray of 20
+  AnsiString slots at 011AE2C8, LStrClr on 011AE2C0/011AE2BC/0061F2EC/
+  F2E8/F2E4/F2E0, and two 50-element AnsiString arrays at 0061F1F4 and
+  0061F12C. Recon deviation: the grids are static records without
+  managed fields, so the run block is empty; kept as
+  `initialization / finalization / end.` (this DCC17 requires a
+  non-empty-list syntax chain - bare `finalization end.` fails with
+  E2029, a preceding empty `initialization` is accepted).
+- Note: grids 0213E95C / 01D5A7DC (Nachfahren, $214 stride) appear in
+  the finalization set; they are owned by the Unit1/Unit recon target,
+  documented here for cross-reference.
+
+### Batch: Unit3 gedein_5 helpers (sub_005BE4B8 / sub_005BEF5C)
+- Decoded and implemented `sub_005BE4B8` ("2 DATE" handler of the GEDCOM import, Projects_AhnenWin\Unit3.pas L64989-65635): per event tag (gvar_02536858 = BIRT/BAPT/DEAT/BURI/EMIG) parses the pre-comma part via sub_00577934, writes the date triplet to Table1 Gebtag/Gebmonat/Gebjahr (554/558/55C), Tauftag/Taufmonat/Taufjahr (564/568/56C), Sttag/Stmonat/Stjahr (57C/580/584) or Begtag/Begmonat/Begjahr (590/594/598), and appends the post-comma part to comment accumulator gvar_0253684C with prefixes "Geburt: "/"Taufe: "/"Tod: "/"Bestatt.: "/"Auswanderung am ". Lines without comma only parse the date; EMIG non-comma writes "Auswanderung am d.m.y" via sub_005772E4; other tags only parse.
+- Decoded and implemented `sub_005BEF5C` ("2 PLAC" handler, Projects_AhnenWin\Unit3.pas L65635-66413): mirrors the place text via TForm3.Ortdreh unless tag = RESI, splits up to three comma parts (e1/e2/e3) when gvar_0253685C is empty (kept as guard, RESI skips the split), updates/creates Table13 (FindKey ort -> Edit Lkr/Bland/Land, else Append Ort + Lkr/Bland/Land, offsets A44/A4C/A58/A64) and finally assigns Table1Gebort/Taufort/Stort/Begort/Lebensort; EMIG appends "Auswanderung nach <ort>" via sub_005772E4.
+- Component mapping fixed: Table1 field offsets 558 = Table1Gebmonat, 590/594/598 = Table1Begtag/Begmonat/Begjahr (Unit2.pas); Table13 fields A44=Ort, A4C=Land, A58=Bland, A64=Lkr; Table1Lebensort = 578.
+- `Form3.sour` (= sub_005BF434 body, "2 SOUR @" Repso2 resolver) was found already reconstructed in Unit3.pas.
+- Verified: build.cmd -> [build] SUCCESS. Array-slicing PowerShell quirks avoided by direct Read tool usage.
+- Next: main body of TForm3.gedein_5 (stub, current recon L1807+), which calls sub_005BC604 (huge, L62911-71288 of the listing - approx 8300 lines, separate batch) - register declaration stub with 15 params (3 register + 12 stack) first.
+
+### Batch: Unit3 gedein_5 main body (005BFB94) - COMPLETED, build green (2026-10-29)
+- Fully converted `TForm3.gedein_5` in Units\Unit3.pas (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\gedein5.txt, 5432 lines, 005BFB94-005C541D), transcribed in chunks C1..C8: prolog (fsc temp table Nr/Fnr/V/M/K, open dialog), header loop, Phase I (@INDI/0 @F counting, 0 @S source import, 0 @P places, 1/2 NOTE), Phase II (persons: SEX/RUFN/OCCU/RELI/IDNO, event/date/place taboo ladder, 1 SOUR @S replication into Table1Quelle + Table38, ADDR/ADR1..ADR5/CITY/POST, EMAIL/PHON/URL/WWW), Phase III (fsc Auswertung: v/m pairs into Table5Nummer/Table5Epnum, k-splits into Table1Vater/Mutter via Table1.FindKey, family loop with 1 HUSB/WIFE/CHIL via Form1.Repso2 'alt_' index, MARR/DIV marshalling into 16 locals m1dat..sav2, MARRIED/_STAT mapping).
+- Component/field verifications: Table1 offsets 5CC=Adr1, 5D0=Adr2, 5D4=PLZ, 5D8=Ort, 5DC=Adrzus, 5F0=Tel, 5F4=Ema, 5F8=Ur, 5FC=Quelle, 600=Rufname, 5E0=Indj; [ebx+80]=Table5 (fsc Auswertung target, recon-name Table11 discarded); Form1 offsets 400=Label18, 404=Label19, 8C0=Repso2, 8C8=Repso2nr.
+- `sub_005BC604` remains a stub (declare 4 register ints + 12 stack AnsiStrings, exact register/stack push order 30,68,6C,50,54,58,5C,60,64,70,74,78 = 16 args, listing L62911ff; body still to be decoded as a separate batch).
+- Loop-tail convention: `LPhase2Tail` ends each Phase II chunk with ReadLn + goto LPhase2; `005C27F8 jmp 005C47E5` was recon-coded as `goto LPhase2` - final-stage candidate for verification against C8 epilogue.
+- Verified: build.cmd -> [build] SUCCESS (28063 lines, only known unused-local hints).
+
+### Batch: Unit3 sub_005BC604 (Ehe/Familie-Schreiber) - COMPLETED, build green (2026-10-29)
+- Fully converted `sub_005BC604` in Units\Unit3.pas (listing extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_B604.txt, L1-1094 relevant; method ends 005BD6CA `ret 30`), transcribed in 3 chunks: C1 prolog (Table5.FindKey([AHusn]) -> Append Nummer[410]/Epnum[414]), C2 edit path pass 1 (Verbind[440] from AMarried; date triplets Htag/Hmonat/Hjahr 418-420, Satag 42C-434, Schtag 444-44C via sub_00577934 comma-split Copy(8,Pos-8)/Copy(8,Length); raw texts Hort 424/Saort 438/Schort 450; witnesses Copy(9) -> Trauz 428/Satrauz 43C; three '2 SOUR @' blocks -> Hqu 454/Saqu 458/Schqu 45C via Form1.Repso2 'ih'/Repso2inh2 dedup with '; ' chain; Post), pass-2 entry FindKey([AWifn]) + Append mirror, C3 mirrored edit path (no source-field writes on pass 2, faithful to listing) + Post @005BD656.
+- Field names verified in Unit2.pas: Table5Nummer 410, Epnum 414, Htag/Hmonat/Hjahr 418/41C/420, Hort 424, Trauz 428, Satag/Samonat/Sajahr 42C-434, Saort 438, Satrauz 43C, Verbind 440, Schtag/Schmonat/Schjahr 444-44C, Schort 450, Hqu 454, Saqu 458, Schqu 45C (Table5Schjahr restored from earlier 'Sajahr' typo).
+- Param slots: +34 AMarried (int), +30..+8 = 11 AnsiStrings (ADatD/AOrtD/ADat1/AOrt1/AWit1/ADat2/AOrt2/AWit2/AQm1/AQm2/AQd), LStrAddRef list consistent, ret 30.
+- Next/Eof tails 005BD063/005BD65E documented unreachable after FindKey/Append positioning (Unit3 comments).
+- Verified: build.cmd -> [build] SUCCESS (28292 lines).
+
+### Batch: Unit3 gedein_5 C4-Verifikation (Kontrollfluss) - COMPLETED, build green (2026-10-29)
+- 005C27F8 `jmp 005C47E5` verified: Phase-I exit RE-ENTERS the Phase-II read loop (EOF check entry at 005C47E5); recon `exit;` was wrong, replaced with `goto LPhase2;` (~L2563).
+- Phase2Tail (005C4786-005C47E5) verified vs listing L71026-71054: ReadLn -> '0 @F'-check (005C47A2 jg 005C47FC = Phase3 entry) -> EOF-check -> zsa(zeile,ptmp) + zeile upload -> EOF-check back edge. Recon tail previously missed the '0 @F' long-jump AND the zsa; without them Phase II silently dropped entire family records.
+- Phase3 loop tail (005C520E-005C52CC) verified: correct order is ReadLn first, then zsa, then flush-condition (Pos('0 @')+Pos('@F')>0 && famIdx/husn/wifn>0 -> sub_005BC604), then loop condition (no Eof-check before ReadLn). Rewritten.
+- New W1036 uninit warnings (husn/wifn/relN/nummer) accepted = compiler flow-blindness from goto/labeled-loop structure.
+- Verified: build.cmd -> [build] SUCCESS (28291 lines).
+
+### Batch: Unit3 gedein_5 C4 alt84/alt88 - COMPLETED, build green (2026-10-29)
+- alt88 ([ebp-88]) only ever cleared at 005C282B -> effectively constant ''; recon `alt88 := ''` matches (aka/immigrant messages emit leading space like original).
+- Missing gate fixed: ASM 005C2F63-2F72 `gvar_02536858='NAME'` (jne 005C352D) guards the whole alt84/'2 TYPE'/type-name ladder (005C2F78-005C350D); recon ran it ungated -> wrapped in `if gvar_02536858 = 'NAME' then begin ... end;`. The '2 NOTE' block follows afterwards with its own guard.
+- alt84 slot mapping re-verified (listing L69565-69614): Copy(zeile,8,1)='/' check 005C2F91; alt84 := Trim(Copy(zeile, Pos+1, 40)) then Copy(alt84,1,Length-1) in place; '1 NAME'-2nd-line and '2 TYPE' variants identical.
+- Verified: build.cmd -> [build] SUCCESS (28294 lines).
+
+### Batch: Unit3 sub_00582C24 (Datum-Export-Formatter) - COMPLETED, build green (2026-10-29)
+- Converted as `function sub_00582C24(A, B, C: AnsiString): AnsiString;` (A=Tag, B=Monatsnr, C=Jahr; Result via hidden [ebp+8], `ret 4`) in Units\Unit3.pas after sub_005BEF5C.
+- Semantics (extract C:\Users\Mir\AppData\Local\Temp\opencode\sub_582c24.txt, 00582C24-00582DFF): `case StrToInt(B)` -> JAN..DEC (jmp table 00582C97); with month: Format('%2s',[A])+' '+mon+' '+Format('%4s',[C]) = 'DD MON YYYY'; without: DD.MM.YYYY dot-triplet. Prefix marker 'um*UM*ca*CA*VO*vo*na*NA*ER*er' (Pos in A) suppresses standard Result; uppercase ladder UM/CA->'ABT ', VO->'BEF ', NA->'AFT ', ER->'CAL ', each 'PREFIX '+mon+' '+C, only when StrToInt(B)>0; empty A -> 'MON YYYY', empty A+B -> C. try/finally pairs collapse to CatN3 fallbacks (normal-flow only).
+- 21 call sites (005A66xx..005B9D7A) all in still-open methods, mainly TForm3.gedausv (005B5224, TODO stub).
+- Verified: build.cmd -> [build] SUCCESS (28382 lines).
+
+### Batch: Unit3 illki (Lebenslinien-Katalogeintrag) - COMPLETED, build green (2026-10-30)
+- Converted `TForm3.illki(ALine: AnsiString; ANr: Integer; var AErgebnis: AnsiString)` (Units\Unit3.pas; extract C:\Users\Mir\AppData\Local\Temp\opencode\illki.txt, 00584350-00584E21, `ret 4`; edx=ALine LStrAddRef, ecx=ANr, [ebp+8]=var-result via mov ebx). Interface + implementation declarations updated (was parameterless TODO stub).
+- Body: AErgebnis:=''; empty-Trim exit; Table1.IndexName:='' + First; num=Round(Length/7); loop over 7-char packets -> k=StrToInt(Copy(ALine,(i-1)*7+1,6)) -> Table1.FindKey([k]); AErgebnis += Name+' '+Vornamen; name-list adds to gvar_02536440 in three variants gated by gvar_02536414/gvar_02536418 (with ' * '+Gebjahr / plain), suffix sub_00576F54(i) with empty separator (CatN7/5/3 push pairs verified).
+- lfbh2 block: gvar_02536454 := Form1.lfbh2.IndexName saved, bookmark vtbl+150 stubbed as `bmk := -1`, IndexName 'Pro' + First; sub_00576EB0(Table1Nummer.AsInteger, u) -> FindKey([StrToInt(u)]) -> AErgebnis += ' [' + IntToStr(lfbh2Nm.AsInteger) + ']', lfbFlag:=1; IndexName restored; vtbl+1A0 stub comment; lfbFlag<>0 -> Continue (skips following blocks, jmp 00584DDA loop tail, faithful).
+- Remaining blocks in order: gvar_02536404 Religion ', '; gvar_025363F0 Beruf ', ' + Hausname ' ' (Table1Hausname 5C8, verified Unit2.pas); birth/baptism(death-replacement) triplets via sub_00576FF8 (procedure (ALine; var) verified) with ' * '/' ~ '/' + ' prefixes; gvar_02536410=1 -> oabk(place)->gvar_02536664 else AErgebnis += ' '+place; gvar_02536444.Add(place+sub_00576F54(ANr)) after each event block; Taufpat ' (TP: ...)' gated gvar_02536400.
+- Verified: build.cmd -unit 3 -> SUCCESS (28532 lines; known hints H2164 's' in oabk, H2077 bmk per stub convention).
+
+### Batch: Unit17 nam2 (Namenszeile Familienblatt) - COMPLETED, build green (2026-10-30)
+- Converted `TForm17.nam2(AIn: AnsiString)` (Units\Unit17.pas; Projects_AhnenWin\Unit17.pas L52-277, 0053CC38-0053CFCF, plain `ret`): builds sheet name line `s` from caller text AIn + current Table3 person, writes both to Table14 (Append, Zeile[1E8]=s, Nm2[1F0]=AIn, Post) when s <> ''.
+- Three name variants: CheckBox9 checked -> ' (DS '+IntToStr(Table3Nummer)+')' suffix; else `Pos('                oo ', AIn)` > 0 (16 spaces + 'oo ') -> AIn+#13#10+20 spaces+name; else plain concat - all as ucase(Table3Name [610]) + ' ' + Table3Vornamen [614] via Form1.ucase(x, var).
+- Toggle blocks in listing order: CheckBox1 ' (ID: ' + Table3IDNR [690] + ')'; CheckBox11 ', ' + Beruf [620]; CheckBox13 ', ' + Hausname [698]; CheckBox7 ', ' + Religion [61C], each only when the field is nonempty.
+- AIn edge cases (listing-faithful, commented in recon): Copy(AIn,1,5)='     ' -> AIn keeps only leading whitespace (Copy 1..Length-TrimLeftLen); ELSE when Trim(AIn) nonempty -> AIn cleared (LStrClr [ebp-4] at 0053CF57 exactly as binary does).
+- Fields verified in Unit2.pas: Table3 604=Nummer/610=Name/614=Vornamen/61C=Religion/620=Beruf/690=IDNR/698=Hausname; Table14 (E0) 1E8=Zeile, 1F0=Nm2.
+- Verified: build.cmd -unit 17 -> SUCCESS (28121 lines, no new Unit17 hints).
+
+### Batch: Unit17 fambeltern (Eltern-Abschnitt Familienblatt) + sub_0053D06C - COMPLETED, build green (2026-10-30)
+- Converted `TForm17.fambeltern(AIn: AnsiString)` (Units\Unit17.pas; Projects_AhnenWin\Unit17.pas L3070-3577, 0053FD18-00540491, plain `ret`): writes the parents' section of the Familienblatt into Table14.
+- Flow: if Vater[538]>0 or Mutter[53C]>0 -> empty Table14.Append+Post + Inc(gvar_0061EFCC); Vater>0 -> Table3.FindKey + nam2(AIn+'Vater : ') + gebst(AIn+11 spaces) + gvar_0061EFCC+3 (order verbatim per LStrCat3 edx+ecx convention: AIn first, label second); Table10.IndexName='num' + FindKey([Table1Vater]) then while not Eof: Epnum[3B8]=Mutter -> Table14.Append + spouse line block; Table10.Next each round; Mutter>0 -> nam2/gebst mirror + gvar_0061EFCC+3.
+- Spouse-line ladder inside Epnum=Mutter: Pos('Ehes', Verbind[3E4])>0 -> (a) Saort[3DC]/Sajahr[3D8] nonempty -> Table13.FindKey([Saort]) + only when Sajahr<>'' line = AIn + '           oo (S) ' + sub_0053D06C(Satag[3D0]+'.'+Samonat[3D4]+'.'+Sajahr) + TrimRight(' '+Saort); (b) else Hort[3C8]/Hjahr[3C4] nonempty -> Table13.FindKey([Hort]) + only when Hjahr<>'' line with Htag[3BC]='HK' comparison -> '           oo ' plain else '           oo (K) ' + norm(date triplet) + TrimRight(' '+Hort); (c) else line = AIn+'            oo' (12 spaces). Pos('Ehes')<=0 (o-o path): Table13.FindKey([Hort]) then only when Trim(Verbind)<>'' line = AIn + '           (o-o ' + norm(H-tag triplet) + TrimRight(' '+Hort) + ')'. Table14.Post per matching row, faithfully even when nothing written.
+- New helper `procedure sub_0053D06C(ALine; var AErgebnis)` (Units\Unit17.pas, twin of sub_00576FF8/Unit3): date normalizer 0053D06C-0053D2F9 - '..'->'', 'HK'->'HK '+Copy(4,7), 'vo.r'->Copy(1,2)+Copy(4,1)+' '+RightStr(4), 'na.ch'->Copy(1,2)+Copy(4,2)+' '+RightStr(4), leading '.'/blank strip loop Copy(2,9), s[1]>'9' -> dot-strip + Insert(' ') before first char < ':'.
+- Signature correction: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358, 2-param) still TODO stub.
+- AHNGlobals fix: gvar_0061EFCC was AnsiString -> Integer (binary does `inc`/`add 3` - Familienblatt-Zeilenzaehler).
+- Uses extended by StrUtils (RightStr).
+- Verified: build.cmd -unit 17 -> SUCCESS (28735 lines, no Unit17 hints).
+
+### Batch: Unit3 gedeausv (005B5224, GEDCOM-Export 5.5.1) Chunk C1 - COMPLETED, build green (2026-10-30)
+- Whole-method extract created: C:\Users\Mir\AppData\Local\Temp\opencode\gedausv.txt (5889 listing lines, 005B5224-005BBCC5; Projects_AhnenWin\Unit3.pas L57025-62908). Parameterless TForm3 method, esi=Self, edi=gvar_0253665C.
+- Chunk C1 transcribed (005B5224-005B5E30): krg := Table1Nummer; Form26.Hide + ModalResult := 2 (vtbl+24C); source-monster string gvar_0253665C := '' then 'qu'-Indexlauf - listing-truth: SetIndexName('qu') on Table29 [248], but First/Next/Eof + Table24Nummer [22C] on Table24 [1D0] (transcribed verbatim, noted as suspicious). File setup: SaveDialog1[3FC] (GetFileName -> System.Assign to gvar_02536458 Text var; explicit System.Assign because bare Assign resolves to TForm3.Assign), Title='ged' (+60), Filter='Gedcom-Dateien (*.ged)|*.ged' (+74), FilterIndex:=2 (+5C), Rewrite. 0 HEAD block: Form27.RadioButton2 -> BOM #$EF#$BB#$BF + '0 HEAD', else plain. CHAR-Varianten: RadioButton1 -> gvar_02536654:=1 + '1 CHAR ANSI'; else RadioButton2 -> gvar_02536650:=1 + '1 CHAR UTF-8'; else RadioButton3 -> gvar_02536650:=1 + '1 CHAR Unicode' (654/650/658 := 0 before). Then '1 SOUR AHNENWIN'/'2 VERS 5.1'/'1 DEST OTHER'; '1 DATE ' + sub_00582C24(Copy(DateToStr 1,2), Copy 4,2, Copy 7,4) [Tag/MonatsNr/Jahr]; '1 FILE ' (+ AnsiToUtf8 in 650-branch) of ExtractFileName(SaveDialog1.FileName); '1 SUBM @S0@'/'1 GEDC'/'2 VERS 5.5.1'/'2 FORM LINEAGE-LINKED'/'1 PLAC'/'2 FORM place, county, state, country'; '1 LANG German' in BOTH charset branches; @S0@ SUBM blocks:
+  - 650-branch (UTF-8): Edit1 nonempty -> '0 @S0@ SUBM'(AnsiToUtf8), '1 ADDR', '2 ADR1 '..'1 POST '(Edit3), '1 CITY '(Edit5[340]), '1 PHON '(Edit4[310]), '1 EMAIL '(Edit6[348]) all via AnsiToUtf8; Edit1 empty -> only '0 @S0@ SUBM'+'1 NAME UNKNOWN'.
+  - ANSI branch: same ladder WITHOUT conversions; transcribed through Edit3/'1 POST ' (Listing L600).
+- Form27 (TOKBottomDlg1/GEDCOM output dialog) field map verified: 304=Edit1, 308=Edit2, 30C=Edit3, 310=Edit4, 340=Edit5, 348=Edit6, 328=RadioButton1, 32C=RadioButton2, 334=RadioButton3 (Units\Unit27.pas); Form26 = gvar_0061EFFC (Units\Unit26.pas).
+- Unit3 uses extended: + Unit26, Unit27.
+- Junction 005B5E30 (followed by the family/person export loop, listing L600+ not yet transcribed) left as TODO C2; uninit-var W1036 warnings of gedein_5 unchanged; new hint H2077 krg (written, read only by later chunks) accepted.
+- Verified: build.cmd -unit 3 -> SUCCESS (28865 lines).
+
+### Batch: Unit3 gedeausv Chunk C2 (005B5E30-005B63EF) - COMPLETED, build green (2026-10-30)
+- Completes the ANSI @S0@ SUBM ladder exactly like the UTF-8 one but WITHOUT AnsiToUtf8: Edit5 '1 CITY ', Edit4 '1 PHON ', Edit6 '1 EMAIL '; Edit1 empty -> '0 @S0@ SUBM' + '1 NAME UNKNOWN' (005B5DFE branch was the left-leg target of the C1 Edit1-check).
+- Junction 005B5E30: Form27.Visible := False; Form1.Label18 [400] Visible/'0 %'/Refresh; Form1.Label19 [404] Visible/'Gedcom schreiben'/Refresh.
+- gvar_02536644 := Table24.RecordCount (vtbl+14C); Table1.IndexName := ''; Table24.IndexName := ''; Table24.First; Table29.Open; Table29.IndexName := 'qu'; personNr ([ebp-0C]) := 1; st2 ([ebp-10]) := ''; call Form3.gedausxv (005B5F25 prefix method); Table24.IndexName := ''; Table24.First.
+- Person loop (listing loop-head jmp 005B8B7D = Eof condition; body 005B5F4B ff) recon'd as `while not DataModule2.Table24.Eof do`: progress Round(personNr/gvar_02536644*100) -> Label18 '%'+Refresh; {edi:=0} scratch; WriteLn '0 @I'+IntToStr+@ INDI (CatN3 order '0 @I',Nr,'@ INDI'); uNr ([ebp-168] Integer) := Table24Nummer.AsInteger; Table1.FindKey([uNr]); st4 := Trim(Table1Vornamen [+544]); Pos('!')->LStrDelete 1 char at pos; NAME variants via CatN4/5: 650=1 -> AnsiToUtf8(st4 + ' /' + Trim(Name [+540]) + '/'), else '1 NAME ' + st4 + ' /' + Trim(Name) + '/'; Namex [+5BC] nonempty -> '1 NAME /'+(Utf8?)Namex+'/' + '2 TYPE variant'; Rufname [+600] -> '2 _RUFNAME '; Hausname [+5C8] -> '1 NAME /'+(Utf8?)Hausname+'/' + '2 TYPE estate'.
+- New vars: personNr, proz, uNr: Integer. u ([ebp-168]) renamed uNr (TIntegerField.AsInteger = Integer, not AnsiString).
+- TODO C3: from 005B63EF (Geschlecht [+548] -> UpperCase -> 'W'/'M'/'1 SEX' blocks, then further person sub-blocks, Extrakt gedeausv.txt L1000+).
+- Verified: build.cmd -unit 3 -> SUCCESS (28937 lines).
+
+### Batch: Unit3 gedeausv Chunk C3 (005B63EF-005B8878) - COMPLETED, build green (2026-10-30)
+- Person-Loop-Fortsetzung transkribiert (Units\Unit3.pas, Extrakt gedeausv.txt L1000-3265): SEX (UpperCase-Vergleiche W/F M/X, leer -> '1 SEX U', nur ein乗 Vergleich); OCCU/RELI/IDNO; Quelleg-Quelref-Blocks;
+  BIRTblock: check Trim(Gebjahr [55C]) + Gebort [560], '1 BIRT'; '2 DATE ' via sub_00582C24(Gebtag 554, Gebmonat 558, Gebjahr 55C); PLAC-Block: FindKey(Table13 [0CC]) ohne Result-Test (positions Table13-Felder) + CatN7 chain 'Ort,Lkr,Bland,Land' (Gebort + Table13Lkr [A64] + Table13Bland [A58] + Table13Land [A4C]); 650 -> AnsiToUtf8; SECOND FindKey mit Result-Test -> '3 _LOC @P'+IntToStr(bmk)+'@' + sub_00576EB0 + Pos(u, st1[ebp-14] PlacRef-Accu) -> st1 += u+'*' DEDUP; Table38.FindKey([Quelleg [5A0]]) -> '2 SOUR @S'+IntToStr(bmk)+'@' + st3[ebp-28] SourRef-Accu += u+'*'.
+- Identische Blockstruktur fuer CHR (56C/570 Check; DATE args TAUFTAG 564/Monat 568/Jahr 56C; Quelle [5A4]), DEAT (584/588; Sttag 57C/Monat 580/Jahr 584; Quelleb [5A8]), BURI (598/59C; Begtag 590/Monat 594/Jahr 598; Quelle [5AC]); '2 _GODP ' via TAUFPAT [574] (Utf8-Variante), '2 CAUS ' via TODESBEZEICHUNG-QUELLE [58C].
+- Anmerkung: Feld-Checks sind jeweils auf dem JAHR-Field (55C/56C/584/598), nicht auf dem Tag - im Original so.
+- RESI-Block: Check Lebensort [578] + Adr1 [5CC] -> '1 RESI'; '2 PLAC ' (Lebensort, Utf8-variante); Adr1 -> '2 ADDR '-Kopfzeile OHNE Inhalt + '3 ADR1 '; Adr2 [5D0] '3 ADR2 '; Adrzus [5DC] '3 ADR3 '; PLZ [5D4] '3 POST '; Ort [5D8] '3 CITY '; Tel [5F0] '2 PHON '; Ema [5F4] '2 EMAIL '; Ur [5F8] '2 WWW ' - alle mit 650/AnsiToUtf8-Unterscheidung.
+- NOTES-Block: Namex [5BC] -> '1 NOTE Schrw.: '(edi=0, dann edi:=1) sonst '2 CONT Schrw.: '; Lebt [5B4]='j' -> '1 NOTE lebt: '/''2 CONT lebt: '' sonst '2 CONT lebt: ', edi := 1 in BEIDEN Zweigen (Jump-Effekt 005B8539); Kommentar TMemoField [5B0] skip if Form27.CheckBox1 [318] Checked (vtbl+0C4); sonst Memo1 [40C] Clear (vtbl+0DC recon als Clear), komFeld := Table1.FieldByName('kommentar'), Memo1.Lines.Assign(komFeld) ([Memo1+220]=Lines vtbl+8 - recon Annahme), Count-Test (vtbl+14), erste Zeile '1 NOTE '/'2 CONT ' (edi-getrieben), while cmzCount < Lines.Count -> '2 CONT '-Zeilen (Get(esi) vtbl+0C, inc esi 005B8857).
+- Neue Locals in gedeausv: edi (NOTES-Merker, init 0 im Loop-Kopf 005B5FA8), bmk (Recon-Stub -1 fuer alle vtbl+150 GetBookmark-Aufrufe), cmzCount (Memo-Lines-Loop-Index), komFeld: TField.
+- TODO C4: ab 005B8878 (FAMS/FAMC-Loops gvar_02536448/44C TStringList, RightStr(6)/StrToInt, sub_00576EB0-Compare, '@F'-Blocks, danach loop-tail personNr+Table1.FindKey([krg])+Table24.Next 'lfn'-Index, FAM-Loop ab 005B8BA4).
+- Verified: build.cmd -unit 3 -> SUCCESS (29323 lines).
+
+### Batch: Unit3 gedeausv Chunk C4 (005B8878-005B8EF9) - COMPLETED, build green (2026-10-30)
+- FAMS-Loop ueber gvar_02536448 ([ebp-30]=Count, esi=famI): Vergleich Copy(item,1,6) UND Copy(item,7,6) gegen sub_00576EB0(Table24Lfdn [228]+58) -> bei Treffer '1 FAMS @F'+IntToStr(StrToInt(RightStr(item,6)))+'@' (CatN3).
+- FAMC-Loop ueber gvar_0253644C: Pos('*'+u6, item) > 0 (CatN3 + LStrPos test/jle) -> '1 FAMC @F...@'-Emission.
+- Person-Loop-Tail (im while): inc [ebp-0C]=personNr; Table1.FindKey([krg]); Table24.Next; while-Kopf 005B8B7D/8B8C (Eof).
+- Familien-Export (nach while): Table24.IndexName := 'lfn'; Table24.First; FAM-Loop ueber gvar_02536448 (005B8BB1..005BA0DA): '0 @F'+Int(StrToInt(RightStr(item,6)))+'@ FAM'; HUSB: Copy 1..6 != '000000' -> '1 HUSB @I'+Int+@; WIFE: Copy 7..6 != '000000' -> '1 WIFE @I'; CHIL: Length(item)>12 -> Copy(item,13,Len-12), Round(Len/7)=childCount [ebp-34], childIdx [ebp-0C]-Reuse (personNr-Slot recycelt!), Copy(item, 13+7*childIdx, 6).
+- Neue Locals: famI (esi), u6 (00576EB0-Output), childCount, childIdx (Slot-Reuse-Anmerkung).
+- TODO C5: ab 005B8EF9 (Paar-Positionierung Copy 1..6/7..6 '000000'-Checks, [168] -> Table24.FindKey -> [22C]+58 Nummer -> Table1.FindKey; Ehe-Suche Table12 [80] First/RecordCount 14C/Next; [410]/[414]+58-Feldvergleiche; 'Ehes'/'and'-Pos auf [440] -> '1 _STAT MARRIED'/'1 _STAT NOT MARRIED'; '1 MARR'/'2 TYPE RELI' ab 005B9234).
+- Verified: build.cmd -unit 3 -> SUCCESS (29386 lines). Splice-Unglueck Anfangs behoben (Block war vorne gelandet): Unit-Header restauriert; kuenftige Chunk-Inserts nur noch via Edit-Tool.
+
+### Batch: Unit3 gedeausv Chunk C5 (005B8EF9-005BA1B8) - COMPLETED, build green (2026-10-30)
+- Paar-Positionierung (005B8EF9..914D): FAM-Item ohne '000000'-Partner (beide Checks Copy 1..6/7..6, ';000000';-je -> skip direkt zum not-marr-Hinweis) -> uNr := StrToInt(Copy(item,1,6)); Table24.FindKey (untested); uNr := Table24Nummer [22C]+58; Table1.FindKey; Table5 [80].First + RecordCount-Loop (005B9025 dec/jle, [ebp-30]): erste Matching-Nummer-Schleife (005B9129 je 005B9031): Table5Nummer [410] = Table24Nummer -> uNr := StrToInt(Copy(item,7,6)) -> Table24.FindKey -> Table5Epnum [414] = Table24Nummer -> break (Found -> 005B914D); sonst Table24 zurueck auf Partner 1 (Copy 1..6) und Table5.Next (005B9113), Eof -> break.
+- Table5-Verbind-Kennzeichnung [440]: Pos('Ehes') -> '1 _STAT MARRIED'; Pos('and') -> '1 _STAT NOT MARRIED'.
+- MARR-RELI-Block (005B9234..971B): Kopf-Bedingung (Trim(Hjahr 420) > '..' LStrCmp-ja) OR (Trim(Hort 424) <> '', jbe -> 005B9720 CIVIL-Check); '1 MARR' + '2 TYPE RELI'; '2 DATE' via sub_00582C24(Htag 418/Hmonat 41C/Hjahr 420) bei Trim(Hjahr)<>'', Trim-empty -> jbe 005B9322 skip; PLAC: Trim(Hort)<>'', sonst jbe 005B9720 (skip WITN+SOUR+CIVIL!! - Listing-truth: bei leerem RELI-PLAC werden Trauz [428]/Hqu [454] uebersprungen und direkt CIVIL angelaufen); untested FindKey(Table13 [0CC]) + CatN7 'Ort,Lkr,Bland,Land' -> '2 PLAC ' (Utf8-Variante); 2. FindKey mit Test -> '3 _LOC @P'+bmk + sub_00576EB0 + Pos-Dedup in st1; '2 _WITN ' via Table5Trauz [428] (Trim, Utf8-Variante); '2 SOUR @S'+IntToStr(bmk)+'@' via Table38 [530].FindKey(Table5Hqu [454]) + st3-Dedup.
+- MARR-CIVIL-Block (005B9720..9C73): gleiche Struktur mit Sa* - Feldern: Kopf (Trim(Sajahr 434) > '..') OR (Trim(Saort 438)<>''; jbe -> 005B9C73 skip); '1 MARR' + '2 TYPE CIVIL'; DATE (Satag 42C/Samonat 430/Sajahr 434); PLAC/_LOC via Saort; '2 _WITN ' via Table5Satrauz [43C]; '2 SOUR' via Table38.FindKey(Table5Saqu [458]) + st3-Dedup.
+- DIV-Block (005B9C73..005BA0D5): Kopf (Trim(Schjahr 44C) > '..') OR (Trim(Schort 450)<>'', jbe -> 005BA0DA); '1 DIV' (KEIN TYPE); DATE (Schtag 444/Schmonat 448/Schjahr 44C); PLAC/_LOC via Schort; '2 SOUR' via Table38.FindKey(Table5Schqu [45C]) + st3-Dedup.
+- not-marr-Hinweis (005BA0DA..005BA1AE, loop-body-Join): erneut Pos('and', Verbind) > 0 und Trim(Copy(item,1,6))<>'' UND Trim(Copy(item,7,6))<>'' -> '2 NOTE not marr'. Danach FAM-Loop-backedge (inc esi/dec [ebp-30]/jne 005B8BCA).
+- Table5-[428]/[43C]-Recon-Feedback: Table5Trauz/Satrauz (Unit2 verifiziert: 428 = Table5Trauz); Table13Lkr/Bland/Land-Offsets 0A64/0A58/0A4C wie in C3.
+- TODO C6: ab 005BA1B8 (@P-PLAC-Record-Export ueber st1-Accu: Round(Len/7) = [ebp-30], childIdx [ebp-0C]-Reuse, Copy(st1, 7*(idx-1)+1, 6), '0 @P'+IntToStr+@ _LOC, StrToInt -> FindKey Table13 [0CC]) bis 005BBCC5-Ende.
+- Verified: build.cmd -unit 3 -> SUCCESS (29585 lines, EXIT=0).
+
+### Batch: Unit3 gedeausv Chunk C6 (005BA1B8-005BBCC5) - COMPLETED, build green (2026-10-30) - GEDEAUSV DAMIT KOMPLETT
+- PLAC-Block (005BA1B8..BA879): if Trim(st1 [ebp-14] PLAC-Ref-Accu) <> '' -> cmzCount [ebp-30] := Round(Length/7); childIdx [ebp-0C]-Reuse := 1; repeat: uLoc [ebp-18] := Copy(st1, childIdx*7-6, 6); WriteLn '0 @P'+IntToStr(StrToInt(uLoc))+'@ _LOC'; Listing vtbl+1A0 (GotoBookmark - Recon-Stub-Konvention aus gedein) positionierte Table13; dann Table13-Feldjaeger im Ort-Datensatz: '1 NAME ' (Table13Ort [A44], Utf8-Variante); '1 _ABBR ' (Abk [A68]); '1 _FPOST ' (PLZ [A48] - KEINE Utf8-Variante im Original); '1 _FCNTY ' (Lkr [A64]); '1 _FSTAE ' (Bland [A58]); '1 _FCTRY ' (Land [A4C]); '1 _GOV ' (Gov [A54], Nur wenn Trim(Ort)<>'' UND Trim(Maid [A74])<>''); '1 MAP ' (Maid) + '2 TYPE MAIDENHEAD'; Inc(childIdx)/Dec(cmzCount)-Loop.
+- SOUR-Section (005BA87F..BB3F5): Table38 [530].Open + IndexName := 'tit' + First; cmz := RecordCount (vtbl+14C); while: sub_00576EB0(Table38N [A14].AsInteger, u6) + '*'-Suffix; if Pos(u6, st3 [ebp-28] SourRef-Accu) > 0 -> '0 @S'+IntToStr(Table38N)+'@ SOUR'; dann Tab38-Feldhilfen: '1 TITL '(Titel [0A18]); '1 ABBR '(Abk [0A1C]); '2 EVEN '(Ereig [0A20]); Zeitraum [ebp-24]: Trim(Von [0A24])+'FROM ' + Trim(Bis [0A28])+' TO ' -> Trim-Check '3 DATE ' (Utf8-Variante); '3 PLAC '(Standort [0A2C]); '1 PUBL '(Publ [0A30]); '2 CALN '(Bestand [0A3C]); Bem [0A38]: Length+7 >= 253 -> '2 NOTE ' + Copy(1,245) + cmzCount := Round(Length/245) + childIdx-Reuse repeat '3 CONC ' + Copy(childIdx*245+1, 245), sonst EINZEILIG '2 NOTE ' direkt; '3 MEDI '(Med [0A40]); Table38.Next + Eof-Break.
+- Abschluss (005BB3F5..BB4A3): Form1.Label18 [400]/Label19 [404].Hide; '0 TRLR' + CloseFile(gvar_02536458); gvar_02536448/0253644C.Free; Form1.Refresh; Table1.IndexName := ''; Table1.FindKey([krg [ebp-8]]); Form1.anzeigen.
+- Neue Locals in gedeausv: uLoc [ebp-18 Copy-slot/-978 Table38N-Extrakt], stVon [ebp-24]. st1 [ebp-14] PLAC-Accu und st3 SourRef-Accu enden leer (005BB3F5 st3 := '').
+- Verifiziert: build.cmd -unit 3 -> SUCCESS (29843 lines, EXIT=0, nur altbekannte Hints/Warnungen).
+- gedeausv (005B5224-005BBCC5) damit VOLLZÄHLIG rekonstruiert.
+
+
+### Batch: Unit3 famn (0057D560) CHIL-Kind-Eltern-Block (0057DB55..0057DD66) - COMPLETED, build green (2026-10-30)
+- famille-Rekonstruktion veroeffentlicht: '1 CHIL'-Zweig nicht mehr Stub: Inc(childIdx [ebp-18]); childNr [ebp-4] := Ziff(s); Table25 [1DC].FindKey([childNr]) untested -> childNr := Table25N [308]; Table1 [5C].FindKey([childNr]) untested.
+- gvar_02536840 = 1 (Datenbank-Format-Kenner): husn>0 -> Table1Kistat [5C4] := 'V'; wifn>0 -> Table1Kistat := Kistat + 'M' (GetText-SetText-CatN2); dann (REIHENFOLGE ORIGINAL: SetTexts VOR TTable.Edit) Table1.Edit; Table31 [2A4].Append; Table31Nummer [2AC] := childNr; Table31Av [2B0] := husn (Vater); Table31Am [2B4] := wifn (Mutter); Table31.Post (vtbl+248).
+- gvar_02536840 <> 1: Table1.Edit (STAATL. in dieser orignalen Ordnung ohne Post - Fortsetzung im Import); Table1Vater [538] := husn; Table1Mutter [53C] := wifn; t := RightStr(('00' + IntToStr(childIdx)),2) [CatN3 '00' + RightStr edx=2]; Table1Indm [5E4] := t (2-stellige Positionsnummer 'JJ'-Format).
+- Neue famn-Locals: childIdx [ebp-18, init 0 am 0057D5B6 kurz nach rel := 1], childNr [ebp-4]. Field names verifiziert (Unit2): Table1Kistat 5C4, Table1Indm 5E4, Table31/Nummer/Av/Am 2A4/2AC/2B0/2B4, Table25/Table25N 1DC/308.
+- Mishap fix: erstes Edit-Insert landete im NOTE-Reset-Zweig (rel := 1 im Pos('NOTE')-Handler) -> rueckgebaut und Neustart der childIdx-Init nach mIdx-Init-Platz korrekt (init Reihenfolge husn/wifn/mIdx/childIdx/rel laut Listing 0057D58F..DB).
+- Verified: build.cmd -unit 3 -> SUCCESS (29871 lines, EXIT=0, neue var W1036-Warnung entstanden und wieder behoben).
+- Unit3-Unit-Integritaet: gedeausv, gedeausv/sub_005BC604 (Pass 1+2 Mirror) und gedein_5 (Phase I/II/III inkl. fsc-Auswertung) jetzt ALLE rekonstruiert; die alten in-Block-TODO-Kommentare (TODO C2/C3 in sub_005BC604, TODO C6/C7 in gedein_5) sind VERALTET-Stubs und markierten bereits transkribierte Bloecke.
+
+
+### Batch: Unit3 ofb3 Chunk C1 (00585048-00585944) - STARTED, chunk C1 transcribed, build green (2026-10-30)
+- ofb3 = OFB/Ortsfamilienbuch-Report (TForm3.ofb3; Listing Projects_AhnenWin Unit3.pas L13934..20969; Extrakt C:\Users\Mir\AppData\Local\Temp\opencode\ofb3.txt).
+- Prolog: krg [ebp-4] := Table1Nummer [534]+58; gvar_02536664 := ''; Form1.Label19 [404] SetText 'OFB erstellen'/SetVisible/Refresh, Form1.Refresh; Screen.SetCursor 0FFF5 (crHourGlass); gvar_02536440 + gvar_02536444 TStringList.Create mit Sorted=True und byte+1D := 0 (CaseSensitive-off - Recon-Style aus gedeausv).
+- Tabellenstart: Form1.lfbh2 [8B8] Open/EmptyDataSet/Open/DisableControls; Table1 [5C] Open/IndexName ''/First/DisableControls; Table18 [140] Open/IndexName 'num'/First/DisableControls.
+- gueltig [ebp-4A]: if Form24.ListBox3 [300].Visible and ListBox4 [304].Visible and ListBox6 [368].Visible (vtbl+0C4=GetVisible; Form27-Konvention war +0C4 GetChecked - Recon der ListBox-Instanzen nur mit 'Visible' sinnvoll) -> gueltig := True; Form24.RadioButton2 [38C].Visible := True (+0C8 SetVisible).
+- Filtermuster: namFilter [ebp-2C] := '*'+Join(Form24.ListBox3.Items)+'*'; ortFilter [ebp-30] (ListBox4); husFilter [ebp-34] (ListBox6).
+- Hauptloop Table1 (while not Eof): 'M'-Zweig: lfbh2.Append; lfbh2Nam [91C] := Table1Name [540]; if gvar_025363E8=1 -> lfbh2Ix [918] := Vornamen [544]+Gebjahr [55C]+Taufjahr [56C]; sub_00576EB0(Table1Nummer, s) -> lfbh2Prob [910]; if gvar_025363E0=1 -> lfbh2Ix := Trim(GebJahr)+GebJahr/GebMonat [558]/GebTag [554] oder TaufJahr [56C]/TaufMonat [568]/TaufTag [564].
+- Table18-Loop: num [ebp-0B0] := Table1Nummer; leere [ebp-0AC] := False; if Table18.FindKey([num]): idx [ebx] := 1; repeat sub_00576EB0(Table18Epnum [4CC].AsInteger, u); lfbh2Eh [914] := lfbh2Eh + u + '*'; if (gvar_025363E4=1) and (idx=1) -> lfbh2Ix := SaJahr [4EC]/SaMonat [4E8]/SaTag [4E4] sonst HJahr [4D8]/HMonat [4D4]/HTag [4D0]; Table18.Next; until Eof or Table18Nummer [4C8] <> Table1Nummer [534]. Danach lfbh2Eh := lfbh2Eh + '000000*'; lfbh2.Post (vtbl+248).
+- Neues Recon-Naming: namFilter/ortFilter/husFilter, gueltig, num, leere (verdorbener Recon-Wert), idx, agu (reserviert fuer C2 [ebp-49]); Unit24 wurde in Unit3-uses aufgenommen (eigentlich schon vor dem Build-Reklamationsfehler).
+- Unresolved-Notiz: '00585945 jmp 005866AB' - das ist die landende Neueinstellung der naechsten Grossblock-Route (W-Zweig, Chunk C2).
+- Verified: build.cmd -unit 3 -> SUCCESS (29993 lines, EXIT=0; neue Hinweise krg/gueltig/leere/agu im ofb3-C1-Scope werden in C2/C3 aufgebraucht.
+- Next chunk C2: W-Zweig 0058594A..005866AB (Geschlecht W: agui [ebp-49]-Pos-Ketten Hausname [5C8]/Name [540]/Gebort [560]/Taufort [570]/Stort [588]/Begort [59C], gueltig-Kurzschluss, Table18-Ort-Suchfilter [4F0 Saort]/[4DC Hort], dann Weiteres 00585D50..005866C5).
+
+### Batch: Unit3 ofb3 Chunk C2 (0058594A-00586D65) - DONE, build green (2026-10-31)
+- W-Zweig-Filter (0058594A..D53): UpperCase(Table1Geschlecht [548]) = 'W'; toter Pos-Test Hausname [5C8]/husFilter (setg-Ergebnis 00585A1C ungenutzt ueberschrieben, entfaellt); agu [ebp-49] := Pos('*'+Table1Name [540]+'*', namFilter) > 0; bl (ebx-Register, neu): OR-Kette Pos('*'+Gebort [560]/Taufort [570]/Stort [588]/Begort [59C]+'*', ortFilter); if gueltig [ebp-4A] -> agu := False, bl := False, Form24.RadioButton2 [38C].Visible := True.
+- Ort-Nachsuche Table18 (00585B79..CFB): if not bl -> FindKey([num]), repeat: bl := Pos('*'+Saort [4F0]/Hort [4DC]/Schort [508]+'*', ortFilter) > 0 (jede Session OR-Verankerung bis next from Positionsuebertrag), Next, until Eof or Table18Nummer [4C8] <> Table1Nummer [534].
+- Freigabe (00585D01..53): if namFilter = '*' -> agu := True; if ortFilter = '*' -> bl := True; Sonderfall alle drei Filter = '*' -> ohne Test; sonst nur bei agu and bl Erhebung, sonst Table1.Next (Kante 00586689..97 im gemeinsamen while-Tail mit {005858EC..FB}).
+- Ehe-Loop (00585D59..6374): sub_00576EB0(Table1Nummer, u); num := Table1Nummer; if Table18.FindKey([num]): idx := 1; repeat: lfbh2.IndexName 'Pro'; sub_00576EB0(Table18Epnum [4CC], u); dup (recon): FindKey([u]) (+2C4 auf lfbh2 = TCustomClientDataSet.FindKey nach TVarRec-Nachweis: [ebp-0B0]=Wert, [ebp-0AC]=VTyp, 0=vtInteger/0B=vtAnsiString, edx=@arr, ecx=High=0) und FindKey([s] mit sub_00576EB0(Table18Nummer [4C8], s)) und Pos(u, lfbh2Eh) > 0 -> kein Append; sonst Append-Block: lfbh2Nam := Name [540]; gvar_025363E8 -> lfbh2Ix := Vornamen+Gebjahr+Taufjahr; lfbh2Prob := sub_00576EB0(Nummer); gvar_025363E0 -> lfbh2Ix Geb-/Taufdatum-Trim-Weiche; lfbh2Eh := lfbh2Eh + sub_00576EB0(Epnum) + '*'; (gvar_025363E4 and idx=1) -> lfbh2Ix Sa-/H-Datum-Weiche; lfbh2.Post; Table18.Next; until Eof or Nummer<>. gedeausv-Notiz +2C4 erhaelt Mehrheit d'or unchanged; [ebp-24] bmk bleibt lfbh2-Bookmark (GetBookmark +1A0 GotoBookmark Paar, [ebp-24]/[ebp-0B0]-TVarRec-Nachweis sichert die 'Pro'-Index-Position in der Ablage lfbh2.FindKey-2-Bytes).
+- Mutter-Direktaufnahme (005863A7..86684): Table1.IndexName 'mut'; num := StrToInt([ebp-48]) ; if Table1.FindKey([num]) enter; Table1.IndexName '', FindKey (Positionierung mutter-datensatz); lfbh2.Append; lfbh2Nam := Name; gvar_025363E8 -> lfbh2Ix := Vornamen; lfbh2Prob := sub_00576EB0(Nummer); gvar_025363E0 -> Geb-/Taufdatum; Post; Backset IndexName ''/FindKey([num]).
+- lfbh2-Aufbereitung (005866C2..B57): Table1/IndexName '', Table18 'num', lfbh2 'Pro', First; while not Eof: u := lfbh2Prob.GetText [910]; bmk := lfbh2.Bookmark (+150, TBookmark/AnsiString-Konfligt: TBookmark(PChar(lfbh2.Bookmark)) Recon-Cast); num := StrToInt(u); Table1.FindKey ohne Test; Vater-Zweig [538]>0: sub_00576EB0(Vater, s) -> lfbh2.FindKey([s]) und Table1Mutter [53C]>0 und Pos(sub_00576EB0(Mutter), lfbh2Eh)>0 -> 'mut'-Index: FindKey([num]) erfolgreich ODER Table18.FindKey([num]) erfolgreich -> Skip, sonst lfbh2. GotoBookmark(bmk) +1A0 /Edit/lfbh2Nm := 1 +0A8/Post ; dann IndexName ''/FindKey + Mutter-Zweig [53C]>0 analog mit 'vat' [58C8D0] und Pos(IntToStr(Vater), lfbh2Eh). Schleifen-Tail: IndexName ''/GotoBookmark(bmk)/lfbh2.Next.
+- lfbh2-Reorganisation (00586B73..CA5): lfbh2.IndexName 'na'; First; idx := 0 (ebx); while not Eof: lfbh2Nm [90C] = 1 -> lfbh2.Delete (kein Post/Next); sonst inc(idx), Edit, lfbh2Nm := idx (+0A8edx=ebx), if not gueltig -> lfbh2Hei [924] := Copy(lfbh2Ix [918] GetText, 1, 4), Post,Next.
+- Epilog (00586CA5..D65): lfbh2.IndexName 'na'; if gueltig -> 'heir'; First; Table1.IndexName ''; Table14 [0E0] Open/Close/EmptyTable/Open (Tabelle14 neue FastVereinigung); idx := 0; lfbh2.First; s := ' ' [ebp-3C]; Marker 00586D65 jmp 0058BFDD -> Chunk C3 (Report-Generator-Loop 00586D6A..0058BF7B).
+- Neue Variablen: bl: Boolean, dup: Boolean (recon Ehe-Duplikat-Weiche), bmk: TBookmark, v: AnsiString (Pos-Nadel 6stellige Mutter-Nr).
+- Verified: build.cmd -unit 3 -> SUCCESS (EXIT=0). Wichtig: '+2C4 FindKey' TVarRec-nachweis; +150 GetBookmark / +1A0 GotoBookmark - Paar bestätigt; gedeausv-Stub-Konvention (bmk := -1, GotoBookmark = no-op) nicht fuer ofb3 (echte Calls im Listing).
+
+### ofb3 COMPLET (C1..C3q DONE, build gruen) - Commits r1622..r1625, C3q + Checks in r1626 (2026-11-01)
+- C3a..C3h: Report-Generator-Loop (while lfbh2.Eof, Name-/Nachnamen-Blocke, Religion/Beruf/Hausname, Geb/Tauf/St-Blocke, gvar-Weichen, Ehen-Loop).
+- C3i..C3n (r1622): M-Zweig Kind-Loops mit 'vat'-Index, Mutter-nicht-bekannt (illki), erst->Integer.
+- C3o (r1623): W-Zweig gespiegelt (unkVat, 'mut'-Index, Kind-Loop Vater=patn [538], Vater-nicht-bekannt).
+- C3p (r1625): Ehen-Loop repeat/until (i=Length(lfbh2Eh) div 7), Table18-Loop-Tail (Next/Eof/Epnum[4CC]=num), Table14-Write B920+BF75 (Zeile:=zzg, Post), 2. Pass vat/mut unter '000000*'-Weiche (Pro-Kopf-Check, 'Kind(er), Mutter/Vater nicht bekannt: - '+illki bzw. ' - '+illki).
+- C3q (r1626): Epilog 0058BFF7..C6ED: EnableControls Table1[5C]/Table18[140]/lfbh2[8B8]; Table1.IndexName:=''; Table1.FindKey([krg]) [ebp-8]; crDefault; Label19.Visible:=False [404]; if Trim(gvar_02536664)<>'': Table13[0CC] Open, 'ort_'-Index, 3 Leerbloecke+Kopfzeile 'Orts-Abkuerzungen: ' in Table14[0E0], while Table13: sub_00576EB0(Table13.RecNo,u) [vtbl+150=RecNo, Konf. oabk L2802/L5872], if Pos(u,gvar_02536664)>0: Zeile:=Table13Abk+': '+Table13Ort, Post; danach lfbh2.EmptyDataSet; Form15-Setup (QRMemo1/QRLabel2/QRShape3/QRDBText4..12 unsichtbar, QRBand1.Height:=30, QRLabel3:='OFB', Page.Columns:=1, InputQuery('OFB','Ueberschrift : ',gvar_02536438) -> QRLabel1.Caption, QRDBText1 'zeile' 60/610 Font 9, QRDBText2 'nm' 8/40 AutoSize False, +242/+0E0 PByte-Write); OnPreview/Preview = nicht implementiert (Konv. Unit1 L8282).
+- [54C]-Konsistenzcheck (r1626): 4 Bugs gefixt (C3h Vater+Mutter-Guard 5885BA, Pos-Needle aus Mutter [53C] 588645, C3h Loop-Control 5886F0..72F je 88626/jmp 8887D, M-Head Table1Mutter=patn [53C] 589571).
+- Feldname-Konsistenzcheck (r1627): 2 Bugs gefixt (lfbh2Aus->lfbh2Hei [924] String; 2x: Sajahr [4EC] 587E4C und Hjahr [4D8] 588291). Notizen korrigiert (gvar-Typo 25366644->2536644 Single, lfbh2-Tabellar inkl. Hei [924], Table18-Offset-Vollzeile mit Trauz [4E0]).
+- Balance-Fix C3q: fehlendes 'end' der if-0058702B-Block nach L1849 (Assy jne->7299); exakt 3 offene begins (Prozedur L1424, while L1782, if L1819).
+- Uses: QuickRpt, QRCtrls ergaenzt; D7-Konv.: InputQuery-Return-Boolean wird verworfen (E2034-Test).
+
+### Unit3 ofb2 Chunk 1 (0058CB84-0058CEF8) - DONE, build green (r1628, 2026-11-01)
+- Listing: Projects_AhnenWin\Unit3.pas L20970..28999 (ofb2 gesamt, ~8000 Assy-Zeilen bis NList@L29000); Extract Temp\opencode\ofb2.txt.
+- Prolog wie ofb3 (krg:=Table1Nummer [534]+58, gvar_02536664:='', Label19 'OFB erstellen' sichtbar+Refresh, crHourGlass 0FFF5, gvar_02536440/444 Create+Sorted(True)+[1D]:=0, lfbh2/Open/EmptyDataSet/DisableControls — NUR 1x Open, ofb3 hatte 2x), Table1 [5C] Open/IndexName ''/First/DisableControls, Table18 [140] Open/'num'/First/DisableControls.
+- Flags: agu [ebp-5D], bl [ebp-5E], gueltig [ebp-60]; Gate 58CD3D: gueltig := ListBox6.Count>0 (vtbl+0C4=Count); RB2-Freigabe erst danach.
+- Filterstrings wie ofb3 C1: namFilter [ebp-54] (ListBox3), ortFilter [ebp-58] (ListBox4), husFilter [ebp-5C] (ListBox6), je '*'-umguenzt; if gueltig -> agu:=False, bl:=False, Form24.RadioButton2.Visible:=True [38C]+0C8.
+- NEU ggü. ofb3: DataModule2.Table15 [0E8] Open + IndexName 'num' (Ehen-Tabelle der ofb2-Variante); 0058CEF8 jmp 0058DA45 = Schleifen-Condition (Chunk 2).
+- BUG-7 ofb3 C1 (gefixt r1628): Gate 585207..24C war als 'ListBox3/4/6.Visible'-AND transkribiert. Maschinell: gleicher Slot +0C4 wie die Loop-Bounds (585280 = Count!), tote Count-Calls L3/L4, einziger Sprung jle 58524C testet NUR ListBox6.Count. Fix: tote Count-Statements + if ListBox6.Count>0.
+
+### Unit3 ofb2 Chunk 2 (0058CEFD-0058DAA5) - DONE, build green (r1629, 2026-11-01)
+- Schleifen-Condition 0058DA45: while not Table1.Eof ([5C]+0A1, je->CEFD); Body-Head: UpperCase(Geschlecht [548])='M' — NICHT-M springt direkt zum Tail (0058DA23), d.h. ofb2 verarbeitet im Hauptloop NUR M-Personen.
+- CFAF-Knoten (nur bei gvar_0253641C=0): FindKey([Table1Nummer]) auf Table15 [0E8] ('num'); bei Fail Next-Schleife mit Pos(Geschlecht,'MmxX')<>0-Check (5953D0, eax=SubStr/edx=S — Konvention via CFF0-Needle bestaetigt); CF3F-Eof -> CFF0, CF67-Eof und Pos<>0 -> CFAF (FindKey-Wdh. mit aktueller/letzter Zeile). Pascal: noch-Flag-While + Repeat/Until.
+- Tail: Table1.Next + Eof-Break (0058DA23..43). Post-Loop (0058DA5C..A5): Table1.IndexName:='' + First; if gueltig -> agu:=False, bl:=False, RadioButton2.Visible:=True; jmp 0058E996.
+- Offen (Chunk 4): Block ab 0058DAAA und E996-Weiche (zweiter Filterblock) bis ofb2-Ende.
+
+### Unit3 ofb2 Chunk 3 (0058CFF0-0058DA1D) - DONE, build green (r1630, 2026-11-01)
+- M-Filterblock CFF0: husHit = Pos('*'+Hausname+'*', husFilter) [ebp-5F]; wenn not gueltig: agu = Pos(Name vs namFilter) [ebp-5D], bl = OR-Chain Gebort/Taufort/Stort/Begort vs ortFilter [ebp-5E]; wenn not bl: FindKey Table18([Nummer]) + while Nummer=Nummer: bl = OR Saort/Hort/Schort vs ortFilter, Next bis Eof/Nummerwechsel.
+- '*'-Fallbacks (D361..D96): Filter='*' setzt agu/bl/husHit := True. Gate D39A..D3D3: gueltig -> ok:=husHit; (namFilter='*') and (ortFilter='*') -> ok:=True; sonst ok:=agu and bl. ok=0 -> skip Append (je DA23).
+- Append-Block D3D9..DA1D: lfbh2.Append; lfbh2Nam := Table1Name; gvar_025363E8=1 -> lfbh2Ix := Vornamen+Gebjahr+Taufjahr; lfbh2Prob := 576EB0(Nummer) (6-stellig); gvar_025363E0=1 -> Ix := Jahr+Monat+Tag (Geb, sonst Tauf); gvar_025363E4=1 -> lfbh2Hei := '' + Copy(Kommentar, Pos(#$92+'N')+3, 4) (2. Pos-Check; 1. Copy = Totalspeicher [ebp-114], nie gelesen).
+- Table18-Ehen-Schleife (D75D..D9C5): FindKey([Nummer]); idx:=1; while Table18Nummer=Table1Nummer: lfbh2Eh += 576EB0(Epnum)+'*'; (gvar_025363E4 and idx=1) -> Ix := erstes Ehedatum (Sajahr-Trim<>'' ? Sajahr+Samonat+Satag : Hjahr+Hmonat+Htag); Next/Eof-Break, Inc(idx). Danach lfbh2Eh += '000000*' + lfbh2.Post.
+- @LStrCopy-Konvention: Hidden-Dest-Push vor Args (lea eax,[local]; push eax) — Result wird in die Local-Variable geschrieben (Verifikation ueber ofb3-00586C1E..48).
+- lfbh2-Felder: [910] Prob, [914] Eh, [918] Ix, [91C] Nam, [924] Hei (Unit1 L411-418).
+
+### Unit3 ofb2 Chunk 4 (0058E996-Schleifenkopf + 0058DAAA..E96F) - DONE, build green (r1632, 2026-11-01)
+- 2. Table1-Pass: while not Eof (E996) — nur W-Personen (UpperCase(Geschlecht)='W', jne E974); Spiegel des M-Zweigs.
+- W-Knoten (gvar_0253641C=0): FindKey Table15 [0E8]; Fail -> Next-Schleife mit Pos(Geschlecht,'WwxX') [595408]; Eof-Ausgaenge DAF8->DBAF / DB20->DB6E — strukturidentisch mit M-Knoten (noch-Flag-While).
+- Tail (in if-W): Table1.IndexName:='' + FindKey([StrToInt(u48)]) [E948..E96F]; u48=[ebp-48], wird in DFAA gesetzt. KORRIGIERT in Chunk 5: E937..E96F laeuft NUR im E689-Pfad (kein-Ehen-Fund) — nicht nach normalem Schleifen-Exit (E684/E64F -> direkt E974). Gemeinsamer Exit: Next + Eof-Break (E974).
+- Offen (Chunk 6): E9AD..NList-Start (lfbh2-Pro-/Delete-/na-Loops wie ofb3 L1686ff). 5b/5c s.u. DONE.
+
+### Unit3 ofb2 Chunk 5 (0058DBAF..E684) - DONE, build green (r1633, 2026-11-01)
+- W-Filterblock DBAF..DD87 (Spiegel CFF0): husHit [ebp-5F]; not gueltig -> agu [ebp-5D] + bl-OR Gebort/Taufort/Stort/Begort [ebp-5E]; not bl -> FindKey Table18 + while Nummer=Nummer: bl = OR Saort/Hort/Schort vs ortFilter, Next/Eof-Break.
+- '*'-Fallbacks DF20..DF55; Gate DF59..DF92 (wie D39A): gueltig->ok:=husHit / beide '*'->True / sonst agu and bl; ok=0 -> je E974 (skippt auch E937-Tail).
+- DFAA: sub_00576EB0(Table1Nummer, u48) — u48=[ebp-48] ist die 6-stellige Nummer.
+- DFB2: FindKey Table18([Nummer]) -> Fail (je E689); sonst DFF3 idx:=1 + while Table18Nummer=Table1Nummer (E656 je->DFFD / jmp->E974), Loop-Bottom E629 Next + Eof-Break + Inc(idx).
+- (5b-Details s.u.) DFFD..E623 — dedup vor Append: lfbh2.IndexName:='Pro'; FindKey lfbh2([576EB0(Epnum)]) (Fail->E10E Append); sonst FindKey lfbh2([576EB0(Table18Nummer)]) (Fail->E629); sonst Pos(Epnum6, lfbh2Eh)<>0 -> E629 (skip), Pos=0 -> E10E. Append-Block E10E..E623: Nam, gvar_E8->Ix:=Vornamen+Gebjahr+Taufjahr, Prob:=576EB0, gvar_E0->Ix:=Gebdatum/Taufdatum (Trim-geguardet), E36F lfbh2Eh += '*'+Epnum6, gvar_E4 and idx=1 -> Ix:=Sajahr-Datum (Trim-guard) else Hjahr-Datum (Trim-guard, zusaetzlich gegen M-Zweig), E571: if Pos(#92'N',Kommentar)>0 -> Hei:=Copy(Pos+3,4) (KEIN '' vorab, KEIN 1. dead-Copy), E623 Post.
+- (5c-Details s.u.) E689..E936 — kein-Ehen-Pfad: gvar=0 -> Table1.IndexName:='mut' [595424]; FindKey([StrToInt(u48)]) -> Fail je E937; sonst IndexName:='' + FindKey, lfbh2.Append OHNE dedup (gvar_E8 -> Ix := nur Vornamen [544], nicht Cat3!), Prob, gvar_E0 -> Ix-Datum, Post -> faellt in E937: IndexName:='' + FindKey([StrToInt(u48)]).
+
+### Unit3 ofb2 Chunk 5b (0058DFFD..E623 Dedup+Append) - DONE, build green (r1634, 2026-11-01)
+- Loop-Body DFFD: lfbh2.IndexName:='Pro'; u:=576EB0(Table18Epnum). DEDUP-4-Pfade (NEU Var dup): 1. FindKey([u]) Fail -> dup:=False -> E10E Append; ok -> dup:=True, s:=576EB0(Table18Nummer), 2. FindKey([s]) Fail -> dup bleibt True -> E629 SKIP (ABWEICHUNG von ofb3: dort Fail -> Append); ok -> dup := Pos(u, lfbh2Eh)>0 (Pos<>0 -> E629 SKIP, Pos=0 -> E10E Append). ACHTUNG: ofb3-Zeile 1590 (`if FindKey and Pos>0 then dup:=False`) bildet Fail->Append ab — ofb2-Asm hat je->E629 = Fail->SKIP; ofb3-Transkription evtl. semantisch pruefen.
+- Append E10E..E623: lfbh2.Append; Nam; gvar_E8 -> Ix:=Vornamen+Gebjahr+Taufjahr; Prob:=576EB0(Nummer); gvar_E0 -> Ix:=Trim(Gebjahr)<>'' ? Gebjahr+Gebmonat+Gebtag : Taufjahr+Taufmonat+Tauftag (kein Trim auf Tauf-Zweig); Eh := Eh + u + '*'; gvar_E4 and idx=1 -> Ix:=Trim(Sajahr)<>'' ? Sajahr-Datum : (Trim(Hjahr)<>'' ? Hjahr-Datum : nichts — zusaetzlicher Hjahr-Trim-Guard vs M); Hei: EIN Pos(#92'N')-Check >0 -> Hei:=Copy(Pos+3,4), KEIN ''-Vorab, KEIN 1. dead-Copy (vs. M-Zweig D647/D65E); lfbh2.Post. Danach Loop-Bottom E629 Next/Eof-Break/Inc(idx).
+
+### Unit3 ofb2 Chunk 5c (0058E689..E96F) - DONE, build green (r1635, 2026-11-01)
+- else-Zweig (Table18-FindKey Fail): gvar_0253641C=0 -> Table1.IndexName:='mut' [595424]; FindKey([StrToInt(u48)]) — Fail -> E937; Success -> IndexName:='' + FindKey([StrToInt(u48)]) (ohne Test) + lfbh2.Append OHNE dedup: Nam; gvar_E8 -> Ix := NUR Table1Vornamen [544] (vs. Cat3 Vornamen+Gebjahr+Taufjahr im Haupt-Append); Prob:=576EB0(Nummer); gvar_E0 -> Ix := Trim(Gebjahr)<>'' ? Geb-Datum : Tauf-Datum; lfbh2.Post. KEIN Eh-Block, KEIN Hei, KEIN gvar_E4.
+- E937 (immer im else): Table1.IndexName:='' + FindKey([StrToInt(u48)]) — laeuft nach Post UND nach FindKey-Fail; NICHT nach normalem Schleifen-Exit (E684/E64F -> E974).
+
+### Unit3 ofb2 Chunk 6a (0058E9AD..EEE0 Pro-Loop) - DONE, build green (r1636, 2026-11-01)
+- Nachlauf-Setup: Table1.IndexName:='' + Table18.IndexName:='num' [5953AC] + lfbh2.IndexName:='Pro' [595418] + lfbh2.First; jmp EEE0 (Condition: not Eof -> je EA03).
+- Pro-Loop-Body EA03: u := lfbh2Prob.AsString [910]+60 [ebp-48]; bmk := lfbh2.Bookmark (vtbl+150, NEU Var bmk: TBookmark); FindKey Table1([StrToInt(u)]) ohne Test.
+- Block 1 (EA5C..EC57, Vater-Seite): Vater [538] >0; Vater6 := 576EB0; lfbh2.FindKey([Vater6]); Mutter [53C] >0; Mutter6 := 576EB0; Pos(Mutter6, lfbh2Eh)>0; Table1.IndexName:='mut' [595424]; NOT FindKey Table1([u]) AND NOT FindKey Table18([u]) (beide jne->EC57 = skip); GotoBookmark; gvar_0253641C=0 -> Edit + Nm:=1 + Post, sonst Edit + Nm:=-1 + Post (ABWEICHUNG ofb3: dort nur Nm:=1 ohne gvar-Zweig).
+- EC57: Table1.IndexName:='' + FindKey([u]) ohne Test.
+- Block 2 (EC94..EE8F, Mutter-Seite): Mutter [53C] >0; Mutter6 := 576EB0; lfbh2.FindKey([Mutter6]); Vater [538] >0; Pos(IntToStr(Vater), lfbh2Eh)>0 (PLAIN IntToStr, NICHT 576EB0 — Asymmetrie zu Block 1!); Table1.IndexName:='vat' [595430]; NOT FindKey Table1([u]) AND NOT FindKey Table18([u]); GotoBookmark; gvar-Zweig Nm:=1/-1 + Post.
+- Loop-Bottom EE8F: Table1.IndexName:='' + GotoBookmark(bmk) + lfbh2.Next.
+- Offen Chunk 6b: Delete-Loop EEFA..EF73 (Nm=-1 -> lfbh2.Delete, kein Next; else Eof-Break + Next) + 'na'-Loop EF75.. (IndexName 'na', idx:=0; Nm=1 -> wenn not gueltig: Edit + Nm:=-1 + Post, sonst nur Next; Nm<>1 -> inc idx, Edit + Nm:=idx, wenn not gueltig: Hei:=Copy(Ix,1,4), Post, Next) bis ofb2-Ende.
+
+### Unit3 ofb2 Chunk 6b (0058EEFA..F4D8 + Loop-Skelett) - DONE, build green (r1637, 2026-11-01)
+- Delete-Loop #1 EEFA..EF73: lfbh2.First; while not Eof: Nm=-1 -> lfbh2.Delete (kein Next, jmp->Condition); else Eof-Break (EF37, redundant) + Next. Raeumt gvar!=0-Markierungen.
+- 'na'-Loop EF75..F0DE: IndexName 'na' [59543C], First, idx:=0; Nm=1 (dec/jne) -> wenn not gueltig: Edit + Nm:=-1 + Post (gueltig: nur Next); Nm<>1 -> Inc(idx), Edit + Nm:=idx, wenn not gueltig: lfbh2Hei := Copy(lfbh2Ix, 1, 4), Post; Next. (Unterschied ofb3: dort Nm=1 -> Delete hier; Delete erst im Folge-Loop.)
+- Delete-Loop #2 F0DE..F159: identisch #1 — raeumt die in der 'na'-Loop gesetzten -1-Markierungen.
+- Aus-Copy-Loop F159..F401: Table1 ''/Table18 'num'/lfbh2 'Pro' + First; Body: u:=Prob, bmk:=Bookmark, FindKey Table1([u]) ohne Test; wenn Vater>0: Vater6:=576EB0 + lfbh2.FindKey (Fail->Next) -> idx := GEFUNDENEN Nm (Vater-Row!), GotoBookmark, Edit, lfbh2Aus [920] := idx, Post; ELSE Mutter>0: analog mit Mutter6. (Asymmetrie Block1/Block2 wie Pro-Loop: Vater-Pos dort 576EB0, hier im else-Zweig nur FindKey, kein Pos-Check.)
+- Output-Setup F401..F4D8: lfbh2.IndexDefs.Update; IndexName 'na'; gueltig -> 'heir' [595448]; Table1 ''; lfbh2.First; Table14 [0E0]: Open+Close+EmptyTable+Open; idx:=0; lfbh2.First (2.); prevName := ' ' [ebp-44, NEU Var] (595458); jmp 00594B8B.
+- Offen Chunk 7: Haupt-Output-Body F4DD..00594B89 (Table14-Zeilen, Namensgruppen via LStrCmp Name vs prevName, Personen/Ehen-Ausgabe) — RIESIG (~6200 Listing-Zeilen, Master ~22800..28990), Condition 00594B8B: not lfbh2.Eof -> je F4DD; Body endet Next 00594B63 + Eof-Fruehexit 00594B89 jne 00594BA5.
+- Offen Chunk 8: 00594BA5..Ende — EnableControls x3, Table1 '' + FindKey([krg]) [ebp-8], Screen.Cursor:=0, Label19.Visible:=False, Trim(gvar_02536664)>'': Table13 [0CC] Open + 'ort_'-Sortierung; @HandleAnyException 00594EB9 (Handler-Inhalt pruefen); finally-LStrArrayClr 005952C7ff NACH Konvention NICHT transkribieren (s. Unit13 L3206).
+
+### Unit3 ofb2 Chunk 7a (0058F4DD..FAD6 Personen-Zeilen-Builder) - DONE, build green (r1639, 2026-11-02)
+- Body-Einstieg F4DD: s4C:='' + s50:='' (NEU Vars [ebp-4C]/[ebp-50], erst spaeter benutzt); Trim(lfbh2Prob)='' -> Form1.lfbh2.Next + Continue (jbe->00594B63 = Loop-Bottom).
+- F523: if idx>0 -> Table14.Append + Table14Zeile:=' ' + Post (Blankzeile vor jeder Person); n1C:=0 [ebp-1C NEU]; FindKey Table1([StrToInt(Prob)]) ohne Test; t1Num := Table1Nummer [ebp-10 NEU].
+- Namensgruppe F5C9: if Table1Name <> prevName -> 3x Table14 (Leerzeile, ucase(Name), Leerzeile) + prevName := Name.
+- Zeilenrumpf: gvar_02536630:='' (ebx=@gvar, Prolog 0058CB99); Inc(idx); Table14.Append + Table14Nm:=IntToStr(idx) [1EC]; gvar_0253643C:=' '; if Trim(Table1Namex [5BC])<>'' -> gvar_0253643C += ' ('+Trim+') '; gvar_02536630 := ucase(Name)+gvar_0253643C+Vornamen.
+- if Trim(Name)<>'' (jbe->FAD9): if gvar_02536420=1 -> gvar_02536630 += ' [DS '+IntToStr(Nummer)+']'; if gvar_02536414=1: (if gvar_02536418=1: if Gebjahr>' ' -> Add(Name+' '+Vornamen+' * '+Gebjahr+''+u) edx=7 else Add(Name+' '+Vornamen+''+u) edx=5) else Add(same edx=5) else Add(Name+''+u) edx=3; alle sub_00576F54(idx,u) + gvar_02536440.Add (vtbl+38) — SPIEGEL zu ofb3 L1820-1852; Gebjahr-Vergleich ofb2 mit ' ' (ofb3 mit '', Asm-Literal 595458 vs 58C8F8).
+- Offen Chunk 7b: 0058FAD9.. (gueltig-[ebp-60]/lfbh2Aus[920]-Gate, ' [aus '-Suffix auf gvar_02536630, Geburt/Tauf/Tod-Ort-Adds in gvar_02536444, Ehen-Ausgabe, Table14-Schreibblock) bis 00594B89.
+
+### Unit3 ofb2 Chunk 7b (0058FAD9..005903CB Personen-Suffix/Daten) - DONE, build green (r1641, 2026-11-02)
+- [aus]-Gate FAD9: if not gueltig AND lfbh2Aus[920]>0 -> gvar_02536630 += ' [aus '+IntToStr(Aus)+'] ' (CatN edx=4 ebx). ACHTUNG ofb3-FIX: ofb3 L1853 stand 'if gueltig' — eigener Asm (cmp [ebp-4A],0 jne->72F2) verlangt 'if not gueltig'; korrigiert.
+- gvar_02536404=1 -> if Trim(Religion[54C])<>'' -> gvar += ', '+Religion; gvar_025363F0=1: if Trim(Beruf[550]) -> ', '+Beruf, if Trim(Hausname[5C8]) -> ', '+Hausname (beide INNERHALB des gvar410-Blocks: jne->FC6F); if Trim(Lebensort[578]) -> ' in '+Lebensort.
+- Geburt-Block FCD2: if Trim(Gebjahr)<>'' or Trim(Gebort)<>'' -> sub_00576FF8(Gebtag+'.'+Gebmonat+'.'+Gebjahr, v) (NEU Var v), gvar += ' * '+v; gvar_02536410=1: if Trim(Gebort)<>'' -> oabk(Gebort,u) + gvar_02536664 += u; else gvar += ' '+Gebort; sub_00576F54(idx,u); gvar_02536444.Add(Gebort+''+u). jmp->005900E3 ueberspringt Tauf-Block.
+- Tauf-Block FEDD (else): if Trim(Taufjahr)<>'' or Trim(Taufort)<>'' -> analog mit ' ~ ' + Tauftag/Taufmonat/Taufjahr + Taufort-Add.
+- St-Block 005900E3: if Trim(Stjahr)<>'' or Trim(Stort)<>'' -> analog mit ' + ' + Sttag/Stmonat/Stjahr + Stort-Add; Skip->005903CB.
+- Offen Chunk 7c: 005903CB.. (gvar_025363F8 Todesurs [58C], gvar_025363EC Alter [5EC], gvar_025363F4 Kommentar [5B0] mit Memo1-Kopie, dann Ehen-Ausgabe + Table14-Schreibblock) bis 00594B89.
+
+### Unit3 ofb2 Chunk 7c (005902E9..005944D1 Todesurs/Alter/Kommentar + Ehen-Loop-Setup) - DONE, build green (r1642, 2026-11-02)
+- Todesurs 02E9: gvar_025363F8=1 -> if Trim(Todesurs[58C])<>'' -> gvar += ' ('+Todesurs+')' (CatN edx=4 ebx, Literale 595464/'(' + 59550C/')'); Alter 035A: gvar_025363EC=1 -> analog mit Alter[5EC]; Kommentar 03CB: gvar_025363F4=1 -> if Trim(Kommentar[5B0])<>'' -> gvar += #13#10+Kommentar (CatN edx=3 ebx, 595518). KEIN Memo1-Kopierblock (anders als ofb2-Kommentar-Ersatz in ofb3 L1938ff - dort anderes Vorgehen).
+- Ehen-Setup 0437: if Trim(lfbh2Eh[914])<>'' (jbe->005944D1): i := Round(Length(Eh)/7) [ebp-64 = Slot-Wiederverwendung von i], if i>0 (jle->44D1): iEh:=1 [ebp-14 NEU], repeat-Loop-Head 04B9: n20:=0 [ebp-20 NEU] + Table18.FindKey([Table1Nummer]) ohne Test; while Table18Nummer[4C8] = Table1Nummer[534] do (4497 je->04FC).
+- Loop-Body 04FC..43BA NOCH OFFEN (Chunk 7d): Copy(Eh,(iEh-1)*7+1,6) -> StrToInt vs Table18Epnum[4CC] (Mismatches -> 005943D7), Heirats-/Scheidungs-Verarbeitung; innere Rueck-jump-Targets 3106/3144/319E/43BA -> 43D7, Table1Mutter[53C]=t1Num -> je 005931A9.
+- Loop-Tail (pro Iteration): 43D7 if Trim(s50)<>'' -> illki(s50,idx,s) + gvar += #13#10+'Vater nicht bekannt: '+s (CatN edx=4, 595634); s50:=''; Table1.IndexName:=''; Table1.First; Table1.FindKey([t1Num]); Table18.Next; Eof->Break (4495 jne->44C5); Inc(iEh); Dec(i); until i=0 (44CB jne->04B9).
+- Offen Chunk 7d: 005904FC..005943BA Ehen-Body, danach 7e = 005944D1.. (Table14-Schreibblock [1E8] + Folge-Ausgabe) bis 00594B89.
+
+### Unit3 ofb2 Chunk 7d1 (005904FC..00590D54 Ehen-Body: Match-Gate + Ehes/Bezie + Partner) - DONE, build green (r1643, 2026-11-02)
+- Match-Gate 04FC: if StrToInt(Copy(lfbh2Eh,(iEh-1)*7+1,6)) = Table18Epnum[4CC] (jne->005943D7 = Tail); patn := Epnum [ebp-30 NEU Var].
+- Pos('Ehes',Table18Verbind[4F8])>0 (jle->0C0B): Sajahr-Gate: if Trim(Sajahr[4EC])<>'' -> lfbh2.Edit + (if not gueltig: lfbh2Hei[924]:=Sajahr) + Post; if (Trim(Sajahr)<>'') or (Trim(Saort[4F0])<>'') -> Datum Satag.Samonat.Sajahr via sub_00576FF8 + gvar += CRLF+CRLF+'- oo '+v; gvar_02536410=1: Trim(Saort)->oabk+gvar6664 += ; else gvar+=' '+Saort; Add(Saort+54(idx)); gvar_025363FC=1: Trim(Satrauz[4F4]) -> ' (TZ: '+Satrauz+')'. ELSE: H-Gate (Hjahr[4D8]/Hort[4DC]) analog mit Hei:=Hjahr-Set IM gvar410-Zweig; beide leer -> gvar += CRLF+CRLF+'- oo'. IMMER danach: gvar += ': ' (00590BFD).
+- Bezie-Zweig 0C0B: Pos('Bezie',Verbind)>0 -> gvar += CRLF+CRLF+'- o-o : '.
+- Partner 0C54: Table1.FindKey([Table18Epnum]); gvar += ucase(Table1Name)+' '+Table1Vornamen; bmk := lfbh2.Bookmark [ebp-3C]; lfbh2.IndexName:='Pro'; if (Table1Vater[538]>0) and (Table1Mutter[53C]>0): if gueltig -> 0EC0 / else -> 0D5A (beide Chunk 7d2).
+- Offen 7d2: 00590D5A..0059108E (not-guellig: sub_00576EB0(Vater) + lfbh2.FindKey + Prob-Scan-Loop mit Mutter6+'*'-Pos -> ' [aus '+Nm+'] '; gueltig-Pfad 0EC0), danach 7d3: 0059108E..005931A9, 7d4: 005931A9..005943BA (Ende: 43BA jne->43D7 + 43BC Table1Mutter=t1Num je->31A9), dann 7e: 005944D1..
+
+### Unit3 ofb2 Chunk 7d2 (00590D5A..0059108E Eltern-Pfade: gueltig=Table17, not-guellig=Prob-Scan) - DONE, build green (r1644, 2026-11-02)
+- Neue Var pnum (00590ED2 edi [Partner-Nummer]).
+- gueltig (00590EC0..1089, jne->0EC0): pnum := Table1Nummer [534]; Table17.Open [13C]; Table17.IndexName:=''; FindKey([pnum]); FindKey([Table17Vater [948]]); gvar += ' <'+Table17Name[950]+' '+Table17Vornamen[954]+'/'; FindKey([pnum]); FindKey([Table17Mutter [94C]]); gvar += Table17Name+' '+Table17Vornamen+'>'; FindKey([pnum]) (Restore).
+- not-guellig (00590D5A..0EBB): sub_00576EB0(Table1Vater [538], u); if lfbh2.FindKey([u]) then while StrToInt(lfbh2Prob [910]) = Table1Vater do: sub_00576EB0(Table1Mutter [53C], u); if Pos(u+'*', lfbh2Eh [914])>0 then gvar += ' [aus '+IntToStr(lfbh2Nm [90C])+'] ' + Break; lfbh2.Next; if Eof then Break. Alle Ausstiege -> 108E.
+- Merge 108E: lfbh2.IndexName:='na' [59543C]; if gueltig then IndexName:='heir' [595448]; GotoBookmark(bmk [ebp-3C]); Trim(Table1Name [540]) leer->138C; gvar_02536420=1 -> gvar += ' [DS '+IntToStr(Table1Nummer)+'] '.
+- Offen 7d3: 0059108E..005931A9 (Partner-Zeilen-Ausgabe), 7d4: 005931A9..005943BA, dann 7e: 005944D1..
+
+### Unit3 ofb2 Chunk 7d3a (0059108E..00591DA6 Partnerzeile + Kind-Loop-Start) - DONE, build green (r1645, 2026-11-02)
+- Neue Var k (00591C62 [ebp-18] Kommentar-Loop).
+- Partnerzeile: lfbh2.IndexName 'na' [59543C]; gueltig -> 'heir' [595448]; GotoBookmark(bmk); if Trim(Table1Name)<>'' begin [DS]-Gate (gvar420); gvar414/418-gvar440-Block (Gebjahr>' '-Cmp, 4 Zweige edx=7/5/5/3, sub_00576F54(idx,u)) end; gvar404->Religion [54C] ', '; gvar3F0->Beruf [550]+'/Hausname [5C8] ', '; Geburt ([55C]/[560] ja->1533, ' * '+Gebtag[554].Gebmonat[558].Gebjahr via 6FF8, gvar410: Gebort[560]-oabk/gvar6664 else ' '+Gebort, Add(Gebort+54)) else if Tauf ([56C]/[570], ' ~ '+Tauftag[564].Taufmonat[568].Taufjahr, analog) end; St-Block ([584]/[588], ' + '+Sttag[57C].Stmonat[580].Stjahr[584], analog); gvar3F8->' ('+Todesurs[58C]+')'; gvar3EC->' ('+Alter[5EC]+')'; gvar3F4->Kommentar[5B0]: Memo1.Clear + Memo1.Lines.Add + for k:=0 to Count-1: gvar += CRLF+Trim(Lines[k]).
+- Kind-Loop-Start: Table1.IndexName:=''/First/FindKey([t1Num]); if UpperCase(Geschlecht [548])<>'M' -> 0059310B (W-Zweig, Marker) else: s4C:='' [ebp-4C], IndexName:='vat' [595430], First, if patn>0: FindKey([t1Num]), if Found: {Loop-Marker 00593082/00591DAB/00593012}; Post-Loop-Marker 0059309D.
+- Offen 7d3b: Kind-Loop (00593082 Bedingung, 00591DAB Koerper Mutter=patn mit n1C/n20/'Kind(er): '/CheckBox14+gvar440, 00593012 Else, [20]-Marker/lfbh2-Scan-Loop wie ofb3 L2320ff), W-Zweig 0059310B..005931A8; dann 7d4: 005931A9..005943BA, 7e: 005944D1..
+
+### Unit3 ofb2 Chunk 7d3b+7d4 (00591DAB..005943D7 Kind-Loops M/W + lfbh2-Scan + Post-Loop-illki) - DONE, build green (2026-11-02; Commit ausstehend, SVN down)
+- Setup M: s4C:='' [ebp-4C], Table1.IndexName:='vat' [595430], First, if patn>0 (jle->0059309D), FindKey([t1Num]), if Found; Loop: while Table1Vater[538]=t1Num (00593082..897 je->00591DAB / jne->0059309D); Body-Head: if Table1Mutter[53C]=patn (je->00591DB2 / jne->00593012).
+- Body: Inc(n1C) [ebp-1C] + Inc(n20) [ebp-20]; n20=1 -> zzg += #13#10#13#10'Kind(er): ' (CatN edx=4, 5955BC); Form24.CheckBox14 [394] vtbl+0C4=Count-Gate (Bug-7) -> Kindzeile mit gvar_0253643C-Namex-Suffix (gvar424-Gate, CatN edx=8/7) bzw. ohne CRLF im else; if Trim(Table1Name)<>'' -> [DS]-Gate (gvar420) + gvar414/418-Vierzweig (Gebjahr>' ', sub_00576F54(idx,v), gvar440.Add, edx=7/5/5/3, SPIEGEL von 7a).
+- lfbh2-Scan ab 0059257D: eli:=0 [ebp-38]; gvar_02536454:=lfbh2.IndexName; bmk:=lfbh2.Bookmark (vtbl+150 -> [ebp-34]); lfbh2.IndexName:='Pro'; First; if gueltig (je->0059268B): sub_00576EB0(Table1Nummer,u) + FindKey([u]) -> zzg += ' ['+IntToStr(lfbh2Nm)+']' + eli:=1; First; while not lfbh2.Eof: u:=576EB0+u+'*' vs Pos(u, lfbh2Eh[914]) -> ... (Restore via gvar6454 + GotoBookmark vtbl+1A0).
+- M-Else 00593012: Mutter=0 -> s4C += 6-stellig+'*' (Sammel-String, kein illki; eli/kommentar-Gates 005927BF/00592F98 springen ebenfalls dorthin); Bottom: Table1.Next + if Eof then Break.
+- W-Zweig-Spiegel (Setup 00593142..319C, Body 005931A9ff, Cond 005943BC je->005931A9, Exit je->005943D7): s50 [ebp-50], IndexName 'mut' [595424], while Table1Mutter=t1Num mit if Table1Vater=patn.
+- Post-Loop M 0059309D / W 005943D7: if Trim(s4C)<>'' -> illki(s4C, idx, s) + zzg += #13#10'Mutter nicht bekannt: ' + s (CatN edx=4); analog Trim(s50) -> illki(s50, idx, s) + 'Vater nicht bekannt: ' (005943EE..4409, eax=Self edx=s50 ecx=esi=idx).
+
+### Unit3 ofb2 Chunk 7e (005944D1..00594B8B Table14-Schreibblock + vat/mut-2.-Pass) - DONE, build green (2026-11-02; Commit ausstehend, SVN down)
+- Struktur gespiegelt zum ofb3-C3q-Gate (Zeile 2643ff): Zeile := zzg [1E8]+0B0 -> Table1.IndexName:=''/First/FindKey([t1Num]) -> if Trim(lfbh2Eh[914])='000000*' (jne->00594B26) -> Geschlecht M->'vat' / W->'mut' (zwei getrennte if-Blöcke mit end else).
+- Zwei unabhängige Schleifen: if IndexName='vat' -> FindKey([t1Num]) -> while Table1Vater=t1Num mit Mutter=0-Scan; if IndexName='mut' -> while Table1Mutter=t1Num mit Vater=0-Scan. Scan-Loop je: eli:=0; gvar_02536454:=lfbh2.IndexName; bmk:=lfbh2.Bookmark (vtbl+150); lfbh2.IndexName:='Pro'; First; sub_00576EB0(Table1Nummer,u); if lfbh2.FindKey([u]) -> eli:=1; IndexName restore + GotoBookmark (vtbl+1A0); if eli=1 -> Pos('Mutter/Vater nicht bekannt: ', zzg)=0-Weiche: frisch sub_00576EB0+u:='*'+illki+zzg += #13#10#13#10'Kind(er), ... nicht bekannt: - '+s (edx=5) BZW. else zzg += ' - '+s (edx=3).
+- Entry-Beweis: 00594668/005948F4 jmp->487F/4B0B = Loop-Condition (while-Stil, NICHT chunk5's not-Eof+Continue-Stil); Bottom: Next + if Eof then Break.
+- Tail 00594B26: Zeile := zzg -> Post -> IndexName:='' -> lfbh2.Next; 00594B7C/4B8B = While-Bottom (Eof-Flag [8B8]+0A1) -> 00594BA5 = Chunk 8.
+
+### Unit3 ofb2 Chunk 8 (00594BA5..00595388 Epilog = ofb2 KOMPLETT) - DONE, build green (2026-11-03; Commit ausstehend, SVN down)
+- EnableControls x3 (Table1 [5C] / Table18 [140] / lfbh2 [8B8]) -> Table1.IndexName:='' + FindKey([krg] [ebp-8]) -> Screen.Cursor:=crDefault -> Label19[404].Visible:=False -> if Trim(gvar_02536664)<>'' (jbe->00594EC3): Table13[0CC] Open + IndexName 'ort_' -> 4x Table14 Append/Zeile/Post (' ', ' ', 'Orts-Abkürzungen: ' [5956BC], ' '; ofb3 hat nur 3!) -> First -> while not Table13.Eof: sub_00576EB0(Table13.RecNo, u); if Pos(u, gvar_02536664)>0 -> Append + Zeile := Table13Abk[0A68]+': '+Table13Ort[0A44] (CatN edx=3) + Post -> Next.
+- Danach: lfbh2.EmptyDataSet -> Form15.QRMemo1[310].Visible/Enabled:=False -> gvar_02536438:='' -> **if InputQuery('OFB','Überschrift : ', gvar_02536438) then** (je->005952BA = Prozedur-Epilog; ofb3 verwirft das Return!) -> QR-Block: QRLabel1.Caption:=gvar438; QuickRep1.Page.Columns:=1; QRLabel2/QRShape3 Visible+Enabled:=False; QRBand1.Height:=30; QRLabel3.Caption:='(OFB) '+gvar438 (LStrCat3; ofb3 nur 'OFB' [58CB64]) -> QRDBText4..12 Visible:=False -> Table14.Open; QuickRep1.DataSet:=Table14; QRDBText1[350].DataSet/DataField 'zeile'; QRDBText2[354] 'nm'; Visible/Enabled:=True x2; Left 60/Width 610 (3C/262), Left 8/Width 40; +242-Pokes x2 (PByte); QRDBText2.AutoStretch:=False (TQRLabel.SetAutoStretch - ofb3-Zwilling notiert hier fälschlich 'AutoSize'); Font.Size:=9 x2; +0E0-Pokes: QRDBText1:=0 / QRDBText2:=1 (wie ofb3 C694/C6B5 transkribiert) -> OnPreview/Preview wie überall als Kommentar (Kompatibilitaetsschicht).
+- SEH-Behandlung (KONVENTION): Schleifenrahmen 00594D8E..4EBE (Handler 4EB9 jmp @HandleAnyException + @DoneExcept) und Prozedur-Epilog 005952BA..5388 (12x @LStrArrayClr, jmp @HandleFinally 595378) sind compilergeneriert - NICHT transkribiert, wie beim ofb3-Zwilling C3q (Zeile 2744ff).
+- Verifikation: prof.py 2854 4448 2853 -> Tiefe 0; build.cmd -unit 3 grün; voller build.cmd -> [build] SUCCESS (keine neuen Warnungen in 4354..4448).
+- STAND: ofb2 (0058CB84..00595388) ist KOMPLETT transkribiert.
+
+### Unit3 C3m (M-Zweig-Umschichtung + W-Zweig-Else) - DONE, build green (2026-11-04; Commit ausstehend, SVN down)
+- **T1-Paradox aufgelöst**: Kind-Loop rekonstruiert als `while Table1Vater[538] = perNr do begin` (Unit3.pas L2245 {0058A603..17 [538] cmp esi; je->00589571 COND}) mit BODY (if Mutter[53C]=patn, Inc kcount/erst, 'Kind(er): '-Block, CheckBox14-Gate, gespiegelter Hauptkörper) → Kopf-scan {00589B9B [20]-Marker + lfbh2-Scan, jetzt PRO Kind im Zyklus statt nach der While} → if-kopf/mirror → TAIL (Mutter=0 → unkMut-Append {0058A61D..31}, Next {0058A66B..75}, Eof→Break {0058A67A..8B jne->0058B914; Abw.: ofb2 00593079 -> M-Exit}). 3 getauschte Kanten im Code kommentiert; Zeugen ofb2 593012/593082 + ofb3 58B80D.
+- **M-Exit 0058A691..58A6FC** liegt außerhalb des Geschlecht-if; alle Abbruchpfade (Geschlecht≠'M' 589505, patn≤0 58953A, FindKey-Fail 589566) fallen dorthin (Kommentare L2235/L2241/L2244). M-Exit endet mit `jmp 58B827` {0058A6FC}.
+- **W-Zweig = else** von L2234 (`end else begin` vor {0058A701 W-Zweig}, abschließendes `end;` vor Join {0058B827}); Beweis 587DB7 jne 58A701 (else-Kante) + 58A6FC jmp 58B827 (then-Jump-über-else).
+- **Bug-Fix**: Table18-while-Tail L2627 von `Table18Epnum = num` auf `Table18Nummer = Table1Nummer` {0058B8E6..0E [4C8]/[534]} korrigiert (Idiom via L1529).
+- Verifikation: prof.py 1958 2641 1957 -> Tiefe 0; build.cmd -unit 3 grün; voller build.cmd -> [build] SUCCESS (keine neuen Warnungen; nur vorbestehende H2077/W1037/W1036 in 1507..7941).
+- Offen (bewusst nicht kodiert): eh-Match-Pfad bearbeitet W-Personen über M-Exit, W-Block läuft auf eh-Mismatch-Zeilen — binary-faith, Semantik hängt von lfbh2Eh ab.
+
+### Unit3 gedausxv (005B4288..005B51B5 FAMS/FAMC-Paarlisten) - DONE, build green (2026-11-05; Commit ausstehend, SVN down)
+- Voll transkribiert in Unit3.pas L7282..7511 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt). Baut gvar_02536448 (Paar-Einträge `s0C(12)+s4(7*n)+idx(6)` = 18+7n) und gvar_0253644C (Kinder-Teil `s4+idx6`) für gedausv FAMS/FAMC (L8113ff).
+- Prolog: 2x TStringList.Create -> gvar_02536448/44C {005B42AF..CC, KEIN Free}; s8:='' [ebp-8] {42D1}; idx:=0 [edi] {42D9}; krg:=Table1Nummer [ebp-10] {42DB}; toter Table24.RecordCount-Aufruf {42EB, Kommentar}; Table24.IndexName:='lfn' + First {42FB..4315}.
+- Outer-Loop `while not Table24.Eof` (Kopf 513D, Body 431F, Tail 511F): Table1.FindKey([Table24Nummer]); s0C/s4:='' {4342/434A}; `if Table5.RecordCount > 0` {4362 jle->4B84} -> Table5.First + `while not Table5.Eof` (Kopf 4B6F, Body 437C, Tail 4B49 s4:='' + Next).
+- Table5-Body: Gate `Pos(Num2Str(Table5Epnum)+'*', gvar_0253665C)>0` {43AE}; Dedup Nadel1 `'*'+krg6+'*'+epn6` {43B4..4408 jne->4B49} und Nadel2 `'*'+epn6+'*'+krg6` {440E..4462} -> s8 += Nadel1 (CatN5 {4468..44AD}); dann **sequenzielle** ifs auf `UpperCase(Table1Geschlecht [548])` — ACHTUNG: Feld ist Table1Geschlecht (nicht Table5!), Offset-Kommentar Unit2 L337.
+- M-Block {44E0}: lfd:=Table24Lfdn [esi]; 2x dsn-Excursion (FindKey Table1Nummer -> s0C:=lfdn6, FindKey Table5Epnum -> s0C += lfdn6); 'lfn'+FindKey([lfd]); Table7.IndexFieldNames:='Vater'; `if FindKey([Table1Nummer]) then while Table7Vater=Table1Nummer` (Body 466C: Pos-Gate Table7Nummer + `if Table7Mutter=Table5Epnum` -> dsn-Excursion s4 += '*'+lfdn6 + 'lfn'-Restore; Tail 4767 Next + Eof→Break); nach Loop: Inc(idx) + s0C := s0C+s4+idx6 (CatN3) + 448.Add(s0C) + 44C.Add(s4+idx6) {47A9..47F9}.
+- W-Block {47FC} (kein else, fällt aus M heraus): 1. Excursion identisch (s0C:=lfdn6); 2. Excursion **ohne SetIndexName** {48EE, Index bleibt von Vorblock} -> Cat3 umgekehrt `s0C := lfdn6+s0C` {4929}; 'Mutter'-Walk analog (Gate Table7Vater=Table5Epnum); doppelte Add identisch {4AE4..4B46}.
+- Zweites Paar {4B84} (nach Table5-Loop, s4/s0C neu): `if Geschlecht='M'` {4BC8 jne->4E5C} -> 'Vater'-Walk mit `if Table7Mutter=0`-Gate + Pos-Gate {4C13..4C63}; `if s4<>''` {4D54 jbe->511F} -> Inc(idx), dsn-Excursion, 448.Add(`lfdn6+'000000'+s4+idx6`) + 44C.Add(s4+idx6), 'lfn'-Restore, `jmp 511F`. **else** `if Geschlecht='W'` {4E90 jne->511F} -> 'Mutter'-Walk mit `if Table7Vater=0`-Gate; Add **gespiegelt** `448.Add('000000'+lfdn6+s4+idx6)` {506A..50C0}.
+- Semantik bestätigt: Eintrag = Ehemann(6)+Ehefrau(6)+Kinder('*'+6 je)+Paar-Idx(6); '000000' = fehlender Partner; M schreibt own+Partner, W schreibt Partner+own -> beide ergeben Mann+Frau (Konsument-Form Copy(1,6)/Copy(7,6) stimmt).
+- Epilog {5152}: Table24.IndexName:='dsn' + Table1.FindKey([krg]); SEH-Teardown + @LStrArrayClr [ebp-0D4],2F / [ebp-0C],3 = Kommentar (Konvention).
+- **Bug-Fix gedausv CHIL-Loop (Hex-Radix, Unit3.pas L8163/8165/8170)**: Listing `cmp/sub eax,12` = 0x12 = **18** (nicht 12) -> `if Length>18` und `Length-18`; Copy-Start `dec/shl3/sub/add 0C(=12)/add 2` = `7*(childIdx-1)+14` (nicht `13+7*childIdx`). Eintrag = 12+7n+6, Kinderblock ab 13, Ziffern ab 14 — vorher StrToInt-Crash ('*…') bei Familien mit >=2 Kindern. Beweis D:\...\IDR Unit3.pas L60345..60413.
+- Verifikation: prof.py 7282 7511 7281 -> Tiefe 0 (kein UNMATCHED end); build.cmd -unit 3 grün; voller build.cmd -> [build] SUCCESS (keine neuen Warnungen in 7282..7511).
+- Offen: 8 weitere Unit3-Stubs mit veraltetem `// TODO: Listing fehlt noch` (adrschreib, osbein, ahndosein, gedausx, gedaus, gedein, gedein2, gedein_neu) — Listing liegt vollständig vor.
+
+### Unit3 adrschreib (005B3A3C..005B40E3 Adressen-Export als Tab-Text) - DONE, build green (2026-11-05; Commit ausstehend, SVN down)
+- Voll transkribiert in Unit3.pas L7277..7382 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt). Schreibt die Adressen der als lebend markierten Personen (Table17Lebt='j') als Tab-getrennte Textdatei mit 9 Spalten: `Brf_Anr  Adr_Anr  Vorname  Nachname  Anschrift1  Anschrift2  PLZ  Ort  Adrzus`.
+- Offsets aufgelöst (Unit2/Unit1-Declarationen): **[13C]=Table17** (Filter/Filtered/Filter 'gebjahr<=N and taufjahr<=N' wie Unit13 L1783ff), **[0CC]=Table13** (FindKey-Ortsnachschlag), Felder [9C4]Lebt/[9E8]Ort/[9DC]Adr1/[9E0]Adr2/[9E4]PLZ/[9EC]Adrzus/[954]Vornamen/[950]Name/[958]Geschlecht, [0A44]=Table13Ort; Form1: **[3FC]=SaveDialog1** (f74=DefaultExt, f60=Filter, f78=FileName, vtbl+3C=Execute), [400]=Label18, [404]=Label19, [7B4]=DBText1 (Color:=$FFFF wie Unit13).
+- Ablauf: SaveDialog1 (DefaultExt 'txt', Filter 'Text-Dateien (*.txt)|*.txt') -> Exit bei Abbruch/leerem Namen; `if Pos('.txt',FileName)=0 then FileName := FileName+'.txt'` (LStrCat3 direkt auf [3FC]+78); AssignFile/Rewrite des lokalen TextFile `f` [ebp-1D8] mit `if IOResult<>0 then Exit`. Filter-Block (gvar_02536BA0>1) -> Open, IndexName 'namgeb', crHourGlass, First, Label19.Caption 'Adressen schreiben', Form1.lab18ein, lfd:=1 [esi]/anz:=0 [edi], Kopf-WriteLn.
+- Schleife `while not Table17.Eof` (Kopf 5B3FF2, Body 5B3CAB, Tail 5B3FDF Next+Inc(lfd)): s0C:='' -> Label18.Caption:=IntToStr(lfd)+Refresh -> `if Table17Lebt='j'` (jne->5B3FDF) -> `if Table13.FindKey([Table17Ort]) then s0C:=Table13Ort` -> Leere-Pruefung `Adr1+Adr2+PLZ+s0C+Adrzus <> ''` (CatN edx=5, jbe->5B3FDF) -> `ucase(Table17Geschlecht)='M'` -> s4:='Herrn'/s8:='Herr' **else if** `='W'` -> s4/s8:='Frau' -> WriteLn der 9 Spalten (CatN **edx=0x11=17** Teile, Hex-Radix!) -> Inc(anz).
+- Epilog: CloseFile, Label18/19.Hide, crDefault, `ShowMessage(IntToStr(anz)+' Adresse(n) geschrieben.'+#13#10+'(Nur lebende Personen !)')` (CatN edx=4, vorwaerts gepusht). SEH-Rahmen + 4x @LStrArrayClr (0x13/5/4/3) + @HandleFinally = Kommentar (Konvention); Early-Exits ueber gemeinsamen Epilog.
+- **Offene Detailfrage (abgeleitet)**: Die Kopfzeilen-Konstante {005B4184} ist im IDR-Listing nach 'Anschrift2' abgeschnitten (`...`, IDR kuerzt lange String-Annotationen auf ~80 Zeichen); die letzten 3 Spaltennamen ('PLZ'/'Ort'/'Adrzus') sind aus den 9 Ausgabespalten abgeleitet und erst mit dem Original-Binary verifizierbar (kein passendes AHNWIN51/52-Binary auf dem Rechner gefunden, weder IDR-Ordner noch AhnWin52 enthalten es).
+- Verifikation: prof.py 7277 7382 7276 -> Tiefe 0 (kein UNMATCHED end); build.cmd -unit 3 grün; voller build.cmd -> [build] SUCCESS (keine neuen Warnungen; `Text`-Alias in Unit3 nicht verfügbar -> lokales File als `TextFile` wie in Unit1).
+- Offen: **7** weitere Unit3-Stubs (osbein 005B229C, ahndosein 005AFB9C, gedausx 005A634C, gedaus 005A7C40, gedein 0059D218, gedein2 00596994, gedein_neu 0057EDEC) — Listings liegen vollständig vor.
+
+### Unit3 osbein (005B229C..005B3725 OSB-Import kibu.dbf) - DONE, build green (2026-11-05; Commit ausstehend, SVN down)
+- Voll transkribiert in Unit3.pas L8756..8950 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt). Liest die im OpenDialog1 gewaehlte OSB-Datei (Verzeichnis = FileName minus 8 Zeichen, Datei heisst konstant `kibu.dbf`) und haengt jede Person an Table1 an (bis zu 4 Ehen an Table5), mit Fortschrittsanzeige auf Label18 (`x %`) und Label19 (`OSB lesen`).
+- Offsets aufgelost: DataModule2 **[248]=Table29** (IndexName 'qu', nur First als toter Zugriff), **[5C]=Table1**, **[80]=Table5**, **[1C4]=Table23** (Importtabelle); Form1 **[400]=Label18**, **[404]=Label19**, **[40C]=Memo1**, **[414]=OpenDialog1**; gvars `02536648:=1` (Start), `02536940` (ID-Basis = letzte Table1.Nummer, nur wenn RecordCount>0), `02536944` (max. Nummer, am Ende neu).
+- Ablauf: Table29 Open/'qu'/First -> gvar_02536648:=1 -> `if Table1.RecordCount>0` (jle->2352): IndexName:='' + Last + gvar_02536940:=Table1Nummer -> Form1.Refresh -> Table23.Close/DatabaseName/TableName/Open/Last -> `maxnum:=FieldByName('num').AsInteger` [ebp-0C] -> First, cnt:=0 [ebp-8] -> Label18/19 sichtbar + Caption + Refresh -> **while not Table23.Eof** (Kopf 3651, Body 24BD, Tail 363C Inc(cnt)+Next).
+- Person-Block: Prozent `IntToStr(Round(cnt/maxnum*100))+' %'` (fild/fdivp/fmul Single 100:Single @5B377C) -> Table1.Append -> Nummer/Vater/Mutter `+ gvar_02536940` (nur wenn `>'0'`, StrToInt) -> name/vornamen/beruf -> geschlecht: `LowerCase` speichern, dann `Form1.ucase(Table1Geschlecht.AsString, sg); if sg='F' then := 'w'` -> religion -> herkunft->Lebensort -> gebtag/gebmonat/gebjahr/gebort -> Quelleg:='' -> tauftag zerlegt Copy(1,2)/(4,2)/(7,4) -> Tauftag/Taufmonat/Taufjahr -> taufort/taufpat -> Quellet:='' -> sttag/stmonat/stjahr/stort -> Quelles:='' -> todesurs -> begrtag zerlegt -> Begtag/Begmonat/Begjahr -> begrort -> Quelleb:=''.
+- Kommentar-Block: `Form1.Memo1.Clear` (vtbl+0DC) -> `Form1.Memo1.Lines.Assign(Table23.FieldByName('kommentar'))` (vtbl+8) -> Zeilenschleife `for i:=0 to Lines.Count-1`: `if Copy(Lines[i],Length,1)=#$EC then Lines[i]:=Copy(...,1,Length-1)` (vtbl+0C Get / +20 Put) -> `Table1Kommentar.Assign(Memo1.Lines)` (vtbl+8) -> `if Trim(AsString)<>'' then AsString += #13+#10+#13+#10` (CatN edx=5) -> s:='' [ebp-10] -> `if quelle<>'' then s += 'Qu.: '+quelle+#13+#10` (CatN edx=5) -> `if sonstiges<>'' then s += 'Bemerk.: '+sonstiges` (CatN edx=3) -> `Table1Kommentar.AsString += s` (Cat 2x @LStrCat) -> Lebt:='n' -> `if Gebjahr<>''` (jbe->310D): Indj/Indm/Indt:=Gebjahr/Gebmonat/Gebtag **else** Taufjahr/Taufmonat/Tauftag -> **stilles** `try Table1.Post except end` (SEH 31A6..31D5).
+- Ehen-Block: `for i:=1 to 4 do` (Init 31DA, Bottom `inc; cmp 5; jne 31E1`) -> `if Copy(FieldByName('ehen').AsString,(i-1)*6+1,5)>'00000'` (jbe->362F, Offset `edx*2*3+1`) -> Table5.Append -> Nummer/Epnum `+ gvar_02536940` (Epnum via StrToInt derselben 5er-Copy) -> htag/hmonat/hjahr/hort/trauz mit `+IntToStr(i)` (LStrCat3, EDX=Prefix, ECX=Zahl) -> **Hqu:=''** [454] -> Verbind:='Eheschliessung' -> `if Hjahr<>''` (jbe->3592): Indj/Indm:=Hjahr/Hmonat **else** Sajahr/Samonat -> **stilles** `try Table5.Post except end` (SEH 35F8..362A).
+- Epilog: Table23.Close -> Form1.listen_akt -> Label18/19.Hide -> Table1.Last -> gvar_02536944:=Table1Nummer -> Table1.First.
+- **Listing-Befund `#13`/`#10`**: In osbein sind `#13` (5B3950) und `#10` (5B395C) **zwei einzelne 1-Zeichen-Konstanten** (jeweils 12 Byte Abstand, exakt die 8+1+1-Pad-4-Grösse der .data-Konstanten; IDR-Annotation `#13` ohne `+`), daher als getrennte Operanden transkribiert (`+ #13 + #10`, CatN edx=5). Zum Vergleich 00589598/5895A0 pusht **einmal** `58C980;#13+#10` zweimal (CatN edx=4) — dort ist `#13#10` eine Konstante. Beweis fuer das Push-Reihenfolge-Postulat "erster Push = erster Operand": zzg+'#13#10'+'#13#10'+'Kind(er): ' ergibt nur so den korrekten Text (Alternative: vorgestellte Steuerzeichen).
+- **Listing-Befund Sonderzeichen**: Die Vergleichskonstante {005B3944} ist ein 1-Zeichen-Literal mit **Rohbyte 0xEC** (py-Lesung der IDR-Datei als Bytes; die Datei ist dort nicht gueltiges UTF-8) -> als `#$EC` transkribiert (IDR zeigt das Byte als Mojibake). Kommentar-Endzeichen des OSB-Exports.
+- Vtbl-Idiome bestaetigt: **+8 = Assign** (TStrings- und TField-Seite, gleicher TPersistent-Slot), **+0DC = Memo1.Clear**, +0C/+14/+20 = TStrings Get/GetCount/Put, +14C = RecordCount, +248 = Post, +0A1 = Eof, +58/+60 = AsInteger/AsString-get, +0A8/+0B0 = AsInteger/AsString-set.
+- SEH/Teardown (KONVENTION): beide `try..except`-Rahmen (31A6/35F8, je `jmp @HandleAnyException` + `@DoneExcept`) sind stille Ausnahmeblaocker -> als `try ... except end` transkribiert; Prozedur-Epilog 36E5..3717 (`@HandleFinally`, @LStrArrayClr 0x54 Slots ab [ebp-16C] + 3 Slots ab [ebp-1C], @LStrClr [ebp-10]) = Kommentar.
+- Verifikation: prof.py 8756 8951 8755 -> Tiefe 0; build.cmd -unit 3 gruen; voller build.cmd -> [build] SUCCESS (0 Fehler, keine neuen Warnungen in 8756..8951).
+- Offen: **6** weitere Unit3-Stubs (ahndosein 005AFB9C, gedausx 005A634C, gedaus 005A7C40, gedein 0059D218, gedein2 00596994, gedein_neu 0057EDEC) — Listings liegen vollstaendig vor.
+
+### Unit3 ahndosein (005AFB9C..005B1E3E AHNEN-DOS-Import ahnen.dbf) - DONE, build green (2026-11-06; Commit ausstehend, SVN down)
+- Voll transkribiert in Unit3.pas L8952..9306 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt). Liest die DOS-Datei `ahnen.dbf` (Verzeichnis = OpenDialog1.FileName minus **9** Zeichen) zunaechst in eine lokal angelegte Paradox-Tabelle `ahntab`, danach jede Person nach Table1, bis zu 3 Ehen nach Table5.
+- Setup: Table29 Open/'qu'/First -> `gvar_02536648:=1` -> `local := TTable.Create(Self)` (**AOwner in ecx=[ebp-4]**, dl=1) -> `local.TableType := ttParadox` (dl=1) -> TableName 'ahntab' -> FieldDefs.Clear + **43 Add** (005AFC3A..5AFF3B, n/num ftAutoInc/ftInteger Required=True, Rest ftString ausser kommentar ftMemo; groesste 80='Lebensorte', 60=quelle/sonstiges, 55=taufpat/trauz*) -> IndexDefs: `Add('','n',[ixPrimary])` + `Add('ein','name;gebjahr;gebmonat;gebtag',[ixCaseInsensitive])` -> CreateTable/IndexName 'ein'/Open -> Table23.Close + DatabaseName `Copy(FileName,1,Length-9)` + TableName 'ahnen.dbf' + Open + First.
+- Lokals: [ebp-18]=local:TTable, [ebp-14]=s, [ebp-10]=maxnum, [ebp-0C]=cnt, [ebp-8]=i, [ebp-4]=Self; Transform-Temp `t` (quellen-lokal, 19x).
+- Kopier-Loop `while not Table23.Eof` (Kopf 5B0B6F je->Body 5B0047, Tail Next 5B0B5D): **42 Kopien** Table23 -> local, davon **19 mit `sub_005AFB14(src, t); dest := t`** (name, vornamen, beruf, lebensorte, gebort, taufort, taufpat, hort1..3, trauz1..3, stort, todesurs, begrort, quelle, sonstiges, kommentar), 23 plain (num als AsInteger). **`local.Post` (5B0B52) ist ein PLAIN call** (+248, kein Rahmen) -> kein try..except dort.
+- Nach der Schleife: `if Table1.RecordCount>0` (jle->5B0BD9) -> IndexName:=''+Last+`gvar_02536940:=Table1Nummer`; local.First, `maxnum:=local.RecordCount`, `cnt:=0`, Label18 '0 %', **Label19.Refresh**, Label19 'AHNEN DOS lesen         ', Label19.Refresh, Form1.lab18ein.
+- Personen-Loop `while not local.Eof` (Kopf 5B1D66, Body 5B0C57): Prozent -> Table1.Append -> Nummer:=localnum+gvar -> **Vater-Guard `Copy(code,5,4)` und Mutter-Guard `Copy(code,9,4)` je MIT ZWEI Auswertungen** (`> '00000'` und `<> ''`), Body `StrToInt(Trim(Copy))+gvar` -> [538]/[53C] -> name/vornamen/beruf -> geschlecht `LowerCase` -> `if ucase(Table1Geschlecht.AsString)='F' then := 'w'` (TForm3.ucase als Methode-Funktion, eax=[ebp-4]) -> religion -> gebtag/gebmonat/gebjahr/gebort -> `Quelleg:=''` -> tauftag **zerlegt** Copy(1,2)/(4,2)/(7,4) -> Tauftag/Taufmonat/Taufjahr -> taufort/taufpat -> `Quellet:=''` -> sttag/stmonat/stjahr **direkt** (keine Zerlegung, Felder getrennt!) -> stort -> `Quelles:=''` -> todesurs -> begrtag zerlegt -> Begtag/Begmonat/Begjahr -> begrort -> `Quelleb:=''`.
+- Kommentar-Block: `Form1.Memo1.Clear` (+0DC) -> `Memo1.Lines.Assign(local.kommentar)` (+8) -> `for i:=0 to Lines.Count-1`: `if Copy(Lines[i],Length,1)=#$EC then Lines[i]:=Copy(...,1,Length-1)` (+14/+0C/+20) -> `Table1Kommentar.Assign(Memo1.Lines)` (+8) -> Trim-Guard `+ #13#10#13#10` (CatN edx=5) -> **zweiter Trim-Guard mit `ShowMessage(Table1Kommentar.AsString)`** (Debug-Rest des Originals, bewusst uebernommen) -> `s:=''` -> **erst 'Bemerk. '(sonstiges), dann 'Qu. '(quelle)** (CatN edx=5 je) -> `Kommentar.AsString += s` (@LStrCat) -> `Lebensort:=locallebensorte`, `Lebt:='n'` -> `if Gebjahr<>''` (jbe->5B195B): Indj/Indm/Indt:=Gebjahr/Gebmonat/Gebtag **else** Taufjahr/Taufmonat/Tauftag -> **stilles `try Table1.Post except end`** (5B19F4..1A23).
+- Ehen: `for i:=1 to 3` (Init 5B1A28, Bottom `inc 5B1D4E; cmp 4; jne 5B1A2F`) -> Guard `Copy(code,(i-1)*5+13,4)>'00000'` mit **nur EINER** Bedingung (kein `<> ''`, Offset-Aufbau `dec; lea edx*5; add 0C; inc`) -> Table5.Append -> Nummer/Epnum `+ gvar` (Epnum via StrToInt derselben Copy) -> htag/hmonat/hjahr/hort/trauz mit `'x'+IntToStr(i)` (LStrCat3) -> **`Hqu:=''`** -> Verbind:='Eheschliessung' -> **stilles `try Table5.Post except end`** (5B1D17..D49) -> **KEIN Indj/Indm-Block fuer Table5** -> Inc(cnt) -> local.Next.
+- Epilog: local.Close/Free, Form1.listen_akt, Label18/19.Hide, Table1.Last, `gvar_02536944:=Table1Nummer`, Table1.First.
+- **Listing-Befund Label-Folge**: 5B0C0B ist `Refresh` auf [404]=Label19, direkt nach `Label18.Caption:='0 %'` und VOR `Label19.Caption:=...` - so transkribiert (nicht "logisch" umsortiert).
+- **Listing-Befund Literal-Case**: FieldDefs nutzen `'Lebensorte'` (5B1EE8), alle Kopien/Zugriffe dagegen `'lebensorte'` (5B2178) - FindField vergleicht ohne Gross/Klein, daher 1:1 uebernommen.
+- SEH/Teardown (KONVENTION): genau **zwei** stille try..except (Table1.Post 5B19F4, Table5.Post 5B1D17; je `jmp @HandleAnyException` + `@DoneExcept`) und **drei** `fs:[eax]`-Schreibstellen (5B1E31 = Aussenrahmen); Aussen-Teardown 5B1DEE..E30 (`@LStrArrayClr` 0x64 ab [ebp-288], 0x35 ab [ebp-0F8], 3 ab [ebp-24], `@LStrClr` [ebp-14]) = Kommentar.
+- **Korrekturen an bestehendem Code**: Unit3.pas L5184 `TTable.Create(nil)` -> `TTable.Create(Self)` (Listing ecx=[ebp-4]=Self) und L5186 `ttDefault` -> `ttParadox` (TTableType: 0=ttDefault, 1=ttParadox; Listing dl=1).
+- Verifikation: prof.py 8952 9306 8951 -> Tiefe 0; build.cmd -unit 3 gruen; voller build.cmd -> exit 0 (keine neuen Warnungen/Hinweise in 8952..9306).
+- Offen: **5** weitere Unit3-Stubs (gedausx 005A634C, gedaus 005A7C40, gedein 0059D218, gedein2 00596994, gedein_neu 0057EDEC) — Listings liegen vollstaendig vor.
+
+### Unit3 gedausx (005A634C..005A7BB2 Paar-Tabelle Table32) - DONE, build green (2026-11-06)
+- Voll transkribiert in Unit3.pas L9308..9681 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt). Baut Table32 (Paar-Tabelle) aus Table1 + Table5 auf: pro Person und pro Ehe ein Eintrag mit Ehe-/Scheidungs-/Verbindungsdaten, Dedup ueber den Table32-Index `v`/`m` (FindKey auf die 6-stellige Nummer), Kinder-Liste `fk` aus Table17 (Index `vat`/`mut`); danach pflegt es die Table31-Adressen ein (Edit + Fk-Ergaenzung bzw. neuer Eintrag mit `Vb:='A'`) und haengt Eintraege ohne Partner nach (`Fk:=uk`), `gvar_02536660` sammelt `Nummer*Fn#` fuer den Folgelauf.
+- Lokals: cnt [ebp-10], anz [ebp-14] (Table1.RecordCount), upd [ebp-18], vnr [esi]/mnr [edi] (Table31Av/Am), flag [esi] (Boolean), t [ebp-8] (toter Reset, einziges Vorkommen), fk [ebp-4], uk [ebp-0C]; Strings n6/ep6/fn6 = `sub_00576EB0`-Temps (6-stellige Nummer, Epnum, StrToInt(Fn)).
+- Setup: Table31 Open/IndexName:='' -> Table32 Open/Close/EmptyTable/Open -> cnt:=0 -> toter Read Table1Nummer (63C8, Kommentar) -> anz:=Table1.RecordCount -> Table1 IndexName:='' + First -> Table17 Open/IndexName:='' + First -> Table5 IndexName:='num'.
+- Aussen-Loop `while not Table1.Eof` (Kopf 75C2, Body 643B, Tail Next 75AA): **Fortschritt `Label18.Caption := IntToStr(Round(Table1Nummer/anz*100/2))+' %'` + `Label18.Refresh`** (beide [400], fdiv/fmul 100:Single@5A7BC0/fdiv 2:Single@5A7BC4) -> t:='' -> fk:='' -> `if Table5.RecordCount>0` (jle->71AC): First -> **Table5-Loop** `while not Table5.Eof` (Kopf 7197, Body 64DC, Tail Next 7179 + Eof-Break 7186).
+- In-Loop M/W = **if/else-if** (M 64DC..6504 jne->6AEB, M-Ende jmp 7179; W 6AEB..6B1F jne->7179): M: IndexName:='v'/First/flag:=False/n6:=pad(Table1Nummer) -> `if FindKey([n6]) then while Table32Fv=n6 do begin ep6:=pad(Table5Epnum); if Table32Fm=ep6 then flag:=True,Break; Next; if Eof then Break end` -> First + n6 neu -> **`if not (FindKey([n6]) and flag)`** -> Inc(cnt)/Append/Fv:=n6/Fm:=ep6/H..Indm (17 Felder, 582C24 fuer H/S/Sch, `Vb:=UpperCase(Copy(Verbind,1,1))`, `Fn:=IntToStr(cnt)`) -> fk-Scan index 'vat' (`Vater=Table1Nummer`, im Body `Mutter=Table5Epnum`, CatN3) -> `if Trim(fk)<>'' then Fk:=fk` (**ungetrimmt**) -> Post. W symmetrisch mit Index 'm', `Fm=n6` im Cond und `Fv=ep6` im Body, Fv:=ep6/Fm:=n6, fk-Scan index 'mut'.
+- Post-Loop (nach Table5-Loop, **zwei separate Ifs**, kein else): uk:='' -> M: index 'vat'/FindKey/`while Vater=Table1Nummer`, Body `Mutter=0` -> `if Trim(uk)<>'' then Inc(cnt)/Append/Fv:=pad(Table1Nummer)/Fm:=pad(0)/Fk:=uk/Fn:=IntToStr(cnt)/Indj:=Table5Indj/Post` (nur diese 6 Felder!) -> W: index 'mut', `Mutter=Table1Nummer`, Body `Vater=0`, Fv:=pad(0)/Fm:=pad(Table1Nummer) -> Table1.Next + Eof-Break.
+- Final-Block: `gvar_02536660:=''` -> `if Table31.RecordCount>0` (jle->7B58): Loop `while not Table31.Eof` (Kopf 7B43, Body 75FB, Tail Next 7B25): upd:=0 -> **else-if-Kette** `if Table31Av>0 then` (vnr:=Av [esi], mnr:=Am [edi], IndexName:='v', n6:=pad(vnr), `if FindKey([n6]) then while StrToInt(Table32Fv)=vnr do begin if StrToInt(Table32Fm)=mnr then Edit; Fk:=Fk+pad(Table31Nummer)+'*'; Post; gvar+=pad(Table31Nummer)+'*'+pad(StrToInt(Table32Fn))+'#'; upd:=1; Break; Next/Eof-Break end`) `else if Table31Am>0 then` (IndexName:='m', n6:=pad(mnr), Cond `StrToInt(Fm)=mnr`, Body `StrToInt(Fv)=vnr`) -> `if upd=0 then Inc(cnt)/Append/Fv:=pad(Av)/Fm:=pad(Am)/Fk:=pad(Nummer)+'*'/Fn:=IntToStr(cnt)/Vb:='A'/Post/gvar-Zeile`.
+- **Listing-Befund Auswerte-Reihenfolge**: `sub_00576EB0` (im Original eine Funktion) steht bei jedem CatN-Ausdruck IM Ausdruck (zuerst `push gvar`, dann pad-Teilausdruecke); als Prozedur-Aufruf vor der Aussage transkribiert -> Reihenfolge-Delta, bewusst so (siehe Recon-Notizen). Gleiches Delta bei den Vergleichen (`ep6`/`n6` werden vor dem `while`/`if` berechnet statt im Condition-Code).
+- **Listing-Befund toeter Code**: 63C8 liest Table1Nummer.AsInteger ohne Ergebnis (Kommentar); `t:=''` (64A2) ist der einzige Zugriff auf [ebp-8].
+- SEH/Teardown (KONVENTION): Prozedur-Epilog 7B58..7BAA (`@HandleFinally`, `@LStrArrayClr` 0x64 Slots ab [ebp-1FC], 0xF ab [ebp-6C], 2 ab [ebp-28], `@LStrClr` [ebp-1C], 3 ab [ebp-0C]) = Kommentar; keine try..except im Text (Post-Aufrufe sind plain +248).
+- Verifikation: prof.py 9308 9684 9308 -> Tiefe 0; build.cmd -unit 3 gruen; voller build.cmd -> exit 0 (keine neuen Warnungen/Hinweise im Bereich 9308..9681).
+- Offen: **4** weitere Unit3-Stubs (gedaus 005A7C40, gedein 0059D218, gedein2 00596994, gedein_neu 0057EDEC) — Listings liegen vollstaendig vor.
+
+### Unit3 gedein (0059D218..005A58A9 GEDCOM-Hauptimport) - DONE, build green (2026-11-11; Commit ausstehend, SVN down)
+- Voll transkribiert in Unit3.pas L9683..11428 (Stub ersetzt, `// TODO: Listing fehlt noch` entfernt; 1746 Zeilen). Liest die in OpenDialog1 gewaehlte GEDCOM-Datei zeilenweise ein und baut Table25 (INDI-Nummern, Index `AA`), Table26 (REPO/NOTE/SOUR, Index `nro`/`alt_`), Table29 (SOUR-Quellen), Table1 (Personen), Table13 (Extended Locations), Table12 (Nachnamen), Table5 (Ehen) und Table31 (Verwandtschaft) auf.
+- **Setup** (0059D23D..D38C): `gvar_0253663C/nds/gvar_0253666C/gvar_02536668 := 0` -> Table25 Open/Close/EmptyTable/Open + `IndexName:='AA'` -> Table26 gleich mit `'nro'` -> Table29/Table1 Open -> `indnr := gvar_02536940`, indz/extloc/utfflag/gvar_02536648/664C := 0, `gvar_0061F048 := 1` -> `fname := Form1.OpenDialog1.FileName` -> `System.Assign(gvar_02536458, fname); Reset; 2x ReadLn` -> `if IOResult <> 0 then ShowMessage('Fehler beim Einlesen.'); Exit` (Exit -> Epilog 005A57D5).
+- **Kopf-Schleife** (0059D3F9..D49C, laeuft bis die Zeile mit `'0'` beginnt): `'1 CHAR '` -> `'1 CHAR IBM'` -> `gvar_02536648:=1`, `'1 CHAR UTF'` -> `utfflag:=1`, `'1 CHAR UNIC'` wird nur Pos-geprueft (0059D466..D486, ohne Auswertung); `'3 _EXTENDED_LOCATIONS'` -> `extloc:=1`. Danach `Reset` (zurueck zum Anfang), `rdflag:=0`, ReadLn+Trim, `Label19 'Gedcom prüfen ... '`, `famz:=0`.
+- **1. Lauf** (Kopf 0059D58B, Bedingung 0059EE26..EE7A `jne->D58B`, Body endet 0059EE20): `'0 @ INDI'` -> `Inc(indnr)/Inc(indz)`, Nummern-Prefix (`ucase(Copy(line,4,1))='I'` -> `Pos('@')+2`, sonst `+1`) -> Table25.Append (`A:=StrToInt(...)`, `N:=indnr`) -> Table1.Append mit Grundfeldern (`Vornamen:='NN'`, 5x Quelle leer, `Lebt:='n'`) -> **stilles try/except mit `ShowMessage('Fehler: ' + IntToStr(indnr))`** (0059D80D..D861). `'0 @F'` -> `Inc(famz)`. `'0 @REPO'` -> Table26.Append (`Nr:=Inc(nds)`, `Alt:=Copy(hdr,1,Pos('@'))`). `'@ NOTE'` -> Table26-Chain. `'1 TEXT/AUTH/1 DATE/1 PLAC/1 URL/1 TYPE/1 TITL/1 PUBL'` jeweils `if ctx='sour'` -> `Table29.Edit` + Quelle-Anhaenge mit **Trenner-Trennzeichen** (`'; '`, `' '`, `' '`, `' '`, `' '`, **direkt ueberschrieben** bei TYPE + `' '`, `': '`, `' '`) + Post. `'@ _LOC'` mit `extloc=1` -> Table13 FindKey -> Edit/Append -> `Ort` + inneres `while Copy(line,1,1)='1'` (_FCNTY/_FCTRY/POST/_ABBR/_FSTAE/_GOV) -> Post. **Leseroutine**: `if rdflag=0 then ReadLn+Trim; if utfflag=1 then Utf8ToAnsi; rdflag:=0; gvar_02536644+1`.
+- **Zwischen den Laeufen** (0059EE80..EFB4): `gvar_0253666C := famz + indz` (Single, Zaehlerbasis der Prozentanzeige) -> `CloseFile; System.Assign; Reset; ReadLn` -> `while (Copy(line,1,1)<>'0') and (Pos('@ INDI',line)=0) do ReadLn` -> `Label18 sichtbar/'0 %'/Refresh`, `Label19 sichtbar/'Gedcom einlesen  '/Refresh` -> `rdflag:=0; ctx:=''`.
+- **2. Lauf** (Kopf 0059EFC7, Bedingung 005A571D..5771 `jne->EFC7`): `'0 @ INDI'` -> **`indi`-Methodenaufruf** (0059F010, Positioniert Table1 + Label79) -> `gvar_02536668+1` -> `Label18.Caption := IntToStr(Round(gvar_02536668 / gvar_0253666C * 100)) + ' %'` + Refresh -> `ctx:=''; adrz:=1`. Dann `'1 AFN'`->IDNR; `'1 NAME'` mit `'/'`-Split (Vornamen/Name je `ans(...)+Trim`, Table12-Dedup `FindKey`->Append/Post; ohne `'/'` nur Vornamen, danach Wdh.-Split von `hdr`); `'2 GIVN'`/`'2 SURN'`; `'SEX'` F/M/U/else -> `'w'/'m'/'x'/LowerCase`; `'NPFX'`/`'OCCU'` (`Pos=3`) -> Beruf; RELI-Block (Kommentar-Anhaenge via `@LStrCatN`); Termin-Matrix `'2 DATE'` ohne Edit -> Familien-Snapshots; `'2 PLAC'`-Matrix (Table13-Findex); `'0 @N'`-Block (Skip bis naechste `'0'`-Zeile, rdflag:=1); **NOTE-Guard** 005A1396..A22DE (Pos('@')=8-Chain -> Table26 `alt_`-FindKey -> Kommentar; `'@' an anderer Position -> Skip`; Rest-Schluesselworte bis `//005A22DE: Ende Note-Guard`); CONT/COMM-Zweites-Dispatch (Varianten ohne Fallbacks); ADR1..ADR5 + ADDR-Kontext-Parser + NOTERest; `' NOTE @'`-Rueckverknuepfung + `' TEXT'`-Klammer-Anhang (nur `ctx<>'sour'`).
+- **FAM-Block (Chunk 7, 005A389D..A571B, L10989..11417)**: Level-0-Gate `Copy(line,1,1)='0'` -> **zwei gespiegelte Table5-Bogen** (Bogen1 `Nummer:=wifesnr/Epnum:=mansnr`, Bogen2 `Nummer:=mansnr/Epnum:=wifesnr`) je mit `Append`, `Epnum`-Fallback `:=0`, 21 Feldzuweisungen (Verbind/H..Schqu/Trauz aus den Snapshots), `Table1.FindKey`+`Edit`, `if Trim(famkom)<>''`-Anhang + stilles `try Post except`, `Edit`, Indj/Indm aus Hjahr/Hmonat bzw. **else** Sajahr/Samonat, und **`Table5.Post` nur bei Zustandsbyte [9D] in 2..3** (Form A `cmp 2/je; cmp 3/jne`, Form B `add al,0FE; sub al,2; jae`); danach `mansnr:=0; wifesnr:=0`. `'@ FAM'`-Init ohne else (faellt in klist-Scan durch): ctx/husbfound/kid/verbind/alle Snapshots/famkom zuruecksetzen + Fortschritt (Label18 %). klist-Scan (`'000000'+Copy(line,5,Len-9)` -> RightStr 6 -> `+'*'` -> Pos -> `husbfound:=1`). `'1 HUSB'`/`'1 WIFE'`/`'1 CHIL'` je mit **`Copy(line,9,1)='I'`-Test, transkribiert als inverse Form `if <> 'I' then <Neuberechnung>`** (Original: leeres then-Zweig + else), Table25.FindKey -> `mansnr`/`wifesnr`, `sub_00576EB0`+`+'*'` -> Pos in huslist/wifelist -> `kid:=20`, CatN an die Liste; WIFE schliesst mit `(mansnr>0) and (wifesnr>0)` -> `ctx:='fam_reli'`. `Table31.Open` je Zeile; CHIL: `kid+1` -> `RightStr('0000'+IntToStr(kid),4)` -> Table1Indj, Indm/Indt `:=''` (**`xor edx,edx; [ecx+0B0]` = leerer String, nicht `'0'`**), `husbfound=1` -> `Kistat:='V'` + Table31.Append (Nummer/Av/Am) + Post, else `(husnrTxt<>'') or (wifnrTxt<>'')` -> Vater/Mutter-Setzen + Post. `'1 MARR'`/`'2 TYPE RELI'`/`'2 TYPE CIVI'`/`'DIV'` -> ctx + verbind, `_WITN` -> trauzTxt/satrauz (je als `and` mit ctx-Vergleich, gleiche Sprungziele). `'@ _LOC'`-Restblock mit `while Copy(line,1,1)='1' do ReadLn+rdflag:=1`. Leseroutine (rdflag/utfflag).
+- **In-Body-TRLR-Test + While-Bedingung**: 005A4D7E prueft im Body `Copy(ucase(Trim(line)),1,6)='0 TRLR'` und fuehrt bei Treffer den FAM-Flush (beide Boegen) aus, sonst `jne->A571D` = die While-Bedingung (die dasselbe prueft, `jne->EFC7`); beide Enden springen auf den Epilog A5777. In Pascal faellt der Flush auf die While-Bedingung durch, die dann exitet - semantisch identisch.
+- **Epilog** (005A5777..A57D0): `Label18/19.Visible := False`, `CloseFile(gvar_02536458)`, `ChDir(gvar_02536B9C)`, `Form1.listen_akt`, `Table1.First`; SEH-Rahmen/Prolog-Teardown (12x `@LStrArrayClr`/`@LStrClr` ab [ebp-938], `@HandleFinally`, pop edi/esi/ebx) = Kommentar.
+- **Listing-Befund Tot-Code/Fallstricke**: `famkom` [ebp-74] wird **nie beschrieben** (nur `:=''` im Init) -> die vier `if Trim(famkom)<>''`-Anhaenge sind toter Code; toter `Pos('1 CHAR UNIC')`-Test; `[ebp-14]:=1` und `[ebp-10]:=0` sind Zaehler ohne Auswertung; `gvar_02536644` (1. Lauf) wird nur gezaehlt, nie gelesen.
+- **Verifikation**: `prof.py 9683 11428 9683` -> Tiefe 0 (Zeile 11428); `chk7.py` -> **0 fehlerhafte Adress-Annotationen**; `cov7b.py` -> alle Luecken mit `call`-Instruktionen sind Multi-Call-Ausdruecke (Copy/Trim/ucase/Cat3/CatN); `build.cmd` -> `[build] SUCCESS`, AHNWIN51.dpr kompiliert (keine neuen Warnungen im Bereich 9683..11428).
+- Offen: **2** Unit3-Arbeiten (gedein2 00596994, gedein_neu 0057EDEC) — Listings liegen vollstaendig vor; gedausx (005A634C) ist seit 2026-11-06 und gedaus (005A7C40) seit 2026-11-13 DONE und gehoeren nicht mehr dazu.
+
+### Unit3 gedaus (005A7C40..005AF0FA, GEDCOM-Export) - DONE, build green (2026-11-13; Commit ausstehend, SVN down)
+- Extrakt: `C:\Users\Mir\AppData\Local\Temp\opencode\gedaus.txt` (6549 Listing-Zeilen, roh 005A7C40..005AF0FA aus Projects_AhnenWin\Unit3.pas). **Alle 9 Chunks transkribiert** (Chunks 1-8 frueher, Chunk 9 am 2026-11-13); alle Marker `{CHUNK7}`..`{CHUNK9}` und der Chunk-8-Platzhalter sind verbraucht, Prozedur schliesst mit `end;` direkt vor `procedure TForm3.gedein_neu`.
+- **Chunks 1–4 (frueher, Stand 2026-11-11 dokumentiert)**: Loop offen, notiz, INDI/NAME/NAMEx/RUFNAME/Hausname/SEX/OCCU/RELI/IDNO, Quelle → `1 SOUR @S`, BIRT mit Date/PLAC/_LOC + locList.
+- **Chunk 5 (005A9A0F..005AA374)**: Quelleg → `2 SOUR @S` INNERHALB BIRT; CHR-Guard + `1 CHR` + `2 DATE` + Taufort PLAC/_LOC; `Table38.IndexName := 'tit'` (005A9E52) innerhalb CHR; Quellet → `2 SOUR @S`; Taufpat → `2 _GODP` (ausserhalb CHR); DEAT-Guard + `1 DEAT` + `2 DATE` + Stort PLAC/_LOC; `Table38.First` (005AA374) innerhalb DEAT.
+- **BIRT-Struktur-Fix (Chunk 5)**: `Table38.First` (005A9A02) und der Quelleg-Block gehoeren INNERHALB von BIRT — Beweis: Guard-Skip `005A96D9 jbe→005A9AD1`. Chunk 4 hatte BIRT vor `First` faelschlich geschlossen; korrigiert.
+- **Chunk 6 (005AA374..005AA960)**: Quelles (`Table1Quelles` //5A8) → `2 SOUR @S` und CAUS (`Table1Todesurs` //58C) → `2 CAUS`, beide INNERHALB DEAT (Skip `005AA04B jbe→005AA510`); DEAT `end;` vor 005AA510; BURI-Guard (Begjahr//598 oder Begort//59C, Skip→005AA891) + `1 BURI` + `2 DATE` (sub_00582C24(Begtag,Begmonat,Begjahr)) + Begort PLAC/_LOC; `Table38.First` (005AA891) AUSSERHALB BURI; Quelleb (`Table1Quelleb` //5AC) → `2 SOUR @S`; Marker `{CHUNK7}` an 005AA960.
+- **Chunks 7-8 (005AA960..005AD7EF + For-Schluss)**: RESI/ADDR-Block, ADOP, FAMS/FAMC-Paarlisten (Table32), FAM-Loop MARR/DIV (`2 NOTE not marr`, Table32.Next/Eof), Notes via `Form1.Memo1` (Form1+40C), locList-7er-Split-For (len/7) mit Table13-Emissionen (`_FCTRY`/`_GOV`/`1 MAP`/`2 LONG`/`2 LATI`/`_MAIDENHEAD`); For-`end;` mit Ruecksprung 005ADC37->005AD331. Offen blieben der Loop-Rest-Platzhalter (005AD7EF..005ADC32) und Marker `{CHUNK9}`.
+- **Chunk 9 (005AD7EF..005AE7B2, 2026-11-13)**: Loop-Rest IM For-Loop (Deferred-Platzierung, 6-space): Table13Ort+Maid -> `_GOV`, Bg+Lg -> `1 MAP`, Ort+Lg -> `2 LONG`, Ort+Bg -> `2 LATI`, Maid -> `_MAIDENHEAD`, Gov -> `_GOV` (je gvar_02536650 UTF/ANSI). Prozedurebene: Table38 Open/'tit'/First + RecordCount-Guard (v14C) + while-not-Eof-SOUR-Loop (`'0 @S'+RecNo+'@ SOUR'` via v150), TITL/ABBR/EVEN, FROM/TO-Zeitraum -> `stVon` [ebp-3C] -> `3 DATE`, PLAC/PUBL/CALN, NOTE-253-Guard mit zwei `kz`-CONC-Loops (245er-Chunks), MEDI, Table38.Next; danach Label18/19.Hide, `0 TRLR`, CloseFile(f), Form1.Refresh, Table1.IndexName:=''+FindKey([krg]), Form1.anzeigen.
+- **SEH-Teardown 005AE7B3..005AF0FA bewusst nicht transkribiert**: ganzer Prozedur-SEH-Rahmen (push 5AF0EA @ 005A7C69); der finally-Block enthaelt ausschliesslich compiler-generiertes @LStrClr/@LStrArrayClr-Cleanup (427 Zeilen, 0 User-Calls) - Header-Kommentar L11645, identisch zu gedausv.
+- **Build-Fixes in Units\Unit3.pas (2026-11-11)**: E2003 `clYellow` (Jahresfilter-Block //005A8D88) — `Graphics,` in die uses aufgenommen, gleiches Muster wie Unit10.pas //Controls, Graphics, Windows und Unit26.pas mit identischem `Form1.DBText1.Color := clYellow`; E2153 ×4 — je ein ueberzaehliges `;` vor `else` in den vier PLAC-then-Zweigen entfernt (Annotationen //005A98A3..98C7, //005A9CF3..9D17, //005AA215..A239, //005AA732..A768).
+- **Verifikation Chunk 9 + Gesamt**: `chk8_gedaus.py` -> 0 bad / 0 order; `jumpcheck7.py 5AD7EF 5AE7B3` -> 57/57 Spruenge, 0 Mismatch, 0 Style; 5-hex-Ziel-Count = 0; `[build] SUCCESS` (E2029 aufgeloest - Person-Loop schliesst in Chunks 8/9).
+- **Open/Unfinished-Liste Unit3 = 2**: gedein2 (00596994) + gedein_neu (0057EDEC); gedausx (005A634C, 2026-11-06) und gedaus (005A7C40, 2026-11-13) sind DONE.

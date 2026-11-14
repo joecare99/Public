@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, Buttons, StdCtrls, ExtCtrls;
 
 type
-  TMainForm = class(TForm)
+  TMainKeyInfoForm = class(TForm)
     Label2: TLabel;
     CharLabel: TLabel;
     Label3: TLabel;
@@ -44,7 +44,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  MainForm: TMainKeyInfoForm;
 
 implementation
 
@@ -62,7 +62,7 @@ const
     ('F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8',
      'F9', 'F10', 'F11', 'F12');
 
-procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TMainKeyInfoForm.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   s: string;
@@ -87,7 +87,7 @@ begin
     Key := 0;
 end;
 
-procedure TMainForm.FormKeyPress(Sender: TObject; var Key: Char);
+procedure TMainKeyInfoForm.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   if Ord(Key) in [ctrl_A .. ctrl_Z] then
     CharLabel.Caption := '^' + Chr(-1 + Ord(Key) + Ord('A') )
@@ -96,7 +96,7 @@ begin
   ValueLabel.Caption := IntToStr(Ord(Key));
 end;
 
-procedure TMainForm.FormKeyUp(Sender: TObject; var Key: Word;
+procedure TMainKeyInfoForm.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
 {- Erase the three labels when user releases key(s) }

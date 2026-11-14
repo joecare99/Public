@@ -1,7 +1,7 @@
 program OleWord2; 
 uses 
   Forms, 
-  Frm_OLEWord2Main in '..\Source\OleWord2\Frm_OLEWord2Main.pas' {MainForm}; 
+  Frm_OLEWord2Main in '..\source\OleWord2\Frm_OLEWord2Main.pas' {MainForm}; 
 {$R *.RES} 
 begin 
   Application.Initialize; 

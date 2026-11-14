@@ -1,7 +1,7 @@
 object frmAboutMain: TfrmAboutMain
-  Left = 583
+  Left = 1011
   Height = 127
-  Top = 247
+  Top = 588
   Width = 272
   HorzScrollBar.Visible = False
   ActiveControl = btnClickMe
@@ -12,15 +12,14 @@ object frmAboutMain: TfrmAboutMain
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '4.4.0.0'
   object btnClickMe: TButton
     Left = 48
     Height = 73
     Top = 24
     Width = 185
     Caption = 'Click Me! ...'
-    OnClick = btnClickMeClick
     TabOrder = 0
+    OnClick = btnClickMeClick
   end
 end

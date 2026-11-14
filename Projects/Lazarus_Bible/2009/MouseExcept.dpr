@@ -1,7 +1,7 @@
 program MouseExcept; 
 uses 
   Forms, 
-  frm_MouseExceptMain in '..\Source\MouseExcept\frm_MouseExceptMain.pas' {MainForm}; 
+  frm_MouseExceptMain in '..\source\MouseExcept\frm_MouseExceptMain.pas' {MainForm}; 
 {$R *.RES} 
 begin 
   Application.Initialize; 

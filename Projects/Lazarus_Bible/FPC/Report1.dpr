@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_Report1Main in '..\Source\Report1\Frm_Report1Main.pas' {MainForm}; 
+  Frm_Report1Main in '..\source\Report1\Frm_Report1Main.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

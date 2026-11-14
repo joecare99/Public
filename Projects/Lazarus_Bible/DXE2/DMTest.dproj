@@ -94,10 +94,10 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\DMtest\Frm_DMTestMain.pas">
+			<DCCReference Include="..\source\DMTest\Frm_DMTestMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\DMtest\Frm_Module1.pas">
+			<DCCReference Include="..\source\DMTest\Frm_Module1.pas">
 				<Form>DataModule1</Form>
 				<DesignClass>TDataModule</DesignClass>
 			</DCCReference>

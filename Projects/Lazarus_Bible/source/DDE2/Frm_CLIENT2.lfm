@@ -1,0 +1,41 @@
+object ClientForm: TClientForm
+  Left = 198
+  Top = 185
+  Caption = 'Client2'
+  ClientHeight = 107
+  ClientWidth = 467
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OldCreateOrder = True
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Edit1: TEdit
+    Left = 16
+    Top = 24
+    Width = 441
+    Height = 24
+    TabOrder = 0
+    Text = 'Edit1'
+  end
+  object BitBtn1: TBitBtn
+    Left = 368
+    Top = 64
+    Width = 89
+    Height = 33
+    TabOrder = 1
+    Kind = bkClose
+  end
+  object SimpleIPCServer1: TSimpleIPCServer
+    Active = True
+    ServerID = 'dde2'
+    Global = False
+    OnMessage = SimpleIPCServer1Message
+    left = 192
+    top = 56
+  end
+end

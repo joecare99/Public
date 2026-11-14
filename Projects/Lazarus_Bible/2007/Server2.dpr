@@ -1,0 +1,15 @@
+program Server2;
+
+uses
+  Forms,
+  Frm_SERVER2 in '..\DDE2\Frm_SERVER2.pas' {ServerForm};
+
+{$R *.RES}
+{$E EXE}
+
+begin
+Application.Initialize;
+  Application.Title := 'Demo: Server2';
+  Application.CreateForm(TServerForm, ServerForm);
+  Application.Run;
+end.

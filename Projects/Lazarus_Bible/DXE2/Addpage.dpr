@@ -2,7 +2,7 @@ program Addpage;
 
 uses
   Forms,
-  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.PAS' {frmAddPageMain};
+  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.pas' {frmAddPageMain};
 
 {$E EXE}
 {$R *.RES}

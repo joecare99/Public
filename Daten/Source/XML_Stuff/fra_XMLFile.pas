@@ -13,7 +13,6 @@ type
     { TfraXmlFile }
 
     TfraXmlFile = class(TFrame)
-        actDoSomething: TAction;
         actFileSave: TAction;
         actFileLoad: TAction;
         alsXMLFile: TActionList;

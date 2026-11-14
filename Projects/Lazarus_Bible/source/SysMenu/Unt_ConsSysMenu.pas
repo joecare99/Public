@@ -1,5 +1,8 @@
 unit Unt_ConsSysMenu;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 procedure Execute;
@@ -7,9 +10,17 @@ procedure Execute;
 implementation
 
 uses
-  windows,
+
   dialogs,
-  SysUtils;
+
+  SysUtils,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 const
   cm_About = $00A0;  { Define a constant for the new command }

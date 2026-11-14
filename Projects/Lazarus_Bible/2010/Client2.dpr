@@ -1,7 +1,7 @@
 program Client2; 
 uses 
   Forms, 
-  Frm_CLIENT2 in '..\Source\DDE2\Frm_CLIENT2.PAS' {ClientForm}; 
+  Frm_CLIENT2 in '..\source\DDE2\Frm_CLIENT2.pas' {ClientForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

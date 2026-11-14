@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Spin, Buttons, ExtCtrls;
 
 type
-  TMainForm = class(TForm)
+  TfrmListfontMain = class(TForm)
     FontListBox: TListBox;
     Label1: TLabel;
     SampleLabel: TLabel;
@@ -39,7 +39,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmListfontMain: TfrmListfontMain;
 
 implementation
 
@@ -49,12 +49,12 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmListfontMain.FormCreate(Sender: TObject);
 begin
   FontListBox.Items := Screen.Fonts;
 end;
 
-procedure TMainForm.FontListBoxDblClick(Sender: TObject);
+procedure TfrmListfontMain.FontListBoxDblClick(Sender: TObject);
 begin
   with FontListBox do
   if ItemIndex >= 0 then
@@ -64,19 +64,19 @@ begin
   end;
 end;
 
-procedure TMainForm.FontListBoxKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmListfontMain.FontListBoxKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key in [VK_RETURN, VK_SPACE] then
     FontListBoxDblClick(Sender);
 end;
 
-procedure TMainForm.SpinEdit1Change(Sender: TObject);
+procedure TfrmListfontMain.SpinEdit1Change(Sender: TObject);
 begin
   SampleLabel.Font.Size := SpinEdit1.Value;
 end;
 
-procedure TMainForm.CloseBitBtnClick(Sender: TObject);
+procedure TfrmListfontMain.CloseBitBtnClick(Sender: TObject);
 begin
   Close;
 end;

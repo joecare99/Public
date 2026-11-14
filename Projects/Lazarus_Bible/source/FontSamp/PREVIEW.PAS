@@ -8,7 +8,7 @@ interface
 
 uses
   SysUtils, {$IFNDEF FPC} Windows, Messages,  {$ENDIF}Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, DrawPage;
+  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, DRAWPAGE;
 
 type
   TPreviewForm = class(TForm)
@@ -40,7 +40,7 @@ var
 
 implementation
 
-uses frm_FontsampMain;
+uses frm_fontsampMAIN;
 
 {$IFnDEF FPC}
   {$R *.dfm}

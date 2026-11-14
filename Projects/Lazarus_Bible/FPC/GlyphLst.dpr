@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_GlyphListMain in '..\Source\GLYPHLST\Frm_GlyphListMain.pas' {MainForm};
+  Frm_GlyphListMain in '..\source\GlyphLst\Frm_GlyphListMain.pas' {MainForm};
 {$IFNDEF FPC} {$E EXE}   {$ENDIF}
 
 begin

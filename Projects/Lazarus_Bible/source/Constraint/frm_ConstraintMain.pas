@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmConstraintMain }
 
-  TMainForm = class(TForm)
+  TfrmConstraintMain = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -42,7 +42,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmConstraintMain: TfrmConstraintMain;
 
 implementation
 

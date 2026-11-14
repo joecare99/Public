@@ -54,8 +54,13 @@ var i:integer;
 begin
   for I := 0 to 10 do
     begin
+     {$IFNDEF FPC}
      Series1.AddY(random*500);
      Series2.AddY(random*500-300);
+     {$ELSE}
+     Series1.Add(random*500);
+     Series2.Add(random*500-300);
+     {$ENDIF}
     end;
 end;
 

@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmPrintgrMain: TfrmPrintgrMain
   Left = 248
   Height = 246
   Top = 141
@@ -31,9 +31,5 @@ object MainForm: TMainForm
         OnClick = Exit1Click
       end
     end
-  end
-  object PrintDialog1: TPrintDialog
-    left = 144
-    top = 24
   end
 end

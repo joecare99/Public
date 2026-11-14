@@ -23,8 +23,8 @@ uses
   GuiTestRunner,
   TextTestRunner,
   tst_Calc32 in '..\source\tests\tst_Calc32.pas',
-  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.PAS' {frmCalcAbout},
-  Frm_CALC in '..\source\CALC32\Frm_CALC.PAS' {frmCalcMain},
+  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.pas' {frmCalcAbout},
+  Frm_CALC in '..\source\Calc32\Frm_CALC.pas' {frmCalcMain},
   StrUtilsExt in '..\source\Strings\StrUtilsExt.pas';
 
 {$R *.res}

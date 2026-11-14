@@ -7,8 +7,8 @@ unit Frm_MDIDemoMAIN;
 interface
 
 uses
- Windows, {$IFnDEF FPC}
-
+ {$IFnDEF FPC}
+  Windows,
 {$ELSE}
   LCLIntf, LCLType, LMessages,
 {$ENDIF}
@@ -204,42 +204,26 @@ end;
 
 procedure TMainForm.wmSize(var Msg: TLMSize);
 
-Type  WINDOWPLACEMENT = record
-          length : UINT;
-          flags : UINT;
-          showCmd : UINT;
-          ptMinPosition : TPOINT;
-          ptMaxPosition : TPOINT;
-          rcNormalPosition : TRECT;
-       end;
-
 Var
  L,H :integer;
- WS :WINDOWPLACEMENT;
 begin
   Inherited wmsize(Msg);
-  H := GetSystemMetrics(SM_CYMINSPACING);
-  If H and $0F <> 0 Then H := (H and $FFFFFFF0)+$10;//Seems we need to abey 16 byte page size in heitgh;
+  { Die Fenster werden im MDI-Bereich platziert - unter Linux genuegen
+    die Eigenschaften Top und Height des LCL-Fensters. }
+  H := 16;
   For L := 0 To ScrollBox1.ComponentCount-1 do
   Begin
    if (ScrollBox1.Components[L] is Tform) Then
     With TForm(ScrollBox1.Components[l]) do
      Begin
-      Ws.Length := SizeOf(WS);
-      GetWindowPlaceMent(Handle, @WS);
       If WindowState= wsMinimized then
-       Begin
-        WS.ptMinPosition.y := ScrollBox1.Height-H;
-        WS.Flags := WPF_SETMINPOSITION;
-        Ws.ShowCmd := SW_MINIMIZE;
-        SetWindowPlacement(Handle, @WS);
-       End Else
-      if WS.rcNormalPosition.Top > ScrollBox1.Height Then
-       Begin
-        WS.rcNormalPosition.Top := ScrollBox1.Height-H;
-        Ws.RCNormalPosition.Bottom -=H;
-        SetWindowPlacement(Handle, @Ws);
-       end;
+       SetBounds(Left, ScrollBox1.Height-H, Width, H)
+      else
+       if Top > ScrollBox1.Height Then
+        Begin
+         Top := ScrollBox1.Height-H;
+         Height := Height - H;
+        end;
      end;
   end;
 End;

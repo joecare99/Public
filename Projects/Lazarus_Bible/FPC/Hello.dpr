@@ -10,7 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_HelloMAIN in '..\Source\HELLO\frm_HelloMAIN.PAS' {Form1}; 
+  Frm_HelloMAIN in '..\source\HELLO\view\Frm_HelloMAIN.pas' {Form1},
+  HelloViewModel in '..\source\HELLO\viewmodel\HelloViewModel.pas'; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

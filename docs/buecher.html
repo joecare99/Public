@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B&uuml;cher - Joe Care</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="shortcut icon" href="images/joe_care.png" type="image/png">
+  <style>
+    #layout-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    @media (min-width: 992px) {
+      #layout-container {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+    #books-shelf {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+      align-content: start;
+    }
+    .shelf-item {
+      cursor: pointer;
+      transition: transform 0.2s;
+      text-align: center;
+    }
+    .shelf-item:hover, .shelf-item.active {
+      transform: scale(1.05);
+    }
+    .shelf-item.active img {
+      outline: 3px solid var(--pico-primary);
+    }
+    .shelf-item img {
+      width: 100%;
+      border-radius: calc(var(--pico-border-radius) / 2);
+      box-shadow: var(--pico-card-box-shadow);
+      margin-bottom: 0.5rem;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+    }
+    .shelf-item h4 {
+      font-size: 0.8rem;
+      margin: 0;
+      line-height: 1.2;
+    }
+    #book-details {
+      flex: 0 0 100%;
+      position: sticky;
+      top: 1rem;
+    }
+    @media (min-width: 992px) {
+      #book-details {
+        flex: 0 0 50%;
+      }
+    }
+    #book-details article {
+      margin: 0;
+    }
+    .detail-header {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .detail-img {
+      width: 150px;
+      border-radius: var(--pico-border-radius);
+      object-fit: cover;
+      box-shadow: var(--pico-card-box-shadow);
+    }
+    .book-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+    .book-links a { flex-grow: 1; text-align: center; }
+    .genre-badge { display: inline-block; background: var(--pico-primary); color: var(--pico-primary-inverse); padding: 0.2rem 0.5rem; border-radius: var(--pico-border-radius); font-size: 0.8rem; margin-right: 0.3rem; margin-bottom: 0.3rem; }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong>Joe Care</strong></li>
+      </ul>
+      <ul>
+        <li><a href="index2.html" class="contrast">Home</a></li>
+        <li><a href="aktuelles.html" class="contrast">Aktuelles</a></li>
+        <li><a href="buecher.html" class="contrast">B&uuml;cher</a></li>
+        <li><a href="bilder.html" class="contrast">Bilder</a></li>
+        <li><a href="tipps.html" class="contrast">Tipps &amp; Tricks</a></li>
+        <li><a href="links.html" class="contrast">Links</a></li>
+        <li><a href="impressum.html" class="contrast">Impressum</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Meine B&uuml;cherauslage</h2>
+    <p>Hier finden Sie meine gesammelten Geschichten und B&uuml;cher in verschiedenen Dateiformaten frei verf&uuml;gbar.</p>
+    
+    <div id="layout-container">
+      <div id="books-shelf">
+        <!-- B&uuml;cherregal wird dynamisch geladen -->
+      </div>
+      <div id="book-details">
+        <article id="detail-card" style="display: none;">
+          <!-- Detailansicht wird bei Klick geladen -->
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container">
+    <hr>
+    <nav>
+      <ul>
+        <li><small>&copy; Joe Care</small></li>
+      </ul>
+      <ul>
+        <li><small><a href="index.html" class="secondary">Zum &ouml;ffentlichen GitHub-Portal</a></small></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script>
+    // Fallback Daten fÃ¼r lokale Nutzung (file:/// Protokoll)
+    const fallbackBooks = [
+      {
+        "title": "FlÃ¼stern",
+        "coverUrl": "FlÃ¼stern/cover.jpg",
+        "description": "Das FlÃ¼stern hinter der Wand. Ein kleines Web-eBook fÃ¼r den schnellen LesespaÃŸ.",
+        "links": [
+          { "format": "Online lesen", "url": "FlÃ¼stern/index.html" }
+        ]
+      }
+    ];
+
+    let allBooks = [];
+
+    function selectBook(book, element) {
+      document.querySelectorAll('.shelf-item').forEach(el => el.classList.remove('active'));
+      if(element) element.classList.add('active');
+
+      const detailCard = document.getElementById('detail-card');
+      detailCard.style.display = 'block';
+      detailCard.innerHTML = '';
+
+      const header = document.createElement('div');
+      header.className = 'detail-header';
+
+      const img = document.createElement('img');
+      img.className = 'detail-img';
+      img.src = book.coverUrl;
+      img.alt = `Cover von ${book.title}`;
+      img.onerror = function() { this.src = 'https://via.placeholder.com/400x600/e2e8f0/808080?text=Kein+Cover'; }; 
+      header.appendChild(img);
+
+      const info = document.createElement('div');
+      info.style.flex = "1 1 200px";
+
+      const h3 = document.createElement('h3');
+      h3.textContent = book.title;
+      h3.style.marginBottom = '0.5rem';
+      info.appendChild(h3);
+
+      if (book.genre && book.genre.length > 0) {
+        const genreDiv = document.createElement('div');
+        genreDiv.style.marginBottom = '1rem';
+        book.genre.forEach(g => {
+          const span = document.createElement('span');
+          span.className = 'genre-badge';
+          span.textContent = g;
+          genreDiv.appendChild(span);
+        });
+        info.appendChild(genreDiv);
+      }
+
+      header.appendChild(info);
+      detailCard.appendChild(header);
+
+      const pDesc = document.createElement('p');
+      pDesc.innerHTML = book.description || 'Keine Beschreibung verf&uuml;gbar.';
+      detailCard.appendChild(pDesc);
+
+      const footer = document.createElement('div');
+      footer.className = 'book-links';
+      if(book.links) {
+        book.links.forEach(link => {
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.className = 'outline';
+          a.setAttribute('role', 'button');
+          a.textContent = link.format;
+          if (link.format !== 'Online lesen') {
+            a.download = link.url.split('/').pop();
+          }
+          footer.appendChild(a);
+        });
+      }
+      detailCard.appendChild(footer);
+    }
+
+    function renderShelf(books) {
+      allBooks = books;
+      const shelf = document.getElementById('books-shelf');
+      shelf.innerHTML = '';
+      
+      books.forEach((book, index) => {
+        const div = document.createElement('div');
+        div.className = 'shelf-item';
+        div.onclick = () => selectBook(book, div);
+        
+        const img = document.createElement('img');
+        img.src = book.coverUrl;
+        img.alt = `Cover von ${book.title}`;
+        img.loading = "lazy";
+        img.onerror = function() { this.src = 'https://via.placeholder.com/400x600/e2e8f0/808080?text=Kein+Cover'; }; 
+        div.appendChild(img);
+        
+        const h4 = document.createElement('h4');
+        h4.textContent = book.title;
+        div.appendChild(h4);
+        
+        shelf.appendChild(div);
+
+        // Select the first book automatically
+        if(index === 0) {
+          selectBook(book, div);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch('buecher.json')
+        .then(response => {
+          if (!response.ok) throw new Error("HTTP error " + response.status);
+          return response.json();
+        })
+        .then(books => renderShelf(books))
+        .catch(error => {
+          console.warn("Fehler beim Laden (CORS?). Nutze Fallback-Daten.", error);
+          renderShelf(fallbackBooks);
+        });
+    });
+  </script>
+</body>
+</html>

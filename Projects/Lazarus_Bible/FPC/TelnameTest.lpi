@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="TelnameTest"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
+    </General>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="TelnameTest.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TelnameTest"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="../source/tests/tst_Telname.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Telname"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../source/TELNAME/model/TelnameModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TelnameModel"/>
+      </Unit2>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <Target>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/TelnameTest"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="../source/tests;../source/TELNAME/model"/>
+      <IncludeFiles Value="../source/tests;../source/TELNAME/model"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/TelnameTest"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="ObjFPC"/>
+      </SyntaxOptions>
+    </Parsing>
+  </CompilerOptions>
+</CONFIG>

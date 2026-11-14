@@ -84,10 +84,10 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\SYSCOLOR\Frm_SyscolorMAIN.PAS">
+        <DCCReference Include="..\source\SYSCOLOR\Frm_SyscolorMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
-        <DCCReference Include="..\Source\SYSCOLOR\Frm_ABOUTDLG.PAS">
+        <DCCReference Include="..\source\SYSCOLOR\Frm_ABOUTDLG.pas">
             <Form>AboutBox</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

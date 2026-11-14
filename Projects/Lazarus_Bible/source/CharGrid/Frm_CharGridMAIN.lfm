@@ -52,7 +52,6 @@ object frmCharGridMain: TfrmCharGridMain
     BevelOuter = bvNone
     ClientHeight = 59
     ClientWidth = 586
-    TabOrder = 1
     object pnlBtmFlow: TFlowPanel
       Left = 69
       Height = 59
@@ -207,7 +206,6 @@ object frmCharGridMain: TfrmCharGridMain
       BorderSpacing.Around = 6
       ClientHeight = 47
       ClientWidth = 57
-      TabOrder = 1
       object lblCharView: TLabel
         Left = 7
         Height = 33
@@ -235,7 +233,6 @@ object frmCharGridMain: TfrmCharGridMain
     BevelOuter = bvNone
     ClientHeight = 50
     ClientWidth = 586
-    TabOrder = 2
     object lblFont: TLabel
       Left = 16
       Height = 16

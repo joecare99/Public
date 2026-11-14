@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="BibleExplorer"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="True"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
+      <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+            <IncludeFiles Value="../meta/units"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+            <IncludeFiles Value="../meta/units"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="3">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LazUtils"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="SynEdit"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="printer4lazarus"/>
+      </Item4>
+    </RequiredPackages>
+    <Units Count="14">
+      <Unit0>
+        <Filename Value="BibleExplorer.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleExplorer"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="units/BibleExplorerMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="BibleExplorerMain"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="units/BibleCodeView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleCodeView"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="units/BibleCodeHighlighter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleCodeHighlighter"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="units/BibleDemoInfo.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleDemoInfo"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="units/BibleIndex.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleIndex"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="units/BibleShowcase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleShowcase"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="units/BibleShowcaseRegistry.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BibleShowcaseRegistry"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../../source/HELLO/view/Frm_HelloMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_HelloMAIN"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../../source/HELLO/viewmodel/HelloViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="HelloViewModel"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../../source/Calc32/view/Frm_CALC.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CALC"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../../source/Calc32/viewmodel/Calc32ViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Calc32ViewModel"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../../source/Calc32/model/CalculatorModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CalculatorModel"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../../source/ENUMFON/Frm_EnumFonMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_EnumFonMAIN"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../source/PRINTGR/Frm_PrintgrMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_PrintgrMAIN"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../../source/LISTFONT/Frm_ListFontMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ListFontMAIN"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../../source/COMBOS/Frm_CombosMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CombosMAIN"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../../source/CHECKS/Frm_ChecksMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ChecksMAIN"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../../source/SPINBUTT/Frm_SpinButtonMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_SpinButtonMAIN"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../../source/Actions/Frm_ActionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ActionsMain"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../../source/Addpage/Frm_AddpageMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AddpageMAIN"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../../source/GlyphLst/Frm_GlyphListMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_GlyphListMain"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../source/LISTTEXT/Frm_ListTextMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ListTextMAIN"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="../../source/MULTIMEN/Frm_MultiWayMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_MultiWayMAIN"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="../../source/OPTIONS/Frm_OptionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_OptionsMain"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../../source/PALETTE/Frm_PaletteMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_PaletteMain"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../../source/Sketch/Frm_SketchMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_SketchMAIN"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="../../source/Constraint/frm_ConstraintMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_ConstraintMain"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="../../source/CONTCOMP/frm_ContCompMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_ContCompMAIN"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../../source/FANCY/Frm_FancyMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_FancyMAIN"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="../../source/FILEMENU/Frm_FileMenuMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_FileMenuMAIN"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="../../source/OBJLIST/Frm_ObjListMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ObjListMAIN"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="../../source/Toolbar3/Frm_Toolbar3MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Toolbar3MAIN"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="../../source/STRLIST/Frm_StrlistMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StrlistMAIN"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="../../source/STRRES/Frm_StrresMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StrresMAIN"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="../../source/Status/Frm_StatusMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StatusMain"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="../../source/StatusOD/Frm_StatusODMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StatusODMain"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="../../source/TABS/Frm_TabsMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_TabsMAIN"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="../../source/TABS/Frm_OPTIONS.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_OPTIONS"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="../../source/TABS/TABS_Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="TABS_Frm_ABOUT"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="../../source/TABS/TabsUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TabsUnit"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="../../source/TELNAME/Frm_TelnameMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_TelnameMAIN"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="../../source/TOOLBAR1/Frm_Toolbar1MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Toolbar1MAIN"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="../../source/TOOLBAR2/Frm_Toolbar2MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Toolbar2MAIN"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="../../source/UpDownDemo/Frm_UpDownDemoMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_UpDownDemoMain"/>
+      </Unit44>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <Target>
+      <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/Actions;../../source/Addpage;../../source/GlyphLst;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/Sketch;../../source/Inidata;../../source/Constraint;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/Toolbar3;../../source/STRLIST;../../source/STRRES;../../source/Status;../../source/StatusOD;../../source/TABS;../../source/TELNAME;../../source/TOOLBAR1;../../source/TOOLBAR2;../../source/UpDownDemo;../../source/_core/services;../../source/_core/tools"/>
+      <IncludeFiles Value="../meta/units"/>
+      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
+  </CompilerOptions>
+</CONFIG>

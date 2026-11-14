@@ -44,7 +44,7 @@
 			<DelphiCompile Include="MouseExcept.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MouseExcept\frm_MouseExceptMain.pas">
+			<DCCReference Include="..\source\MouseExcept\frm_MouseExceptMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

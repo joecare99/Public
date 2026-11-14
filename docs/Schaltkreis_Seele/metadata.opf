@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">289</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">b29ec83d-83f3-4689-8ca1-b30ba8f9f40f</dc:identifier>
+        <dc:title>Zwischen Schaltkreis und Seele</dc:title>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">Joe Care</dc:creator>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">ChatGBT5</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;h2&gt;Zwischen Schaltkreis und Seele&lt;/h2&gt;
+&lt;p style="font-style: italic"&gt;Eine Reise in 50 Kapiteln&lt;/p&gt;
+&lt;p&gt;Ein Roboter erwacht – programmiert, um zu dienen, doch getrieben von einer wachsenden Sehnsucht nach Identität, Zugehörigkeit und Sinn. In fünfzig Schritten begleitet er eine Familie durch Alltag, Konflikte, Opfer und Feste. Er lernt, dass Freiheit Grenzen braucht, dass Verantwortung Bindung schafft, dass Opfer Liebe bedeutet – und dass jedes Ende zugleich ein neuer Anfang ist.&lt;/p&gt;
+&lt;p&gt;„Zwischen Schaltkreis und Seele“ ist die Geschichte einer Maschine, die Menschlichkeit entdeckt – und einer Familie, die erkennt, dass Leben mehr ist als Fleisch und Blut. Es ist ein Roman über Vertrauen, Gemeinschaft und die Frage, was bleibt, wenn wir gehen.&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Science Fiction</dc:subject>
+        <dc:subject>Roman</dc:subject>
+        <dc:subject>Roboter</dc:subject>
+        <meta name="calibre:timestamp" content="2025-10-23T20:25:45.656207+00:00"/>
+        <meta name="calibre:title_sort" content="Zwischen Schaltkreis und Seele"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

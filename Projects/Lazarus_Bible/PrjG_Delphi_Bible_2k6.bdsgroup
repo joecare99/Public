@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{3FDEEDBE-089A-4D7F-8103-ED8C767D6788}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>  <Projects>
+      <Projects Name="Aboutex.exe">2006\Aboutex.bdsproj</Projects>
+      <Projects Name="Actions.exe">2006\Actions.bdsproj</Projects>
+      <Projects Name="Addpage.exe">2006\Addpage.bdsproj</Projects>
+      <Projects Name="Animator.exe">2006\Animator.bdsproj</Projects>
+      <Projects Name="BarTest.exe">2006\BarTest.bdsproj</Projects>
+      <Projects Name="Bitview.exe">2006\Bitview.bdsproj</Projects>
+      <Projects Name="Bitview2.exe">2006\Bitview2.bdsproj</Projects>
+      <Projects Name="Calc32.exe">2006\Calc32.bdsproj</Projects>
+      <Projects Name="Capslock2.exe">2006\Capslock2.bdsproj</Projects>
+      <Projects Name="Capslock.exe">2006\Capslock.bdsproj</Projects>
+      <Projects Name="Cclient.exe">2006\Cclient.bdsproj</Projects>
+      <Projects Name="Cserver.exe">2006\Cserver.bdsproj</Projects>
+      <Projects Name="Chargrid.exe">2006\Chargrid.bdsproj</Projects>
+      <Projects Name="Checks.exe">2006\Checks.bdsproj</Projects>
+      <Projects Name="Client1.exe">2006\Client1.bdsproj</Projects>
+      <Projects Name="Server1.exe">2006\Server1.bdsproj</Projects>
+      <Projects Name="Client2.exe">2006\Client2.bdsproj</Projects>
+      <Projects Name="Colorlib.dll">2006\Colorlib.bdsproj</Projects>
+      <Projects Name="Testdll.exe">2006\Testdll.bdsproj</Projects>
+      <Projects Name="Combos.exe">2006\Combos.bdsproj</Projects>
+      <Projects Name="Compstrm.exe">2006\Compstrm.bdsproj</Projects>
+      <Projects Name="Constraint.exe">2006\Constraint.bdsproj</Projects>
+      <Projects Name="Contcomp.exe">2006\Contcomp.bdsproj</Projects>
+      <Projects Name="CoolDemo.exe">2006\CoolDemo.bdsproj</Projects>
+      <Projects Name="Dclock.exe">2006\Dclock.bdsproj</Projects>
+      <Projects Name="Server2.exe">2006\Server2.bdsproj</Projects>
+      <Projects Name="DingPkg.bpl">2006\DingPkg.bdsproj</Projects>
+      <Projects Name="TestDing.exe">2006\TestDing.bdsproj</Projects>
+      <Projects Name="DingButtonXControl.ocx">2006\DingButtonXControl.bdsproj</Projects>
+      <Projects Name="Direx.exe">2006\Direx.bdsproj</Projects>
+      <Projects Name="Direxec.exe">2006\Direxec.bdsproj</Projects>
+      <Projects Name="DMTest.exe">2006\DMTest.bdsproj</Projects>
+      <Projects Name="YesNoTest.exe">2006\YesNoTest.bdsproj</Projects>
+      <Projects Name="TestCDlg.exe">2006\TestCDlg.bdsproj</Projects>
+      <Projects Name="Dragme.exe">2006\Dragme.bdsproj</Projects>
+      <Projects Name="Dropfile.exe">2006\Dropfile.bdsproj</Projects>
+      <Projects Name="Enumfon.exe">2006\Enumfon.bdsproj</Projects>
+      <Projects Name="Enumwin.exe">2006\Enumwin.bdsproj</Projects>
+      <Projects Name="Except1.exe">2006\Except1.bdsproj</Projects>
+      <Projects Name="Except2.exe">2006\Except2.bdsproj</Projects>
+      <Projects Name="Except3.exe">2006\Except3.bdsproj</Projects>
+      <Projects Name="Exlist.exe">2006\Exlist.bdsproj</Projects>
+      <Projects Name="Fancy.exe">2006\Fancy.bdsproj</Projects>
+      <Projects Name="Filemenu.exe">2006\Filemenu.bdsproj</Projects>
+      <Projects Name="Findrepl.exe">2006\Findrepl.bdsproj</Projects>
+      <Projects Name="Fishy.exe">2006\Fishy.bdsproj</Projects>
+      <Projects Name="Fishy2.exe">2006\Fishy2.bdsproj</Projects>
+      <Projects Name="Fontsamp.exe">2006\Fontsamp.bdsproj</Projects>
+      <Projects Name="Glyphlst.exe">2006\Glyphlst.bdsproj</Projects>
+      <Projects Name="Hello.exe">2006\Hello.bdsproj</Projects>
+      <Projects Name="Keycount.exe">2006\Keycount.bdsproj</Projects>
+      <Projects Name="Calc32_2.EXE">2006\Calc32_2.bdsproj</Projects>
+      <Projects Name="Keyinfo.exe">2006\Keyinfo.bdsproj</Projects>
+      <Projects Name="Lister.EXE">2006\Lister.bdsproj</Projects>
+      <Projects Name="Listfont.EXE">2006\Listfont.bdsproj</Projects>
+      <Projects Name="Listtext.EXE">2006\Listtext.bdsproj</Projects>
+      <Projects Name="Master.EXE">2006\Master.bdsproj</Projects>
+      <Projects Name="MayTemp.EXE">2006\MayTemp.bdsproj</Projects>
+      <Projects Name="Mdidemo.EXE">2006\Mdidemo.bdsproj</Projects>
+      <Projects Name="Mdidemo2.EXE">2006\Mdidemo2.bdsproj</Projects>
+      <Projects Name="MemInfo.EXE">2006\MemInfo.bdsproj</Projects>
+      <Projects Name="Memopad.EXE">2006\Memopad.bdsproj</Projects>
+      <Projects Name="Metamore.exe">2006\Metamore.bdsproj</Projects>
+      <Projects Name="MouseExcept.exe">2006\MouseExcept.bdsproj</Projects>
+      <Projects Name="Msgdlg.EXE">2006\Msgdlg.bdsproj</Projects>
+      <Projects Name="Multimen.exe">2006\Multimen.bdsproj</Projects>
+      <Projects Name="Nonclien.EXE">2006\Nonclien.bdsproj</Projects>
+      <Projects Name="Objlist.exe">2006\Objlist.bdsproj</Projects>
+      <Projects Name="OleCont.EXE">2006\OleCont.bdsproj</Projects>
+      <Projects Name="OleWord1.exe">2006\OleWord1.bdsproj</Projects>
+      <Projects Name="OleWord2.exe">2006\OleWord2.bdsproj</Projects>
+      <Projects Name="Ontop.exe">2006\Ontop.bdsproj</Projects>
+      <Projects Name="Targets">Aboutex.exe Actions.exe Addpage.exe Animator.exe BarTest.exe Bitview.exe Bitview2.exe Calc32.exe Capslock2.exe Capslock.exe Cclient.exe Cserver.exe Chargrid.exe Checks.exe Client1.exe Server1.exe Client2.exe Colorlib.dll Testdll.exe Combos.exe Compstrm.exe Constraint.exe Contcomp.exe CoolDemo.exe Dclock.exe Server2.exe DingPkg.bpl TestDing.exe DingButtonXControl.ocx Direx.exe Direxec.exe DMTest.exe YesNoTest.exe TestCDlg.exe Dragme.exe Dropfile.exe Enumfon.exe Enumwin.exe Except1.exe Except2.exe Except3.exe Exlist.exe Fancy.exe Filemenu.exe Findrepl.exe Fishy.exe Fishy2.exe Fontsamp.exe Glyphlst.exe Hello.exe Keycount.exe Calc32_2.EXE Keyinfo.exe Lister.EXE Listfont.EXE Listtext.EXE Master.EXE MayTemp.EXE Mdidemo.EXE Mdidemo2.EXE MemInfo.EXE Memopad.EXE Metamore.exe MouseExcept.exe Msgdlg.EXE Multimen.exe Nonclien.EXE Objlist.exe OleCont.EXE OleWord1.exe OleWord2.exe Ontop.exe</Projects>
+    </Projects>
+    <Dependencies>
+      <Dependency GUID="{F24C0A91-A610-4928-BAF1-4068D5049944}">
+        <Dependency GUID="{F602FE62-5913-4BD1-8DD7-B4419423D6EF}"/>
+      </Dependency>
+    </Dependencies>
+  </Default.Personality>
+	<StarTeamAssociation></StarTeamAssociation>
+	<StarTeamNonRelativeFiles></StarTeamNonRelativeFiles>
+</BorlandProject>

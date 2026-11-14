@@ -2,7 +2,6 @@ UNIT Frm_PolyflowMain;
 
 INTERFACE
 
-{$I jedi.inc}
 
 
 USES
@@ -38,7 +37,7 @@ TYPE
   END;
 
 TYPE
-  TMainForm = CLASS(TForm)
+  TMainPolyflowForm = CLASS(TForm)
     MainMenu1: TMainMenu;
     Demo1: TMenuItem;
     Exit1: TMenuItem;
@@ -63,7 +62,7 @@ TYPE
   END;
 
 VAR
-  MainForm     : TMainForm;
+  MainForm     : TMainPolyflowForm;
 
 IMPLEMENTATION
 
@@ -73,7 +72,7 @@ IMPLEMENTATION
   {$R *.lfm}
 {$ENDIF}
 
-PROCEDURE TMainForm.CreateParams(VAR Params: TCreateParams);
+PROCEDURE TMainPolyflowForm.CreateParams(VAR Params: TCreateParams);
 BEGIN
   INHERITED CreateParams(params);
   WITH Params.WindowClass DO
@@ -83,7 +82,7 @@ END;
 
 {- Return -1 if n < 0 or +1 if n >= 0 }
 
-FUNCTION TMainForm.Sign(N: Integer): Integer;
+FUNCTION TMainPolyflowForm.Sign(N: Integer): Integer;
 BEGIN
   IF N < 0 THEN
     Sign := -1
@@ -93,7 +92,7 @@ END;
 
 {- Erase LineArray and set X1 to -1 as "no line" flag }
 
-PROCEDURE TMainForm.InitLineArray;
+PROCEDURE TMainPolyflowForm.InitLineArray;
 VAR
   I            : Integer;
 BEGIN
@@ -106,7 +105,7 @@ END;
 
 {- Create new line, direction, and color }
 
-PROCEDURE TMainForm.MakeNewLine(R: TRect; Index: Integer);
+PROCEDURE TMainPolyflowForm.MakeNewLine(R: TRect; Index: Integer);
   PROCEDURE NewCoord(VAR C, Change: Integer; Max: Integer;
     VAR Color: TColor);
   VAR
@@ -136,7 +135,7 @@ END;
 
 {- Draw or erase a line identified by Index }
 
-PROCEDURE TMainForm.DrawLine(Index: Integer);
+PROCEDURE TMainPolyflowForm.DrawLine(Index: Integer);
 BEGIN
   if LineArray[Index].X1>=0 then
   WITH Canvas, LineArray[Index] DO
@@ -149,7 +148,7 @@ END;
 
 {- Draw some lines at each timer interval }
 
-PROCEDURE TMainForm.Timer1Timer(Sender: TObject);
+PROCEDURE TMainPolyflowForm.Timer1Timer(Sender: TObject);
 VAR
   R            : TRect;
   I, OldIndex  : Integer;
@@ -174,7 +173,7 @@ END;
 
 {- Paint or repaint screen using data in LineArray }
 
-PROCEDURE TMainForm.FormPaint(Sender: TObject);
+PROCEDURE TMainPolyflowForm.FormPaint(Sender: TObject);
 VAR
   I            : Integer;
 BEGIN
@@ -186,14 +185,14 @@ END;
 
 {- Start new lines when window size changes }
 
-PROCEDURE TMainForm.FormResize(Sender: TObject);
+PROCEDURE TMainPolyflowForm.FormResize(Sender: TObject);
 BEGIN
   InitLineArray;                        { Erase LineArray and reset globals }
 END;
 
 {- Initialize globals and LineArray }
 
-PROCEDURE TMainForm.FormCreate(Sender: TObject);
+PROCEDURE TMainPolyflowForm.FormCreate(Sender: TObject);
 BEGIN
   WITH Canvas.Pen DO
     BEGIN
@@ -207,7 +206,7 @@ END;
 
 {- End program }
 
-PROCEDURE TMainForm.Exit1Click(Sender: TObject);
+PROCEDURE TMainPolyflowForm.Exit1Click(Sender: TObject);
 BEGIN
   Close;
 END;

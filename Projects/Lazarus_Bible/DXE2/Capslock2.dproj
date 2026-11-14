@@ -110,7 +110,7 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CAPSLOCK\Frm_Capslock2MAIN.PAS">
+			<DCCReference Include="..\source\Capslock\Frm_Capslock2MAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

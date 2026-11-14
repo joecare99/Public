@@ -1,5 +1,10 @@
 unit Frm_OleContMain;
 
+{ OleCont, plattformneutral: Ein OLE-Container (nur Windows/Delphi) wird
+  durch eine Bild-Vorschau ersetzt. "Insert Object..." waehlt eine Datei;
+  Bilder werden angezeigt, andere Dateien mit dem Standardprogramm
+  geoeffnet. Gleiches Lernziel - fremde Inhalte einbetten - ohne OLE. }
+
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
@@ -10,7 +15,7 @@ uses
 {$IFnDEF FPC}
   OleCtnrs, Windows,
 {$ELSE}
-  LCLIntf, LCLType, LMessages, ole2,
+  LCLIntf, LCLType, LMessages,
 {$ENDIF}
   Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Menus, ExtCtrls;
@@ -18,10 +23,11 @@ uses
 type
   TMainForm = class(TForm)
    {$IFDEF FPC}
-    OleContainer1: TActiveXContainer;
+    PreviewImage: TImage;
    {$ELSE}
-    OleContainer1:TOleContainer;
-   {$ENDIF} MainMenu1: TMainMenu;
+    OleContainer1: TOleContainer;
+   {$ENDIF}
+    MainMenu1: TMainMenu;
     File1: TMenuItem;
     Edit1: TMenuItem;
     InsertObject1: TMenuItem;
@@ -51,25 +57,36 @@ begin
 end;
 
 procedure TMainForm.InsertObject1Click(Sender: TObject);
+{$IFDEF FPC}
+var
+  Dlg: TOpenDialog;
+{$ENDIF}
 begin
+{$IFDEF FPC}
+  { Eine Datei waehlen: Bilder in der Vorschau, sonst extern oeffnen. }
+  Dlg := TOpenDialog.Create(Self);
+  try
+    Dlg.Filter :=
+      'Alle Dateien (*.*)|*.*|Bilder (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.jpeg;*.bmp;*.gif';
+    if Dlg.Execute then
+    begin
+      try
+        PreviewImage.Picture.LoadFromFile(Dlg.FileName);
+      except
+        if not OpenDocument(Dlg.FileName) then
+          ShowMessage('Konnte ' + Dlg.FileName + ' nicht anzeigen.');
+      end;
+    end;
+  finally
+    Dlg.Free;
+  end;
+{$ELSE}
   with OleContainer1 do
   begin
     if InsertObjectDialog then
       DoVerb(PrimaryVerb);
   end;
+{$ENDIF}
 end;
-
-(* Delphi 1 code, now obsolete
-procedure TForm1.InsertObject1Click(Sender: TObject);
-var
-  P: Pointer;
-begin
-  if InsertOLEObjectDlg(Form1, 0, P) then
-  begin
-    OleContainer1.PInitInfo := P;
-    ReleaseOleInitInfo(P);
-  end;
-end;
-*)
 
 end.

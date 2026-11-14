@@ -1,7 +1,7 @@
 program Strlist; 
 uses 
   Forms, 
-  Frm_StrlistMAIN in '..\Source\STRLIST\Frm_StrlistMAIN.PAS' {MainForm}; 
+  Frm_StrlistMAIN in '..\source\STRLIST\Frm_StrlistMAIN.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

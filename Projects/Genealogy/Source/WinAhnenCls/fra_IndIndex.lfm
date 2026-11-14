@@ -1,0 +1,213 @@
+object fraIndIndex: TfraIndIndex
+  Left = 0
+  Height = 564
+  Top = 0
+  Width = 274
+  ClientHeight = 564
+  ClientWidth = 274
+  ParentFont = False
+  TabOrder = 0
+  object pnlTop: TPanel
+    Left = 0
+    Height = 80
+    Top = 0
+    Width = 274
+    Align = alTop
+    ClientHeight = 80
+    ClientWidth = 274
+    ParentFont = False
+    TabOrder = 0
+    OnClick = pnlTopClick
+    object cbxSortBy: TComboBox
+      AnchorSideLeft.Control = edtFind
+      AnchorSideRight.Control = pnlTop
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = edtFind
+      Left = 1
+      Height = 23
+      Top = 26
+      Width = 268
+      Anchors = [akLeft, akRight, akBottom]
+      BorderSpacing.Right = 4
+      BorderSpacing.Bottom = 4
+      ItemHeight = 15
+      Items.Strings = (
+        'Familianname'
+        'Vorname'
+        'Geburt'
+        'Hochzeit'
+        'Tod'
+        'ID'
+      )
+      OnChange = cbxSortByChange
+      ParentFont = False
+      TabOrder = 0
+    end
+    object lblSort: TLabel
+      AnchorSideTop.Control = cbxSortBy
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = cbxSortBy
+      Left = -53
+      Height = 15
+      Top = 30
+      Width = 50
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      Caption = 'Sortieren:'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblFind: TLabel
+      AnchorSideTop.Control = edtFind
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = edtFind
+      Left = -45
+      Height = 15
+      Top = 57
+      Width = 42
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      Caption = 'Suchen:'
+      ParentColor = False
+      ParentFont = False
+    end
+    object edtFind: TEdit
+      AnchorSideLeft.Control = pnlTop
+      AnchorSideRight.Control = pnlTop
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = pnlTop
+      AnchorSideBottom.Side = asrBottom
+      Left = 1
+      Height = 22
+      Top = 53
+      Width = 268
+      Anchors = [akLeft, akRight, akBottom]
+      AutoSize = False
+      BorderSpacing.Right = 4
+      BorderSpacing.Bottom = 4
+      OnChange = edtFindChange
+      OnKeyPress = edtFindKeyPress
+      ParentFont = False
+      TabOrder = 1
+      TextHint = '<Suchen>'
+    end
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 59
+    Top = 505
+    Width = 274
+    Align = alBottom
+    ClientHeight = 59
+    ClientWidth = 274
+    ParentFont = False
+    TabOrder = 1
+    object ComboBox1: TComboBox
+      Left = 5
+      Height = 23
+      Top = 31
+      Width = 264
+      Align = alBottom
+      BorderSpacing.Around = 4
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 0
+      Text = '<Manage>'
+    end
+    object chbFilterActive: TCheckBox
+      Left = 90
+      Height = 22
+      Top = 5
+      Width = 135
+      Align = alClient
+      BorderSpacing.Around = 4
+      Caption = 'Aktiv'
+      ParentFont = False
+      TabOrder = 1
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 46
+      Height = 22
+      Top = 5
+      Width = 40
+      Align = alLeft
+      BorderSpacing.Around = 4
+      Caption = '...'
+      ParentFont = False
+    end
+    object Label1: TLabel
+      AnchorSideTop.Control = ComboBox1
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = ComboBox1
+      Left = 9
+      Height = 14
+      Top = 9
+      Width = 29
+      Align = alLeft
+      BorderSpacing.Around = 8
+      Caption = 'Filter:'
+      ParentColor = False
+      ParentFont = False
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 229
+      Height = 22
+      Top = 5
+      Width = 40
+      Align = alRight
+      BorderSpacing.Around = 4
+      Caption = 'S'
+      ParentFont = False
+    end
+  end
+  object TabControl1: TTabControl
+    Left = 0
+    Height = 27
+    Top = 82
+    Width = 274
+    HotTrack = True
+    TabIndex = 0
+    Tabs.Strings = (
+      'Index'
+      'Lesezeichen'
+      'Historie'
+    )
+    Align = alTop
+    BorderSpacing.Top = 2
+    ParentFont = False
+    TabOrder = 2
+  end
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 396
+    Top = 109
+    Width = 274
+    Align = alClient
+    AlternateColor = clCream
+    ColCount = 3
+    ColumnClickSorts = True
+    Columns = <    
+      item
+        Title.Caption = 'Name'
+        Width = 150
+      end    
+      item
+        Title.Caption = 'Color'
+        Width = 30
+      end    
+      item
+        Title.Caption = 'Date'
+      end>
+    DefaultDrawing = False
+    FixedCols = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing, goSmoothScroll, goCellHints]
+    ParentFont = False
+    TabOrder = 3
+    OnDrawCell = StringGrid1DrawCell
+    OnButtonClick = StringGrid1ButtonClick
+    OnGetCellHint = StringGrid1GetCellHint
+    OnGetEditText = StringGrid1GetEditText
+    OnSelection = StringGrid1Selection
+    OnSelectCell = StringGrid1SelectCell
+  end
+end

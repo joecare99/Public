@@ -84,7 +84,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\README\Frm_RunMeTEST.PAS">
+        <DCCReference Include="..\source\README\Frm_RunMeTEST.pas">
             <Form>TestForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

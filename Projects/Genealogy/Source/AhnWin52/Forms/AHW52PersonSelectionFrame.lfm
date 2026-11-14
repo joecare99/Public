@@ -1,0 +1,96 @@
+object AHW52PersonSelectionFrame: TAHW52PersonSelectionFrame
+  Left = 0
+  Height = 1255
+  Top = 0
+  Width = 1877
+  ClientHeight = 1255
+  ClientWidth = 1877
+  DesignTimePPI = 168
+  ParentFont = False
+  TabOrder = 0
+  object DBGrid1: TDBGrid
+    Left = 37
+    Height = 640
+    Hint = 'Auswahl durch Doppelclick auf Name oder <ENTER>;  Schließen auch mit <ESC>'
+    Top = 13
+    Width = 987
+    Color = clWindow
+    Columns = <        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Nummer'
+        Width = 72
+        FieldName = 'Nummer'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Name'
+        Width = 291
+        FieldName = 'Name'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Vornamen'
+        Width = 293
+        FieldName = 'Vornamen'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '*'
+        FieldName = 'Gebjahr'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Geb.-Ort'
+        Width = 333
+        FieldName = 'Gebort'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '~'
+        Width = 85
+        FieldName = 'Taufjahr'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Tauf-Ort'
+        Width = 333
+        FieldName = 'Taufort'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '+'
+        Width = 85
+        FieldName = 'Stjahr'
+      end        
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'IDNR'
+        Width = 85
+        FieldName = 'IDNR'
+      end>
+    Font.Color = clBlack
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
+    TabOrder = 0
+    TitleFont.Color = clBlack
+    TitleFont.Height = -21
+    TitleFont.Name = 'Arial'
+    OnDblClick = DBGrid1DblClick
+    OnKeyDown = DBGrid1KeyDown
+  end
+end

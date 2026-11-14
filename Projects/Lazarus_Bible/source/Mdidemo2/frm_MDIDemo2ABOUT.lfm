@@ -23,7 +23,6 @@ object AboutForm: TAboutForm
     BevelOuter = bvLowered
     ClientHeight = 161
     ClientWidth = 281
-    TabOrder = 0
     object ProgramIcon: TImage
       Left = 8
       Height = 57

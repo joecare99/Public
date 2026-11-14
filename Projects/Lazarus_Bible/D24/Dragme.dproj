@@ -64,7 +64,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\DRAGME\Frm_DragMeMAIN.PAS">
+        <DCCReference Include="..\source\DRAGME\Frm_DragMeMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

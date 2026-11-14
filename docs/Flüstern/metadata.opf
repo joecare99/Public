@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">13</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">3cde0cc2-c3b4-4a54-b166-2e6a4bec510c</dc:identifier>
+        <dc:title>Das Flüstern hinter der Wand</dc:title>
+        <dc:creator opf:file-as="Care, Joe" opf:role="aut">Joe Care</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;p align="center" style="line-height: 100%; page-break-before: always; background-color: transparent; font-weight: bold; font-size: 28pt"&gt;&lt;em style="font-family: 'Liberation Serif','serif'; font-variant: small-caps"&gt;Das Flüstern Hinter Der Wand&lt;/em&gt;&lt;span style="font-family: 'Liberation Sans','sans-serif'"&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 13pt"&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 18pt"&gt;Ein altes Haus, das mehr hört, als es sollte. Ein Ort, an dem Stille nicht leer ist – sondern voller Stimmen. Und eine Frau, die begreift, dass manche Türen nicht nur in Räume führen, sondern in etwas, das nie hätte gefunden werden dürfen.&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 18pt"&gt;Atmosphärisch, beklemmend und unaufhaltsam – eine Geschichte, die dich bis zur letzten Seite nicht loslässt.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Thriller</dc:subject>
+        <meta name="calibre:timestamp" content="2025-09-13T20:53:38+00:00"/>
+        <meta name="calibre:title_sort" content="Flüstern hinter der Wand, Das"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

@@ -1,7 +1,7 @@
 program WinesChart; 
 uses 
   Forms, 
-  frm_WinesChartMain in '..\Source\WinesChart\frm_WinesChartMain.pas' {MainForm}; 
+  frm_WinesChartMain in '..\source\WinesChart\Frm_WinesChartMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

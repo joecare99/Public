@@ -22,7 +22,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmLabyDemo3, frmLabyDemo3);
   Application.CreateForm(TProgessForm, ProgessForm);
   Application.CreateForm(TLaby, Laby);
   Application.Run;

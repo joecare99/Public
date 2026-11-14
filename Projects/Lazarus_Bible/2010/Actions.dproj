@@ -43,7 +43,7 @@
 			<DelphiCompile Include="Actions.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\Actions\Frm_ActionsMain.pas">
+			<DCCReference Include="..\source\Actions\Frm_ActionsMain.pas">
 				<Form>Form1</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

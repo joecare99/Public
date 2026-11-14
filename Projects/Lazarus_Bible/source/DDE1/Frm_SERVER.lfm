@@ -5,12 +5,10 @@ object ServerForm: TServerForm
   ClientHeight = 140
   ClientWidth = 415
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
-  Font.Name = 'System'
+  Font.Name = 'MS Sans Serif'
   Font.Style = []
-  PixelsPerInch = 96
   object Edit1: TEdit
     Left = 24
     Top = 16
@@ -37,8 +35,12 @@ object ServerForm: TServerForm
     TabOrder = 2
     Kind = bkClose
   end
-  object DdeServerItem1: TDdeServerItem
-    Left = 160
-    Top = 56
+  object SimpleIPCServer1: TSimpleIPCServer
+    Active = True
+    ServerID = 'ddeserver1'
+    Global = False
+    OnMessage = SimpleIPCServer1Message
+    left = 160
+    top = 106
   end
-end
+end

@@ -1,0 +1,4073 @@
+{
+  "CatalogKind": "StaticDataModuleResourceMetadata",
+  "Scope": "Resource declarations only; no database rows or provider observations.",
+  "Sources": [
+    "Source\\AhnWin52\\DataModules\\GenealogyDataModule.lfm",
+    "Source\\Projects_AhnenWin\\DataModule2.dfm"
+  ],
+  "TableComponentCount": 38,
+  "PersistentFieldComponentCount": 620,
+  "Components": [
+    {
+      "Component": "Table1",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table1Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table1Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table1Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table1Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table1Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table1Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table1Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table1Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table1Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table1Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table1Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table1Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table1Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table1Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table1Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table1Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table1Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table1Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table1IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table1Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table1Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table1Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table1PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table1Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table1Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table1Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table1Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table1Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table1Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table1Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table1Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table1Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table1Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table2",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "lc.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table2Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table3",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table3Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table3Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table3Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table3Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table3Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table3Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table3Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table3Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table3Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table3Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table3Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table3Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table3Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table3Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table3Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table3Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table3Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table3Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table3Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table3Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table3Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table3IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table3Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table3Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table3Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table3PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table3Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table3Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table3Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table3Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table3Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table3Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table3Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table3Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table3Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table3Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table4",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "NUMRES.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table4Num",
+          "FieldName": "Num",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table5",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "MRG.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table5Numr",
+          "FieldName": "Numr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table5Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table5Epnum",
+          "FieldName": "Epnum",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table5Htag",
+          "FieldName": "Htag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Hmonat",
+          "FieldName": "Hmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Hjahr",
+          "FieldName": "Hjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table5Hort",
+          "FieldName": "Hort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table5Trauz",
+          "FieldName": "Trauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table5Satag",
+          "FieldName": "Satag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Samonat",
+          "FieldName": "Samonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Sajahr",
+          "FieldName": "Sajahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table5Saort",
+          "FieldName": "Saort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table5Satrauz",
+          "FieldName": "Satrauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table5Verbind",
+          "FieldName": "Verbind",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table5Schtag",
+          "FieldName": "Schtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Schmonat",
+          "FieldName": "Schmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table5Schjahr",
+          "FieldName": "Schjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table5Schort",
+          "FieldName": "Schort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table5Hqu",
+          "FieldName": "Hqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table5Saqu",
+          "FieldName": "Saqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table5Schqu",
+          "FieldName": "Schqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table5Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table5Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        }
+      ]
+    },
+    {
+      "Component": "Table6",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "Nummer",
+      "PersistentFields": [
+        {
+          "Component": "Table6Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table6Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table6Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table6Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table6Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table6Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table6Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table6Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table6Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table6Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table6Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table6Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table6Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table6Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table6Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table6Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table6Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table6Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table6Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table6Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table6Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table6IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table6Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table6Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table6Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table6PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table6Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table6Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table6Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table6Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table6Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table6Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table6Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table6Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table6Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table6Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table7",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "Vater",
+      "PersistentFields": [
+        {
+          "Component": "Table7Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table7Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table7Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table7Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table7Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table7Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table7Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table7Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table7Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table7Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table7Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table7Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table7Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table7Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table7Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table7Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table7Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table7Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table7Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table7Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table7Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table7IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table7Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table7Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table7Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table7PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table7Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table7Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table7Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table7Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table7Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table7Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table7Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table7Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table7Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table7Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table8",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table8Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table8Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table8Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table8Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table8Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table8Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table8Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table8Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table8Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table8Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table8Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table8Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table8Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table8Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table8Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table8Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table8Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table8Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table8Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table8Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table8Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table8IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table8Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table8Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table8Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table8PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table8Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table8Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table8Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table8Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table8Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table8Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table8Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table8Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table8Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table8Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table9",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "AWD.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table9Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table9Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table9Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table9Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table9Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table9Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table9Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table9Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table9Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table9Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table9Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table9Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table9Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table9Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table9Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table9Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table9Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table9Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table9Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table9Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table9Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table9IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table9Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table9Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table9Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table9PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table9Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table9Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table9Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table9Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table9Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table9Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table9Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table9Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table9Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table9Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table10",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "MRG.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table10Numr",
+          "FieldName": "Numr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table10Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table10Epnum",
+          "FieldName": "Epnum",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table10Htag",
+          "FieldName": "Htag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Hmonat",
+          "FieldName": "Hmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Hjahr",
+          "FieldName": "Hjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table10Hort",
+          "FieldName": "Hort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table10Trauz",
+          "FieldName": "Trauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table10Satag",
+          "FieldName": "Satag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Samonat",
+          "FieldName": "Samonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Sajahr",
+          "FieldName": "Sajahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table10Saort",
+          "FieldName": "Saort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table10Satrauz",
+          "FieldName": "Satrauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table10Verbind",
+          "FieldName": "Verbind",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table10Schtag",
+          "FieldName": "Schtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Schmonat",
+          "FieldName": "Schmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table10Schjahr",
+          "FieldName": "Schjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table10Schort",
+          "FieldName": "Schort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table10Hqu",
+          "FieldName": "Hqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table10Saqu",
+          "FieldName": "Saqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table10Schqu",
+          "FieldName": "Schqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table10Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table10Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        }
+      ]
+    },
+    {
+      "Component": "Table11",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "chnt.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table11FELD001",
+          "FieldName": "FELD001",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table11FELD002",
+          "FieldName": "FELD002",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table11FELD003",
+          "FieldName": "FELD003",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table11Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table12",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "NM.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table12Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 50
+        }
+      ]
+    },
+    {
+      "Component": "Table13",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "LOC.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table13Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table13PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table13Land",
+          "FieldName": "Land",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13RegBez",
+          "FieldName": "RegBez",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13Gov",
+          "FieldName": "Gov",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table13Bland",
+          "FieldName": "Bland",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13Gde",
+          "FieldName": "Gde",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13Pfr",
+          "FieldName": "Pfr",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13Lkr",
+          "FieldName": "Lkr",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table13Abk",
+          "FieldName": "Abk",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table13Lg",
+          "FieldName": "Lg",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table13Bg",
+          "FieldName": "Bg",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table13Maid",
+          "FieldName": "Maid",
+          "FieldClass": "TStringField",
+          "Size": 10
+        }
+      ]
+    },
+    {
+      "Component": "Table14",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "OUTP.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table14Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table14Zeile",
+          "FieldName": "Zeile",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table14Nm",
+          "FieldName": "Nm",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table14Nm2",
+          "FieldName": "Nm2",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table14Nm3",
+          "FieldName": "Nm3",
+          "FieldClass": "TStringField",
+          "Size": 50
+        }
+      ]
+    },
+    {
+      "Component": "Table15",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "MRG.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table15Numr",
+          "FieldName": "Numr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table15Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table15Epnum",
+          "FieldName": "Epnum",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table15Htag",
+          "FieldName": "Htag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Hmonat",
+          "FieldName": "Hmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Hjahr",
+          "FieldName": "Hjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table15Hort",
+          "FieldName": "Hort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table15Trauz",
+          "FieldName": "Trauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table15Satag",
+          "FieldName": "Satag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Samonat",
+          "FieldName": "Samonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Sajahr",
+          "FieldName": "Sajahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table15Saort",
+          "FieldName": "Saort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table15Satrauz",
+          "FieldName": "Satrauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table15Verbind",
+          "FieldName": "Verbind",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table15Schtag",
+          "FieldName": "Schtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Schmonat",
+          "FieldName": "Schmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table15Schjahr",
+          "FieldName": "Schjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table15Schort",
+          "FieldName": "Schort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table15Hqu",
+          "FieldName": "Hqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table15Saqu",
+          "FieldName": "Saqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table15Schqu",
+          "FieldName": "Schqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table15Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table15Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        }
+      ]
+    },
+    {
+      "Component": "Table16",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "over.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table16Nn",
+          "FieldName": "Nn",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table16Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table16Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table16Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table16Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table16Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table16Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table16Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table16Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table16Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table16Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table16Htag",
+          "FieldName": "Htag",
+          "FieldClass": "TStringField",
+          "Size": 7
+        },
+        {
+          "Component": "Table16Hmonat",
+          "FieldName": "Hmonat",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table16Hjahr",
+          "FieldName": "Hjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table16Hort",
+          "FieldName": "Hort",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table16Hname",
+          "FieldName": "Hname",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table16Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        }
+      ]
+    },
+    {
+      "Component": "Table17",
+      "ComponentClass": "TParadox",
+      "PhysicalIdentity": "awd.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table17Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table17Vater",
+          "FieldName": "Vater",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table17Mutter",
+          "FieldName": "Mutter",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table17Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table17Vornamen",
+          "FieldName": "Vornamen",
+          "FieldClass": "TStringField",
+          "Size": 45
+        },
+        {
+          "Component": "Table17Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table17Religion",
+          "FieldName": "Religion",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Beruf",
+          "FieldName": "Beruf",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table17Gebtag",
+          "FieldName": "Gebtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Gebmonat",
+          "FieldName": "Gebmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Gebjahr",
+          "FieldName": "Gebjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table17Gebort",
+          "FieldName": "Gebort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Tauftag",
+          "FieldName": "Tauftag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Taufmonat",
+          "FieldName": "Taufmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Taufjahr",
+          "FieldName": "Taufjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table17Taufort",
+          "FieldName": "Taufort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Taufpat",
+          "FieldName": "Taufpat",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table17Lebensort",
+          "FieldName": "Lebensort",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table17Sttag",
+          "FieldName": "Sttag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Stmonat",
+          "FieldName": "Stmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Stjahr",
+          "FieldName": "Stjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table17Stort",
+          "FieldName": "Stort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Todesurs",
+          "FieldName": "Todesurs",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Begtag",
+          "FieldName": "Begtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Begmonat",
+          "FieldName": "Begmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Begjahr",
+          "FieldName": "Begjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table17Begort",
+          "FieldName": "Begort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Quelleg",
+          "FieldName": "Quelleg",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table17Quellet",
+          "FieldName": "Quellet",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table17Quelles",
+          "FieldName": "Quelles",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table17Quelleb",
+          "FieldName": "Quelleb",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table17Kommentar",
+          "FieldName": "Kommentar",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table17Lebt",
+          "FieldName": "Lebt",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table17Bild",
+          "FieldName": "Bild",
+          "FieldClass": "TGraphicField",
+          "Size": null
+        },
+        {
+          "Component": "Table17Namex",
+          "FieldName": "Namex",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table17IDNR",
+          "FieldName": "IDNR",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table17Kistat",
+          "FieldName": "Kistat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Hausname",
+          "FieldName": "Hausname",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table17Adr1",
+          "FieldName": "Adr1",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table17Adr2",
+          "FieldName": "Adr2",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table17PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table17Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table17Adrzus",
+          "FieldName": "Adrzus",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table17Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table17Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Indt",
+          "FieldName": "Indt",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table17Alter",
+          "FieldName": "Alter",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table17Tel",
+          "FieldName": "Tel",
+          "FieldClass": "TStringField",
+          "Size": 25
+        },
+        {
+          "Component": "Table17Ema",
+          "FieldName": "Ema",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table17Ur",
+          "FieldName": "Ur",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table17Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table17Rufname",
+          "FieldName": "Rufname",
+          "FieldClass": "TStringField",
+          "Size": 40
+        }
+      ]
+    },
+    {
+      "Component": "Table18",
+      "ComponentClass": "TParadox",
+      "PhysicalIdentity": "MRG.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table18Numr",
+          "FieldName": "Numr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table18Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table18Epnum",
+          "FieldName": "Epnum",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table18Htag",
+          "FieldName": "Htag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Hmonat",
+          "FieldName": "Hmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Hjahr",
+          "FieldName": "Hjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table18Hort",
+          "FieldName": "Hort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table18Trauz",
+          "FieldName": "Trauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table18Satag",
+          "FieldName": "Satag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Samonat",
+          "FieldName": "Samonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Sajahr",
+          "FieldName": "Sajahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table18Saort",
+          "FieldName": "Saort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table18Satrauz",
+          "FieldName": "Satrauz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table18Verbind",
+          "FieldName": "Verbind",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table18Schtag",
+          "FieldName": "Schtag",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Schmonat",
+          "FieldName": "Schmonat",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table18Schjahr",
+          "FieldName": "Schjahr",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table18Schort",
+          "FieldName": "Schort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table18Hqu",
+          "FieldName": "Hqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table18Saqu",
+          "FieldName": "Saqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table18Schqu",
+          "FieldName": "Schqu",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table18Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table18Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        }
+      ]
+    },
+    {
+      "Component": "Table19",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "FKMG.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table19TX",
+          "FieldName": "TX",
+          "FieldClass": "TStringField",
+          "Size": 100
+        },
+        {
+          "Component": "Table19ABK",
+          "FieldName": "ABK",
+          "FieldClass": "TStringField",
+          "Size": 3
+        }
+      ]
+    },
+    {
+      "Component": "Table20",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "FOKO.DBF",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table20GV",
+          "FieldName": "GV",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table20MNR",
+          "FieldName": "MNR",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table20NAME",
+          "FieldName": "NAME",
+          "FieldClass": "TStringField",
+          "Size": 32
+        },
+        {
+          "Component": "Table20BEKENN",
+          "FieldName": "BEKENN",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table20STAAT",
+          "FieldName": "STAAT",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table20PLZ_KZ",
+          "FieldName": "PLZ_KZ",
+          "FieldClass": "TStringField",
+          "Size": 6
+        },
+        {
+          "Component": "Table20ORT",
+          "FieldName": "ORT",
+          "FieldClass": "TStringField",
+          "Size": 24
+        },
+        {
+          "Component": "Table20TER",
+          "FieldName": "TER",
+          "FieldClass": "TStringField",
+          "Size": 3
+        },
+        {
+          "Component": "Table20MK",
+          "FieldName": "MK",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table20VON",
+          "FieldName": "VON",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table20BIS",
+          "FieldName": "BIS",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table20ZTRL",
+          "FieldName": "ZTRL",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table20KORRDAT",
+          "FieldName": "KORRDAT",
+          "FieldClass": "TStringField",
+          "Size": 8
+        },
+        {
+          "Component": "Table20STD",
+          "FieldName": "STD",
+          "FieldClass": "TStringField",
+          "Size": 1
+        }
+      ]
+    },
+    {
+      "Component": "Table21",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "FKHF.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table21Name",
+          "FieldName": "Name",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table21Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table21Zeit",
+          "FieldName": "Zeit",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table21N",
+          "FieldName": "N",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table21Bekenn",
+          "FieldName": "Bekenn",
+          "FieldClass": "TStringField",
+          "Size": 2
+        }
+      ]
+    },
+    {
+      "Component": "Table22",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "nol.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table22No",
+          "FieldName": "No",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table22Zus",
+          "FieldName": "Zus",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        }
+      ]
+    },
+    {
+      "Component": "Table23",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": null,
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": []
+    },
+    {
+      "Component": "Table24",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "VORF.DB",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table24Pp",
+          "FieldName": "Pp",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Lfdn",
+          "FieldName": "Lfdn",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Kek",
+          "FieldName": "Kek",
+          "FieldClass": "TFloatField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Gen",
+          "FieldName": "Gen",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Kekr",
+          "FieldName": "Kekr",
+          "FieldClass": "TFloatField",
+          "Size": null
+        },
+        {
+          "Component": "Table24Geschlecht",
+          "FieldName": "Geschlecht",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table24Hd",
+          "FieldName": "Hd",
+          "FieldClass": "TStringField",
+          "Size": 100
+        }
+      ]
+    },
+    {
+      "Component": "Table25",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "gedh.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table25Z",
+          "FieldName": "Z",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table25N",
+          "FieldName": "N",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table25A",
+          "FieldName": "A",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table26",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "repso.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table26Z",
+          "FieldName": "Z",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table26Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table26Inh",
+          "FieldName": "Inh",
+          "FieldClass": "TStringField",
+          "Size": 255
+        },
+        {
+          "Component": "Table26Inh2",
+          "FieldName": "Inh2",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table26Alt",
+          "FieldName": "Alt",
+          "FieldClass": "TStringField",
+          "Size": 30
+        }
+      ]
+    },
+    {
+      "Component": "Table27",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "alfls.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table27Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table27Dsn",
+          "FieldName": "Dsn",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table27Kn",
+          "FieldName": "Kn",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table27Namvorn",
+          "FieldName": "Namvorn",
+          "FieldClass": "TStringField",
+          "Size": 125
+        },
+        {
+          "Component": "Table27Geb",
+          "FieldName": "Geb",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table27Sterb",
+          "FieldName": "Sterb",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table27Kmt",
+          "FieldName": "Kmt",
+          "FieldClass": "TStringField",
+          "Size": 100
+        }
+      ]
+    },
+    {
+      "Component": "Table28",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "ng2h",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table28N",
+          "FieldName": "N",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Bn",
+          "FieldName": "Bn",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Ep",
+          "FieldName": "Ep",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Elt",
+          "FieldName": "Elt",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Absz",
+          "FieldName": "Absz",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Ord",
+          "FieldName": "Ord",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28K",
+          "FieldName": "K",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table28E",
+          "FieldName": "E",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table28Lf",
+          "FieldName": "Lf",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table29",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "sour",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table29Quelle",
+          "FieldName": "Quelle",
+          "FieldClass": "TStringField",
+          "Size": 150
+        }
+      ]
+    },
+    {
+      "Component": "Table30",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "ng2h",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table30N",
+          "FieldName": "N",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Bn",
+          "FieldName": "Bn",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Ep",
+          "FieldName": "Ep",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Elt",
+          "FieldName": "Elt",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Absz",
+          "FieldName": "Absz",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30Ord",
+          "FieldName": "Ord",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table30K",
+          "FieldName": "K",
+          "FieldClass": "TStringField",
+          "Size": 1
+        },
+        {
+          "Component": "Table30E",
+          "FieldName": "E",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table31",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "adp",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table31Nummer",
+          "FieldName": "Nummer",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table31Av",
+          "FieldName": "Av",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table31Am",
+          "FieldName": "Am",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table32",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "ftab",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table32N",
+          "FieldName": "N",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table32Fv",
+          "FieldName": "Fv",
+          "FieldClass": "TStringField",
+          "Size": 6
+        },
+        {
+          "Component": "Table32Fm",
+          "FieldName": "Fm",
+          "FieldClass": "TStringField",
+          "Size": 6
+        },
+        {
+          "Component": "Table32Fk",
+          "FieldName": "Fk",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table32Fn",
+          "FieldName": "Fn",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table32H",
+          "FieldName": "H",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table32Ho",
+          "FieldName": "Ho",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table32S",
+          "FieldName": "S",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table32So",
+          "FieldName": "So",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table32Sch",
+          "FieldName": "Sch",
+          "FieldClass": "TStringField",
+          "Size": 15
+        },
+        {
+          "Component": "Table32Scho",
+          "FieldName": "Scho",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table32Vb",
+          "FieldName": "Vb",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table32Indj",
+          "FieldName": "Indj",
+          "FieldClass": "TStringField",
+          "Size": 4
+        },
+        {
+          "Component": "Table32Indm",
+          "FieldName": "Indm",
+          "FieldClass": "TStringField",
+          "Size": 2
+        },
+        {
+          "Component": "Table32Hq",
+          "FieldName": "Hq",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table32Sq",
+          "FieldName": "Sq",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table32Schq",
+          "FieldName": "Schq",
+          "FieldClass": "TStringField",
+          "Size": 150
+        },
+        {
+          "Component": "Table32Htz",
+          "FieldName": "Htz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        },
+        {
+          "Component": "Table32Stz",
+          "FieldName": "Stz",
+          "FieldClass": "TStringField",
+          "Size": 120
+        }
+      ]
+    },
+    {
+      "Component": "Table33",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "gede.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table33Typ",
+          "FieldName": "Typ",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table33Inh",
+          "FieldName": "Inh",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        }
+      ]
+    },
+    {
+      "Component": "Table34",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "LOC2.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table34Ort",
+          "FieldName": "Ort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table34PLZ",
+          "FieldName": "PLZ",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table34Land",
+          "FieldName": "Land",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34RegBez",
+          "FieldName": "RegBez",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34FOKO_ID",
+          "FieldName": "FOKO_ID",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table34Bland",
+          "FieldName": "Bland",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34Gde",
+          "FieldName": "Gde",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34Pfr",
+          "FieldName": "Pfr",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34Lkr",
+          "FieldName": "Lkr",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table34Abk",
+          "FieldName": "Abk",
+          "FieldClass": "TStringField",
+          "Size": null
+        },
+        {
+          "Component": "Table34Lg",
+          "FieldName": "Lg",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table34Bg",
+          "FieldName": "Bg",
+          "FieldClass": "TStringField",
+          "Size": 30
+        },
+        {
+          "Component": "Table34Maid",
+          "FieldName": "Maid",
+          "FieldClass": "TStringField",
+          "Size": 10
+        }
+      ]
+    },
+    {
+      "Component": "Table35",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "occ.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table35NN",
+          "FieldName": "NN",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table35Occ",
+          "FieldName": "Occ",
+          "FieldClass": "TStringField",
+          "Size": 70
+        }
+      ]
+    },
+    {
+      "Component": "Table36",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "lfbh.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table36Nr",
+          "FieldName": "Nr",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table36Nm",
+          "FieldName": "Nm",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        },
+        {
+          "Component": "Table36Prob",
+          "FieldName": "Prob",
+          "FieldClass": "TStringField",
+          "Size": 6
+        },
+        {
+          "Component": "Table36Eh",
+          "FieldName": "Eh",
+          "FieldClass": "TStringField",
+          "Size": 70
+        },
+        {
+          "Component": "Table36Ix",
+          "FieldName": "Ix",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table36Nam",
+          "FieldName": "Nam",
+          "FieldClass": "TStringField",
+          "Size": 50
+        },
+        {
+          "Component": "Table36Aus",
+          "FieldName": "Aus",
+          "FieldClass": "TIntegerField",
+          "Size": null
+        }
+      ]
+    },
+    {
+      "Component": "Table37",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "ndh.db",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table37Hofname",
+          "FieldName": "Hofname",
+          "FieldClass": "TStringField",
+          "Size": 100
+        }
+      ]
+    },
+    {
+      "Component": "Table38",
+      "ComponentClass": "TSQLTable",
+      "PhysicalIdentity": "sour2",
+      "IndexName": "",
+      "IndexFieldNames": "",
+      "PersistentFields": [
+        {
+          "Component": "Table38N",
+          "FieldName": "N",
+          "FieldClass": "TAutoIncField",
+          "Size": null
+        },
+        {
+          "Component": "Table38Titel",
+          "FieldName": "Titel",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table38Abk",
+          "FieldName": "Abk",
+          "FieldClass": "TStringField",
+          "Size": 80
+        },
+        {
+          "Component": "Table38Ereig",
+          "FieldName": "Ereig",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table38Von",
+          "FieldName": "Von",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table38Bis",
+          "FieldName": "Bis",
+          "FieldClass": "TStringField",
+          "Size": 10
+        },
+        {
+          "Component": "Table38Standort",
+          "FieldName": "Standort",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table38Publ",
+          "FieldName": "Publ",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table38Rep",
+          "FieldName": "Rep",
+          "FieldClass": "TStringField",
+          "Size": 60
+        },
+        {
+          "Component": "Table38Bem",
+          "FieldName": "Bem",
+          "FieldClass": "TMemoField",
+          "Size": 10
+        },
+        {
+          "Component": "Table38Bestand",
+          "FieldName": "Bestand",
+          "FieldClass": "TStringField",
+          "Size": 40
+        },
+        {
+          "Component": "Table38Med",
+          "FieldName": "Med",
+          "FieldClass": "TStringField",
+          "Size": null
+        }
+      ]
+    }
+  ]
+}

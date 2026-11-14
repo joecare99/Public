@@ -1,4 +1,4 @@
-﻿unit Frm_MemoPadMAIN;
+unit Frm_MemoPadMAIN;
 
 {$IFDEF FPC}
   {$MODE Delphi}

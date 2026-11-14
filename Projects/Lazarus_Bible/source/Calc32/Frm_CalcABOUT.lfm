@@ -25,7 +25,6 @@ object frmCalcAbout: TfrmCalcAbout
     Font.Height = -13
     Font.Name = 'System'
     ParentFont = False
-    TabOrder = 0
     object icoProgramIcon: TImage
       Left = 12
       Height = 85

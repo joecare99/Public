@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_MouseExceptMain in '..\Source\MouseExcept\frm_MouseExceptMain.pas' {MainForm}; 
+  frm_MouseExceptMain in '..\source\MouseExcept\frm_MouseExceptMain.pas' {MainForm}; 
 {$R *.res}
 begin 
   Application.Initialize; 

@@ -1,5 +1,9 @@
 unit Frm_CLIENT;
 
+{ DDE1-Client als FPC-Variante: schickt Text an den Server1
+  (SimpleIPCClient, ServerID 'ddeserver1'). Im Eingabefeld
+  Enter druecken. }
+
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
@@ -12,21 +16,17 @@ uses
 {$ELSE}
   LCLIntf, LCLType, LMessages,
 {$ENDIF}
-  Messages, Classes, Graphics, Controls,
+  Messages, Classes, simpleipc, Graphics, Controls,
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
   TClientForm = class(TForm)
-    DdeClientItem1: TDdeClientItem;
-    DdeClientConv1: TDdeClientConv;
     Edit1: TEdit;
     BitBtn1: TBitBtn;
+    SimpleIPCClient1: TSimpleIPCClient;
     procedure FormCreate(Sender: TObject);
-    procedure DdeClientItem1Change(Sender: TObject);
-    procedure DdeClientConv1Open(Sender: TObject);
-    procedure DdeClientConv1Close(Sender: TObject);
+    procedure Edit1KeyPress(Sender: TObject; var Key: char);
   private
-    FOpen: Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -45,22 +45,18 @@ implementation
 
 procedure TClientForm.FormCreate(Sender: TObject);
 begin
-  DdeClientItem1.DdeItem := 'DdeServerItem1';
+  { Beim ersten Send wird automatisch verbunden. }
 end;
 
-procedure TClientForm.DdeClientConv1Close(Sender: TObject);
+procedure TClientForm.Edit1KeyPress(Sender: TObject; var Key: char);
 begin
-  FOpen := false;
-end;
-
-procedure TClientForm.DdeClientConv1Open(Sender: TObject);
-begin
-  FOpen := true;
-end;
-
-procedure TClientForm.DdeClientItem1Change(Sender: TObject);
-begin
-  Edit1.Text := DdeClientItem1.Text;
+  if Key = #13 then
+  begin
+    if not SimpleIPCClient1.Active then
+      SimpleIPCClient1.Connect;
+    SimpleIPCClient1.SendStringMessage(Edit1.Text);
+    Key := #0;
+  end;
 end;
 
 end.

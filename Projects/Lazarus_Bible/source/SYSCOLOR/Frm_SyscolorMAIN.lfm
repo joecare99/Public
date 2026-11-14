@@ -1,0 +1,569 @@
+object MainForm: TMainForm
+  Left = 138
+  Top = 115
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'System Colors'
+  ClientHeight = 399
+  ClientWidth = 478
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Icon.Data = {
+    0000010001002020100000000000E80200001600000028000000200000004000
+    0000010004000000000080020000000000000000000000000000000000000000
+    000000008000008000000080800080000000800080008080000080808000C0C0
+    C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF009999
+    99999999999999999999999999999FFFFFFFFFFFFF88888888888FFFFFF997FF
+    FFFFFFFF888888888888888FFFF9977FFFFFFFF8444C444888888888FFF99777
+    FFFFFF4444444444488888888FF997777FFF44444C4C4C4C4C48888888F99777
+    77F44444449444444444888888F99777774C444C499C4C4C4C4C488888899777
+    74444444C994C444C444C48888899777744C4C4C499C4C4C4C4C4C8888899777
+    444444C49994CCC4C4C4C44888899777444C4C49999C4C4C4C4C4CA888899774
+    4444C4499999CCCCC4CCC4AA888997744C4C4C4999999C4C4C4C4CAA88899774
+    4444C49999999CCCCCCCC4AA88899774444C4C999999CC4CCC4C4CAA88899774
+    4444C499999CCCCCCCCAAAAA888997744C4C4C994C4C4CCCCCCAAAAA88899774
+    44444499CCCC9CCCCCCAAAAA88F99777444C4C499C499C4CCC4CAAA888F99777
+    4444949999999CCCCCCCC4C88FF99777744C999999999C4C4C433C88FFF99777
+    7444999999999CCCCCC3348FFFF99777774C999999999C4C3C433FFFFFF99777
+    7774999999C999CC3433FFFFFFF9977777774999994C999C4C377FFFFFF99777
+    77777744499444C4477777FFFFF99777777777774C4C4C477777777FFFF99777
+    777777777777777777777777FFF997777777777777777777777777777FF99777
+    77777777777777777777777777F9999999999999999999999999999999990000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000000000000000000000000000
+  }
+  Menu = MainMenu1
+  OldCreateOrder = True
+  Position = poDefault
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Label1: TLabel
+    Left = 12
+    Top = 8
+    Width = 62
+    Height = 16
+    Caption = 'Scroll bar'
+  end
+  object Label2: TLabel
+    Left = 12
+    Top = 28
+    Width = 77
+    Height = 16
+    Caption = 'Background'
+  end
+  object Label3: TLabel
+    Left = 12
+    Top = 48
+    Width = 90
+    Height = 16
+    Caption = 'Active caption'
+  end
+  object Label4: TLabel
+    Left = 12
+    Top = 68
+    Width = 102
+    Height = 16
+    Caption = 'Inactive caption'
+  end
+  object Label6: TLabel
+    Left = 12
+    Top = 108
+    Width = 52
+    Height = 16
+    Caption = 'Window'
+  end
+  object Label5: TLabel
+    Left = 12
+    Top = 88
+    Width = 36
+    Height = 16
+    Caption = 'Menu'
+  end
+  object Label7: TLabel
+    Left = 12
+    Top = 128
+    Width = 93
+    Height = 16
+    Caption = 'Window frame'
+  end
+  object Label8: TLabel
+    Left = 12
+    Top = 148
+    Width = 64
+    Height = 16
+    Caption = 'Menu text'
+  end
+  object Label9: TLabel
+    Left = 12
+    Top = 168
+    Width = 80
+    Height = 16
+    Caption = 'Window text'
+  end
+  object Label10: TLabel
+    Left = 12
+    Top = 188
+    Width = 77
+    Height = 16
+    Caption = 'Caption text'
+  end
+  object Label11: TLabel
+    Left = 12
+    Top = 208
+    Width = 85
+    Height = 16
+    Caption = 'Active border'
+  end
+  object Label12: TLabel
+    Left = 12
+    Top = 228
+    Width = 97
+    Height = 16
+    Caption = 'Inactive border'
+  end
+  object Label13: TLabel
+    Left = 12
+    Top = 248
+    Width = 101
+    Height = 16
+    Caption = 'App work space'
+  end
+  object Label14: TLabel
+    Left = 12
+    Top = 268
+    Width = 58
+    Height = 16
+    Caption = 'Highlight'
+  end
+  object Label15: TLabel
+    Left = 12
+    Top = 288
+    Width = 86
+    Height = 16
+    Caption = 'Highlight text'
+  end
+  object Label16: TLabel
+    Left = 12
+    Top = 308
+    Width = 73
+    Height = 16
+    Caption = 'Button face'
+  end
+  object Label17: TLabel
+    Left = 12
+    Top = 328
+    Width = 96
+    Height = 16
+    Caption = 'Button shadow'
+  end
+  object Label18: TLabel
+    Left = 12
+    Top = 348
+    Width = 59
+    Height = 16
+    Caption = 'Gray text'
+  end
+  object Label19: TLabel
+    Left = 12
+    Top = 368
+    Width = 70
+    Height = 16
+    Caption = 'Button text'
+  end
+  object RedLabel: TLabel
+    Left = 264
+    Top = 28
+    Width = 30
+    Height = 16
+    Caption = '&Red:'
+    FocusControl = RedEdit
+  end
+  object GreenLabel: TLabel
+    Left = 256
+    Top = 60
+    Width = 43
+    Height = 16
+    Caption = '&Green:'
+    FocusControl = GreenEdit
+  end
+  object BlueLabel: TLabel
+    Left = 264
+    Top = 92
+    Width = 34
+    Height = 16
+    Caption = '&Blue:'
+    FocusControl = BlueEdit
+  end
+  object Shape1: TShape
+    Tag = 1
+    Left = 124
+    Top = 8
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape2: TShape
+    Tag = 2
+    Left = 124
+    Top = 28
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape3: TShape
+    Tag = 3
+    Left = 124
+    Top = 48
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape4: TShape
+    Tag = 4
+    Left = 124
+    Top = 68
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape5: TShape
+    Tag = 5
+    Left = 124
+    Top = 88
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape6: TShape
+    Tag = 6
+    Left = 124
+    Top = 108
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape7: TShape
+    Tag = 7
+    Left = 124
+    Top = 128
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape8: TShape
+    Tag = 8
+    Left = 124
+    Top = 148
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape9: TShape
+    Tag = 9
+    Left = 124
+    Top = 168
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape10: TShape
+    Tag = 10
+    Left = 124
+    Top = 188
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape11: TShape
+    Tag = 11
+    Left = 124
+    Top = 208
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape12: TShape
+    Tag = 12
+    Left = 124
+    Top = 228
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape13: TShape
+    Tag = 13
+    Left = 124
+    Top = 248
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape14: TShape
+    Tag = 14
+    Left = 124
+    Top = 268
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape15: TShape
+    Tag = 15
+    Left = 124
+    Top = 288
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape16: TShape
+    Tag = 16
+    Left = 124
+    Top = 308
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape17: TShape
+    Tag = 17
+    Left = 124
+    Top = 328
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape18: TShape
+    Tag = 18
+    Left = 124
+    Top = 348
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object Shape19: TShape
+    Tag = 19
+    Left = 124
+    Top = 368
+    Width = 117
+    Height = 17
+    OnMouseDown = ShapeMouseDown
+  end
+  object ColorLabel: TLabel
+    Left = 252
+    Top = 128
+    Width = 109
+    Height = 16
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'None'
+  end
+  object RedSB: TScrollBar
+    Left = 304
+    Top = 28
+    Width = 121
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 0
+    OnChange = SBChange
+  end
+  object GreenSB: TScrollBar
+    Tag = 1
+    Left = 304
+    Top = 60
+    Width = 121
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 2
+    OnChange = SBChange
+  end
+  object BlueSB: TScrollBar
+    Tag = 2
+    Left = 304
+    Top = 92
+    Width = 121
+    Height = 17
+    LargeChange = 10
+    Max = 255
+    PageSize = 0
+    TabOrder = 4
+    OnChange = SBChange
+  end
+  object RedEdit: TEdit
+    Left = 432
+    Top = 26
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    MaxLength = 3
+    ParentFont = False
+    TabOrder = 1
+    Text = '0'
+    OnChange = EditChange
+  end
+  object GreenEdit: TEdit
+    Tag = 1
+    Left = 432
+    Top = 58
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    MaxLength = 3
+    ParentFont = False
+    TabOrder = 3
+    Text = '0'
+    OnChange = EditChange
+  end
+  object ColorEdit: TEdit
+    Left = 272
+    Top = 152
+    Width = 73
+    Height = 24
+    Color = clBlack
+    Enabled = False
+    ReadOnly = True
+    TabOrder = 6
+  end
+  object BlueEdit: TEdit
+    Tag = 2
+    Left = 432
+    Top = 90
+    Width = 33
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    MaxLength = 3
+    ParentFont = False
+    TabOrder = 5
+    Text = '0'
+    OnChange = EditChange
+  end
+  object SetBitBtn: TBitBtn
+    Left = 268
+    Top = 232
+    Width = 89
+    Height = 29
+    Caption = 'Se&t'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 8
+    OnClick = SetBitBtnClick
+  end
+  object ResetBitBtn: TBitBtn
+    Left = 268
+    Top = 268
+    Width = 89
+    Height = 29
+    Caption = 'R&eset'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 9
+    OnClick = ResetBitBtnClick
+  end
+  object SaveBitBtn: TBitBtn
+    Left = 376
+    Top = 268
+    Width = 89
+    Height = 29
+    Caption = '&Save'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 11
+    OnClick = SaveBitBtnClick
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 376
+    Top = 304
+    Width = 89
+    Height = 29
+    DoubleBuffered = True
+    Kind = bkClose
+    ParentDoubleBuffered = False
+    TabOrder = 12
+  end
+  object ClearBitBtn: TBitBtn
+    Left = 360
+    Top = 168
+    Width = 89
+    Height = 33
+    Caption = 'C&lear'
+    DoubleBuffered = True
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333333333333333333333333333333333333333333333333333333333
+      3333333333333FF3333333333333003333333333333F77F33333333333009033
+      333333333F7737F333333333009990333333333F773337FFFFFF330099999000
+      00003F773333377777770099999999999990773FF33333FFFFF7330099999000
+      000033773FF33777777733330099903333333333773FF7F33333333333009033
+      33333333337737F3333333333333003333333333333377333333333333333333
+      3333333333333333333333333333333333333333333333333333333333333333
+      3333333333333333333333333333333333333333333333333333
+    }
+    NumGlyphs = 2
+    ParentDoubleBuffered = False
+    TabOrder = 7
+    OnClick = ClearBitBtnClick
+  end
+  object ResetAllBitBtn: TBitBtn
+    Left = 268
+    Top = 304
+    Width = 89
+    Height = 29
+    Caption = 'Reset &All'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
+    TabOrder = 10
+    OnClick = ResetAllBitBtnClick
+  end
+  object SaveCheckBox: TCheckBox
+    Left = 284
+    Top = 352
+    Width = 165
+    Height = 17
+    Caption = 'Save settings on exit'
+    TabOrder = 13
+    OnClick = SaveCheckBoxClick
+  end
+  object MainMenu1: TMainMenu
+    Left = 404
+    Top = 208
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      object FileAbout: TMenuItem
+        Caption = '&About SysColor...'
+        OnClick = FileAboutClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = FileExitClick
+      end
+    end
+  end
+end

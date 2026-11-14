@@ -2,7 +2,7 @@ program Telname;
 
 uses
   Forms,
-  Frm_TelnameMAIN in '..\source\TELNAME\Frm_TelnameMAIN.PAS' {MainForm};
+  Frm_TelnameMAIN in '..\source\TELNAME\Frm_TelnameMAIN.pas' {MainForm};
 
 {$R *.RES}
 {$E EXE}

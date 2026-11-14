@@ -19,7 +19,9 @@
 
 unit unt_ExWin;
 
-{$i jedi.inc}
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 
 interface
 
@@ -27,7 +29,14 @@ procedure Execute;
 
 implementation
 
-uses windows;
+uses
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 {** procedure Execute
 

@@ -2,7 +2,7 @@ program Readme;
 
 uses
   Forms,
-  Frm_ReadMeMain in '..\source\README\Frm_ReadMeMain.PAS' {MainForm};
+  Frm_ReadMeMain in '..\source\README\Frm_ReadMeMain.pas' {MainForm};
 
 {$E EXE}
 {$R *.RES}

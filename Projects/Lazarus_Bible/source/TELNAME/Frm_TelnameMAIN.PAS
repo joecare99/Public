@@ -1,13 +1,17 @@
 unit Frm_TelnameMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, Mask;
+  SysUtils, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, Buttons,
+  PropertyChangedEventArgs, TelnameViewModel;
 
 type
-  TMainForm = class(TForm)
+  TfrmTelnameMain = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
     ListBox1: TListBox;
@@ -17,132 +21,138 @@ type
     NameEdit: TEdit;
     NumbEdit: TEdit;
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure NumberBitBtnClick(Sender: TObject);
     procedure NamesBitBtnClick(Sender: TObject);
     procedure NumbEditKeyPress(Sender: TObject; var Key: Char);
     procedure NameEditKeyPress(Sender: TObject; var Key: Char);
+    procedure NameEditChange(Sender: TObject);
+    procedure NumbEditChange(Sender: TObject);
   private
-    { Private declarations }
-    function TelNameToNum(TelName: String): String;
-    procedure ListNames(TelNum: String);
+    FViewModel: TTelnameViewModel;
+    procedure ViewModelPropertyChanged(Sender: TObject;
+      const AArgs: TPropertyChangedEventArgs);
+    procedure ApplyViewModel;
   public
-    { Public declarations }
+    property ViewModel: TTelnameViewModel read FViewModel;
   end;
 
 var
-  MainForm: TMainForm;
+  frmTelnameMain: TfrmTelnameMain;
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
-var
-{ Array of telephone dialog letters }
-  TelDial: array[0 .. 9] of String;
-
-{ Return telephone digit that corresponds to C }
-function DigitToLetter(C: Char): Char;
-var
-  I, J: Integer;
+procedure TfrmTelnameMain.FormCreate(Sender: TObject);
 begin
-  C := Upcase(C);
-  for I := 0 to 9 do
-    for J := 1 to 3 do
-      if (C = TelDial[I][J]) then
-      begin
-        Result := Chr(I + Ord('0'));
-        Exit;
-      end;
-  Result := C;  { Default }
+  ClientWidth := 620;
+  ClientHeight := 440;
+  Position := poScreenCenter;
+  Caption := 'Telefonname und Nummer';
+  Label1.Caption := 'Telefonnummer';
+  Label2.Caption := 'Telefonname';
+  ListBox1.SetBounds(24, 64, 264, 336);
+  ListBox1.Anchors := [akLeft, akTop, akBottom];
+  Label2.SetBounds(320, 40, 130, 17);
+  NameEdit.SetBounds(320, 64, 276, 28);
+  NameEdit.Anchors := [akLeft, akTop, akRight];
+  Label1.SetBounds(320, 132, 130, 17);
+  NumbEdit.SetBounds(320, 156, 276, 28);
+  NumbEdit.Anchors := [akLeft, akTop, akRight];
+  NumberBitBtn.SetBounds(320, 200, 180, 34);
+  NumberBitBtn.Caption := 'In Nummer umwandeln';
+  NumberBitBtn.Glyph.Clear;
+  NamesBitBtn.SetBounds(320, 260, 180, 34);
+  NamesBitBtn.Caption := 'Buchstaben erzeugen';
+  NamesBitBtn.Glyph.Clear;
+  CloseBitBtn.SetBounds(492, 400, 104, 32);
+  CloseBitBtn.Anchors := [akRight, akBottom];
+  FViewModel := TTelnameViewModel.Create;
+  FViewModel.OnPropertyChanged := ViewModelPropertyChanged;
+  NameEdit.OnChange := NameEditChange;
+  NumbEdit.OnChange := NumbEditChange;
+  OnDestroy := FormDestroy;
+  ApplyViewModel;
 end;
 
-{ Return ordinal value of digit character C }
-function ValueOfChar(C: Char): Integer;
+procedure TfrmTelnameMain.FormDestroy(Sender: TObject);
 begin
-  Result := Ord(C) - Ord('0');
+  FreeAndNil(FViewModel);
 end;
 
-{ Return number for a telephone alphabetic name }
-function TMainForm.TelNameToNum(TelName: String): String;
-var
-  I: Integer;
+procedure TfrmTelnameMain.ViewModelPropertyChanged(Sender: TObject;
+  const AArgs: TPropertyChangedEventArgs);
 begin
-  Result := '';
-  for I := 1 to Length(TelName) do
-    Result := Result + DigitToLetter(TelName[I]);
-end;
-
-procedure TMainForm.ListNames(TelNum: String);
-var
-  S: String;  { Temporary string }
-
-  { Find N alphabetic permutations of digits in TelNum }
-  procedure Permute(N: Integer);
-  var
-    I, Digit: Integer;
+  if AArgs.PropertyName = 'Names' then
   begin
-    Digit := ValueOfChar(TelNum[N]);
-    for I := 1 to 3 do
-    begin
-      S[N] := TelDial[Digit][I];  { Insert letter }
-      if (N = Length(TelNum)) then
-        ListBox1.Items.Add(S)     { Add string to ListBox }
-      else
-        Permute(N + 1);  { Call Permute recursively }
+    ListBox1.Items.BeginUpdate;
+    try
+      ListBox1.Items.Assign(FViewModel.Names);
+    finally
+      ListBox1.Items.EndUpdate;
     end;
-  end; { Permute }
-
-begin
-  if Length(TelNum) > 0 then
-  begin
-    S := TelNum;    { Assign to temporary string }
-    Permute(1);     { Start permutations }
   end;
+  if (AArgs.PropertyName = 'ErrorMessage') and
+    (FViewModel.ErrorMessage <> '') then
+    ShowMessage(FViewModel.ErrorMessage);
+  ApplyViewModel;
 end;
 
-{ Initialize global variables }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmTelnameMain.ApplyViewModel;
 begin
-  TelDial[0] := '   ';  TelDial[1] := '   ';
-  TelDial[2] := 'ABC';  TelDial[3] := 'DEF';
-  TelDial[4] := 'GHI';  TelDial[5] := 'JKL';
-  TelDial[6] := 'MNO';  TelDial[7] := 'PRS';
-  TelDial[8] := 'TUV';  TelDial[9] := 'WXY';
+  if FViewModel = nil then
+    Exit;
+  if NameEdit.Text <> FViewModel.NameText then
+    NameEdit.Text := FViewModel.NameText;
+  if NumbEdit.Text <> FViewModel.NumberText then
+    NumbEdit.Text := FViewModel.NumberText;
+  NumberBitBtn.Enabled := FViewModel.ConvertNameCommand.CanExecute;
+  NamesBitBtn.Enabled := FViewModel.GenerateNamesCommand.CanExecute;
 end;
 
-{ Do Number button click }
-procedure TMainForm.NumberBitBtnClick(Sender: TObject);
+procedure TfrmTelnameMain.NameEditChange(Sender: TObject);
 begin
-  NumbEdit.Text := TelNameToNum(NameEdit.Text);
+  if FViewModel <> nil then
+    FViewModel.NameText := NameEdit.Text;
+end;
+
+procedure TfrmTelnameMain.NumbEditChange(Sender: TObject);
+begin
+  if FViewModel <> nil then
+    FViewModel.NumberText := NumbEdit.Text;
+end;
+
+procedure TfrmTelnameMain.NumberBitBtnClick(Sender: TObject);
+begin
+  FViewModel.ConvertNameCommand.Execute;
   NumbEdit.SetFocus;
 end;
 
-{ Do Names button click }
-procedure TMainForm.NamesBitBtnClick(Sender: TObject);
+procedure TfrmTelnameMain.NamesBitBtnClick(Sender: TObject);
 begin
-  ListBox1.Clear;
-  ListNames(NumbEdit.Text);
+  FViewModel.GenerateNamesCommand.Execute;
   ListBox1.SetFocus;
 end;
 
-{ Click Names button for Enter key in Number Edit object }
-procedure TMainForm.NumbEditKeyPress(Sender: TObject;
-  var Key: Char);
+procedure TfrmTelnameMain.NumbEditKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
   begin
-    NamesBitBtn.Click;
+    FViewModel.GenerateNamesCommand.Execute;
     Key := #0;
   end;
 end;
 
-{ Click Number button for Enter key in Name Edit object }
-procedure TMainForm.NameEditKeyPress(Sender: TObject;
-  var Key: Char);
+procedure TfrmTelnameMain.NameEditKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
   begin
-    NumberBitBtn.Click;
+    FViewModel.ConvertNameCommand.Execute;
     Key := #0;
   end;
 end;

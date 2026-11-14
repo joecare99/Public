@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <!-- Modernes .NET verwenden -->
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Versteckt redundante Output-Ordner in der VS-Ansicht -->
+    <BaseIntermediateOutputPath>.vs\obj\</BaseIntermediateOutputPath>
+    <OutputPath>.vs\bin\</OutputPath>
+  </PropertyGroup>
+
+</Project>

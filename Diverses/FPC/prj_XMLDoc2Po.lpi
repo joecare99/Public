@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="prj_XMLDoc2Po"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -24,7 +26,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="1"/>
+      <BuildNr Value="6"/>
       <StringTable CompanyName="JCSoft" FileDescription="Extracts strings from XMLDoc into PO-files and on reverse substitutes them" InternalName="XMLDoc2Po"/>
     </VersionInfo>
     <BuildModes Count="1">
@@ -46,10 +48,13 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="BaseUnits"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="6">
       <Unit0>
@@ -85,6 +90,7 @@
       <Unit5>
         <Filename Value="C:\unt_cdate.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="unt_CDate"/>
       </Unit5>
     </Units>
   </ProjectOptions>
@@ -100,6 +106,9 @@
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

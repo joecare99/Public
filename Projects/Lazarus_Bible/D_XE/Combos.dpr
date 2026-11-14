@@ -2,7 +2,7 @@ program Combos;
 
 uses
   Forms,
-  Frm_CombosMAIN in '..\source\COMBOS\Frm_CombosMAIN.PAS' {MainForm};
+  Frm_CombosMAIN in '..\source\COMBOS\Frm_CombosMAIN.pas' {MainForm};
 
 {$R *.RES}
 {$E EXE}

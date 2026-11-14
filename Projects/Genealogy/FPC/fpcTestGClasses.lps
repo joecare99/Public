@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="fpcTestGClasses.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\Test_Gen\testgdate.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestGDate"/>
+        <IsVisibleTab Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\Test_Gen\testgplace.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="testGPlace"/>
+        <UsageCount Value="20"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\Components\GBaseClasses.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit3>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default"/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

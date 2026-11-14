@@ -72,6 +72,60 @@ end;
 
 {$else}
 
+uses Forms;
+
+{ Unter Linux gibt es die WinAPI nicht - die Demo bleibt in der Lehre
+  erhalten, indem sie die Formulare DES laufenden Programms aufzaehlt:
+  Screen.Forms entspricht der EnumWindows-Liste, die Handles sind
+  dieselben THandle-Werte, die die LCL intern fuehrt. }
+function FindWindow(Windowname: String): THandle;
+var
+  I: Integer;
+begin
+  result := 0;
+  for I := 0 to Screen.FormCount - 1 do
+    if CompareText(Screen.Forms[i].Name, Windowname) = 0 then
+      Exit(THandle(Screen.Forms[i].Handle));
+end;
+
+procedure FillWindowlist(const aList: TStrings);
+var
+  I: Integer;
+begin
+  for I := 0 to Screen.FormCount - 1 do
+    aList.AddObject(Screen.Forms[i].Caption,
+      TObject(PtrInt(Screen.Forms[i].Handle)));
+end;
+
+function GetWindowName(aHDL: THandle): String;
+var
+  I: Integer;
+begin
+  result := '';
+  for I := 0 to Screen.FormCount - 1 do
+    if THandle(Screen.Forms[i].Handle) = aHDL then
+      Exit(Screen.Forms[i].Caption);
+end;
+
+function GetClassName(aHDL: THandle): String;
+var
+  I: Integer;
+begin
+  result := '';
+  for I := 0 to Screen.FormCount - 1 do
+    if THandle(Screen.Forms[i].Handle) = aHDL then
+      Exit(Screen.Forms[i].ClassName);
+end;
+
+procedure ActivateWindow(aHDL: THandle);
+var
+  I: Integer;
+begin
+  for I := 0 to Screen.FormCount - 1 do
+    if THandle(Screen.Forms[i].Handle) = aHDL then
+      Screen.Forms[i].Show;
+end;
+
 {$endif}
 
 end.

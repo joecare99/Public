@@ -1,9 +1,9 @@
-object MainForm: TMainForm
+object frmConstraintMain: TfrmConstraintMain
   Left = 192
   Height = 214
   Top = 132
   Width = 318
-  Caption = 'MainForm'
+  Caption = 'Constraint'
   ClientHeight = 214
   ClientWidth = 318
   Color = clBtnFace

@@ -1,4 +1,4 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
 			<ProjectGuid>{aae79947-9d5d-4165-8a1e-b2eb4cc59614}</ProjectGuid>
 			<MainSource>Calc32.dpr</MainSource>
@@ -93,10 +93,10 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CALC32\Frm_CALC.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CALC.pas">
 				<Form>CalcForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\CALC32\Frm_CalcABOUT.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CalcABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
 			<DCCReference Include="..\source\Strings\StrUtilsExt.pas"/>

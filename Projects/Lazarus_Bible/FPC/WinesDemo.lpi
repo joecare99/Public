@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="WinesDemo"/>
+      <UseAppBundle Value="False"/>
+    </General>
+    <BuildModes Count="1"><Item1 Name="Default" Default="True"/></BuildModes>
+    <Units Count="2">
+      <Unit0><Filename Value="WinesDemo.lpr"/><IsPartOfProject Value="True"/></Unit0>
+      <Unit1>
+        <Filename Value="../source/WinesDemo/Frm_WinesDemoMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_WinesDemoMain"/>
+      </Unit1>
+    </Units>
+    <RequiredPackages Count="2">
+      <Item1><PackageName Value="LCL"/></Item1>
+      <Item2><PackageName Value="DBParadox"/></Item2>
+    </RequiredPackages>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target><Filename Value="../bin/$(TargetCPU)-$(TargetOS)/WinesDemo$(ExeExt)"/></Target>
+    <SearchPaths>
+      <IncludeFiles Value="../source/WinesDemo;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/WinesDemo;../source/_core/services;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
+    </SearchPaths>
+    <Parsing><SyntaxOptions><SyntaxMode Value="Delphi"/></SyntaxOptions></Parsing>
+  </CompilerOptions>
+</CONFIG>

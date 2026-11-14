@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PageTabMain in '..\Source\PageTab\Frm_PageTabMain.pas' {MainForm}; 
+  Frm_PageTabMain in '..\source\PageTab\Frm_PageTabMain.pas' {MainForm}; 
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

@@ -1,8 +1,8 @@
 program DMTest; 
 uses 
   Forms, 
-  Frm_DMTestMain in '..\Source\DMTest\Frm_DMTestMain.pas' {MainForm}, 
-  Frm_Module1 in '..\Source\DMTest\Frm_Module1.pas' {DataModule1: TDataModule}; 
+  Frm_DMTestMain in '..\source\DMTest\Frm_DMTestMain.pas' {MainForm}, 
+  Frm_Module1 in '..\source\DMTest\Frm_Module1.pas' {DataModule1: TDataModule}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

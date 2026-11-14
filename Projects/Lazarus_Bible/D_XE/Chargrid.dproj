@@ -52,10 +52,10 @@
 			<DelphiCompile Include="Chargrid.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CHARGRID\Frm_CharGridMAIN.PAS">
+			<DCCReference Include="..\source\CharGrid\Frm_CharGridMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\CHARGRID\Frm_CharGridABOUT.PAS">
+			<DCCReference Include="..\source\CharGrid\Frm_CharGridABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

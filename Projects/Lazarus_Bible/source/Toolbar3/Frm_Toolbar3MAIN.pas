@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, Buttons, ExtCtrls, StdCtrls;
 
 type
-  TMainForm = class(TForm)
+  TfrmToolbar3Main = class(TForm)
     FloatingToolbar: TPanel;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
@@ -51,7 +51,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmToolbar3Main: TfrmToolbar3Main;
 
 implementation
 
@@ -62,20 +62,20 @@ implementation
 {$ENDIF}
 
 {- Initialize }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmToolbar3Main.FormCreate(Sender: TObject);
 begin
   Dragging := False;
 end;
 
 {- Display number of selected SpeedButton in toolbar }
-procedure TMainForm.SpeedButton1Click(Sender: TObject);
+procedure TfrmToolbar3Main.SpeedButton1Click(Sender: TObject);
 begin
   ShowMessage('You selected button number ' +
     IntToStr(TSpeedButton(Sender).Tag));
 end;
 
 {- Start dragging operation on clicking in toolbar }
-procedure TMainForm.FloatingToolbarMouseDown(Sender: TObject;
+procedure TfrmToolbar3Main.FloatingToolbarMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if AllowDraggingCB.Checked then
@@ -88,7 +88,7 @@ begin
 end;
 
 {- End dragging operation on releasing mouse button }
-procedure TMainForm.FormMouseUp(Sender: TObject; Button: TMouseButton;
+procedure TfrmToolbar3Main.FormMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   if Dragging then      { Ignore if not dragging }
@@ -100,7 +100,7 @@ begin
 end;
 
 {- Move toolbar if dragging operation in progress }
-procedure TMainForm.FormMouseMove(Sender: TObject; Shift:
+procedure TfrmToolbar3Main.FormMouseMove(Sender: TObject; Shift:
   TShiftState; X, Y: Integer);
 begin
   if Dragging then      { Ignore if not dragging }
@@ -108,14 +108,14 @@ begin
 end;
 
 {- Move the toolbar to mouse location X and Y }
-procedure TMainForm.MoveToolbar(X, Y: Integer);
+procedure TfrmToolbar3Main.MoveToolbar(X, Y: Integer);
 begin
   FloatingToolbar.Left := X - XOffset; // Adjust location of
   FloatingToolbar.Top := Y - YOffset;  // panel top-left corner
 end;
 
 {- Reset toolbar to startup location }
-procedure TMainForm.ResetBitBtnClick(Sender: TObject);
+procedure TfrmToolbar3Main.ResetBitBtnClick(Sender: TObject);
 begin
   with FloatingToolbar do
   begin
@@ -126,7 +126,7 @@ begin
   AllowDraggingCB.Checked := True;
 end;
 
-procedure TMainForm.AllowDraggingCBClick(Sender: TObject);
+procedure TfrmToolbar3Main.AllowDraggingCBClick(Sender: TObject);
 begin
   with Label1 do
     Enabled := not Enabled;

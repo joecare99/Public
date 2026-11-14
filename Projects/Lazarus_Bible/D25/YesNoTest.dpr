@@ -1,7 +1,7 @@
 program YesNoTest;
 uses
   Forms,
-  Frm_YesNoMAIN in '..\Source\YESNO\Frm_YesNoMAIN.PAS' {frmYesNoMain},
+  Frm_YesNoMAIN in '..\source\YESNO\Frm_YesNoMAIN.pas' {frmYesNoMain},
   Frm_YesNo in '..\source\YESNO\Frm_YesNo.pas';
 
 {$R *.RES}

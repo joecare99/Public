@@ -65,6 +65,7 @@ type
 
 var
   frmCharGridMain: TfrmCharGridMain;
+  frmAboutForm: TfrmAboutForm;
 
 implementation
 
@@ -175,6 +176,8 @@ end;
 { Help|About menu command }
 procedure TfrmCharGridMain.mniHelpAboutClick(Sender: TObject);
 begin
+  if frmAboutForm = nil then
+    frmAboutForm := TfrmAboutForm.Create(Self);
   frmAboutForm.ShowModal;
 end;
 

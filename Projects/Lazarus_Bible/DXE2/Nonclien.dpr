@@ -1,7 +1,7 @@
 program Nonclien; 
 uses 
   Forms, 
-  frm_NonClientMAIN in '..\Source\NONCLIEN\frm_NonClientMAIN.PAS' {MainForm}; 
+  frm_NonClientMAIN in '..\source\NONCLIEN\frm_NonClientMAIN.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

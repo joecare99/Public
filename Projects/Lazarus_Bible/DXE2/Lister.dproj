@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Lister.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\LISTER\Frm_ListerMAIN.PAS">
+			<DCCReference Include="..\source\LISTER\Frm_ListerMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_PicDialogsMain in '..\Source\PicDialogs\Frm_PicDialogsMain.pas' {MainForm}; 
+  Frm_PicDialogsMain in '..\source\PicDialogs\Frm_PicDialogsMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

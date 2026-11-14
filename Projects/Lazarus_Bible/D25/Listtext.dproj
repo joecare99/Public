@@ -84,7 +84,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\LISTTEXT\Frm_ListTextMAIN.PAS">
+        <DCCReference Include="..\source\LISTTEXT\Frm_ListTextMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

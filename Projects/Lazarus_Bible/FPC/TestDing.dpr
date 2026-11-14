@@ -10,7 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_TestDingMain in '..\source\DING\Frm_TestDingMain.pas' {MainForm};
+  Frm_TestDingMain in '..\source\DING\Frm_TestDingMain.pas' {MainForm},
+  Ctrl_DingButton in '..\source\DING\Ctrl_DingButton.pas';
 {$E EXE}
 
 begin

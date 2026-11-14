@@ -50,21 +50,13 @@ object MainForm: TMainForm
     Kind = bkClose
     TabOrder = 1
   end
-  object DdeClientConv1: TDdeClientConv
-    OnClose = DdeClientConv1Close
-    OnOpen = DdeClientConv1Open
-    Left = 128
-    Top = 24
-  end
-  object DdeClientItem1: TDdeClientItem
-    Text = '$00A8F181  '
-    Lines.Strings = (
-      '$00A8F181  '
-    )
-    DdeConv = DdeClientConv1
-    OnChange = DdeClientItem1Change
-    Left = 216
-    Top = 24
+  object SimpleIPCServer1: TSimpleIPCServer
+    Active = True
+    ServerID = 'ddecolor'
+    Global = False
+    OnMessage = SimpleIPCServer1Message
+    left = 128
+    top = 24
   end
   object Timer1: TTimer
     Interval = 500

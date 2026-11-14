@@ -1,0 +1,935 @@
+object Form1: TForm1
+  Left = 192
+  Height = 867
+  Top = 92
+  Width = 1257
+  BorderStyle = bsSingle
+  Caption = 'AHNENWIN 5.2'
+  ClientHeight = 809
+  ClientWidth = 1257
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -15
+  Font.Name = 'MS Sans Serif'
+  KeyPreview = True
+  Menu = MainMenu1
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.0.10.0'
+  object Shape1: TShape
+    Left = 0
+    Height = 1
+    Top = 4
+    Width = 1055
+  end
+  object Label9: TLabel
+    Left = 15
+    Height = 27
+    Top = 245
+    Width = 58
+    Caption = 'Beruf'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label14: TLabel
+    Left = 16
+    Height = 27
+    Top = 367
+    Width = 48
+    Caption = 'geb.'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    ParentColor = False
+    ParentFont = False
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 864
+    Height = 27
+    Top = 3
+    Width = 31
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'MS Sans Serif'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+      7700333333337777777733333333008088003333333377F73377333333330088
+      88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+      000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+      FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+      99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+      99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+      99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+      93337FFFF7737777733300000033333333337777773333333333
+    }
+    NumGlyphs = 2
+    ParentFont = False
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 1272
+    Top = 0
+    Width = 1885
+    TabStop = False
+    ActivePage = TabSheet2
+    Align = alClient
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabIndex = 1
+    TabOrder = 0
+    OnExit = PageControl1Exit
+    object TabSheet1: TTabSheet
+      Caption = 'Auswahl'
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      inline PersonSelectionFrame: TAHW52PersonSelectionFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Bearbeiten'
+      ClientHeight = 1230
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 1
+      ParentFont = False
+      inline PersonEditFrame: TAHW52PersonEditFrame
+        Height = 1230
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1230
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Details'
+      ClientHeight = 1259
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 2
+      ParentFont = False
+      inline PersonDetailsFrame: TAHW52PersonDetailsFrame
+        Height = 1259
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1259
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Ehen u.a.'
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 3
+      ParentFont = False
+      inline RelationshipsFrame: TAHW52RelationshipsFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Geschwister'
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 4
+      ParentFont = False
+      inline SiblingsFrame: TAHW52SiblingsFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet6: TTabSheet
+      Caption = 'Text'
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 5
+      ParentFont = False
+      inline PersonTextFrame: TAHW52PersonTextFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet7: TTabSheet
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 6
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabVisible = False
+      inline RelatedPersonSelectionFrame: TAHW52RelatedPersonSelectionFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet8: TTabSheet
+      Caption = 'Adresse'
+      ClientHeight = 1259
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 7
+      ParentFont = False
+      inline AddressFrame: TAHW52AddressFrame
+        Height = 1259
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1259
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+    object TabSheet9: TTabSheet
+      Caption = 'Bilder'
+      ClientHeight = 1255
+      ClientWidth = 1877
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ImageIndex = 8
+      ParentFont = False
+      inline PicturesFrame: TAHW52PicturesFrame
+        Height = 1255
+        Width = 1877
+        Align = alClient
+        ClientHeight = 1255
+        ClientWidth = 1877
+        TabOrder = 0
+      end
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 949
+    Top = 293
+    object Datei1: TMenuItem
+      Caption = 'Datei'
+      object GebDatumTaufdatum1: TMenuItem
+        Caption = 'Geb.-Datum -> Taufdatum'
+        Enabled = False
+        Visible = False
+        OnClick = GebDatumTaufdatum1Click
+      end
+      object N32: TMenuItem
+        Caption = '-'
+        Enabled = False
+        Visible = False
+      end
+      object Datenlschen1: TMenuItem
+        Caption = 'alle Daten löschen'
+        HelpContext = 1
+        OnClick = Datenlschen1Click
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object IDSatznr1: TMenuItem
+        Caption = 'ID = Satznr.'
+        HelpContext = 2
+        OnClick = IDSatznr1Click
+      end
+      object IDslschen1: TMenuItem
+        Caption = 'IDs löschen'
+        HelpContext = 3
+        OnClick = IDslschen1Click
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object Datenschutzein1: TMenuItem
+        Caption = 'Datenschutz ein'
+        HelpContext = 56
+        OnClick = Datenschutzein1Click
+      end
+      object Datenschutzaus1: TMenuItem
+        Caption = 'Datenschutz aus'
+        HelpContext = 56
+        OnClick = Datenschutzaus1Click
+      end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object Druckereinstellung1: TMenuItem
+        Caption = 'Druckereinstellung'
+        HelpContext = 19
+        OnClick = Druckereinstellung1Click
+      end
+      object Bildschirmdrucken1: TMenuItem
+        Caption = 'Bildschirm drucken'
+        HelpContext = 40
+        ShortCut = 32848
+        OnClick = Bildschirmdrucken1Click
+      end
+      object N7: TMenuItem
+        Caption = '-'
+      end
+      object ExcelExport1: TMenuItem
+        Caption = 'Excel-Export'
+        HelpContext = 401
+        OnClick = ExcelExport1Click
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object EhenKiordnen1: TMenuItem
+        Caption = 'Ehen/Kinder ordnen'
+        HelpContext = 111
+        OnClick = EhenKiordnen1Click
+      end
+      object N28: TMenuItem
+        Caption = '-'
+      end
+      object beenden1: TMenuItem
+        Caption = 'beenden'
+        ShortCut = 32856
+        OnClick = beenden1Click
+      end
+    end
+    object Datenaustausch1: TMenuItem
+      Caption = 'Datenaustausch'
+      object AHNENDOSeinlesen1: TMenuItem
+        Caption = 'AHNEN DOS einlesen'
+        Enabled = False
+        HelpContext = 2
+        Visible = False
+        OnClick = AHNENDOSeinlesen1Click
+      end
+      object OSBeinlesen1: TMenuItem
+        Caption = 'OSB einlesen'
+        Enabled = False
+        HelpContext = 3
+        Visible = False
+        OnClick = OSBeinlesen1Click
+      end
+      object N22: TMenuItem
+        Caption = '-'
+        Visible = False
+      end
+      object GedcomDateischreiben1: TMenuItem
+        Caption = 'Gedcom-Datei schreiben'
+        HelpContext = 5
+        OnClick = GedcomDateischreiben1Click
+      end
+      object GedcomDateieinlesen1: TMenuItem
+        Caption = 'Gedcom-Datei einlesen'
+        HelpContext = 400
+        OnClick = GedcomDateieinlesen1Click
+      end
+      object N18: TMenuItem
+        Caption = '-'
+      end
+      object GedcomXMLschreiben1: TMenuItem
+        Caption = 'Gedcom-XML schreiben'
+        Enabled = False
+        Visible = False
+      end
+      object GedcomXMLeinlesen1: TMenuItem
+        Caption = 'Gedcom-XML einlesen'
+        Enabled = False
+        Visible = False
+      end
+      object N19: TMenuItem
+        Caption = '-'
+        Visible = False
+      end
+      object FOKODateierstellen1: TMenuItem
+        Caption = 'FOKO-Datei erstellen'
+        HelpContext = 7
+        OnClick = FOKODateierstellen1Click
+      end
+      object FOKODateieditieren1: TMenuItem
+        Caption = 'FOKO-Datei editieren'
+        HelpContext = 16
+        OnClick = FOKODateieditieren1Click
+      end
+      object N14: TMenuItem
+        Caption = '-'
+      end
+      object inyTafelerstellen1: TMenuItem
+        Caption = 'Tiny-Tafel erstellen'
+        HelpContext = 6
+        OnClick = inyTafelerstellen1Click
+      end
+      object N13: TMenuItem
+        Caption = '-'
+      end
+      object Adressendateischreiben1: TMenuItem
+        Caption = 'Adressendatei schreiben'
+        HelpContext = 38
+        OnClick = Adressendateischreiben1Click
+      end
+    end
+    object Datensatz1: TMenuItem
+      Caption = 'Datensatz'
+      object neu1: TMenuItem
+        Caption = 'neu'
+        HelpContext = 402
+        OnClick = neu1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object schen1: TMenuItem
+        Caption = 'löschen'
+        HelpContext = 403
+        OnClick = schen1Click
+      end
+    end
+    object Suchen1: TMenuItem
+      Caption = 'Suchen'
+      object DatensatzNr1: TMenuItem
+        Caption = 'Datensatz-Nr.'
+        HelpContext = 9
+        OnClick = DatensatzNr1Click
+      end
+      object N8: TMenuItem
+        Caption = '-'
+      end
+      object GlobaleSuche1: TMenuItem
+        Caption = 'Globale Suche'
+        HelpContext = 22
+        OnClick = GlobaleSuche1Click
+      end
+      object N27: TMenuItem
+        Caption = '-'
+      end
+      object Partnersuche1: TMenuItem
+        Caption = 'Partnersuche'
+        HelpContext = 57
+        OnClick = Partnersuche1Click
+      end
+      object LetzteSuche1: TMenuItem
+        Caption = 'Letzte Suche'
+        object anzeigen1: TMenuItem
+          Caption = 'anzeigen'
+          HelpContext = 58
+          OnClick = anzeigen1Click
+        end
+        object drucken1: TMenuItem
+          Caption = 'drucken'
+          HelpContext = 58
+          OnClick = drucken1Click
+        end
+      end
+      object N20: TMenuItem
+        Caption = '-'
+      end
+      object Verwandtschaft1: TMenuItem
+        Caption = 'Verwandtschaft'
+        OnClick = Verwandtschaft1Click
+      end
+      object Vettern1: TMenuItem
+        Caption = 'Vettern'
+        OnClick = Vettern1Click
+      end
+      object Basen1: TMenuItem
+        Caption = 'Basen'
+        OnClick = Basen1Click
+      end
+    end
+    object Listen1: TMenuItem
+      Caption = 'Listen'
+      object Familienblatt2: TMenuItem
+        Caption = 'Familienblatt'
+        HelpContext = 12
+        OnClick = Familienblatt2Click
+      end
+      object FamilienblattHTML1: TMenuItem
+        Caption = 'Familienblatt HTML'
+        HelpContext = 404
+        OnClick = FamilienblattHTML1Click
+      end
+      object FamGrafik1: TMenuItem
+        Caption = 'Familien-Grafik'
+        HelpContext = 405
+        OnClick = FamGrafik1Click
+      end
+      object N15: TMenuItem
+        Caption = '-'
+      end
+      object OFBDruck1: TMenuItem
+        Caption = 'OFB-Druck'
+        HelpContext = 20
+        OnClick = OFBDruck1Click
+      end
+      object N11: TMenuItem
+        Caption = '-'
+      end
+      object Namensliste1: TMenuItem
+        Caption = 'Namensliste'
+        object allePersonen1: TMenuItem
+          Caption = 'alle Personen'
+          HelpContext = 60
+          OnClick = allePersonen1Click
+        end
+        object frbestimmtenOrt1: TMenuItem
+          Caption = 'für bestimmten Ort'
+          HelpContext = 58
+          OnClick = frbestimmtenOrt1Click
+        end
+      end
+      object Ortsliste1: TMenuItem
+        Caption = 'Ortsliste'
+        object allePersonen2: TMenuItem
+          Caption = 'alle Personen'
+          HelpContext = 61
+          OnClick = allePersonen2Click
+        end
+        object Probandenname1: TMenuItem
+          Caption = 'Probandenname'
+          HelpContext = 28
+          OnClick = Probandenname1Click
+        end
+      end
+      object Quellenliste1: TMenuItem
+        Caption = 'Quellenliste'
+        Visible = False
+        OnClick = Quellenliste1Click
+      end
+      object N12: TMenuItem
+        Caption = '-'
+      end
+      object NamensListeeditieren1: TMenuItem
+        Caption = 'Namens-Verwaltung'
+        HelpContext = 69
+        OnClick = NamensListeeditieren1Click
+      end
+      object OrtsDatei1: TMenuItem
+        Caption = 'Orts-Verwaltung'
+        HelpContext = 70
+        OnClick = OrtsDatei1Click
+      end
+      object BerufeVerwaltung1: TMenuItem
+        Caption = 'Berufe-Verwaltung'
+        HelpContext = 32
+        OnClick = BerufeVerwaltung1Click
+      end
+      object QuellenListeeditieren1: TMenuItem
+        Caption = 'Quellen-Verwaltung'
+        HelpContext = 71
+        OnClick = QuellenListeeditieren1Click
+      end
+      object HofnamenVerwaltung1: TMenuItem
+        Caption = 'Hofnamen-Verwaltung'
+        OnClick = HofnamenVerwaltung1Click
+      end
+      object N26: TMenuItem
+        Caption = '-'
+      end
+      object Listenaktualisieren1: TMenuItem
+        Caption = 'Listen aktualisieren'
+        HelpContext = 14
+        OnClick = Listenaktualisieren1Click
+      end
+    end
+    object Vorfahren1: TMenuItem
+      Caption = 'Vorfahren'
+      object Listen2: TMenuItem
+        Caption = 'Listen'
+        HelpContext = 49
+        OnClick = Listen2Click
+      end
+      object N21: TMenuItem
+        Caption = '-'
+      end
+      object Spitzenahnen1: TMenuItem
+        Caption = 'Spitzenahnen'
+        object Proband1: TMenuItem
+          Caption = 'Proband'
+          HelpContext = 407
+          OnClick = Proband1Click
+        end
+        object allePersonen3: TMenuItem
+          Caption = 'alle Personen'
+          HelpContext = 406
+          OnClick = allePersonen3Click
+        end
+      end
+      object Basisahnen1: TMenuItem
+        Caption = 'Basisahnen'
+        HelpContext = 408
+        OnClick = Basisahnen1Click
+      end
+      object N25: TMenuItem
+        Caption = '-'
+      end
+      object Grafikalt1: TMenuItem
+        Caption = 'Grafik I'
+        HelpContext = 54
+        OnClick = Grafikalt1Click
+      end
+      object Grafik1: TMenuItem
+        Caption = 'Grafik II'
+        HelpContext = 72
+        OnClick = Grafik1Click
+      end
+      object Neu2: TMenuItem
+        Caption = '-'
+      end
+    end
+    object Nachfahren1: TMenuItem
+      Caption = 'Nachfahren'
+      object Liste1: TMenuItem
+        Caption = 'Listen'
+        HelpContext = 15
+        OnClick = Liste1Click
+      end
+      object geschachtelt1: TMenuItem
+        Caption = 'geschachtelt'
+        HelpContext = 15
+        OnClick = geschachtelt1Click
+      end
+      object N24: TMenuItem
+        Caption = '-'
+      end
+      object GrafikI1: TMenuItem
+        Caption = 'Grafik I'
+        HelpContext = 55
+        OnClick = GrafikI1Click
+      end
+      object Grafikneu1: TMenuItem
+        Caption = 'Grafik II'
+        HelpContext = 73
+        OnClick = Grafikneu1Click
+      end
+    end
+    object Kalender1: TMenuItem
+      Caption = 'Kalender'
+      object GregorianischerKalender1: TMenuItem
+        Caption = 'Gregorianischer Kalender'
+        HelpContext = 8
+        OnClick = GregorianischerKalender1Click
+      end
+      object FrzRevolutionskalender1: TMenuItem
+        Caption = 'Frz.Revolutionskalender'
+        HelpContext = 29
+        OnClick = FrzRevolutionskalender1Click
+      end
+      object Osterberechnung1: TMenuItem
+        Caption = 'Osterberechnung'
+        HelpContext = 10
+        OnClick = Osterberechnung1Click
+      end
+      object ChristlicheNamenstage1: TMenuItem
+        Caption = 'Christliche Namenstage'
+        HelpContext = 11
+        OnClick = ChristlicheNamenstage1Click
+      end
+    end
+    object Bilder1: TMenuItem
+      Caption = 'Bilder'
+      object einfgen1: TMenuItem
+        Caption = 'einfügen'
+        HelpContext = 52
+        OnClick = einfgen1Click
+      end
+      object entfernen1: TMenuItem
+        Caption = 'entfernen'
+        HelpContext = 23
+        OnClick = entfernen1Click
+      end
+      object N17: TMenuItem
+        Caption = '-'
+      end
+      object bmpjpg1: TMenuItem
+        Caption = 'bmp -> jpg'
+        HelpContext = 24
+        OnClick = bmpjpg1Click
+      end
+      object N16: TMenuItem
+        Caption = '-'
+      end
+      object alleBilderentfernen1: TMenuItem
+        Caption = 'alle Bilder entfernen'
+        HelpContext = 25
+        OnClick = alleBilderentfernen1Click
+      end
+      object bernehmen1: TMenuItem
+        Caption = 'übernehmen'
+        HelpContext = 31
+        OnClick = bernehmen1Click
+      end
+    end
+    object Datenprfung1: TMenuItem
+      Caption = 'Datenprüfung'
+      object Prfen1: TMenuItem
+        Caption = 'Plausibilitäts-Prüfung'
+        HelpContext = 42
+        OnClick = Prfen1Click
+      end
+      object N29: TMenuItem
+        Caption = '-'
+      end
+      object Einzelpersonen1: TMenuItem
+        Caption = 'Einzelpersonen '
+        HelpContext = 63
+        OnClick = Einzelpersonen1Click
+      end
+      object DoppelteEintrge1: TMenuItem
+        Caption = 'Mehrfach-Einträge'
+        HelpContext = 64
+        OnClick = DoppelteEintrge1Click
+      end
+      object N30: TMenuItem
+        Caption = '-'
+      end
+      object nichtverknpfteBeziehungen1: TMenuItem
+        Caption = 'nicht verknüpfte Beziehungen'
+        HelpContext = 65
+        OnClick = NichtverknpfteBeziehungen1Click
+      end
+    end
+    object Filter1: TMenuItem
+      Caption = 'Filter'
+      object ID1: TMenuItem
+        Caption = 'ID'
+        HelpContext = 66
+        OnClick = ID1Click
+      end
+      object Name1: TMenuItem
+        Caption = 'Name'
+        HelpContext = 66
+        OnClick = Name1Click
+      end
+      object Hausname1: TMenuItem
+        Caption = 'Hofname'
+        HelpContext = 66
+        OnClick = Hausname1Click
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object aus1: TMenuItem
+        Caption = 'aus'
+        OnClick = aus1Click
+      end
+    end
+    object Info1: TMenuItem
+      Caption = 'Info'
+      object Hilfe1: TMenuItem
+        Caption = 'Hilfe'
+        ShortCut = 112
+        OnClick = Hilfe1Click
+      end
+      object N10: TMenuItem
+        Caption = '-'
+      end
+      object zuAHNENWIN1: TMenuItem
+        Caption = 'zu AHNENWIN'
+        OnClick = zuAHNENWIN1Click
+      end
+      object N31: TMenuItem
+        Caption = '-'
+      end
+      object Fenstertitelndern1: TMenuItem
+        Caption = 'Fenstertitel ändern'
+        OnClick = Fenstertitelndern1Click
+      end
+    end
+    object Datensicherung1: TMenuItem
+      Caption = 'Sicherung'
+      object Datensichern1: TMenuItem
+        Caption = 'Daten sichern'
+        HelpContext = 108
+        OnClick = Datensichern1Click
+      end
+      object SicherungsDateieinlesen2: TMenuItem
+        Caption = 'Sicherungs-Datei einlesen'
+        OnClick = SicherungsDateieinlesen1Click
+      end
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    Filter = 'Gedcom-Dateien (*.ged)|*.ged|Textdateien (*.txt)|*.txt|Sicherungs-Dateien (*.hej)|*.hej'
+    Left = 747
+    Top = 295
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'AHNEN-Dateien|ahnen.dbf|OSB-Dateien|kibu.dbf|Gedcom-Dateien|*.ged|Text-Dateien|*.txt|Sicherungs-Datei|*.hej|Bilder übernehmen|*.bmp; *.jpg'
+    Left = 789
+    Top = 295
+  end
+  object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
+    Left = 896
+    Top = 249
+    object Verbindungeinfgen1: TMenuItem
+      Caption = 'Verbindung einfügen'
+      OnClick = Verbindungeinfgen1Click
+    end
+    object Verbindunglschen1: TMenuItem
+      Caption = 'Verbindung entfernen'
+      OnClick = Verbindunglschen1Click
+    end
+  end
+  object PopupMenu2: TPopupMenu
+    OnPopup = PopupMenu2Popup
+    Left = 939
+    Top = 249
+    object Kindereinfgen1: TMenuItem
+      Caption = 'Kind einfügen'
+      HelpContext = 23
+      OnClick = Kindereinfgen1Click
+    end
+    object Kinderentfernen1: TMenuItem
+      Caption = 'Kind entfernen'
+      HelpContext = 37
+      OnClick = Kinderentfernen1Click
+    end
+  end
+  object PopupMenu3: TPopupMenu
+    OnPopup = PopupMenu3Popup
+    Left = 853
+    Top = 293
+    object Vatereinfgen1: TMenuItem
+      Caption = 'Vater einfügen'
+      OnClick = Vatereinfgen1Click
+    end
+    object Vaterentfernen1: TMenuItem
+      Caption = 'Vater entfernen'
+      OnClick = Vaterentfernen1Click
+    end
+  end
+  object PopupMenu4: TPopupMenu
+    OnPopup = PopupMenu4Popup
+    Left = 896
+    Top = 293
+    object Muttereinfgen1: TMenuItem
+      Caption = 'Mutter einfügen'
+      OnClick = Muttereinfgen1Click
+    end
+    object Mutterentfernen1: TMenuItem
+      Caption = 'Mutter entfernen'
+      OnClick = Mutterentfernen1Click
+    end
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 811
+    Top = 245
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 693
+    Top = 288
+  end
+  object DataSource1: TDataSource
+    Left = 683
+    Top = 245
+  end
+  object DataSource2: TDataSource
+    Left = 897
+    Top = 208
+  end
+  object DataSource4: TDataSource
+    Left = 791
+    Top = 208
+  end
+  object PrinterSetupDialog1: TPrinterSetupDialog
+    Left = 640
+    Top = 288
+  end
+  object ColorDialog1: TColorDialog
+    Color = clBlack
+    CustomColors.Strings = (
+      'ColorA=000000'
+      'ColorB=000080'
+      'ColorC=008000'
+      'ColorD=008080'
+      'ColorE=800000'
+      'ColorF=800080'
+      'ColorG=808000'
+      'ColorH=808080'
+      'ColorI=C0C0C0'
+      'ColorJ=0000FF'
+      'ColorK=00FF00'
+      'ColorL=00FFFF'
+      'ColorM=FF0000'
+      'ColorN=FF00FF'
+      'ColorO=FFFF00'
+      'ColorP=FFFFFF'
+      'ColorQ=C0DCC0'
+      'ColorR=F0CAA6'
+      'ColorS=F0FBFF'
+      'ColorT=A4A0A0'
+    )
+    Left = 747
+    Top = 352
+  end
+end

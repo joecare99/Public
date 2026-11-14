@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmOptionsMain: TfrmOptionsMain
   Left = 298
   Top = 176
   Caption = 'Options Dialog Demonstration'
@@ -11,7 +11,6 @@ object MainForm: TMainForm
   Font.Name = 'System'
   Font.Style = []
   OnCreate = FormCreate
-  PixelsPerInch = 96
   object TabbedNotebook1: TPageControl
     Left = 0
     Top = 0

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="UpDownDemo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\UpDownDemo\frm_UpDownDemoMain.pas">
+			<DCCReference Include="..\source\UpDownDemo\Frm_UpDownDemoMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

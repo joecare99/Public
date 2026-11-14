@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Objlist.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\OBJLIST\Frm_ObjListMAIN.PAS">
+			<DCCReference Include="..\source\OBJLIST\Frm_ObjListMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

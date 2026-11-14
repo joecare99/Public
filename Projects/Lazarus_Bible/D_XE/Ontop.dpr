@@ -2,7 +2,7 @@ program Ontop;
 
 uses
   Forms,
-  Frm_OntopMAIN in '..\source\ONTOP\Frm_OntopMAIN.PAS' {MainForm};
+  Frm_OntopMAIN in '..\source\ONTOP\Frm_OntopMAIN.pas' {MainForm};
 
 {$R *.RES}
 

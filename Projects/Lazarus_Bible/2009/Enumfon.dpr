@@ -1,7 +1,7 @@
 program Enumfon; 
 uses 
   Forms, 
-  Frm_EnumFonMAIN in '..\Source\ENUMFON\Frm_EnumFonMAIN.PAS' {MainForm}; 
+  Frm_EnumFonMAIN in '..\source\ENUMFON\Frm_EnumFonMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

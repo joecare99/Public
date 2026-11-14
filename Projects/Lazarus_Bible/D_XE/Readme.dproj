@@ -50,7 +50,7 @@
 			<DelphiCompile Include="Readme.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\README\Frm_ReadMeMain.PAS">
+			<DCCReference Include="..\source\README\Frm_ReadMeMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

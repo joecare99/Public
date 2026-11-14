@@ -2,7 +2,7 @@ program Bitview;
 
 uses
   Forms,
-  Frm_BitViewMAIN in '..\source\BITVIEW\Frm_BitViewMAIN.PAS' {frmBitmapViewerMain};
+  Frm_BitViewMAIN in '..\source\Bitview\Frm_BitViewMAIN.pas' {frmBitmapViewerMain};
 
 {$R *.RES}
 {$E EXE}

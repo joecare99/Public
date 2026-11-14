@@ -38,16 +38,16 @@
 			<DelphiCompile Include="Fontsamp.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\FONTSAMP\frm_fontsampMAIN.PAS">
+			<DCCReference Include="..\source\FontSamp\frm_fontsampMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\FONTSAMP\Frm_fontSampABOUT.PAS">
+			<DCCReference Include="..\source\FontSamp\Frm_fontSampABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\FONTSAMP\PREVIEW.PAS">
+			<DCCReference Include="..\source\FontSamp\PREVIEW.pas">
 				<Form>PreviewForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\FONTSAMP\DRAWPAGE.PAS"/>
+			<DCCReference Include="..\source\FontSamp\DRAWPAGE.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

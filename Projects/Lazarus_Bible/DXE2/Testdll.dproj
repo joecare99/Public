@@ -93,7 +93,7 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\COLORDLL\Frm_TestDLLMAIN.PAS">
+			<DCCReference Include="..\source\COLORDLL\Frm_TestDLLMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

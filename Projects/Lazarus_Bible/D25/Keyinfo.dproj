@@ -84,7 +84,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\KEYINFO\Frm_KeyInfoMAIN.PAS">
+        <DCCReference Include="..\source\KEYINFO\Frm_KeyInfoMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

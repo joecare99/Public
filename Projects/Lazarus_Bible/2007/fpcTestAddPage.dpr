@@ -4,9 +4,9 @@ program fpcTestAddPage;
 
   Delphi DUnit-Testprojekt
   -------------------------
-  Dieses Projekt enthält das DUnit-Test-Framework und die GUI/Konsolen-Test-Runner.
-  Fügen Sie den Bedingungen in den Projektoptionen "CONSOLE_TESTRUNNER" hinzu,
-  um den Konsolen-Test-Runner zu verwenden.  Ansonsten wird standardmäßig der
+  Dieses Projekt enthï¿½lt das DUnit-Test-Framework und die GUI/Konsolen-Test-Runner.
+  Fï¿½gen Sie den Bedingungen in den Projektoptionen "CONSOLE_TESTRUNNER" hinzu,
+  um den Konsolen-Test-Runner zu verwenden.  Ansonsten wird standardmï¿½ï¿½ig der
   GUI-Test-Runner verwendet.
 
 }
@@ -24,7 +24,7 @@ uses
   GuiTestRunner,
   TextTestRunner,
   tst_AddPage in '..\source\tests\tst_AddPage.pas',
-  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.PAS';
+  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.pas';
 
 begin
   Application.Initialize;

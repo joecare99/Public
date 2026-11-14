@@ -47,7 +47,7 @@
 			<DelphiCompile Include="Compstrm.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\COMPSTRM\frm_CompStrmMAIN.PAS">
+			<DCCReference Include="..\source\COMPSTRM\frm_CompStrmMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

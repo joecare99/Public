@@ -84,10 +84,10 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\SPLASHIN\Frm_SplashinMAIN.PAS">
+        <DCCReference Include="..\source\SPLASHIN\Frm_SplashinMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
-        <DCCReference Include="..\Source\SPLASHIN\Frm_SPLASH.PAS">
+        <DCCReference Include="..\source\SPLASHIN\Frm_SPLASH.pas">
             <Form>SplashForm</Form>
         </DCCReference>
         <None Include="ModelSupport_Splashin\default.txaPackage"/>

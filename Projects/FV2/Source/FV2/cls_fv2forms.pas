@@ -1,63 +1,87 @@
-unit cls_Fv2Forms;
+unit cls_fv2forms;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, Views, cls_fv2Controls;
+  Classes, SysUtils, Types, cls_fv2controls, cls_fv2canvas;
 
 type
-
-{ TForm }
-
-TForm=class(TComponent)
+  TForm = class(TControl)
   private
-    FAlign: TAlignment;
-    FFVGroup:TGroup;
-    FAction: TBasicAction;
-    FActiveControl: TControl;
-
-    FAllowDropFiles: boolean;
-  procedure SetAction(AValue: TBasicAction);
-  procedure SetActiveControl(AValue: TControl);
-  procedure SetAlign(AValue: TAlignment);
-
-  procedure SetAllowDropFiles(AValue: boolean);
-        published
-        Property Action:TBasicAction read FAction write SetAction;
-        Property ActiveControl:TControl read FActiveControl write SetActiveControl;
-        Property Align:TAlignment read FAlign write SetAlign;
-        Property AllowDropFiles:boolean read FAllowDropFiles write SetAllowDropFiles;
-
-      end;
+    FCaption: string;
+    FOnShow: TNotifyEvent;
+    FOnClose: TNotifyEvent;
+    FShown: Boolean;
+    FOnCloseRequest: TNotifyEvent;
+    procedure SetCaption(const AValue: string);
+  public
+    constructor Create(AOwner: TComponent); override;
+    procedure Show;
+    procedure Close;
+    procedure RequestClose;
+    procedure Paint(ACanvas: TFvCanvas); override;
+    property Caption: string read FCaption write SetCaption;
+    property Shown: Boolean read FShown;
+    property OnShow: TNotifyEvent read FOnShow write FOnShow;
+    property OnClose: TNotifyEvent read FOnClose write FOnClose;
+    property OnCloseRequest: TNotifyEvent read FOnCloseRequest write FOnCloseRequest;
+  end;
 
 implementation
 
-{ TForm }
-
-procedure TForm.SetAction(AValue: TBasicAction);
+constructor TForm.Create(AOwner: TComponent);
 begin
-  if FAction=AValue then Exit;
-  FAction:=AValue;
+  inherited Create(AOwner);
+  Bounds := Rect(0, 0, 80, 25);
 end;
 
-procedure TForm.SetActiveControl(AValue: TControl);
+procedure TForm.SetCaption(const AValue: string);
 begin
-  if FActiveControl=AValue then Exit;
-  FActiveControl:=AValue;
+  if FCaption = AValue then
+    Exit;
+  FCaption := AValue;
+  Invalidate;
 end;
 
-procedure TForm.SetAlign(AValue: TAlignment);
+procedure TForm.Show;
 begin
-  if FAlign=AValue then Exit;
-  FAlign:=AValue;
+  if FShown then
+    Exit;
+  FShown := True;
+  if not Visible then
+    Visible := True;
+  if Assigned(FOnShow) then
+    FOnShow(Self);
+  Invalidate;
 end;
 
-procedure TForm.SetAllowDropFiles(AValue: boolean);
+procedure TForm.Close;
 begin
-  if FAllowDropFiles=AValue then Exit;
-  FAllowDropFiles:=AValue;
+  if not FShown then
+    Exit;
+  if Assigned(FOnClose) then
+    FOnClose(Self);
+  FShown := False;
+  Visible := False;
+end;
+
+procedure TForm.RequestClose;
+begin
+  if Assigned(FOnCloseRequest) then
+    FOnCloseRequest(Self)
+  else
+    Close;
+end;
+
+procedure TForm.Paint(ACanvas: TFvCanvas);
+begin
+  if not FShown then
+    Exit;
+  inherited Paint(ACanvas);
+  if Assigned(ACanvas) then
+    ACanvas.TextOut(Bounds.Left, Bounds.Top, FCaption);
 end;
 
 end.

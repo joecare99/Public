@@ -96,7 +96,7 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\dde1\Frm_SERVER.PAS">
+			<DCCReference Include="..\source\DDE1\Frm_SERVER.pas">
 				<Form>ServerForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

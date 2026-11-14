@@ -23,7 +23,7 @@ uses
   GuiTestRunner,
   TextTestRunner,
   tst_AddPage in '..\source\tests\tst_AddPage.pas',
-  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.PAS' {frmAddPageMain};
+  Frm_AddpageMAIN in '..\source\Addpage\Frm_AddpageMAIN.pas' {frmAddPageMain};
 
 begin
   Application.Initialize;

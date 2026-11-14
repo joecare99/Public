@@ -23,7 +23,7 @@ procedure DrawOnePage(
 
 implementation
 
-uses frm_FontsampMain;
+uses frm_fontsampMAIN;
 
 var
   C: TCanvas;

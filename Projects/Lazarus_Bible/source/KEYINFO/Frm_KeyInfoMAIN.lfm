@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object MainForm: TMainKeyInfoForm
   Left = 199
   Height = 244
   Top = 99

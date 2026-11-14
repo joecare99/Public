@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Findrepl.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\FINDREPL\Frm_FindReplMAIN.PAS">
+			<DCCReference Include="..\source\FINDREPL\Frm_FindReplMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

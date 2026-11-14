@@ -75,7 +75,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\WinesEntry\Frm_WinesEntryMain.pas">
+        <DCCReference Include="..\source\WinesEntry\Frm_WinesEntryMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Hello.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\HELLO\frm_HelloMAIN.PAS">
+			<DCCReference Include="..\source\HELLO\view\Frm_HelloMAIN.pas">
 				<Form>Form1</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

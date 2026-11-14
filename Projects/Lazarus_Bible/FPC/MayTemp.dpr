@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MayMain in '..\Source\MayTemp\Frm_MayMain.pas' {MainForm}; 
+  Frm_MayMain in '..\source\MayTemp\Frm_MayMain.pas' {MainForm}; 
 
 {$E EXE}
 {$R *.res}

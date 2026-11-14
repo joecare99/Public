@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, Menus;
 
 type
-  TMainForm = class(TForm)
+  TMainOntopForm = class(TForm)
     MainMenu1: TMainMenu;
     Demo1: TMenuItem;
     Stayontop1: TMenuItem;
@@ -30,7 +30,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  MainForm: TMainOntopForm;
 
 implementation
 
@@ -40,12 +40,12 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TMainOntopForm.Exit1Click(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.Stayontop1Click(Sender: TObject);
+procedure TMainOntopForm.Stayontop1Click(Sender: TObject);
 begin
   with Sender as TMenuItem do
   begin

@@ -1,7 +1,7 @@
 program StatusOD; 
 uses 
   Forms, 
-  Frm_StatusODMain in '..\Source\StatusOD\Frm_StatusODMain.pas' {MainForm}; 
+  Frm_StatusODMain in '..\source\StatusOD\Frm_StatusODMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

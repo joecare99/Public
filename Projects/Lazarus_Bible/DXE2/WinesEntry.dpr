@@ -1,7 +1,7 @@
 program WinesEntry; 
 uses 
   Forms, 
-  Frm_WinesEntryMain in '..\Source\WinesEntry\Frm_WinesEntryMain.pas' {MainForm}; 
+  Frm_WinesEntryMain in '..\source\WinesEntry\Frm_WinesEntryMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

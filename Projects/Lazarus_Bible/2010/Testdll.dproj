@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Testdll.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\COLORDLL\Frm_TestDLLMAIN.PAS">
+			<DCCReference Include="..\source\COLORDLL\Frm_TestDLLMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

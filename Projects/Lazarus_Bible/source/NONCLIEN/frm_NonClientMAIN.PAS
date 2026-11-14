@@ -10,7 +10,7 @@ uses
 {$IFnDEF FPC}
   Windows,
 {$ELSE}
-  LCLIntf, LCLType,
+  LCLIntf, LCLType, LMessages,
 {$ENDIF}
   SysUtils, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls;
@@ -40,10 +40,19 @@ procedure TMainForm.WndProc(var Message: TMessage);
 begin
   with Message do
   case Msg of
+    {$IFnDEF FPC}
     wm_NCLButtonDblClk:
       ShowMessage('Nonclient left button click');  // Obsolete!
     wm_NCRButtonDblClk:
       ShowMessage('Nonclient right button click');
+    {$ELSE}
+    LM_NCLBUTTONDBLCLK:
+      ShowMessage('Nonclient left button double click');
+    LM_NCHITTEST:
+      ;
+    LM_NCPAINT:
+      ;
+    {$ENDIF}
   end;
   inherited WndProc(Message);
 end;

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Spinbutt.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\SPINBUTT\Frm_SpinButtonMAIN.PAS">
+			<DCCReference Include="..\source\SPINBUTT\Frm_SpinButtonMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

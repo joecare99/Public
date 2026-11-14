@@ -19,7 +19,8 @@ uses
     tst_CapsLock,
     tst_CapsLock2,
     tst_CharGrid,
-    tst_Something;
+    tst_Something,
+    tst_Telname;
 
 {$R *.res}
 

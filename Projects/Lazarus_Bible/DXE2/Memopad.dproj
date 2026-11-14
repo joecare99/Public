@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Memopad.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MEMOPAD\Frm_MemoPadMAIN.PAS">
+			<DCCReference Include="..\source\MEMOPAD\Frm_MemoPadMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

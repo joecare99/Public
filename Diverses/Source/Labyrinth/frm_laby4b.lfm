@@ -10,9 +10,9 @@ object FrmLaby4: TFrmLaby4
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.10.0'
   object pbxResult: TPaintBox
     Left = 0
     Height = 771
@@ -28,6 +28,7 @@ object FrmLaby4: TFrmLaby4
     Align = alRight
     ClientHeight = 771
     ClientWidth = 107
+    ParentBackground = False
     TabOrder = 0
     object pbxPreview: TPaintBox
       Left = 1
@@ -45,6 +46,7 @@ object FrmLaby4: TFrmLaby4
       Align = alClient
       ClientHeight = 528
       ClientWidth = 105
+      ParentBackground = False
       TabOrder = 0
       object btnGenerate: TBitBtn
         Left = 15
@@ -52,8 +54,8 @@ object FrmLaby4: TFrmLaby4
         Top = 56
         Width = 75
         Caption = 'Generate'
-        OnClick = btnGenerateClick
         TabOrder = 1
+        OnClick = btnGenerateClick
       end
       object btnDraw: TBitBtn
         Left = 16
@@ -61,8 +63,8 @@ object FrmLaby4: TFrmLaby4
         Top = 88
         Width = 75
         Caption = 'Draw'
-        OnClick = btnDrawClick
         TabOrder = 2
+        OnClick = btnDrawClick
       end
       object btnPrint: TBitBtn
         Left = 15
@@ -70,8 +72,8 @@ object FrmLaby4: TFrmLaby4
         Top = 120
         Width = 75
         Caption = 'Print'
-        OnClick = btnPrintClick
         TabOrder = 3
+        OnClick = btnPrintClick
       end
       object edtLabySize: TSpinEdit
         Left = 15
@@ -81,9 +83,9 @@ object FrmLaby4: TFrmLaby4
         Increment = 5
         MaxValue = 80
         MinValue = 8
-        OnChange = edtLabySizeChange
         TabOrder = 0
         Value = 21
+        OnChange = edtLabySizeChange
       end
       object lblLabySize: TLabel
         Left = 15

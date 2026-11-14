@@ -1,5 +1,8 @@
 unit StrUtilsExt;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 function IntToBin(Value: Longint; Digits: Integer): String;overload;

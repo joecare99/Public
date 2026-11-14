@@ -42,7 +42,7 @@
 			<DelphiCompile Include="StatusOD.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\StatusOD\Frm_StatusODMain.pas">
+			<DCCReference Include="..\source\StatusOD\Frm_StatusODMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

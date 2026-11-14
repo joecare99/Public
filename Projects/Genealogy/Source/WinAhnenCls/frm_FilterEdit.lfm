@@ -1,0 +1,106 @@
+object FrmFilterEdit: TFrmFilterEdit
+  Left = 667
+  Height = 394
+  Top = 37
+  Width = 638
+  Caption = 'FrmFilterEdit'
+  ClientHeight = 394
+  ClientWidth = 638
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '2.0.12.0'
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 638
+    Align = alTop
+    Caption = 'Panel1'
+    ParentFont = False
+    TabOrder = 0
+  end
+  object ScrollBox1: TScrollBox
+    Left = 0
+    Height = 294
+    Top = 50
+    Width = 638
+    HorzScrollBar.Page = 542
+    VertScrollBar.Page = 290
+    Align = alClient
+    ClientHeight = 290
+    ClientWidth = 617
+    ParentFont = False
+    TabOrder = 1
+    object cbxHejConcType: TComboBox
+      Left = 5
+      Height = 23
+      Top = 29
+      Width = 100
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 0
+      Text = 'cbxHejConcType'
+    end
+    object ComboBox2: TComboBox
+      Left = 111
+      Height = 23
+      Top = 5
+      Width = 100
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 1
+      Text = 'ComboBox2'
+    end
+    object ComboBox3: TComboBox
+      Left = 225
+      Height = 23
+      Top = 5
+      Width = 100
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 2
+      Text = 'ComboBox3'
+    end
+    object ComboBox4: TComboBox
+      Left = 345
+      Height = 23
+      Top = 5
+      Width = 100
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 3
+      Text = 'ComboBox4'
+    end
+    object Edit1: TEdit
+      Left = 462
+      Height = 23
+      Top = 5
+      Width = 80
+      ParentFont = False
+      TabOrder = 4
+      Text = 'Edit1'
+    end
+    object Memo1: TMemo
+      Left = 11
+      Height = 154
+      Top = 141
+      Width = 326
+      Lines.Strings = (
+        'Memo1'
+      )
+      ParentFont = False
+      ScrollBars = ssAutoVertical
+      TabOrder = 5
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 50
+    Top = 344
+    Width = 638
+    Align = alBottom
+    Caption = 'Panel2'
+    ParentFont = False
+    TabOrder = 2
+  end
+end

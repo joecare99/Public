@@ -9,7 +9,7 @@
       <SearchPaths>
         <IncludeFiles Value="..\Source\DBConfig"/>
         <OtherUnitFiles Value="..\Source\DBConfig"/>
-        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)\$(BuildMode)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

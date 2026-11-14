@@ -64,7 +64,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\EXCEPT1\Frm_Except1MAIN.PAS">
+        <DCCReference Include="..\source\EXCEPT1\Frm_Except1MAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

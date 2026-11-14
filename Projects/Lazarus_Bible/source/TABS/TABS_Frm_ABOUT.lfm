@@ -1,0 +1,119 @@
+object AboutForm: TAboutForm
+  Left = 238
+  Top = 104
+  ActiveControl = OKButton
+  BorderStyle = bsDialog
+  Caption = 'About'
+  ClientHeight = 213
+  ClientWidth = 298
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Position = poScreenCenter
+  object Panel1: TPanel
+    Left = 8
+    Top = 8
+    Width = 281
+    Height = 161
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    object ProgramIcon: TImage
+      Left = 8
+      Top = 8
+      Width = 65
+      Height = 57
+      Picture.Data = {
+        07544269746D6170F6000000424DF60000000000000076000000280000001000
+        000010000000010004000000000080000000120B0000120B0000100000000000
+        0000000000000000800000800000008080008000000080008000808000007F7F
+        7F00BFBFBF000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+        FF00555555777555555555555500075775555557550000500755557005888000
+        0075570870088078007555787887087777755550880FF0800007708080888F70
+        88077088F0708F7888077000F0778080005555508F0008800755557878FF8877
+        7075570870080088075555707588807075555557550007555555555555777555
+        5555
+      }
+      Stretch = True
+      IsControl = True
+    end
+    object ProductName: TLabel
+      Left = 88
+      Top = 16
+      Width = 29
+      Height = 13
+      Caption = 'Tabs'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Version: TLabel
+      Left = 88
+      Top = 40
+      Width = 65
+      Height = 13
+      Caption = 'Version 2.0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Copyright: TLabel
+      Left = 8
+      Top = 80
+      Width = 252
+      Height = 13
+      Caption = 'Copyright '#169' 1991, 1995. 1998 by Tom Swan'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Comments: TLabel
+      Left = 8
+      Top = 104
+      Width = 249
+      Height = 39
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Converted from the original program version 1.0 written in Turbo Vision (Turbo Pascal).'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      WordWrap = True
+      IsControl = True
+    end
+  end
+  object OKButton: TBitBtn
+    Left = 111
+    Top = 178
+    Width = 77
+    Height = 27
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    Kind = bkOK
+    Margin = 2
+    ParentFont = False
+    Spacing = -1
+    TabOrder = 1
+    IsControl = True
+  end
+end

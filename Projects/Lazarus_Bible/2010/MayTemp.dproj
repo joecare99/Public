@@ -44,7 +44,7 @@
 			<DelphiCompile Include="MayTemp.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MayTemp\Frm_MayMain.pas">
+			<DCCReference Include="..\source\MayTemp\Frm_MayMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

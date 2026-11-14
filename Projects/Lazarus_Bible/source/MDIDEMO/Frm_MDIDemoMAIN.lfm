@@ -33,7 +33,6 @@ object MainForm: TMainForm
     Top = 0
     Width = 987
     Align = alClient
-    TabOrder = 1
   end
   object MainMenu1: TMainMenu
     left = 60

@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmGlyphListMain }
 
-  TMainForm = class(TForm)
+  TfrmGlyphListMain = class(TForm)
     PathLabel: TLabel;
     BitBtn1: TBitBtn;
     GlyphList: TStringGrid;
@@ -34,7 +34,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmGlyphListMain: TfrmGlyphListMain;
 
 implementation
 
@@ -98,7 +98,7 @@ const
 
 // Reads all glyph bitmaps and stores their filenames and
 // images in the GlyphList TStringGrid object.
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmGlyphListMain.FormCreate(Sender: TObject);
 var
   SearchRec: TSearchRec; { Directory scan result record }
   K: Integer; { while-loop control variable }
@@ -157,7 +157,7 @@ end;
 
 // Frees memory occupied by all glyph bitmaps. The TStringGrid
 // object does NOT do this automatically.
-procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmGlyphListMain.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   I: Integer;
 begin
@@ -169,7 +169,7 @@ end;
 // Draw each glyph bitmap. The TStringGrid object is smart
 // enough to draw its filename text objects with no further
 // help. This code draws only the bitmaps in the second column.
-procedure TMainForm.GlyphListDrawCell(Sender: TObject; Col, Row: Integer;
+procedure TfrmGlyphListMain.GlyphListDrawCell(Sender: TObject; Col, Row: Integer;
   Rect: TRect; State: TGridDrawState);
 var
   Bitmap: TBitmap;

@@ -14,7 +14,7 @@ uses
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls
-      {$IFDEF FPC}, BGRASpriteAnimation, ImageList{$ELSE} {$endif};
+      {$IFDEF FPC}, SpriteAnim{$ELSE} {$endif};
 
 type
 
@@ -22,7 +22,7 @@ type
 
   TfrmCoolDemoMain = class(TForm)
     {$IFDEF FPC}
-    Animate1: TBGRASpriteAnimation;
+    Animate1: TSpriteAnimation;
     Image1: TImage;
     Panel1: TPanel;
     {$ELSE}
@@ -49,6 +49,9 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+{$IFDEF FPC}
+    function BuildSprite: TBitmap;
+{$ENDIF}
   public
     { Public declarations }
   end;
@@ -61,8 +64,35 @@ implementation
 {$IFnDEF FPC}
   {$R *.dfm}
 {$ELSE}
-  uses BGRAAnimatedGif,BGRABitmapTypes,BGRABitmap;
   {$R *.lfm}
+{$ENDIF}
+
+{$IFDEF FPC}
+{ Baut einen horizontalen Sprite-Streifen (8 Frames) prozedural. }
+function TfrmCoolDemoMain.BuildSprite: TBitmap;
+const
+  Frames = 8;
+  Cell = 16;
+var
+  I: Integer;
+begin
+  Result := TBitmap.Create;
+  Result.Width := Frames * Cell;
+  Result.Height := Cell;
+  Result.Canvas.Brush.Color := clBlack;
+  Result.Canvas.FillRect(0, 0, Result.Width, Result.Height);
+  for I := 0 to Frames - 1 do
+  begin
+    case I mod 4 of
+      0: Result.Canvas.Brush.Color := clRed;
+      1: Result.Canvas.Brush.Color := clLime;
+      2: Result.Canvas.Brush.Color := clBlue;
+    else
+      Result.Canvas.Brush.Color := clYellow;
+    end;
+    Result.Canvas.Ellipse(I * Cell + 3, 3, I * Cell + Cell - 3, Cell - 3);
+  end;
+end;
 {$ENDIF}
 
 resourcestring
@@ -101,40 +131,19 @@ begin
 end;
 
 procedure TfrmCoolDemoMain.FormCreate(Sender: TObject);
+begin
  {$IFDEF FPC}
-  var
-   TempGif: TBGRAAnimatedGif;
-   TempBitmap: TBitmap;
-   n: integer;
-    {$ENDIF}
-
- begin
- {$IFDEF FPC}
-   TempGif := TBGRAAnimatedGif.Create;
-   try
-   TempGif.LoadFromResourceName(HINSTANCE,'COOL');
-   TempBitmap := TBitmap.Create;
-   TempBitmap.Width:=TempGif.Width * TempGif.Count;
-   TempBitmap.Height:=TempGif.Height;
-   TempBitmap.PixelFormat:=pf32bit;
-
-   for n := 0 to TempGif.Count do
-   begin
-     TempGif.CurrentImage := n;
-     TempBitmap.Canvas.Draw(TempGif.Width * n, 0, TempGif.Bitmap);
-   end;
-
-   Animate1.Sprite.Assign(TempBitmap);
-   Animate1.SpriteCount := TempGif.Count;
-
-   finally
-
-     freeandnil(TempGif);
-     freeandnil(TempBitmap);
-   end;
+   { Animate1 zur Laufzeit erzeugen (BGRASpriteAnimation ist nicht
+     verfuegbar); die Animation wird prozedural erzeugt. }
+   Animate1 := TSpriteAnimation.Create(Self);
+   Animate1.Parent := Panel1;
+   Animate1.Align := alClient;
+   Animate1.Sprite := BuildSprite;
+   Animate1.SpriteCount := 8;
+   Animate1.AnimSpeed := 120;
    Image1.Picture.Bitmap.Assign(CoolBar1.Bitmap);
    ToolBar1.ControlStyle:=ToolBar1.ControlStyle-[csOpaque]+[csParentBackground];
-    {$ENDIF}
+ {$ENDIF}
 end;
 
 procedure TfrmCoolDemoMain.FormShow(Sender: TObject);

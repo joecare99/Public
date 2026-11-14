@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Keycount.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\KEYCOUNT\Frm_KeyCountMAIN.PAS">
+			<DCCReference Include="..\source\KEYCOUNT\Frm_KeyCountMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

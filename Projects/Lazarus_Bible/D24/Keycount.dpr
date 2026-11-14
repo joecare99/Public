@@ -1,7 +1,7 @@
 program Keycount; 
 uses 
   Forms, 
-  Frm_KeyCountMAIN in '..\Source\KEYCOUNT\Frm_KeyCountMAIN.PAS' {MainForm}; 
+  Frm_KeyCountMAIN in '..\source\KEYCOUNT\Frm_KeyCountMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Fishy2.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\FISHY\Frm_Fishy2MAIN.PAS">
+			<DCCReference Include="..\source\FISHY\Frm_Fishy2MAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

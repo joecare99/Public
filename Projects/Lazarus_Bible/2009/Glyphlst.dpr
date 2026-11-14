@@ -1,7 +1,7 @@
 program Glyphlst; 
 uses 
   Forms, 
-  Frm_GlyphListMain in '..\Source\GLYPHLST\Frm_GlyphListMain.pas' {MainForm};
+  Frm_GlyphListMain in '..\source\GlyphLst\Frm_GlyphListMain.pas' {MainForm};
 
 {$R *.RES}
 {$E EXE}

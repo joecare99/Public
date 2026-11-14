@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">273</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">3bea3996-6a6c-4258-950a-04faeab45d60</dc:identifier>
+        <dc:title>Doppeltes Spiel</dc:title>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">Joe Care</dc:creator>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">ChatGBT5</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;h1&gt;Doppeltes Spiel&lt;/h1&gt;
+&lt;p style="font-style: italic"&gt;Er suchte die Wahrheit – und fand Verrat im Regen.&lt;/p&gt;
+&lt;p&gt;Privatdetektiv Crane kennt die Schattenseiten der Stadt besser als jeder andere. Doch als Evelyn Marlowe in sein Büro tritt, beginnt ein Fall, der ihn tiefer hinabzieht als alle zuvor. Ihr Bruder ist verschwunden – und mit ihm eine Spur aus Blut, Geld und Lügen.&lt;/p&gt;
+&lt;p&gt;Die Suche führt Crane in verrauchte Bars, verlassene Lagerhallen und in die Büros der Männer, die die Stadt im Würgegriff halten. Jeder Hinweis bringt ihn näher an die Wahrheit – und näher an den Abgrund. Denn Evelyn spielt ihr eigenes Spiel, und Crane muss entscheiden, ob er ihr vertrauen kann… oder ob sie ihn längst verraten hat.&lt;/p&gt;
+&lt;p&gt;In einer Welt, in der Loyalität käuflich ist und Gerechtigkeit nur ein Wort, bleibt am Ende nur eins: Überleben.&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Kriminalroman</dc:subject>
+        <dc:subject>Noir</dc:subject>
+        <meta name="calibre:timestamp" content="2025-10-12T10:33:08+00:00"/>
+        <meta name="calibre:title_sort" content="Doppeltes Spiel"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

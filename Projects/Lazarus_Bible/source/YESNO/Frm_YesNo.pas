@@ -1,10 +1,26 @@
 unit Frm_YesNo;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  StdCtrls, ExtCtrls;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ Buttons,
+
+  StdCtrls,
+ ExtCtrls,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
 

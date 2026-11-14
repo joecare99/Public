@@ -44,13 +44,13 @@
 			<DelphiCompile Include="Mdidemo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MDIDEMO\Frm_MDIDemoMAIN.PAS">
+			<DCCReference Include="..\source\MDIDEMO\Frm_MDIDemoMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<DCCReference Include="..\Source\MDIDEMO\CHILD1.PAS">
 				<Form>ChildForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\MDIDEMO\Frm_MDIDemoABOUT.PAS">
+			<DCCReference Include="..\source\MDIDEMO\Frm_MDIDemoABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

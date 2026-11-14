@@ -94,7 +94,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\source\tests\tst_Actions.pas"/>
-        <DCCReference Include="..\source\Actions\Frm_ActionsMain.PAS">
+        <DCCReference Include="..\source\Actions\Frm_ActionsMain.pas">
             <Form>frmActionsMain</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

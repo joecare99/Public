@@ -1,7 +1,7 @@
 program Hello; 
 uses 
   Forms, 
-  frm_HelloMAIN in '..\Source\HELLO\frm_HelloMAIN.PAS' {Form1}; 
+  frm_HelloMAIN in '..\source\HELLO\view\Frm_HelloMAIN.pas' {Form1}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

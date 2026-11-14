@@ -1,7 +1,7 @@
 program Exlist; 
 uses 
   Forms, 
-  Frm_exListMAIN in '..\Source\EXLIST\Frm_exListMAIN.PAS' {MainForm}; 
+  Frm_exListMAIN in '..\source\EXLIST\Frm_exListMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

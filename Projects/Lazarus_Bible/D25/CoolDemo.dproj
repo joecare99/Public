@@ -100,7 +100,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\source\CoolDemo\frm_CooldemoMain.pas">
+        <DCCReference Include="..\source\Cooldemo\frm_CooldemoMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

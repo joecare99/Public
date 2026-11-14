@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_SketchMAIN in '..\Source\SKETCH\Frm_SketchMAIN.PAS' {MainForm}; 
+  Frm_SketchMAIN in '..\source\Sketch\Frm_SketchMAIN.pas' {MainForm}; 
 {$IFNDEF FPC}
   {$E EXE}
 {$ENDIF}

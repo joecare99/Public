@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="My Application"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+    </General>
+    <BuildModes>
+      <Item Name="Debug" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <Units>
+      <Unit>
+        <Filename Value="DependencyInjection.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="DIExample"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.Scope.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.IServiceScope.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.ServiceDescriptor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.Lifetime.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.Container.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\source\DIExample\DI.IServiceProvider.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\DependencyInjection"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\source\DIExample"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+      <VerifyObjMethodCallValidity Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

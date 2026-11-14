@@ -42,7 +42,7 @@
 			<DelphiCompile Include="StaticDemo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\StaticDemo\Frm_StaticDemoMain.pas">
+			<DCCReference Include="..\source\StaticDemo\Frm_StaticDemoMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<None Include="ModelSupport_StaticDemo\default.txaPackage"/>

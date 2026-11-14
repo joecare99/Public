@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Name Value="BarChartp"/>
     <Type Value="RunAndDesignTime"/>
     <CompilerOptions>
       <Version Value="11"/>
-      <PathDelim Value="\"/>
+      <PathDelim Value="/"/>
       <SearchPaths>
-        <IncludeFiles Value="..\source\BARCHART"/>
-        <Libraries Value="$(PkgOutPath)"/>
-        <OtherUnitFiles Value="..\source\BARCHART"/>
-        <UnitOutputDirectory Value="..\..\lib\$Nameonly($Project(Infofile))\$(TargetCPU)-$(TargetOS)"/>
+        <IncludeFiles Value="../source/Barchart"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="../source/Barchart"/>
+        <UnitOutputDirectory Value="../../lib/$Nameonly($Project(Infofile))/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -22,14 +22,14 @@
     <Description Value="Bar-Chart Komponente"/>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\source\BARCHART\BarChart.pas"/>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="BarChart"/>
       </Item1>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>
-      <OutDir Value="..\Language"/>
+      <OutDir Value="../Language"/>
     </i18n>
     <RequiredPkgs Count="1">
       <Item1>

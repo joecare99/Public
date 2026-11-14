@@ -1,0 +1,14 @@
+object Form5: TSingleColumnA4ReportForm
+  Left = 192
+  Height = 480
+  Top = 114
+  Width = 696
+  BorderIcons = [biSystemMenu]
+  Caption = 'Form5'
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poMainFormCenter
+  LCLVersion = '2.2.6.0'
+end

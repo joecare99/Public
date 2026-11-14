@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Menus, Buttons;
 
 type
-  TMainForm = class(TForm)
+  TfrmFileMenuMain = class(TForm)
     MainMenu1: TMainMenu;
     FileMenu: TMenuItem;
     FileExit: TMenuItem;
@@ -40,7 +40,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmFileMenuMain: TfrmFileMenuMain;
 
 implementation
 
@@ -50,13 +50,13 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.FileExitClick(Sender: TObject);
+procedure TfrmFileMenuMain.FileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
 { - Prompt for filename and add name to File menu }
-procedure TMainForm.OpenButtonClick(Sender: TObject);
+procedure TfrmFileMenuMain.OpenButtonClick(Sender: TObject);
 var
   S: string;
   I, K: Integer;
@@ -81,7 +81,7 @@ begin
 end;
 
 { - Get filename selected from File menu }
-procedure TMainForm.FileName1Click(Sender: TObject);
+procedure TfrmFileMenuMain.FileName1Click(Sender: TObject);
 var
   Filename: string;
 begin

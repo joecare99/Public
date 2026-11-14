@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Cserver.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DDECOLOR\Frm_SERMAIN.PAS">
+			<DCCReference Include="..\source\DDECOLOR\Frm_SERMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

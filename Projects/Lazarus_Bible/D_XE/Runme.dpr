@@ -2,7 +2,7 @@ program Runme;
 
 uses
   Forms,
-  Frm_RunMeTEST in '..\source\README\Frm_RunMeTEST.PAS' {TestForm};
+  Frm_RunMeTEST in '..\source\README\Frm_RunMeTEST.pas' {TestForm};
 
 {$E EXE}
 {$R *.RES}

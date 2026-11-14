@@ -1,0 +1,4774 @@
+unit Unit13;
+
+{-------------------------------------------------------------------------------
+  Unit13 - TForm13, reconstructed from the IDR disassembly
+  Source\Projects_AhnenWin\Unit13.pas and the original resource
+  Source\Projects_AhnenWin\Form13.dfm.
+
+  The component offsets in the comments are the addresses at which the
+  original binary addressed the components. They are the reference for
+  every component access in the method listings of the other units.
+-------------------------------------------------------------------------------}
+
+interface
+
+uses
+  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR1, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, Graphics;
+
+type
+  TForm13 = class(TForm)
+  published
+    Panel1: TPanel; //2F0
+    SpeedButton11: TSpeedButton; //2F4
+    SpeedButton12: TSpeedButton; //2F8
+    SpeedButton1: TSpeedButton; //2FC
+    PrintDialog1: TPrintDialog; //300
+    Label1: TLabel; //304
+    Button1: TButton; //308
+    FontDialog1: TFontDialog; //30C
+    SpeedButton2: TSpeedButton; //310
+    Button2: TButton; //314
+    Button3: TButton; //318
+    Button4: TButton; //31C
+    SaveDialog1: TSaveDialog; //320
+    PrinterSetupDialog1: TPrinterSetupDialog; //324
+    SpeedButton13: TSpeedButton; //328
+    Button5: TButton; //32C
+    Button6: TButton; //330
+    Label2: TLabel; //334
+    PaintBox1: TPaintBox; //338
+    ScrollBar1: TScrollBar; //33C
+    ScrollBar2: TScrollBar; //340
+    Memo1: TMemo; //344
+    Button7: TButton; //348
+    Button8: TButton; //34C
+    Label3: TLabel; //350
+    WPPDFPrinter1: TWPPDFPrinter; //354
+    SpeedButton3: TSpeedButton; //358
+    WPPDFProperties1: TWPPDFProperties; //35C
+    procedure sub_0056CAD4; //0056CAD4
+    procedure nr2; //0056CB30
+    procedure nz1(ACanvas: TCanvas); //0056D6B4, ACanvas in EDX
+    procedure nz2(ACanvas: TCanvas); //0056EB10, ACanvas in EDX
+    procedure schieb_vm; //0056862C
+    procedure schieb_vm1; //00568528
+    procedure ScrollBar1Change(Sender: TObject); //00572484
+    procedure ScrollBar2Change(Sender: TObject); //00572490
+    procedure nr1; //0056C0D4
+    procedure Nach_erm; //0056A970
+    procedure kek_ord; //005686F0
+    procedure Proband1Click(ARoot, AOther: Integer); //005729E4, Register code; original pushes Sender additionally
+    procedure Button7Click(Sender: TObject); //00573120
+    procedure vorf_erm2(ARoot, AOther: Integer); //00572A78
+    procedure SpeedButton3Click(Sender: TObject); //00573450
+    procedure sam2(AOther: Integer); //00572D98, AOther in EDX
+    procedure Symm; //00568834
+    procedure kek_ord_2; //00568774
+    procedure Verwandtschaft1Click(Sender: TObject); //0057249C
+    procedure Button8Click(Sender: TObject); //005730D4
+    procedure Vorf_erm1(AGens, AShift: Integer); //00563CF8, AGens in EDX, AShift in ECX
+    procedure memein(AValue: Integer); //00566220, AValue in EDX
+    procedure zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas); //005675D8, IDR lists a function; result unused at 0056932E
+    procedure FormCreate(Sender: TObject); //00570740
+    procedure Vorf_erm; //00567A30
+    procedure Button1Click(Sender: TObject); //005707C0
+    procedure Button2Click(Sender: TObject); //00570838
+    procedure SpeedButton2Click(Sender: TObject); //0057082C
+    procedure FormShow(Sender: TObject); //00570294
+    procedure UpDown1Click; //005661E8
+    procedure SpeedButton1Click(Sender: TObject); //005704A8
+    procedure FormClose(sender:tobject;var action:tcloseaction); //00570728
+    procedure SpeedButton12Click(Sender: TObject); //00570694
+    procedure Button3Click(Sender: TObject); //00570854
+    procedure vr1; //00570D1C
+    procedure SpeedButton13Click(Sender: TObject); //00572478
+    procedure vz1(AValue: TCanvas); //005711D4, AValue in EDX
+    procedure vz2(AValue: TCanvas); //00569504, AValue in EDX
+    procedure Vr2; //0056904C
+    procedure nachf_neu(AGen: Integer); //00564668, AGen in EDX
+    procedure Button4Click(Sender: TObject); //00570890
+    procedure PaintBox1Paint(Sender:TObject); //00570C14
+    procedure Button6Click(Sender: TObject); //00572448
+    procedure Button5Click(Sender: TObject); //00572404
+  end;
+
+var
+  Form13: TForm13;
+
+implementation
+
+uses
+  Unit12, Unit2, AHNGlobals, Math, Printers, jpeg, Types, Unit1;
+{$R ..\Forms\Form13.DFM}
+
+
+{ The method bodies of this unit are reconstructed from the IDR
+  listings, method by method. The bodies that are still missing are
+  marked below; the address in the comment is the address of the
+  original method in the AHNENWIN 5.1 binary. }
+
+procedure sub_005637C4(AValue: Integer; var AResult: AnsiString);
+var
+  s: AnsiString;
+begin
+  { Formats the number to 6 digits, zero padded from the right. }
+  s := '000000' + IntToStr(AValue);
+  AResult := Copy(s, Length(s) - 5, 6);
+end;
+
+procedure sub_00563868(AIn: AnsiString; var AOut: AnsiString);
+var
+  i: Integer;
+  c: AnsiChar;
+begin
+  { Uppercases AIn character by character; the German umlauts
+    (which UpperCase does not handle) are mapped manually to
+    their respective uppercase form first. }
+  AOut := '';
+  for i := 1 to Length(AIn) do
+  begin
+    c := AnsiChar(AIn[i]);
+    if c = #$E4 then
+      AOut := AOut + #$C4
+    else
+    begin
+      if c = #$F6 then
+        AOut := AOut + #$D6
+      else
+      begin
+        if c = #$FC then
+          AOut := AOut + #$DC
+        else
+          AOut := AOut + UpperCase(AnsiString(c));
+      end;
+    end;
+  end;
+end;
+
+procedure sub_00563A0C(AIn: AnsiString; var AErgebnis: AnsiString);
+var
+  s: AnsiString;
+  i: Integer;
+begin
+  { Normalizes a date/comment entry: the prefixes ("..", "HK ", "vor...",
+    "nach...") are evaluated, then leading dots and blanks are removed
+    and the remaining dots are stripped. }
+  AErgebnis := AIn;
+  s := AIn;
+  if Trim(s) = '..' then
+  begin
+    AErgebnis := '';
+    exit;
+  end;
+  if Copy(s, 1, 2) = 'HK' then
+  begin
+    AErgebnis := 'HK ' + Copy(s, 4, 7);
+    exit;
+  end;
+  if Pos('vo.r', s) > 0 then
+  begin
+    AErgebnis := Copy(s, 1, 2) + Copy(s, 4, 1) + ' ' + RightStr(s, 4);
+    exit;
+  end;
+  if Pos('na.ch', s) > 0 then
+  begin
+    AErgebnis := Copy(s, 1, 2) + Copy(s, 4, 2) + ' ' + RightStr(s, 4);
+    exit;
+  end;
+  if Trim(s) = '' then
+    exit;
+  AErgebnis := '';
+  while (Length(s) > 0) and ((s[1] = '.') or (s[1] = ' ')) do
+    s := Copy(s, 2, 9);
+  AErgebnis := s;
+  if (Length(s) > 0) and (s[1] > '9') then
+  begin
+    AErgebnis := '';
+    for i := 1 to Length(s) do
+      if s[i] <> '.' then
+        AErgebnis := AErgebnis + s[i];
+    if Length(AErgebnis) > 0 then
+      for i := 1 to Length(AErgebnis) do
+        if AErgebnis[i] < ':' then
+        begin
+          Insert(' ', AErgebnis, i);
+          break;
+        end;
+  end;
+end;
+
+procedure sub_0056897C(AValue: Integer);
+var
+  V, passes, lvl, row, edx, ebx, delta: Integer;
+begin
+  { 0056897C: V-passed normalizer on the grid-A "hi dword" pair
+    (offsets -194/-184/+4 like sub_00568C9C), but comparing with
+    jge/jle and running V full passes over the level loop. The
+    propagation condition compares the level dword with lvl+1. }
+  V := AValue;
+  if V <= 0 then
+    exit;
+  passes := V;                                   //0056898B-96
+  while passes > 0 do
+  begin
+    lvl := V - 1;                                //0056899A-A0
+    while lvl > 1 do
+    begin
+      row := Round(Power(2.0, lvl - 1));         //005689A7-CA
+      while ChartAFlat(102 * row + 1) = 0 do     //005689CF-DD skipper
+        Inc(row);
+      repeat                                     //00568AD7-E2
+        if ChartAFlat(102 * row + 5) = lvl then  //00568AD8-E2
+        begin
+          if ChartAFlat(132 * row + 1) > 0 then  //005689E4-F3
+          begin
+            ebx := ChartAFlat(132 * row + 1);    //005689F5-FC
+            if ebx < ChartAFlat(102 * row + 1) then        //00568A03-A6 jge
+            begin
+              delta := ChartAFlat(102 * row + 1) - ebx;    //00568A10-A28
+              SetChartAFlat(132 * row + 1,
+                ChartAFlat(102 * row + 1));              //00568A2C-A3B
+              edx := 2 * row + 1;                        //00568A2C-A30
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568A5A-69
+              begin
+                if ChartAFlat(66 * edx + 1) > 0 then     //00568A44-4C
+                  SetChartAFlat(66 * edx + 1,
+                    ChartAFlat(66 * edx + 1) + delta);   //00568A4E-52
+                Inc(edx);                                //00568A59
+              end;
+            end;
+          end
+          else if ChartAFlat(132 * row + 103) > 0 then   //00568A6D-72
+          begin
+            ebx := ChartAFlat(102 * row + 1);            //00568A74
+            if ebx > ChartAFlat(132 * row + 102) then    //00568A7B-7E jle
+            begin
+              delta := ebx - ChartAFlat(132 * row + 103); //00568A80-95
+              SetChartAFlat(132 * row + 103, ebx);       //00568A99-AAA
+              edx := 2 * row + 2;                        //00568A99-A9D
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568AC6-D5
+              begin
+                if ChartAFlat(66 * edx + 1) > 0 then     //00568AB0-B8
+                  SetChartAFlat(66 * edx + 1,
+                    ChartAFlat(66 * edx + 1) + delta);   //00568ABA-BE
+                Inc(edx);                                //00568AC5
+              end;
+            end;
+          end;
+          Inc(row);                                      //00568AD7
+        end
+        else
+        begin
+          Dec(lvl);                                      //00568AE8
+          Break;                                         //00568AE9-EC / AF2
+        end;
+      until False;
+    end;
+    Dec(passes);                                         //00568AF2-F6
+  end;
+end;
+
+procedure sub_00568B04(AValue: Integer);
+var
+  V, passes, lvl, row, edx, ebx, delta: Integer;
+begin
+  { 00568B04: same normalizer as sub_0056897C, one dword lower in the
+    cell (offsets -198/-184/bare) like sub_00568E3C vs 968C9C. }
+  V := AValue;
+  if V <= 0 then
+    exit;
+  passes := V;                                   //00568B13-18
+  while passes > 0 do
+  begin
+    lvl := V - 1;                                //00568B22-25
+    while lvl > 1 do
+    begin
+      row := Round(Power(2.0, lvl - 1));         //00568B2F-52
+      while ChartAFlat(102 * row) = 0 do         //00568B57-65 skipper
+        Inc(row);
+      repeat                                     //00568C6D-78
+        if ChartAFlat(102 * row + 5) = lvl then  //00568C6E-78
+        begin
+          if ChartAFlat(132 * row) > 0 then      //00568B6C-7C
+          begin
+            if ChartAFlat(132 * row) <
+               ChartAFlat(102 * row) then        //00568B7E-8C jge
+            begin
+              delta := ChartAFlat(102 * row) -
+                       ChartAFlat(132 * row);    //00568B92-A5
+              SetChartAFlat(132 * row,
+                ChartAFlat(102 * row));          //00568BAE-BBF
+              edx := 2 * row + 1;                //00568BA9-BAD
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568BDE-ED
+              begin
+                if ChartAFlat(66 * edx) > 0 then         //00568BC8-D0
+                  SetChartAFlat(66 * edx,
+                    ChartAFlat(66 * edx) + delta);       //00568BD2-D6
+                Inc(edx);                                //00568BDD
+              end;
+            end;
+          end
+          else if ChartAFlat(132 * row + 102) > 0 then   //00568BF1-FC
+          begin
+            if ChartAFlat(102 * row) >
+               ChartAFlat(132 * row + 102) then          //00568BFE-0F jle
+            begin
+              delta := ChartAFlat(102 * row) -
+                       ChartAFlat(132 * row + 102);      //00568C11-25
+              SetChartAFlat(132 * row + 102,
+                ChartAFlat(102 * row));                 //00568C29-41
+              edx := 2 * row + 2;                       //00568C29-C2D
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568C5C-6B
+              begin
+                if ChartAFlat(66 * edx) > 0 then        //00568C46-4E
+                  SetChartAFlat(66 * edx,
+                    ChartAFlat(66 * edx) + delta);      //00568C50-54
+                Inc(edx);                               //00568C5B
+              end;
+            end;
+          end;
+          Inc(row);                                     //00568C6D
+        end
+        else
+        begin
+          Dec(lvl);                                     //00568C7E
+          Break;                                        //00568C7F-82 / C88
+        end;
+      until False;
+    end;
+    Dec(passes);                                        //00568C88-8C
+  end;
+end;
+
+{ Phase-B note (both walkers below). The addressing is transliterated
+  1:1 into flat dword indexes of grid A via ChartAFlat/SetChartAFlat:
+  every term [esi + T*8 + K] with esi = 011AE35C = base + $198 becomes
+  index 2*T + 102 + (K div 4). With T = $21*ebx = 51*ebx (set by
+  "imul eax,ebx,33") the indexes 102*ebx+c address row ebx dword c,
+  and with T = $42*ebx = 102*ebx ("add eax,eax; imul ...,33") the
+  indexes 132*ebx+c address the corresponding fields of the paired
+  "doubling" row; the propagation loops walk T = 33*eax = 51*eax,
+  i.e. index 66*eax+c. The "Power" call idiom is the Pascal-convention
+  build of Power(2.0, N) with N = level-1 (first push = 2.0 exponent
+  high/low, last = base N), so Round(Power(2.0, lvl-1)) = 2^(lvl-1). }
+
+procedure sub_00568C9C(AValue: Integer);
+var
+  V, lvl, ebx, eax, t1, delta: Integer;
+begin
+  { 00568C9C. }
+  V := AValue;
+  lvl := V - 1;
+  while lvl >= 1 do
+  begin
+    ebx := Round(Power(2.0, lvl - 1));          //00568CB8-DDB
+    while ChartAFlat(102 * ebx + 1) = 0 do      //00568CE2-F0 skipper
+      Inc(ebx);
+    repeat                                      //00568E17-E2B
+      if ChartAFlat(102 * ebx + 5) = lvl then   //00568E18-E22
+      begin
+        if ChartAFlat(102 * ebx + 1) > 0 then   //00568CF7-FF
+        begin
+          if (ChartAFlat(102 * ebx + 103) > 0) and        //00568D05-0D
+             (ChartAFlat(132 * ebx + 1) <> 0) and         //00568D0F-1E
+             (ChartAFlat(132 * ebx + 103) <> 0) then      //00568D20-2C
+            sub_0056897C(V);                              //00568D2E-31
+        end;
+        t1 := ChartAFlat(132 * ebx + 1);                  //00568D36-3D
+        if t1 > 0 then                                    //00568D44-46
+        begin
+          if t1 <> ChartAFlat(102 * ebx + 1) then         //00568D48-56
+          begin
+            delta := t1 - ChartAFlat(102 * ebx + 1);      //00568D5C-6F
+            SetChartAFlat(102 * ebx + 1, t1);             //00568D73-7A
+            eax := ebx + 1;                               //00568D81
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568D84-A6
+            begin
+              if ChartAFlat(66 * eax + 1) > 0 then        //00568D86-8E
+                SetChartAFlat(66 * eax + 1,
+                  ChartAFlat(66 * eax + 1) + delta);      //00568D90-94
+              Inc(eax);                                   //00568D9B
+            end;
+          end;
+        end
+        else if ChartAFlat(132 * ebx + 103) > 0 then      //00568DAA-AF
+        begin
+          if ChartAFlat(102 * ebx + 1) <>
+             ChartAFlat(132 * ebx + 103) then             //00568DB1-C3
+          begin
+            delta := ChartAFlat(132 * ebx + 103) -
+                     ChartAFlat(102 * ebx + 1);           //00568DC5-DA
+            SetChartAFlat(102 * ebx + 1,
+              ChartAFlat(132 * ebx + 103));               //00568DDE-E9
+            eax := ebx + 1;                               //00568DF0
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568DF3-15
+            begin
+              if ChartAFlat(66 * eax + 1) > 0 then        //00568DF5-FD
+                SetChartAFlat(66 * eax + 1,
+                  ChartAFlat(66 * eax + 1) + delta);      //00568DFF-03
+              Inc(eax);                                   //00568E0A
+            end;
+          end;
+        end;
+        Inc(ebx);                                         //00568E17
+      end
+      else
+      begin
+        Dec(lvl);                                         //00568E28
+        Break;                                            //00568E29-2B / CB8
+      end;
+    until False;
+  end;
+end;
+
+procedure sub_00568E3C(AValue: Integer);
+var
+  V, lvl, ebx, eax, t1, delta: Integer;
+begin
+  { 00568E3C: same walker as sub_00568C9C, one dword lower in every
+    8-byte cell (offsets -198/-184/bare instead of -194/-184/+4) and
+    calling sub_00568B04 instead of sub_0056897C. }
+  V := AValue;
+  lvl := V - 1;
+  while lvl >= 1 do
+  begin
+    ebx := Round(Power(2.0, lvl - 1));          //00568E58-7B
+    while ChartAFlat(102 * ebx) = 0 do          //00568E82-90 skipper
+      Inc(ebx);
+    repeat                                      //00568FB1-FC5
+      if ChartAFlat(102 * ebx + 5) = lvl then   //00568FB2-BC
+      begin
+        if ChartAFlat(102 * ebx) > 0 then       //00568E97-9F
+        begin
+          if (ChartAFlat(102 * ebx + 102) > 0) and        //00568EA5-AC
+             (ChartAFlat(132 * ebx) <> 0) and             //00568EAE-BD
+             (ChartAFlat(132 * ebx + 102) <> 0) then      //00568EBF-CA
+            sub_00568B04(V);                              //00568ECC-F0
+        end;
+        t1 := ChartAFlat(132 * ebx);                      //00568ED4-E2
+        if t1 > 0 then                                    //00568EE2-E4
+        begin
+          if t1 <> ChartAFlat(102 * ebx) then             //00568EED-F4
+          begin
+            delta := t1 - ChartAFlat(102 * ebx);          //00568EFA-0D
+            SetChartAFlat(102 * ebx, t1);                 //00568F11-18
+            eax := ebx + 1;                               //00568F1F
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568F22-44
+            begin
+              if ChartAFlat(66 * eax) > 0 then            //00568F24-2C
+                SetChartAFlat(66 * eax,
+                  ChartAFlat(66 * eax) + delta);          //00568F2E-32
+              Inc(eax);                                   //00568F39
+            end;
+          end;
+        end
+        else if ChartAFlat(132 * ebx + 102) > 0 then      //00568F48-4C
+        begin
+          if ChartAFlat(102 * ebx) <>
+             ChartAFlat(132 * ebx + 102) then             //00568F4E-5F
+          begin
+            delta := ChartAFlat(132 * ebx + 102) -
+                     ChartAFlat(102 * ebx);               //00568F61-75
+            SetChartAFlat(102 * ebx,
+              ChartAFlat(132 * ebx + 102));               //00568F79-83
+            eax := ebx + 1;                               //00568F8A
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568F8D-AF
+            begin
+              if ChartAFlat(66 * eax) > 0 then            //00568F8F-97
+                SetChartAFlat(66 * eax,
+                  ChartAFlat(66 * eax) + delta);          //00568F99-9D
+              Inc(eax);                                   //00568FA4
+            end;
+          end;
+        end;
+        Inc(ebx);                                         //00568FB1
+      end
+      else
+      begin
+        Dec(lvl);                                         //00568FC2
+        Break;                                            //00568FC3-5 / E58
+      end;
+    until False;
+  end;
+end;
+
+procedure sub_00568FD4;
+var
+  best, r: Integer;
+begin
+  { 00568FD4: scan chart grid A (gvar_011AE1C4) while row r's
+    active/Count field is > 0, tracking the maximum of the row's
+    dword[5]; the disassembly anchors the array at label 011AE35C =
+    grid A row (r+1) dword[0], so the terms are
+    [ebx + r*408 - $190] = gridA[r].dword[2] and
+    [ebx + r*408 - $184] = gridA[r].dword[5].
+    Passing the maximum to sub_00568C9C. }
+  best := 0;
+  r := 1;
+  while gvar_011AE1C4[r][2] > 0 do
+  begin
+    if best < gvar_011AE1C4[r][5] then
+      best := gvar_011AE1C4[r][5];
+    Inc(r);
+  end;
+  sub_00568C9C(best);
+end;
+
+procedure sub_00569010;
+var
+  best, r: Integer;
+begin
+  { 00569010: identical scan (see sub_00568FD4); the maximum is
+    passed to sub_00568E3C instead. }
+  best := 0;
+  r := 1;
+  while gvar_011AE1C4[r][2] > 0 do
+  begin
+    if best < gvar_011AE1C4[r][5] then
+      best := gvar_011AE1C4[r][5];
+    Inc(r);
+  end;
+  sub_00568E3C(best);
+end;
+
+procedure TForm13.sub_0056CAD4;
+var
+  gen, count, r, edi: Integer;
+begin
+  { 0056CAD4: horizontal push variant for the 'Nachgr2' layout -
+    same conditional slot-right-shift as nr1's push passes, but on
+    the x/d0 columns: anchor eax = 11AE370 = row R + 20 (d5); thus
+    [eax] = d5(row), [eax-14] = d0(row), [eax+198] = d5(next row),
+    [eax+184] = d0(next row). One push pass over the row pairs for
+    every level count = 328-1 (levels 2..328-1); nothing is written
+    in-place beyond next-row d0. Flat index convention:
+    ChartAFlat(102*r + 5) = d5, ChartAFlat(102*r) = d0. }
+  if gvar_011AE328 < 2 then                                        //0056CAD6-D
+    Exit;                                                          //0056CADD
+  count := gvar_011AE328 - 2;                                      //0056CADF-E5
+  if count < 0 then                                                //0056CAE8
+    Exit;
+  count := count + 1;                                              //0056CAEA
+  gen := 2;                                                        //0056CAEB
+  repeat
+    if gvar_011AE344 > 1 then begin                                //0056CAF0-F7
+      r := 1;                                                      //0056CAFB
+      repeat
+        edi := ChartAFlat(102 * r + 5);                            //0056CB00-C
+        if (gen = edi) and                                         //0056CB02-C
+           (edi = ChartAFlat(102 * (r + 1) + 5)) then
+        begin
+          edi := ChartAFlat(102 * r);                              //0056CB0E
+          if edi >= ChartAFlat(102 * (r + 1)) then begin           //0056CB11-F
+            edi := edi + 1;                                        //0056CB19
+            SetChartAFlat(102 * (r + 1), edi);                     //0056CB1A
+          end;
+        end;
+        r := r + 1;                                                //0056CB20-26
+      until r > gvar_011AE344 - 1;
+    end;
+    gen := gen + 1;                                                //0056CB28
+    count := count - 1;                                            //0056CB29-2A
+  until count <= 0;
+end;
+
+procedure TForm13.nr2;
+var
+  row, child, i0, count, lvl, esi: Integer;
+  gen, lastEsi, curGen, posIdx: Integer;
+  tmpS, tmpS2, tmpS3: AnsiString;
+  marked, processed, tmpGenC, msg: AnsiString;
+  pair1, pair2: AnsiString;
+begin
+  { 0056CB30: Nachfahren-Graph 'Nachgr2' vorbereiten (nr2). Same grid-A
+    row layout as nr1 (anchor edi = 011AE35C = row 1 start, so
+    [edi + 408*row + K] = row 'row' at in-row offset K). Differences to
+    nr1: 011AE33C/011AE340 swapped, 61F114 gets *30 as well, x1/y1 are
+    preloaded from gvar_02522AD8/0252C718, duplicate Nummer warnings
+    go to Memo1, and the alignment works on father/mother pairs
+    (d7/d8) before calling sub_0056CAD4. Stack locals: [ebp-38] =
+    current generation, [ebp-3C] = position within the generation,
+    [ebp-40] = marker list, [ebp-44] = processed list,
+    [ebp-34] = last matched row, esi = the processed row register
+    (kept across both alignment phases, 0 on entry). }
+  esi := 0;
+  gvar_011AE33C := Round(gvar_0061F120 * 45);                       //0056CB88-67
+  gvar_011AE340 := 30;                                              //0056CB6C
+  gvar_0061F118 := Round(gvar_0061F120 * 30);                       //0056CB76
+  gvar_0061F114 := Round(gvar_0061F120 * 30);                       //0056CB8C
+  gvar_011AE334 := Round(gvar_0061F120 * 120) + gvar_011AE338;      //0056CB9E-9
+  Screen.Cursor := crHourGlass;                                     //0056CBB-E9
+  gvar_02536364 := 0;                                               //0056CBCE
+  gvar_02536368 := 0;                                               //0056CBD5
+  if PaintBox1.Canvas = gvar_011AE32C then begin                    //0056CBDC-F1
+    gvar_02536364 := ScrollBar1.Position;                           //0056CBF3
+    gvar_02536368 := ScrollBar2.Position;                           //0056CC07
+  end;
+  gvar_011AE348 := 0;                                               //0056CC1B
+  gvar_0253637C := 0;                                               //0056CC22
+  gvar_011AE318 := 0;                                               //0056CC29
+  gvar_011AE32C.Font.Name := 'Arial';                               //0056CC30
+  gvar_011AE32C.Font.Size := Round(gvar_0061F120 * 9);              //0056CC42
+  gvar_011AE318 := -gvar_011AE32C.Font.Height + 2;                  //0056CC62
+  PaintBox1.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056CC79
+  gvar_011AE318 := -PaintBox1.Canvas.Font.Height + 2;               //0056CCA3
+  gvar_0253636C := 0;                                               //0056CCC4
+
+  if Printer.Canvas = gvar_011AE32C then begin                      //0056CCDF-EF
+    gvar_0253636C := 0.6;                                           //0056CCF5
+    Printer.Canvas.Font.Name := 'Arial';                            //0056CD12
+    Printer.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056CD29
+    count := PaintBox1.Canvas.Pen.Width;                            //0056CD50
+    Printer.Canvas.Pen.Width := Round(count * gvar_0253636C);       //0056CDA3-CD8E
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then                         //0056CD8E
+    gvar_0253636C := 0.1;                                           //0056CDA5
+
+  DataModule2.Table17.IndexName := '';                              //0056CDC2-D6
+  marked := '';                                                     //0056CDD6
+  processed := '';                                                  //0056CDE3
+  curGen := 1;                                                      //0056CDEB
+  posIdx := 1;                                                      //0056CDF2
+
+  { 0056CE0C-E1: reload columns x1/y1 from the 'Nachgr2' sources. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056D0E5-0F0
+    SetChartAFlat(102 * row, gvar_02522AD8[row]);                   //0056CE0C-5
+    SetChartAFlat(102 * row + 1, gvar_0252C718[row]);               //0056CE1A
+    if ChartAFlat(102 * row + 5) <> curGen then begin               //0056CE1A-3A
+      curGen := ChartAFlat(102 * row + 5);
+      posIdx := 1;
+    end;
+    for i0 := 0 to 19 do begin                                      //0056CE3A-70
+      ChartSlotAnsi(i0)^ := '';
+      ChartAAnsi(102 * row + 18 + i0)^ := '';
+    end;
+    DataModule2.Table17.FindKey([ChartAFlat(102 * row + 3)]);       //0056CE72-95
+    memein(ChartAFlat(102 * row + 11));                             //0056CE9A
+    sub_005637C4(ChartAFlat(102 * row + 3), tmpS2);                 //0056CEAC-B9
+    tmpS2 := tmpS2 + '*';                                           //0056CEBE-C6
+    if Pos(tmpS2, marked) = 0 then begin                            //0056CECB-CED8
+      { Nummer not seen yet: append the generation/position markers. }
+      sub_005637C4(ChartAFlat(102 * row + 3), tmpS);                //0056CEE1-EE
+      marked := marked + tmpS + '*' +                               //0056CEDE-76
+        RightStr('0' + IntToStr(curGen), 2) + '*' +
+        RightStr('00' + IntToStr(posIdx), 3) + '*';
+    end else begin
+      { Nummer already marked: emit a duplicate warning. }
+      sub_005637C4(ChartAFlat(102 * row + 3), tmpS);                //0056CF8C
+      tmpGenC := Copy(marked, Pos(tmpS, marked) + 7, 2);            //0056CFA1-BC
+      tmpS3 := Copy(marked, Pos(tmpS, marked) + 10, 3);             //0056CFE9-19
+      msg := '***' + #13#10 + 's.a. Gen. ' +                        //0056CFD2-45
+        IntToStr(StrToInt(tmpGenC)) + ' Pos. ' +
+        IntToStr(StrToInt(tmpS3));
+      Memo1.Lines.Add(msg);                                         //0056D04A-61
+      sub_005637C4(ChartAFlat(102 * row + 3), tmpS);                //0056D067
+      processed := processed + tmpS + '*';                          //0056D064-8F
+    end;
+    zerleg(gvar_011AE334, gvar_011AE318, gvar_011AE32C);            //0056D094-A
+    for i0 := 0 to 19 do                                            //0056D0AE-DF
+      ChartAAnsi(102 * row + 18 + i0)^ := ChartSlotAnsi(i0)^;
+    Inc(row);                                                       //0056D0E1
+    Inc(posIdx);                                                    //0056D0E2
+  end;
+
+  if gvar_0061F2BC = 1 then                                          //0056D0F6-D
+    gvar_011AE348 := Round(((gvar_0253637C * gvar_011AE318) +        //0056D0FF-10
+      gvar_011AE318) * 4 / 5);
+
+  { 0056D129-222: mark pass for Vater d7 (row index) / Mutter d8,
+    stopping at rows 1 .. 011AE344-1; bytes 316/318 flag processed
+    rows. Anchor edi = 011AE364 = row 1 d2: [edi] = d2(row),
+    [edi+4] = d3(row). }
+  if gvar_011AE344 > 1 then                                         //0056D129-31
+    for row := 1 to gvar_011AE344 - 1 do
+      if ChartAFlat(102 * row + 2) > 0 then begin                    //0056D13F-47
+        child := 1;                                                  //0056D14D
+        while ChartAFlat(102 * child + 2) > 0 do begin               //0056D202-E
+          if (ChartAFlat(102 * child + 7) > 0) and                   //0056D159-91
+             (ChartAFlat(102 * child + 7) = ChartAFlat(102 * row + 3)) and
+             (ChartAShort(child, 316)^ <> '*') then begin
+            SetChartAFlat(102 * child + 7, row);                     //0056D193-8
+            ChartAShort(child, 316)^ := '*';
+          end;
+          { same for the mother d8/b318 }
+          if (ChartAFlat(102 * child + 8) > 0) and                   //0056D1AC-E4
+             (ChartAFlat(102 * child + 8) = ChartAFlat(102 * row + 3)) and
+             (ChartAShort(child, 318)^ <> '*') then begin
+            SetChartAFlat(102 * child + 8, row);                     //0056D1E6-F
+            ChartAShort(child, 318)^ := '*';
+          end;
+          Inc(child);                                                //0056D1FF
+        end;
+      end;
+
+  { 0056D224-2D4: d10 partner pass - the partner row index is the
+    child's own index minus one, and x1/y1 are then synced back to
+    the 'Nachgr2' sources gvar_02522AD8/0252C718 (converted anchors:
+    [edi-8] = d0(row), [edi-4] = d1(row)). }
+  if gvar_011AE344 > 1 then                                         //0056D224-C
+    for row := 1 to gvar_011AE344 - 1 do
+      if ChartAFlat(102 * row + 2) > 0 then begin                    //0056D248-B
+        child := 1;
+        while ChartAFlat(102 * child + 2) > 0 do begin               //0056D29D-A0
+          if (ChartAFlat(102 * child + 10) > 0) and                  //0056D256-93
+             (ChartAFlat(102 * child + 10) = ChartAFlat(102 * row + 3)) and
+             (ChartAShort(child, 320)^ <> '*') then begin
+            SetChartAFlat(102 * child + 10, child - 1);              //0056D288
+            ChartAShort(child, 320)^ := '*';
+          end;
+          Inc(child);
+        end;
+        gvar_02522AD8[row] := ChartAFlat(102 * row);                 //0056D2AE
+        gvar_0252C718[row] := ChartAFlat(102 * row + 1);             //0056D2B6
+      end;
+
+  { 0056D2D5-46A: alignment over father/mother pairs. Per row:
+    pair1 = Num2Str(d7) + '*' + Num2Str(d8) is rebuilt first (it is
+    built for every row - also for rows failing the d5/processed
+    checks, mirroring the listing). Anchor conversions: [ebx] = d7,
+    [ebx+4] = d8, [ebx-8] = d5, [ebx-10] = d3, [ebx-1C] = d0 of the
+    row; sub_0056CAD4 pushes overlapping siblings. }
+  count := Round(gvar_011AE328 / 2) + 1;                            //0056D2D5-6
+  if count > 0 then                                                 //0056D2E7-9
+    repeat
+      if gvar_011AE328 >= 1 then begin                              //0056D2F2-F7
+        lvl := gvar_011AE328;                                       //0056D300
+        repeat
+          lastEsi := 0;                                             //0056D303
+          if gvar_011AE344 > 0 then begin                           //0056D316-A
+            for row := 1 to gvar_011AE344 do begin                  //0056D31B-450
+              sub_005637C4(ChartAFlat(102 * row + 7), tmpS);        //0056D31B-23
+              sub_005637C4(ChartAFlat(102 * row + 8), tmpS2);       //0056D333-C
+              pair1 := tmpS + '*' + tmpS2;                          //0056D347-40
+              if ChartAFlat(102 * row + 5) = lvl then begin         //0056D354-60
+                sub_005637C4(ChartAFlat(102 * row + 3), tmpS3);     //0056D366
+                if Pos(tmpS3, processed) = 0 then begin             //0056D36E-E
+                  esi := ChartAFlat(102 * row + 7);                 //0056D384
+                  if ChartAFlat(102 * row + 8) < esi then           //0056D386-C
+                    esi := ChartAFlat(102 * row + 8);
+                  sub_005637C4(ChartAFlat(102 * row + 7), tmpS);    //0056D395-D3B7
+                  sub_005637C4(ChartAFlat(102 * row + 8), tmpS2);   //0056D3AD
+                  pair2 := tmpS + '*' + tmpS2;                      //0056D3BB-6
+                  if CompareStr(pair2, pair1) <> 0 then begin       //0056D3CB-9
+                    if (esi > 0) and (esi <> lastEsi) then begin        //0056D3DB-2
+                      sub_005637C4(ChartAFlat(102 * row + 7), tmpS); //0056D3EA
+                      sub_005637C4(ChartAFlat(102 * row + 8), tmpS2); //0056D402
+                      pair1 := tmpS + '*' + tmpS2;                  //0056D410
+                      if ChartAFlat(102 * esi) > ChartAFlat(102 * row) then //0056D41D-2
+                        SetChartAFlat(102 * row, ChartAFlat(102 * esi)) //0056D43B-6
+                      else
+                        SetChartAFlat(102 * esi, ChartAFlat(102 * row)); //0056D43B-D441
+                      sub_0056CAD4;                                 //0056D448
+                      lastEsi := esi;                               //0056D44D
+                    end;
+                  end;
+                end;
+              end;
+            end;
+          end;
+          Dec(lvl);                                                 //0056D45D
+        until lvl <= 0;
+      end;
+      Dec(count);                                                   //0056D531
+    until count <= 0;
+
+  { 0056D46A-52B: alignment from generation 2 upward row by row - the
+    esi + 1 guard skips rows already covered by the last processed
+    pair, then the d0 columns of both rows in a pair are equalized
+    (max of both) before sub_0056CAD4. }
+  if gvar_011AE328 >= 2 then begin                                  //0056D46A-79
+    count := gvar_011AE328 - 2;                                     //0056D470
+    count := count + 1;                                             //0056D479
+    gen := 2;                                                       //0056D47A
+    repeat
+      lastEsi := 0;                                                 //0056D481
+      if gvar_011AE344 > 0 then begin                               //0056D486-91
+        for row := 1 to gvar_011AE344 do begin                      //0056D496-D51E
+          if not ((esi + 1 >= ChartAFlat(102 * row + 7)) and        //0056D49B-24
+                  (esi + 1 >= ChartAFlat(102 * row + 8))) then begin
+            if ChartAFlat(102 * row + 5) = gen then begin           //0056D4A7-AD
+              sub_005637C4(ChartAFlat(102 * row + 3), tmpS);        //0056D4AF
+              if Pos(tmpS, processed) = 0 then begin                //0056D4BD-CD
+                esi := ChartAFlat(102 * row + 7);                   //0056D4CF-D6
+                if ChartAFlat(102 * row + 8) < esi then
+                  esi := ChartAFlat(102 * row + 8);
+                if (esi > 0) and (esi <> lastEsi) then begin            //0056D4DC-E3
+                  if ChartAFlat(102 * esi) > ChartAFlat(102 * row) then //0056D4E5-1
+                    SetChartAFlat(102 * row, ChartAFlat(102 * esi)) //0056D503
+                  else
+                    SetChartAFlat(102 * esi, ChartAFlat(102 * row)); //0056D503-9
+                  sub_0056CAD4;                                     //0056D510
+                  lastEsi := esi;                                   //0056D515
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+      Inc(gen);                                                     //0056D527
+      Dec(count);                                                   //0056D52A-D34
+    until count <= 0;
+  end;
+
+  { 0056D53A-8A: track the maximal d0 column in gvar_011AE320 and the
+    maximal d1 row in gvar_011AE324. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056D57E-8A
+    if ChartAFlat(102 * row) > gvar_011AE320 then                   //0056D541-4
+      gvar_011AE320 := ChartAFlat(102 * row);                       //0056D550
+    if ChartAFlat(102 * row + 1) > gvar_011AE324 then               //0056D560-D
+      gvar_011AE324 := ChartAFlat(102 * row + 1);                   //0056D578
+    Inc(row);                                                       //0056D57E
+  end;
+
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;                    //0056D58C-91
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;                   //0056D5AD-C7
+  ScrollBar1.SmallChange := 10;                                     //0056D5D1
+  ScrollBar2.SmallChange := 10;                                     //0056D5E3
+  Screen.Cursor := crDefault;                                       //0056D5F2
+end;
+
+procedure TForm13.nz1(ACanvas: TCanvas); //0056D6B4
+{ Draws the "Nachfahren" chart variant 1 from the grid-B working copy.
+  Listing: esi = $197665C = gvar_019764C4[1]; every  [esi + 408*row + X]
+  translates to  gvar_019764C4[row][(408 + X) div 4]  (same map as vz1:
+  -198->d0, -194->d1, -190->d2, -18C->d3, -184->d5, -17C/-178->d7/d8,
+  -174->d9, -170/-16C->d10/d11, -168->d12, -150->ptrs@72, -100->@152,
+  -0D7->@193, -56->@322); every  [edi*8 + 11AE1CC + n]  with
+  edi = 51*row -> gvar_011AE1C4[row][k]. EBP aliases: [ebp-8] = ACanvas. }
+var
+  row, shift, ebp14, slotRow, slotI: Integer;      // [ebp-14]=[ebp-10]=[ebp-0C]
+  tName, tVor, tmpS, wasSchon: AnsiString;         // [ebp-154..]/[ebp-1C]
+  img: TImage;                                     // edi in the photo block
+  q1, q2: Integer;
+  ratio: Extended;                                 // [ebp-1D4]
+  jpegFlag: Boolean;                               // [ebp-1D]
+  aRect: TRect;                                    // [ebp-34]
+begin
+  { 0056D6B4: copies grid A rows into grid B, rescales the coordinates
+    and paints title, child connectors, boxes, names and photos. }
+  Screen.Cursor := crHourGlass;                                     //0056D6E0-EB
+  PaintBox1.Canvas.Brush.Color := $FFFFFF;                          //0056D6F0-07
+  PaintBox1.Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height)); //0056D70C-32
+  gvar_02536364 := 0;                                               //0056D737-3E
+  gvar_02536368 := 0;                                               //0056D73E-40
+  if PaintBox1.Canvas = ACanvas then begin                          //0056D745-57
+    gvar_02536364 := ScrollBar1.Position;                           //0056D759-68
+    gvar_02536368 := ScrollBar2.Position;                           //0056D76D-7C
+  end;
+  { Copy grid A -> grid B (rescaled). }
+  row := 1;                                                         //0056D781
+  while gvar_011AE1C4[row][2] > 0 do begin                          //0056D786-953 loop
+    DataModule2.Table17.FindKey([gvar_011AE1C4[row][3]]);           //0056D78B-B0
+    gvar_019764C4[row][2] := gvar_011AE1C4[row][2];                 //0056D7B0-B7
+    gvar_019764C4[row][3] := gvar_011AE1C4[row][3];                 //0056D7BE-C5
+    gvar_019764C4[row][5] := gvar_011AE1C4[row][5];                 //0056D7CC-D3
+    tmpS := UpperCase(ChartAShort(row, 193)^);                      //0056D7DA-D08
+    ChartBShort(row, 193)^ := tmpS;                                 //0056D813-26 (@PStrNCpy cl=28)
+    gvar_019764C4[row][7] := gvar_011AE1C4[row][7];                 //0056D827-2E
+    gvar_019764C4[row][8] := gvar_011AE1C4[row][8];                 //0056D835-3C
+    for shift := 0 to 19 do                                         //0056D843-61 (@CopyArray 20 dwords)
+      ChartBAnsi(102 * row + 18 + shift)^ := ChartAAnsi(102 * row + 18 + shift)^;
+    ChartBShort(row, 152)^ := ChartAShort(row, 152)^;               //0056D862-76 (@PStrNCpy cl=28)
+    gvar_019764C4[row][9] := gvar_011AE1C4[row][9];                 //0056D877-7E
+    gvar_019764C4[row][10] := gvar_011AE1C4[row][10];               //0056D885-8C
+    gvar_019764C4[row][11] := gvar_011AE1C4[row][11];               //0056D893-9A
+    ChartBShort(row, 322)^ := ChartAShort(row, 322)^;               //0056D8A1-B2 (@PStrNCpy cl=50)
+    gvar_019764C4[row][12] := gvar_011AE1C4[row][12];               //0056D8B3-BA
+    gvar_019764C4[row][0] := (gvar_011AE1C4[row][0] - 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340 - gvar_02536364; //0056D8C1-E7
+    gvar_019764C4[row][1] := (gvar_011AE1C4[row][1] - 1) * (gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_0061F114 + gvar_011AE348) + gvar_011AE33C - gvar_02536368; //0056D8EE-27
+    if gvar_011AE1C4[row][0] > gvar_011AE320 then                   //0056D92E-3E
+      gvar_011AE320 := gvar_011AE1C4[row][0];                       //0056D940-4F
+    Inc(row);                                                       //0056D94F
+  end;
+  { Title "Nachfahren von <Name> <Vorname>" from the row-1 person. }
+  DataModule2.Table17.FindKey([gvar_019764C4[1][3]]);               //0056D961-82
+  tmpS := DataModule2.Table17Name.AsString;                         //0056D987-9F
+  sub_00563868(tmpS, tName);                                        //0056D9A5-AB
+  tVor := DataModule2.Table17Vornamen.AsString;                     //0056D9BB-D3
+  wasSchon := 'Nachfahren von ' + tName + ' ' + tVor;               //0056D9D9-E9 (@LStrCatN)
+  ACanvas.TextOut(Round(gvar_0253636C * 30) - gvar_02536364,        //0056D9F0-2C
+    Round(gvar_0253636C * 5) - gvar_02536368, wasSchon);
+  gvar_011AE324 := 0;                                               //0056DA31-33
+  gvar_011AE31C := 0;                                               //0056DA38-3A
+  { Child connectors: elbow to the left from the box edge. }
+  row := 1;                                                         //0056DA3F
+  while gvar_019764C4[row][2] > 0 do begin                          //0056DA44-DF01
+    if gvar_019764C4[row][1] > 0 then begin                         //0056DA49-51
+      if gvar_019764C4[row][5] < gvar_011AE330 then begin           //0056DA57-64 (father block skipped otherwise)
+        if gvar_019764C4[row][5] > 1 then                           //0056DA6A-75
+          if gvar_019764C4[row][7] > 0 then                         //0056DA7B-83
+            if gvar_019764C4[gvar_019764C4[row][7]][1] > gvar_019764C4[gvar_019764C4[row][8]][1] then begin //0056DA89-AAA
+              shift := gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348; //0056DAB7-C8
+              ACanvas.MoveTo(Round(gvar_019764C4[row][0] * gvar_0253636C),      //0056DAB0-0A
+                Round(gvar_0253636C * (gvar_019764C4[row][1] + shift / 2)));
+              ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 / 2) * gvar_0253636C), //0056DB0F-A
+                Round(gvar_0253636C * (gvar_019764C4[row][1] + shift / 2)));
+              ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 / 2) * gvar_0253636C), //0056DB7C-EC
+                Round(gvar_0253636C * (gvar_019764C4[gvar_019764C4[row][7]][1] + shift / 2)));
+              ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 - 1) * gvar_0253636C), //0056DBF1-66
+                Round(gvar_0253636C * (gvar_019764C4[gvar_019764C4[row][7]][1] + shift / 2)));
+            end;
+      end;
+      { 0056DC6B: the mother connector runs for every row (both d5 skips
+        jump straight here). }
+      if (gvar_019764C4[row][8] > 0) and                                           //0056DC6B-73
+         (gvar_019764C4[gvar_019764C4[row][8]][1] > gvar_019764C4[gvar_019764C4[row][7]][1]) then begin //0056DC79-9A
+        shift := gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348; //0056DCAC-BD
+        ACanvas.MoveTo(Round(gvar_019764C4[row][0] * gvar_0253636C),        //0056DCA0-FA
+          Round(gvar_0253636C * (gvar_019764C4[row][1] + shift / 2)));
+        ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 / 2) * gvar_0253636C), //0056DCFF-67
+          Round(gvar_0253636C * (gvar_019764C4[row][1] + shift / 2)));
+        ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 / 2) * gvar_0253636C), //0056DD6C-=DC
+          Round(gvar_0253636C * (gvar_019764C4[gvar_019764C4[row][8]][1] + shift / 2)));
+        ACanvas.LineTo(Round((gvar_019764C4[row][0] - gvar_0061F118 - 1) * gvar_0253636C), //0056DDE1-56
+          Round(gvar_0253636C * (gvar_019764C4[gvar_019764C4[row][8]][1] + shift / 2)));
+      end;
+      if gvar_019764C4[row][11] > 0 then begin                      //0056DE5B-63 (spouse drop line)
+        ACanvas.MoveTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056DE69-A6
+          Round(gvar_019764C4[row][1] * gvar_0253636C));
+        ACanvas.LineTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056DEAB-FB
+          Round((gvar_019764C4[row][1] - gvar_0061F114 - 1) * gvar_0253636C));
+      end;
+    end;
+    Inc(row);                                                       //0056DF00
+  end;
+  { Extrema, boxes, person text, 20 names, photo. }
+  row := 1;                                                         //0056DF12
+  while gvar_019764C4[row][2] > 0 do begin                          //0056DF17-E9AB loop
+    if (gvar_019764C4[row][1] - gvar_011AE33C + gvar_02536368) div (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) > gvar_011AE324 then //0056DF1C-8E (idiv)
+      gvar_011AE324 := (gvar_019764C4[row][1] - gvar_011AE33C + gvar_02536368) div (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348); //0056DF55-8D (identical recompute)
+    if (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_0061F118 + gvar_011AE334) > gvar_011AE31C then //0056DF8E-B2 (idiv)
+      gvar_011AE31C := (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_0061F118 + gvar_011AE334); //0056DFBA-E1 (identical recompute)
+    if gvar_019764C4[row][3] > 0 then begin                         //0056DFE6-EE
+      wasSchon := '';                                               //0056DFF4-FC (@LStrClr)
+      if gvar_0061F2C4 = 1 then                                     //0056DFFC-E
+        wasSchon := 'DS: ' + IntToStr(gvar_019764C4[row][3]);       //0056E005-28 ('DS: ')
+      if gvar_0061F2C8 = 1 then                                     //0056E02D-34
+        if Length(ChartBShort(row, 152)^) > 0 then begin            //0056E036-3E (len byte cmp)
+          if wasSchon = '' then begin                               //0056E040-7B
+            tmpS := 'ID: ' + ChartBShort(row, 152)^;                //0056E046-67 (PStrCpy/PStrNCat cl=2C)
+            wasSchon := tmpS;                                       //0056E06D-76 (@LStrFromString)
+          end
+          else
+            wasSchon := wasSchon + ' ID: ' + ChartBShort(row, 152)^; //0056E07D-AD (@LStrCatN)
+        end;
+      { 0056E0AD-52: father-row suffix block; 0056E155-F2: mother-row
+        suffix block always follows (both else-chains fall through to
+        the mother block). }
+      if gvar_019764C4[row][7] > 0 then begin                       //0056E0AD-B8
+        if gvar_019764C4[row][8] = 0 then                           //0056E0BA-C2
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')' //0056E0C4-F4
+        else if gvar_019764C4[gvar_019764C4[row][7]][12] > 1 then   //0056E103-16
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')'; //0056E118-52
+      end
+      else if gvar_019764C4[gvar_019764C4[row][7]][12] > 1 then     //0056E103-16 (d7 = 0: row 0)
+        wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')';
+      if gvar_019764C4[row][7] = 0 then begin                       //0056E155-6A
+        if gvar_019764C4[row][8] > 0 then                           //0056E162-6A
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')' //0056E16C-A6
+        else if gvar_019764C4[gvar_019764C4[row][8]][12] > 1 then   //0056E1A8-F2
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')';
+      end
+      else if gvar_019764C4[gvar_019764C4[row][8]][12] > 1 then     //0056E1A8-F2
+        wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')';
+      ACanvas.Font.Size := Round(gvar_0061F120 * 9) - 1;            //0056E1F7-11
+      ACanvas.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + 2, //0056E216-F
+        Round((gvar_019764C4[row][1] - gvar_011AE318) * gvar_0253636C) + 1,
+        wasSchon);
+      ACanvas.Font.Size := Round(gvar_0061F120 * 9);                //0056E264-F0
+      DataModule2.Table17.FindKey([gvar_019764C4[row][3]]);         //0056E290-A2
+      slotRow := 0;                                                 //0056E2A7-AE ([ebp-10])
+      slotI := 0;                                                   //0056E2AC-B1 ([ebp-0C])
+      repeat                                                        //0056E2B4-79F
+        ACanvas.Font.Style := [];                                   //0056E2B4-C0 (TFont.SetStyle byte 0)
+        if slotI = 0 then                                           //0056E2C5-C9
+          ACanvas.Font.Style := [fsBold];                           //0056E2CB-D7 (byte 1)
+        if slotI = 0 then                                           //0056E2DC-E2
+          if RightStr(ChartBAnsi(102 * row + 18)^, 1) = '#' then begin //0056E2E2-0C
+            ChartBAnsi(102 * row + 18)^ := Copy(ChartBAnsi(102 * row + 18)^, 1, Length(ChartBAnsi(102 * row + 18)^) - 1); //0056E30E-31 (LStrCopy len-1)
+            ACanvas.Font.Style := [fsBold];                         //0056E336-42
+          end;
+        if slotI = 1 then                                           //0056E347-4B
+          if RightStr(ChartBAnsi(102 * row + 19)^, 1) = '#' then begin //0056E34D-77
+            ChartBAnsi(102 * row + 19)^ := Copy(ChartBAnsi(102 * row + 19)^, 1, Length(ChartBAnsi(102 * row + 19)^) - 1); //0056E379-9C
+            ACanvas.Font.Style := [fsBold];                         //0056E3A1-AD
+          end;
+        if slotI = 2 then                                           //0056E3B2-B6
+          if RightStr(ChartBAnsi(102 * row + 20)^, 1) = '#' then begin //0056E3B8-E2
+            ChartBAnsi(102 * row + 20)^ := Copy(ChartBAnsi(102 * row + 20)^, 1, Length(ChartBAnsi(102 * row + 20)^) - 1); //0056E3E4-:07
+            ACanvas.Font.Style := [fsBold];                         //0056E40C-18
+          end;
+        if slotI = 3 then                                           //0056E41D-21
+          if RightStr(ChartBAnsi(102 * row + 21)^, 1) = '#' then begin //0056E423-4D
+            ChartBAnsi(102 * row + 21)^ := Copy(ChartBAnsi(102 * row + 21)^, 1, Length(ChartBAnsi(102 * row + 21)^) - 1); //0056E44F-72
+            ACanvas.Font.Style := [fsBold];                         //0056E477-83
+          end;
+        ebp14 := ACanvas.TextWidth(ChartBAnsi(102 * row + 18 + slotI)^); //0056E488-A3
+        ebp14 := Round((gvar_011AE334 * gvar_0253636C - ebp14) / 2); //0056E4A3-C4 (fsubrp)
+        ACanvas.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + ebp14, //0056E4C7-25
+          Round((gvar_019764C4[row][1] + slotRow * gvar_011AE318 + gvar_011AE348) * gvar_0253636C) + 3,
+          ChartBAnsi(102 * row + 18 + slotI)^);
+        Inc(slotRow);                                               //0056E791 ([ebp-10])
+        Inc(slotI);                                                 //0056E794 ([ebp-0C])
+      until slotI = 20;                                             //0056E79B-F (cmp $14)
+      ACanvas.Brush.Style := bsClear;                               //0056E52A-32
+      ACanvas.Pen.Color := 0;                                       //0056E537-3F
+      if ChartBShort(row, 193)^ = 'M' then                          //0056E544-5A (@AStrCmp)
+        ACanvas.Rectangle(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056E560-F8
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C));
+      if ChartBShort(row, 193)^ = 'W' then                          //0056E5FD-13 (@AStrCmp)
+        ACanvas.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056E619-B5
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15);
+      if ChartBShort(row, 193)^ = 'X' then begin                    //0056E6BA-D0 (@AStrCmp)
+        ACanvas.Pen.Color := 0;                                     //0056E6D6-DE
+        ACanvas.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056E6E3-7F
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15);
+      end;
+      ACanvas.Pen.Color := 0;                                       //0056E784-8C
+      if gvar_0061F2BC = 1 then begin                               //0056E7A5-AC
+        if ChartBShort(row, 322)^ > ' ' then begin                  //0056E7B2-C3 (@PStrCmp vs ' ', jbe skip)
+          img := TImage.Create(Self);                               //0056E7C9-D3 (AOwner)
+          tmpS := ChartBShort(row, 322)^;                           //0056E7DA-EC (@LStrFromString)
+          img.Picture.LoadFromFile(tmpS);                           //0056E7EC-F8
+          jpegFlag := img.Picture.Graphic is TJPEGImage;            //0056E7FD-11
+          if jpegFlag then begin                                    //0056E814-18
+            ratio := img.Height / img.Picture.Graphic.Height;       //0056E81A-3B (fdivrp)
+            img.Width := Round(img.Picture.Graphic.Width * ratio);  //0056E83F-6B
+          end;
+          q1 := Round((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //0056E870-9B (shl 2, fdiv 5)
+          q2 := Round(img.Picture.Graphic.Width / img.Height * ((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5)); //0056E8CD-90
+          aRect := Rect(Round((gvar_019764C4[row][0] + 4) * gvar_0253636C),   //ALeft  0056E957-:6F
+            Round((gvar_019764C4[row][1] + 2) * gvar_0253636C),              //ATop   0056E93C-56
+            Round((gvar_019764C4[row][0] + q2) * gvar_0253636C),             //ARight 0056E925-38
+            Round((gvar_019764C4[row][1] + q1) * gvar_0253636C));            //ABottom 0056E8C8-:0D
+          img.Proportional := True;                                 //0056E97B-7F
+          ACanvas.StretchDraw(aRect, img.Picture.Graphic);          //0056E984-93
+          img.Free;                                                 //0056E998-9A
+        end;
+      end;
+    end;
+    Inc(row);                                                       //0056E99F
+  end;
+  ScrollBar1.Max := (gvar_011AE31C + 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; //0056E9B1-C5
+  ScrollBar2.Max := (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) * gvar_011AE324 + gvar_011AE33C; //0056E9DA-06
+  Screen.Cursor := crDefault;                                       //0056EA14-1D
+end;
+
+procedure TForm13.nz2(ACanvas: TCanvas); //0056EB10
+{ Draws the "Nachfahren" chart variant 2. Copy/title/names/boxes/photo
+  blocks are byte-identical to nz1; differences: the connector loop
+  draws a horizontal marriage line (d7>0 or d8>0) plus an 'W'-only
+  vertical line (gated by row > 1, d5 < 330-1 and d9 > 0), and the
+  extrema loop uses gvar_011AE324 := max(d5) (plain). EBP aliases:
+  [ebp-8] = ACanvas. }
+var
+  row, shift, ebp14, slotRow, slotI: Integer;      // [ebp-14]=[ebp-10]=[ebp-0C]
+  tName, tVor, tmpS, wasSchon: AnsiString;         // [ebp-154..]/[ebp-1C]
+  img: TImage;                                     // edi in the photo block
+  q1, q2: Integer;
+  ratio: Extended;                                 // [ebp-1D4]
+  jpegFlag: Boolean;                               // [ebp-1D]
+  aRect: TRect;                                    // [ebp-34]
+begin
+  Screen.Cursor := crHourGlass;                                     //0056EB3C-47
+  PaintBox1.Canvas.Brush.Color := $FFFFFF;                          //0056EB4C-63
+  PaintBox1.Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height)); //0056EB68-8E
+  gvar_02536364 := 0;                                               //0056EB93-95
+  gvar_02536368 := 0;                                               //0056EB9A-9C
+  if PaintBox1.Canvas = ACanvas then begin                          //0056EBA1-B3
+    gvar_02536364 := ScrollBar1.Position;                           //0056EBB5-C4
+    gvar_02536368 := ScrollBar2.Position;                           //0056EBC9-D8
+  end;
+  { Copy grid A -> grid B (rescaled, identical to nz1). }
+  row := 1;                                                         //0056EBDD
+  while gvar_011AE1C4[row][2] > 0 do begin                          //0056EBE2-DB7 loop
+    DataModule2.Table17.FindKey([gvar_011AE1C4[row][3]]);           //0056EBE7-C07
+    gvar_019764C4[row][2] := gvar_011AE1C4[row][2];                 //0056EC0C-13
+    gvar_019764C4[row][3] := gvar_011AE1C4[row][3];                 //0056EC1A-21
+    gvar_019764C4[row][5] := gvar_011AE1C4[row][5];                 //0056EC28-2F
+    tmpS := UpperCase(ChartAShort(row, 193)^);                      //0056EC36-54
+    ChartBShort(row, 193)^ := tmpS;                                 //0056EC6F-7E
+    gvar_019764C4[row][7] := gvar_011AE1C4[row][7];                 //0056EC83-8A
+    gvar_019764C4[row][8] := gvar_011AE1C4[row][8];                 //0056EC91-98
+    for shift := 0 to 19 do                                         //0056EC9F-B9 (@CopyArray 20 dwords)
+      ChartBAnsi(102 * row + 18 + shift)^ := ChartAAnsi(102 * row + 18 + shift)^;
+    ChartBShort(row, 152)^ := ChartAShort(row, 152)^;               //0056ECBE-CE (@PStrNCpy cl=28)
+    gvar_019764C4[row][9] := gvar_011AE1C4[row][9];                 //0056ECD3-DA
+    gvar_019764C4[row][10] := gvar_011AE1C4[row][10];               //0056ECE1-E8
+    gvar_019764C4[row][11] := gvar_011AE1C4[row][11];               //0056ECEF-F6
+    ChartBShort(row, 322)^ := ChartAShort(row, 322)^;               //0056ECFD-0A (@PStrNCpy cl=50)
+    gvar_019764C4[row][12] := gvar_011AE1C4[row][12];               //0056ED0F-16
+    gvar_019764C4[row][0] := (gvar_011AE1C4[row][0] - 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340 - gvar_02536364; //0056ED1D-43
+    gvar_019764C4[row][1] := (gvar_011AE1C4[row][1] - 1) * (gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_0061F114 + gvar_011AE348) + gvar_011AE33C - gvar_02536368; //0056ED4A-83
+    if gvar_011AE1C4[row][0] > gvar_011AE320 then                   //0056ED8A-94
+      gvar_011AE320 := gvar_011AE1C4[row][0];                       //0056ED9C-A6
+    Inc(row);                                                       //0056EDAB
+  end;
+  { Title "Nachfahren von <Name> <Vorname>" from the row-1 person. }
+  DataModule2.Table17.FindKey([gvar_019764C4[1][3]]);               //0056EDBD-D9
+  tmpS := DataModule2.Table17Name.AsString;                         //0056EDE3-FB
+  sub_00563868(tmpS, tName);                                        //0056EE01-07
+  tVor := DataModule2.Table17Vornamen.AsString;                     //0056EE17-2F
+  wasSchon := 'Nachfahren von ' + tName + ' ' + tVor;               //0056EE35-40 (@LStrCatN)
+  ACanvas.TextOut(Round(gvar_0253636C * 30) - gvar_02536364,        //0056EE45-83
+    Round(gvar_0253636C * 5) - gvar_02536368, wasSchon);
+  gvar_011AE324 := 0;                                               //0056EE8D-8F
+  gvar_011AE31C := 0;                                               //0056EE94-96
+  { Marriage line + 'W' drop line. }
+  row := 1;                                                         //0056EE9B
+  while gvar_019764C4[row][2] > 0 do begin                          //0056EEA0-0DD loop
+    if gvar_019764C4[row][1] > 0 then begin                         //0056EEA5-AD
+      if gvar_019764C4[row][5] < gvar_011AE330 then begin           //0056EEB3-C0
+        if gvar_019764C4[row][5] > 1 then                           //0056EEC6-D1
+          if (gvar_019764C4[row][7] > 0) or (gvar_019764C4[row][8] > 0) then begin //0056EED7-EF fallthrough either way
+            ACanvas.MoveTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056EEF5-EF38
+              Round(gvar_019764C4[row][1] * gvar_0253636C));
+            ACanvas.LineTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056EF3D-8E
+              Round((gvar_019764C4[row][1] - gvar_0061F114 / 2) * gvar_0253636C));
+          end;
+      end;
+      { 0056EF93: 'W' drop line, only for rows > 1. }
+      if row > 1 then                                               //0056EF93-:96
+        if ChartBShort(row, 193)^ = 'W' then                        //0056EF9C-B5 (@AStrCmp)
+          if gvar_019764C4[row][5] < gvar_011AE330 - 1 then         //0056EFBB-:CE (dec edx, cmp)
+            if gvar_019764C4[row][9] > 0 then begin                 //0056EFD4-DF
+              shift := gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348; //0056EFE8-F0A
+              ACanvas.MoveTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056EFE5-:04F
+                Round(gvar_0253636C * (gvar_019764C4[row][1] + shift)));
+              ACanvas.LineTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C), //0056F054-CC
+                Round(gvar_0253636C * (gvar_019764C4[row][1] + shift + gvar_0061F114 / 2)));
+            end;
+    end;
+    Inc(row);                                                       //0056F0D1
+  end;
+  { Extrema, boxes, person text, 20 names, photo. }
+  row := 1;                                                         //0056F0E3
+  ACanvas.Pen.Color := 0;                                           //0056F0E8-F0
+  while gvar_019764C4[row][2] > 0 do begin                          //0056F0F5-128 loop
+    if gvar_019764C4[row][5] > gvar_011AE324 then                   //0056F6F8-05
+      gvar_011AE324 := gvar_019764C4[row][5];                       //0056F707-16 (plain d5 max!)
+    if (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_0061F118 + gvar_011AE334) > gvar_011AE31C then //0056F716-3A (idiv)
+      gvar_011AE31C := (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_0061F118 + gvar_011AE334); //0056F742-78 (identical recompute)
+    if gvar_019764C4[row][3] > 0 then begin                         //0056F76E-76
+      wasSchon := '';                                               //0056F77C-7F (@LStrClr)
+      if gvar_0061F2C4 = 1 then                                     //0056F784-8B
+        wasSchon := 'DS: ' + IntToStr(gvar_019764C4[row][3]);       //0056F78D-B0 ('DS: ')
+      if gvar_0061F2C8 = 1 then                                     //0056F7B5-BC
+        if Length(ChartBShort(row, 152)^) > 0 then begin            //0056F7BE-C6 (len byte cmp)
+          if wasSchon = '' then begin                               //0056F7C8-C
+            tmpS := 'ID: ' + ChartBShort(row, 152)^;                //0056F7CE-F5 (PStrCpy/PStrNCat cl=2C)
+            wasSchon := tmpS;                                       //0056F7F5-:0 (LStrFromString)
+          end
+          else
+            wasSchon := wasSchon + ' ID: ' + ChartBShort(row, 152)^; //0056F805-30 (@LStrCatN)
+        end;
+      { 0056F835-52: father-row suffix block; 0056F8DD-7A: mother-row
+        suffix block always follows. }
+      if gvar_019764C4[row][7] > 0 then begin                       //0056F835-40
+        if gvar_019764C4[row][8] = 0 then                           //0056F842-4A
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')' //0056F84C-89
+        else if gvar_019764C4[gvar_019764C4[row][7]][12] > 1 then   //0056F88B-9E
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')'; //0056F8A0-D8
+      end
+      else if gvar_019764C4[gvar_019764C4[row][7]][12] > 1 then     //0056F88B-9E (d7 = 0: row 0)
+        wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][7]][12]) + ')';
+      if gvar_019764C4[row][7] = 0 then begin                       //0056F8DD-E8
+        if gvar_019764C4[row][8] > 0 then                           //0056F8EA-F2
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')' //0056F8F4-2E
+        else if gvar_019764C4[gvar_019764C4[row][8]][12] > 1 then   //0056F930-40
+          wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')';
+      end
+      else if gvar_019764C4[gvar_019764C4[row][8]][12] > 1 then     //0056F930-40
+        wasSchon := wasSchon + ' (' + IntToStr(gvar_019764C4[gvar_019764C4[row][8]][12]) + ')';
+      ACanvas.Font.Size := Round(gvar_0061F120 * 9) - 1;            //0056F97F-9F
+      ACanvas.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + 2, //0056F99E-E7
+        Round((gvar_019764C4[row][1] - gvar_011AE318) * gvar_0253636C) + 1,
+        wasSchon);
+      ACanvas.Font.Size := Round(gvar_0061F120 * 9);                //0056F9EC-05
+      DataModule2.Table17.FindKey([gvar_019764C4[row][3]]);         //0056FA0A-2A
+      slotRow := 0;                                                 //0056FA2F-31 ([ebp-10])
+      slotI := 0;                                                   //0056FA34-36 ([ebp-0C])
+      repeat                                                        //0056FA39-FF23
+        ACanvas.Font.Style := [];                                   //0056FA3C-48 (TFont.SetStyle byte 0)
+        if slotI = 0 then                                           //0056FA4D-51
+          ACanvas.Font.Style := [fsBold];                           //0056FA53-5F
+        if slotI = 0 then                                           //0056FA64-68
+          if RightStr(ChartBAnsi(102 * row + 18)^, 1) = '#' then begin //0056FA6A-94
+            ChartBAnsi(102 * row + 18)^ := Copy(ChartBAnsi(102 * row + 18)^, 1, Length(ChartBAnsi(102 * row + 18)^) - 1); //0056FA96-B9 (LStrCopy len-1)
+            ACanvas.Font.Style := [fsBold];                         //0056FABE-CA
+          end;
+        if slotI = 1 then                                           //0056FACF-D3
+          if RightStr(ChartBAnsi(102 * row + 19)^, 1) = '#' then begin //0056FAD5-FF
+            ChartBAnsi(102 * row + 19)^ := Copy(ChartBAnsi(102 * row + 19)^, 1, Length(ChartBAnsi(102 * row + 19)^) - 1); //0056FB01-24
+            ACanvas.Font.Style := [fsBold];                         //0056FB29-35
+          end;
+        if slotI = 2 then                                           //0056FB3A-3E
+          if RightStr(ChartBAnsi(102 * row + 20)^, 1) = '#' then begin //0056FB40-6A
+            ChartBAnsi(102 * row + 20)^ := Copy(ChartBAnsi(102 * row + 20)^, 1, Length(ChartBAnsi(102 * row + 20)^) - 1); //0056FB6C-:8F
+            ACanvas.Font.Style := [fsBold];                         //0056FB94-A0
+          end;
+        if slotI = 3 then                                           //0056FBA5-A9
+          if RightStr(ChartBAnsi(102 * row + 21)^, 1) = '#' then begin //0056FBAB-D5
+            ChartBAnsi(102 * row + 21)^ := Copy(ChartBAnsi(102 * row + 21)^, 1, Length(ChartBAnsi(102 * row + 21)^) - 1); //0056FBD7-FA
+            ACanvas.Font.Style := [fsBold];                         //0056FBFF-:0B
+          end;
+        ebp14 := ACanvas.TextWidth(ChartBAnsi(102 * row + 18 + slotI)^); //0056FC10-25
+        ebp14 := Round((gvar_011AE334 * gvar_0253636C - ebp14) / 2); //0056FC2B-4C (fsubrp)
+        ACanvas.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + ebp14, //0056FC4F-AB
+          Round((gvar_019764C4[row][1] + slotRow * gvar_011AE318 + gvar_011AE348) * gvar_0253636C) + 3,
+          ChartBAnsi(102 * row + 18 + slotI)^);
+        Inc(slotRow);                                               //0056FF19 ([ebp-10])
+        Inc(slotI);                                                 //0056FF1C ([ebp-0C])
+      until slotI = 20;                                             //0056FF23-7 (cmp $14)
+      ACanvas.Brush.Style := bsClear;                               //0056FCB2-BA
+      ACanvas.Pen.Color := 0;                                       //0056FCBF-C7
+      if ChartBShort(row, 193)^ = 'M' then                          //0056FCCC-E2 (@AStrCmp)
+        ACanvas.Rectangle(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056FCE8-80
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C));
+      if ChartBShort(row, 193)^ = 'W' then                          //0056FD85-96 (@AStrCmp)
+        ACanvas.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056FDA1-:3D
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15);
+      if ChartBShort(row, 193)^ = 'X' then begin                    //0056FE42-58 (@AStrCmp)
+        ACanvas.Pen.Color := 0;                                     //0056FE5E-66
+        ACanvas.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),       //0056FE6B-:07
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15);
+      end;
+      ACanvas.Pen.Color := 0;                                       //0056FF0C-14
+      if gvar_0061F2BC = 1 then begin                               //0056FF2D-34
+        if ChartBShort(row, 322)^ > ' ' then begin                  //0056FF3A-4B (@PStrCmp vs ' ', jbe skip)
+          img := TImage.Create(Self);                               //0056FF51-60 (AOwner)
+          tmpS := ChartBShort(row, 322)^;                           //0056FF62-74 (@LStrFromString)
+          img.Picture.LoadFromFile(tmpS);                           //0056FF74-80
+          jpegFlag := img.Picture.Graphic is TJPEGImage;            //0056FF85-9C
+          if jpegFlag then begin                                    //0056FF9C-A0
+            ratio := img.Height / img.Picture.Graphic.Height;       //0056FFA2-C1 (fdivrp)
+            img.Width := Round(img.Picture.Graphic.Width * ratio);  //0056FFC7-F3
+          end;
+          q1 := Round((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //0056FFF8-23 (shl 2, fdiv 5)
+          q2 := Round(img.Picture.Graphic.Width / img.Height * ((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5)); //00570055-85
+          aRect := Rect(Round((gvar_019764C4[row][0] + 4) * gvar_0253636C),   //ALeft  005700DF-:F7
+            Round((gvar_019764C4[row][1] + 2) * gvar_0253636C),              //ATop   005700C1-E
+            Round((gvar_019764C4[row][0] + q2) * gvar_0253636C),             //ARight 005700AD-C0
+            Round((gvar_019764C4[row][1] + q1) * gvar_0253636C));            //ABottom 00570050-:0D
+          img.Proportional := True;                                 //00570103-07
+          ACanvas.StretchDraw(aRect, img.Picture.Graphic);          //0057010C-20
+          img.Free;                                                 //00570120-22
+        end;
+      end;
+    end;
+    Inc(row);                                                       //00570127
+  end;
+  ScrollBar1.Max := (gvar_011AE31C + 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; //00570139-4E
+  ScrollBar2.Max := (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) * gvar_011AE324 + gvar_011AE33C; //00570162-8E
+  Screen.Cursor := crDefault;                                       //0057019C-A5
+end;
+
+procedure TForm13.schieb_vm1;
+var
+  esi, eax, edx, ebx, ecx, edi, ebp: Integer;
+begin
+  { 00568528: first scan grid B rows (while row[r].dword[2] > 0,
+    anchor [eax*8+19764CC] = flat idx 102*eax+2) to find esi = the
+    maximum of row dword[5]; then for ecx = 1 .. esi-1 walk all rows
+    and shift row dword[1] ([eax-8] on the 1976668 anchor = row[r][3]): }
+  gvar_011AE324 := 0;                                 //0056852C-2E
+  esi := 0;
+  eax := 1;                                           //00568535
+  while gvar_019764C4[eax][2] > 0 do                  //00568550-5B
+  begin
+    if esi < gvar_019764C4[eax][5] then               //0056853C-48
+      esi := gvar_019764C4[eax][5];
+    Inc(eax);
+  end;
+  edi := esi - 1;                                     //0056855D-F
+  while edi > 0 do                                    //00568560-20
+  begin
+    ecx := 1;                                         //00568568
+    for edx := 1 to gvar_011AE344 do                  //0056856D-18
+    begin
+      if gvar_019764C4[edx][3] > 0 then               //00568580-83
+      begin
+        if ecx = gvar_019764C4[edx][5] then           //00568589-8C
+        begin
+          ebx := gvar_019764C4[edx][6];               //0056858E
+          if ebx > 0 then                             //00568591-93
+            gvar_019764C4[edx][1] :=                  //00568595-9F
+              ChartBFlat(102 * ebx + 1)
+          else
+          begin
+            ebx := gvar_019764C4[edx][7];             //005685A4
+            if ebx > 0 then
+              gvar_019764C4[edx][1] :=                //005685A4-B5
+                ChartBFlat(102 * ebx + 1);
+          end;
+        end
+        else if (gvar_019764C4[edx][6] = 0) and       //005685BA-C4
+                (gvar_019764C4[edx][7] = 0) and
+                (esi > gvar_019764C4[edx][5]) and     //005685C6-C9 jle
+                (gvar_019764C4[edx][5] = gvar_019764C4[edx - 1][5]) and //005685CD-D3
+                (gvar_019764C4[edx][3] > 0) and       //005685D5-D8
+                (gvar_019764C4[edx - 1][3] > 0) and   //005685DA-E1
+                (gvar_019764C4[edx - 1][4] >= gvar_019764C4[edx][1]) then //005685E3-EC jl
+        begin
+          ebp := gvar_019764C4[edx - 1][4];           //005685E3
+          ebx := gvar_0253637C * gvar_011AE318 +       //005685EE-607
+                 gvar_011AE318 + gvar_0061F118 +
+                 gvar_011AE348 + ebp;
+          gvar_019764C4[edx][1] := ebx;               //0056860D-0F
+        end;
+      end;
+    end;
+    Inc(ecx);                                         //0056861E
+    Dec(edi);                                         //0056861F
+  end;
+end;
+
+procedure TForm13.schieb_vm;
+var
+  esi, ecx, edx, eax, ebx, edi: Integer;
+begin
+  { 0056862C: like schieb_vm1, but the outer count is 011AE328-1 and
+    the row dword[0] ([eax-0C]) is shifted instead of dword[1]. }
+  esi := gvar_011AE328 - 1;                           //0056862F-35
+  while esi > 0 do
+  begin
+    ecx := 1;                                         //0056863E
+    for edx := 1 to gvar_011AE344 do                  //00568643-DB
+    begin
+      if gvar_019764C4[edx][3] > 0 then               //00568656-59
+      begin
+        if ecx = gvar_019764C4[edx][5] then           //0056865B-5E
+        begin
+          ebx := gvar_019764C4[edx][6];               //00568660
+          if ebx > 0 then
+            gvar_019764C4[edx][0] :=                  //00568667-71
+              ChartBFlat(102 * ebx)
+          else
+          begin
+            ebx := gvar_019764C4[edx][7];             //00568676
+            if ebx > 0 then
+              gvar_019764C4[edx][0] :=                //00568676-87
+                ChartBFlat(102 * ebx);
+          end;
+        end
+        else if (gvar_019764C4[edx][6] = 0) and       //0056868C-96
+                (gvar_019764C4[edx][7] = 0) and
+                (gvar_019764C4[edx][5] < gvar_011AE328) and    //00568698-A1 jge
+                (gvar_019764C4[edx][5] = gvar_019764C4[edx - 1][5]) and //005686A3-A9
+                (gvar_019764C4[edx][3] > 0) and       //005686AB-AE
+                (gvar_019764C4[edx - 1][3] > 0) and   //005686B0-B7
+                (gvar_019764C4[edx - 1][0] >= gvar_019764C4[edx][0]) then //005686B9-C2 jl
+        begin
+          edi := gvar_019764C4[edx - 1][0];           //005686B9
+          gvar_019764C4[edx][0] := edi +              //005686C4-D2
+            gvar_011AE334 + gvar_0061F118;
+        end;
+      end;
+    end;
+    Inc(ecx);                                         //005686E1
+    Dec(esi);                                         //005686E2
+  end;
+end;
+
+procedure TForm13.ScrollBar1Change(Sender: TObject);
+begin
+  { 00572484: Scrollbalken 1 -> Graphik neu zeichnen. }
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.ScrollBar2Change(Sender: TObject);
+begin
+  { 00572490: Scrollbalken 2 -> Graphik neu zeichnen. }
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.nr1;
+var
+  row, child, i0, count, gen, esi: Integer;
+begin
+  { 0056C0D4: Nachfahren-Graph 'Nachgr1' vorbereiten (nr1). Devil of
+    the listing: rows of grid A are 408-byte records; esi in the
+    listing is the row number and [edi + 408*esi + off] = row esi at
+    in-row offset off (edi anchors row 1, so K>0 relative terms move
+    one row up). Recon uses the flat dword helpers with flat index
+    102*row + off/4 plus ChartAShort for bytes 316/318/320. |
+    Stack locals: [esp+14] = loop counter (count), [esp+18] = pen
+    width, [esp] = Self. }
+  gvar_011AE340 := Round(gvar_0061F120 * 45);                       //0056C0E7-F8
+  gvar_011AE33C := 30;                                              //0056C0FD
+  gvar_0061F118 := Round(gvar_0061F120 * 30);                       //0056C107
+  gvar_0061F114 := Round(gvar_0061F120 * 20);                       //0056C11D
+  gvar_011AE334 := Round(gvar_0061F120 * 120) + gvar_011AE338;      //0056C133-4A
+  Screen.Cursor := crHourGlass;                                     //0056C14F-5A
+  gvar_02536364 := 0;                                               //0056C15F-8
+  gvar_02536368 := 0;                                               //0056C166
+  if PaintBox1.Canvas = gvar_011AE32C then begin                    //0056C16D-82
+    gvar_02536364 := ScrollBar1.Position;                           //0056C184-A1
+    gvar_02536368 := ScrollBar2.Position;                           //0056C1A7
+  end;
+  gvar_011AE348 := 0;                                               //0056C1AC-B2
+  gvar_0253637C := 0;                                               //0056C1B3-B5
+  gvar_011AE318 := 0;                                               //0056C1BA-C0
+  gvar_011AE32C.Font.Name := 'Arial';                               //0056C1C1-E
+  gvar_011AE32C.Font.Size := Round(gvar_0061F120 * 9);              //0056C1D3-E6
+  gvar_011AE318 := -gvar_011AE32C.Font.Height + 2;                  //0056C1F3-7
+  PaintBox1.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056C20A-30
+  gvar_011AE318 := -PaintBox1.Canvas.Font.Height + 2;               //0056C234-8
+  gvar_0253636C := 0;                                               //0056C255
+
+  if Printer.Canvas = gvar_011AE32C then begin                      //0056C270-9
+    gvar_0253636C := 0.6;                                           //0056C286-9A
+    Printer.Canvas.Font.Name := 'Arial';                            //0056C2A3-D
+    Printer.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056C2BA-D9
+    count := PaintBox1.Canvas.Pen.Width;                            //0056C2E1-F3
+    Printer.Canvas.Pen.Width := Round(count * gvar_0253636C);       //0056C2FC-3F
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then                         //0056C321-8
+    gvar_0253636C := 0.1;                                           //0056C338-F
+
+  DataModule2.Table17.IndexName := '';                              //0056C355-64
+
+  { 0056C369-C426: reset the 20 AnsiString slots per row, replay the
+   ameron row data via Table17->memein, and run zerleg for each row. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C427-32
+    for i0 := 0 to 19 do begin                                      //0056C373-A2
+      ChartSlotAnsi(i0)^ := '';
+      ChartAAnsi(102 * row + 18 + i0)^ := '';
+    end;
+    DataModule2.Table17.FindKey([ChartAFlat(102 * row + 3)]);       //0056C3A4-CA
+    memein(ChartAFlat(102 * row + 11));                             //0056C3CF-D9
+    zerleg(gvar_011AE334, gvar_011AE318, gvar_011AE32C);            //0056C3DE-F4
+    for i0 := 0 to 19 do begin                                      //0056C3F9-24
+      ChartAAnsi(102 * row + 18 + i0)^ := ChartSlotAnsi(i0)^;
+    end;
+    Inc(row);                                                       //0056C426
+  end;
+
+  if gvar_0061F2BC = 1 then                                          //0056C438-F
+    gvar_011AE348 := Round(((gvar_0253637C * gvar_011AE318) +        //0056C441-E
+      gvar_011AE318) * 4 / 5);
+
+  { 0056C46D-C52B: pass 1 - replace d7 Vater person numbers by the
+    row index carrying the same Nummer (d3); the '*' ShortStrings at
+    bytes 316/318/320 remember already processed rows. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C508-25
+    child := 1;
+    while ChartAFlat(102 * child + 2) > 0 do begin                  //0056C47C-C52B
+      if (ChartAFlat(102 * child + 7) > 0) and                      //0056C481-9F
+         (ChartAFlat(102 * child + 7) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 316)^ <> '*') then begin               //0056C4A1-B4
+        SetChartAFlat(102 * child + 7, row);                        //0056C4BA-94 mov 2A01
+        ChartAShort(child, 316)^ := '*';
+      end;
+      { 0056C4C4-C51A: same for the mother d8/b318. }
+      if (ChartAFlat(102 * child + 8) > 0) and
+         (ChartAFlat(102 * child + 8) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 318)^ <> '*') then begin
+        SetChartAFlat(102 * child + 8, row);
+        ChartAShort(child, 318)^ := '*';
+      end;
+      Inc(child);
+    end;
+    Inc(row);
+  end;
+
+  { 0056C52B-C599: pass 2 - same scan over the partner link d10; the
+    partner row index is ebx-1 here. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C580-B
+    child := 1;
+    while ChartAFlat(102 * child + 2) > 0 do begin                  //0056C537-C
+      if (ChartAFlat(102 * child + 10) > 0) and                     //0056C539-67
+         (ChartAFlat(102 * child + 10) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 320)^ <> '*') then begin               //0056C559-C
+        SetChartAFlat(102 * child + 10, child - 1);                 //0056C56E-8
+        ChartAShort(child, 320)^ := '*';
+      end;
+      Inc(child);
+    end;
+    Inc(row);
+  end;
+
+  { 0056C59B-C732: column alignment. Anchor conversions: [eax] = d5,
+    [eax-10] = d1, [eax+8] = d7, [eax+0C] = d8 of the current row;
+    [eax+198] = d1 of the next row, [eax+1A8] = its d5. The inner
+    child terms [edi+W-17C/-178] = d7/d8 and [edi+W-194] = d1 of row
+    W. Level ecx runs over generations. }
+  if gvar_011AE328 >= 3 then begin                                  //0056C59B-A8
+    count := gvar_011AE328 - 3 + 1;                                 //0056C5A8-C
+    gen := 3;                                                       //0056C5BB
+    repeat
+      esi := 0;                                                     //0056C5C0
+      if gvar_011AE328 >= 3 then begin                              //0056C5C2-A
+        for row := 1 to gvar_011AE344 do begin                      //0056C5D9-56
+          if (ChartAFlat(102 * row + 5) = gen) and                  //0056C5DC-E8
+             (esi <> ChartAFlat(102 * row + 7)) and
+             (esi <> ChartAFlat(102 * row + 8)) then begin
+            { childs carrying d7 }
+            if (ChartAFlat(102 * row + 7) > 0) and                  //0056C5EA-1A
+               ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+                (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then begin
+              esi := ChartAFlat(102 * row + 1);                     //0056C610
+              SetChartAFlat(102 * ChartAFlat(102 * row + 7) + 1, esi);
+              esi := ChartAFlat(102 * row + 7);                     //0056C61A
+            end;
+            { the same for d8/mother childs }
+            if (ChartAFlat(102 * row + 8) > 0) and                  //0056C61D-D
+               ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+                (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then begin
+              esi := ChartAFlat(102 * row + 1);                     //0056C63F-6
+              SetChartAFlat(102 * ChartAFlat(102 * row + 8) + 1, esi);
+              esi := ChartAFlat(102 * row + 8);                     //0056C64D
+            end;
+          end;
+        end;
+      end;
+      { 0056C658-8C: push overlapping siblings of the same generation
+        one column right. }
+      for row := 1 to gvar_011AE344 do begin                        //0056C658-8C
+        esi := ChartAFlat(102 * row + 1);                           //0056C665
+        if (ChartAFlat(102 * row + 5) > 1) and                      //0056C66A-F
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin      //0056C677-C
+          Inc(esi);                                                 //0056C67F
+          SetChartAFlat(102 * (row + 1) + 1, esi);                  //0056C680
+        end;
+      end;
+      { 0056C68E-F5: second pass - parent d1 onto the child column. }
+      for row := 1 to gvar_011AE344 do begin                        //0056C68E-F5
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C69B-D
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C69F-F
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C6BD-6
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C6C7-E5
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C6E5-C
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      { 0056C6F7-2B: horizontal push again. }
+      for row := 1 to gvar_011AE344 do begin
+        esi := ChartAFlat(102 * row + 1);
+        if (ChartAFlat(102 * row + 5) > 1) and
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+          Inc(esi);
+          SetChartAFlat(102 * (row + 1) + 1, esi);
+        end;
+      end;
+      Inc(gen);                                                     //0056C72D-2
+      Dec(count);                                                   //0056C72E-32
+    until count <= 0;
+  end;
+
+  { 0056C738-C7C7: single scan - parent d1 onto child column for the
+    generations 3..count-2. }
+  if gvar_011AE328 >= 3 then begin
+    count := gvar_011AE328 - 3;                                     //0056C745-A
+    count := count + 1;                                             //0056C74F
+    gen := 3;                                                       //0056C754
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C759-C0
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C766-C
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C76A-F
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C788-F
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C792-B
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C7B0-7
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      Inc(gen);                                                     //0056C7C2-3
+      Dec(count);
+    until count <= 0;
+  end;
+
+  { 0056C7C9-C805: horizontal push once more. }
+  for row := 1 to gvar_011AE344 do begin
+    esi := ChartAFlat(102 * row + 1);
+    if (ChartAFlat(102 * row + 5) > 1) and
+       (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+       (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+      Inc(esi);
+      SetChartAFlat(102 * (row + 1) + 1, esi);
+    end;
+  end;
+
+  { 0056C807-C8D1: alignment from generation 2 upward. }
+  if gvar_011AE328 >= 2 then begin                                  //0056C807-E
+    count := gvar_011AE328 - 2 + 1;                                 //0056C814-3
+    gen := 2;                                                       //0056C827
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C82C-93
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C839-A
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C83D-5
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C85B-4
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C865-D
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C883-A
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      { 0056C895-CC: push. }
+      for row := 1 to gvar_011AE344 do begin
+        esi := ChartAFlat(102 * row + 1);
+        if (ChartAFlat(102 * row + 5) > 1) and
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+          Inc(esi);
+          SetChartAFlat(102 * (row + 1) + 1, esi);
+        end;
+      end;
+      Inc(gen);                                                     //0056C8CC-D1
+      Dec(count);
+    until count <= 0;
+  end;
+
+  { 0056C8D7-C98C: children adopt the parent's column, generations
+    from gvar_011AE328 downto 2. esi = the last processed child row. }
+  esi := 0;                                                         //0056C8D7-9
+  if gvar_011AE328 >= 2 then begin                                  //0056C8D9-F
+    gen := gvar_011AE328;                                           //0056C8E6-E
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C906-7D
+        if (ChartAFlat(102 * row + 5) = gen) and                    //0056C909-B
+           (esi <> ChartAFlat(102 * row + 7)) and
+           (esi <> ChartAFlat(102 * row + 8)) then begin
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C90D-39
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then begin
+            SetChartAFlat(102 * ChartAFlat(102 * row + 7) + 1,      //0056C939-8
+              ChartAFlat(102 * row + 1));
+            esi := ChartAFlat(102 * row + 7);                       //0056C947
+          end;
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C94A-7A
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then begin
+            SetChartAFlat(102 * ChartAFlat(102 * row + 8) + 1,      //0056C96C-A
+              ChartAFlat(102 * row + 1));
+            esi := ChartAFlat(102 * row + 8);                       //0056C97A
+          end;
+        end;
+      end;
+      Dec(gen);                                                     //0056C988-C
+    until gen <= 1;
+  end;
+
+  { 0056C992-C9CE: final horizontal push. }
+  for row := 1 to gvar_011AE344 do begin
+    esi := ChartAFlat(102 * row + 1);
+    if (ChartAFlat(102 * row + 5) > 1) and
+       (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+       (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+      Inc(esi);
+      SetChartAFlat(102 * (row + 1) + 1, esi);
+    end;
+  end;
+
+  { 0056C9D0-CA22: track the maximal x/d1 column in gvar_011AE320 and
+    gvar_011AE324. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056CA17-22
+    if ChartAFlat(102 * row + 1) > gvar_011AE320 then               //0056C9D7-E4
+      gvar_011AE320 := ChartAFlat(102 * row + 1);
+    if ChartAFlat(102 * row + 1) > gvar_011AE324 then               //0056C9F5-16
+      gvar_011AE324 := ChartAFlat(102 * row + 1);
+    Inc(row);
+  end;
+
+  gvar_011AE320 := gvar_011AE320 - 1;                               //0056CA24
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;                    //0056CA2A-48
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;                   //0056CA4B-6C
+  ScrollBar1.SmallChange := 10;                                     //0056CA6C-B
+  ScrollBar2.SmallChange := 10;                                     //0056CA7E
+  Screen.Cursor := crDefault;                                       //0056CA90-9C
+end;
+
+procedure TForm13.Nach_erm;
+var
+  startNr, edi, cnt, chunkIdx, pnun, pIdx, i0: Integer;
+  ebx, colx, ardy, rowMark: Integer;
+  bmk: Integer;
+  chain, nextChain, markers: AnsiString;
+  tmpS, tmpS2: AnsiString;
+begin
+  { 0056A970: Nachfahren-Ermittlung. Fills chart grid A and the x/y
+    column arrays gvar_02522AD8/gvar_0252C718 per person; the flat
+    dword layout of grid A is reached via ChartAFlat/SetChartAFlat,
+    the in-row ShortStrings via ChartAShort(edi, 152/193/322/...)
+    and the AnsiString aux slots via ChartAAnsi/ChartSlotAnsi.
+    The assembly dumps 48 zero dwords onto the stack; all locals
+    therefore start with '' / nil (markers, chain, nextChain). }
+  markers := '';
+  chain := '';
+  nextChain := '';
+
+  { 0056A99D-AA12: scale/margin setup }
+  Screen.Cursor := crHourGlass;                                     //0056A9A4
+  gvar_0253636C := 0;                                               //0056A9AD-BF
+  gvar_0061F118 := Round(gvar_0061F120 * 20);                       //0056A9C8-9F
+  gvar_0061F114 := Round(gvar_0061F120 * 30);                       //0056A9DE-EF
+  gvar_011AE344 := 0;                                               //0056A9F4
+  gvar_011AE31C := 0;                                               //0056A9FB
+  if gvar_0061F2BC = 1 then                                         //0056AA02-12
+    Inc(gvar_011AE334, 10);                                         //0056AA0B
+
+  { 0056AA12-AB1B: clear grid A and grid B rows 1..10000. Grid A gets
+    d0..d3, d5, d7, d8, d10..d12 plus the in-row bytes 316/318/31A/31C;
+    grid B gets d0..d3, d5..d12 plus the same bytes. }
+  for edi := 10000 downto 1 do
+  begin
+    SetChartAFlat(102 * edi + 0, 0);                                 //0056AA31
+    SetChartAFlat(102 * edi + 2, 0);                                 //0056AA36
+    SetChartAFlat(102 * edi + 1, 0);                                 //0056AA3B
+    SetChartAFlat(102 * edi + 3, 0);                                 //0056AA40
+    SetChartAFlat(102 * edi + 11, 0);                                //0056AA50
+    SetChartAFlat(102 * edi + 12, 0);                                //0056AA55
+    SetChartAFlat(102 * edi + 5, 0);                                 //0056AA60
+    SetChartAFlat(102 * edi + 7, 0);                                 //0056AA68
+    SetChartAFlat(102 * edi + 8, 0);                                 //0056AA70
+    ChartAShort(edi, 316)^ := #0;                                    //0056AA7B-82
+    ChartAShort(edi, 318)^ := #0;                                    //0056AA82-85
+    ChartAShort(edi, 320)^ := #0;                                    //0056AA8C-8F
+    ChartAShort(edi, 322)^ := #0;                                    //0056AA96-99
+    SetChartAFlat(102 * edi + 10, 0);                                //0056AAA0-A5
+    SetChartBFlat(102 * edi + 3, 0);                                 //0056AAA8-AAAC
+    SetChartBFlat(102 * edi + 2, 0);                                 //0056AAAC-AAE
+    ChartBShort(edi, 316)^ := #0;                                    //0056AAB1-B5
+    ChartBShort(edi, 318)^ := #0;                                    //0056AAB8-B8
+    ChartBShort(edi, 320)^ := #0;                                    //0056AABF-BF
+    SetChartBFlat(102 * edi + 9, 0);                                 //0056AAC6-C8
+    SetChartBFlat(102 * edi + 1, 0);                                 //0056AACB-CD
+    SetChartBFlat(102 * edi + 0, 0);                                 //0056AAD0-D2
+    SetChartBFlat(102 * edi + 10, 0);                                //0056AAD5-D7
+    SetChartBFlat(102 * edi + 11, 0);                                //0056AADA-DC
+    SetChartBFlat(102 * edi + 5, 0);                                 //0056AADF-AE4
+    SetChartBFlat(102 * edi + 7, 0);                                 //0056AAE6
+    SetChartBFlat(102 * edi + 8, 0);                                 //0056AAEB
+    ChartBShort(edi, 322)^ := #0;                                    //0056AAEE-F5
+    SetChartBFlat(102 * edi + 12, 0);                                //0056AAF5-A7
+  end;                                                              //0056AB08-1E
+
+  { 0056AB24-AD64: locate the starting person; the filter on
+    Geburt/taufjahr is only applied when more than the merely present }
+  startNr := DataModule2.Table1Nummer.AsInteger;                     //0056AB24-31
+  gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text);                  //0056AB34-51
+  if gvar_02536BA0 > 1 then                                         //0056AB56-5E
+  begin
+    DataModule2.Table17.Filter := 'gebjahr<=' + IntToStr(gvar_02536BA0) +
+      ' and taufjahr<=' + IntToStr(gvar_02536BA0);                  //0056AB60-99
+    DataModule2.Table17.Filtered := True;                            //0056ABAE-B8
+    Form1.DBText1.Color := $FFFF;                                    //0056ABC0-D2
+  end;
+  DataModule2.Table17.FindKey([startNr]);                            //0056ABD7-F3
+  if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'M' then    //0056ABF3-2F
+    DataModule2.Table17.IndexName := 'vat';                          //0056AC1D-2A
+  if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'W' then    //0056AC2F-6B
+    DataModule2.Table17.IndexName := 'mut';                          //0056AC59-66
+  DataModule2.Table17.FindKey([startNr]);                            //0056AC6B-87
+  if not DataModule2.Table17.FindKey([startNr]) then                 //0056AC75-89
+  begin
+    ShowMessage('Keine Nachfahren gefunden.');                       //0056AC8B-90
+    Exit;  //0056AC95: finally does NOT restore the cursor here
+  end;
+  PaintBox1.Canvas.Font.Name := 'Arial';                             //0056AC9A-B1
+  PaintBox1.Canvas.Font.Size := Round(gvar_0061F120 * 9);            //0056ACB6-DB (5C02C: 9)
+  gvar_011AE318 := -PaintBox1.Canvas.Font.Height + 2;                //0056ACE0-D07 (fild/ROUND identity)
+  gvar_011AE33C := Round(gvar_0061F120 * 45);                        //0056AD0C-1D
+  gvar_011AE340 := Round(gvar_0061F120 * 20);                        //0056AD22-33
+  gvar_0061F118 := Round(gvar_0061F120 * 20);                        //0056AD38-49
+  gvar_0061F114 := Round(gvar_0061F120 * 30);                        //0056AD4E-5F
+  gvar_011AE330 := 1;                                                //0056AD6C
+  DataModule2.Table17.IndexName := '';                               //0056AD76-80
+  DataModule2.Table17.FindKey([startNr]);                            //0056AD85-9C
+  sub_005637C4(DataModule2.Table17Nummer.AsInteger, chain);          //0056ADA1-B1
+
+  { Phase 1 (0056ADB6-B47B): BFS over marriage chunks, collects the
+    marked numbers that will be filled in phase 2 into nextChain. }
+  while gvar_011AE330 <= gvar_0061F2F0 do                            //0056ADB6-C1
+  begin
+    cnt := Length(chain) div 6;                                      //0056ADC7-DD
+    if cnt > 0 then                                                  //0056ADD9
+    begin
+      chunkIdx := 1;                                                 //0056ADE2
+      while cnt > 0 do                                               //0056B44E-51
+      begin
+        pnun := StrToInt(Copy(chain, 6 * (chunkIdx - 1) + 1, 6));    //0056ADE9-E0E
+        sub_005637C4(pnun, tmpS);                                    //0056AE11-17
+        tmpS := tmpS + '*';                                          //0056AE1C-24
+        if Pos(tmpS, markers) = 0 then                               //0056AE29-36
+        begin
+          sub_005637C4(pnun, tmpS2);                                 //0056AE3B-41
+          markers := markers + tmpS2 + '*';                          //0056AE3E-56
+        end;
+        DataModule2.Table18.IndexName := 'num';                      //0056AE5B-68
+        if DataModule2.Table18.FindKey([pnun]) then                  //0056AE6D-8B
+        begin
+          while (not DataModule2.Table18.Eof) and                    //0056BE03-12
+                (DataModule2.Table18Nummer.AsInteger = pnun) do      //0056BE05-15
+          begin
+            sub_005637C4(DataModule2.Table18Epnum.AsInteger, tmpS);  //0056AE96-A9
+            chain := chain + tmpS;                                   //0056AEAE-B7
+            sub_005637C4(DataModule2.Table18Epnum.AsInteger, tmpS);  //0056AEBC-F
+            tmpS := tmpS + '*';                                      //0056AED4-DF
+            if Pos(tmpS, markers) = 0 then                           //0056AEE4-F4
+            begin
+              sub_005637C4(DataModule2.Table18Epnum.AsInteger, tmpS2); //0056AEF6-F0C
+              markers := markers + tmpS2 + '*';                      //0056AEF9-24
+            end;
+            bmk := -1;  //0056AF29-39: v150 GetBookmark = or eax,-1;ret
+            DataModule2.Table17.IndexName := '';                       //0056AF3C-46
+            DataModule2.Table17.FindKey([DataModule2.Table18Epnum.AsInteger]); //0056AF4B-6C
+            // 0056AF7E: v1A0 GotoBookmark = bare ret (no-op)
+            bmk := -1;  //0056AF84-94: v150 again
+            if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'M' then //0056AF97-C6
+            begin
+              DataModule2.Table17.IndexName := 'vat';                  //0056AFD9
+              if DataModule2.Table17.FindKey([pnun]) then              //0056AFE3
+                while (not DataModule2.Table17.Eof) and                //0056B19F-AE
+                      (DataModule2.Table17Vater.AsInteger = pnun) do   //0056B1B0-C0
+                begin
+                  rowMark := DataModule2.Table17Mutter.AsInteger;      //0056B00C-19
+                  if rowMark = DataModule2.Table18Epnum.AsInteger then //0056B01B-2A
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B030-43
+                    nextChain := nextChain + tmpS;                     //0056B048-51
+                    if gvar_011AE330 < gvar_0061F2F0 then              //0056B056-61
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B067-7A
+                      tmpS := tmpS + '*';                              //0056B07F-8A
+                      if Pos(tmpS, markers) = 0 then                   //0056B08F-9F
+                      begin
+                        sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056B0A5-B5
+                        markers := markers + tmpS2 + '*';              //0056B0A8-D3
+                      end;
+                    end;
+                  end
+                  else if rowMark = 0 then                             //0056B0DD-EC
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B0F2-FC
+                    nextChain := nextChain + tmpS;                     //0056B10A-13
+                    if gvar_011AE330 < gvar_0061F2F0 then              //0056B118-23
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B125-2F
+                      tmpS := tmpS + '*';                              //0056B13D-43
+                      if Pos(tmpS, markers) = 0 then                   //0056B14D-5D
+                      begin
+                        sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056B15F-6F
+                        markers := markers + tmpS2 + '*';              //0056B162-8D
+                      end;
+                    end;
+                  end;
+                  DataModule2.Table17.Next;                            //0056B192
+                end;
+            end
+            else if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'W' then //0056B1C6-F5
+            begin
+              DataModule2.Table17.IndexName := 'mut';                  //0056B200
+              if DataModule2.Table17.FindKey([pnun]) then              //0056B212
+                while (not DataModule2.Table17.Eof) and                //0056B3C1-DD
+                      (DataModule2.Table17Mutter.AsInteger = pnun) do  //0056B3DF-94
+                begin
+                  rowMark := DataModule2.Table17Vater.AsInteger;       //0056B23B-45
+                  if rowMark = DataModule2.Table18Epnum.AsInteger then //0056B248-59
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B25F-6C
+                    nextChain := nextChain + tmpS;                     //0056B277-80
+                    if gvar_011AE330 < gvar_0061F2F0 then              //0056B285-90
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B296-A3
+                      tmpS := tmpS + '*';                              //0056B2AE-B9
+                      if Pos(tmpS, markers) = 0 then                   //0056B2BE-CE
+                      begin
+                        sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056B2D4-E4
+                        markers := markers + tmpS2 + '*';              //0056B2D7-FA
+                      end;
+                    end;
+                  end
+                  else if rowMark = 0 then                             //0056B30C-1B
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B321-2E
+                    nextChain := nextChain + tmpS;                     //0056B339-42
+                    if gvar_011AE330 < gvar_0061F2F0 then              //0056B347-52
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056B354-5E
+                      tmpS := tmpS + '*';                              //0056B361-72
+                      if Pos(tmpS, markers) = 0 then                   //0056B37C-8C
+                      begin
+                        sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056B38E-9E
+                        markers := markers + tmpS2 + '*';              //0056B391-B8
+                      end;
+                    end;
+                  end;
+                  DataModule2.Table17.Next;                            //0056B3C1
+                end;
+            end;
+            DataModule2.Table17.IndexName := '';                       //0056B3F5-FF
+            // 0056B40F: v1A0 GotoBookmark(bmk) = no-op
+            DataModule2.Table18.Next;                                  //0056B417-1F
+          end;  // while Table18
+        end;    // FindKey([pnun])
+        Inc(chunkIdx);                                               //0056B44B
+        Dec(cnt);                                                    //0056B44E
+      end;
+    end;
+    chain := nextChain;                                              //0056B457-5D
+    nextChain := '';                                                 //0056B462-65
+    Inc(gvar_011AE330);                                              //0056B46A
+  end;                                                               //0056B470-7B
+
+  { Phase 2 (0056B481-BE58): breadth fill of grid A row edi: person
+    rows then one marriage row per spouse of pnun. }
+  edi := 1;                                                          //0056B481
+  colx := 1;                                                         //0056B486
+  ardy := 1;                                                         //0056B48D
+  gvar_011AE330 := 1;                                                //0056B494
+  DataModule2.Table17.IndexName := '';                               //0056B49E-A8
+  DataModule2.Table17.FindKey([startNr]);                            //0056B4AD-C4
+  sub_005637C4(DataModule2.Table17Nummer.AsInteger, chain);          //0056B4C9-D9
+  nextChain := '';                                                   //0056B4DE-E1
+  while gvar_011AE330 <= gvar_0061F2F0 do                            //0056B4E6-F1
+  begin
+    cnt := Length(chain) div 6;                                      //0056B4F7-09
+    if cnt > 0 then
+    begin
+      chunkIdx := 1;                                                 //0056B512
+      while cnt > 0 do                                               //0056BE1E-21
+      begin
+        pnun := StrToInt(Copy(chain, 6 * (chunkIdx - 1) + 1, 6));    //0056B519-44
+        DataModule2.Table17.FindKey([pnun]);                         //0056B547-63
+        SetChartAFlat(102 * edi + 2, edi);                           //0056B563-66
+        SetChartAFlat(102 * edi + 3, DataModule2.Table17Nummer.AsInteger); //0056B56D-7A
+        SetChartAFlat(102 * edi + 7, DataModule2.Table17Vater.AsInteger); //0056B581-8E
+        SetChartAFlat(102 * edi + 8, DataModule2.Table17Mutter.AsInteger); //0056B595-A2
+        ChartAShort(edi, 152)^ := Copy(DataModule2.Table17IDNR.AsString, 1, 40); //0056B5A9-E1
+        if gvar_0061F2BC = 1 then                                    //0056B5E6
+        begin
+          tmpS := gvar_02536B9C + '\bilder\b' + IntToStr(ChartAFlat(102 * edi + 3)) + 'a.jpg'; //0056B5F3-27
+          if FileExists(tmpS) then                                   //0056B62C-37
+          begin
+            tmpS := gvar_02536B9C + '\bilder\b' + IntToStr(ChartAFlat(102 * edi + 3)) + 'a.jpg'; //0056B63B-B6F (recomputed)
+            ChartAShort(edi, 322)^ := Copy(tmpS, 1, 50);             //0056B674-99
+          end;
+        end;
+        if edi = 1 then                                              //0056B69E-A1
+        begin
+          SetChartAFlat(102 * edi + 7, 0);                           //0056B6A3-A5
+          SetChartAFlat(102 * edi + 8, 0);                           //0056B6AC-AE
+        end;
+        ChartAShort(edi, 193)^ := Copy(UpperCase(DataModule2.Table17Geschlecht.AsString), 1, 40); //0056B6B5-6D9
+        if gvar_0253692C = 'Nachgr1' then                            //0056B703-14
+        begin
+          SetChartAFlat(102 * edi + 0, (gvar_011AE330 - 1) + ardy);  //0056B716-1F
+          SetChartAFlat(102 * edi + 1, colx);                        //0056B726-29
+        end;
+        if gvar_0253692C = 'Nachgr2' then                            //0056B730-41
+        begin
+          SetChartAFlat(102 * edi + 0, colx);                        //0056B743-46
+          SetChartAFlat(102 * edi + 1, (gvar_011AE330 - 1) + ardy);  //0056B74D-56
+        end;
+        for i0 := 0 to 19 do                                         //0056B75D-76
+          ChartSlotAnsi(i0)^ := '';
+        SetChartAFlat(102 * edi + 5, gvar_011AE330);                 //0056B778-81
+        Inc(edi);                                                    //0056B788
+        Inc(colx);                                                   //0056B789
+        if colx > gvar_011AE31C then                                 //0056B78C-95
+          gvar_011AE31C := colx;                                     //0056B797
+        DataModule2.Table18.IndexName := 'num';                      //0056B79F-AC
+        if DataModule2.Table18.FindKey([pnun]) then                  //0056B7B1-CF
+        begin
+          pIdx := 0;                                                 //0056B7D5-D7
+          while (not DataModule2.Table18.Eof) and                    //0056BDF4-E03
+                (DataModule2.Table18Nummer.AsInteger = pnun) do      //0056BE05-15
+          begin
+            Inc(pIdx);                                               //0056B7DF
+            sub_005637C4(DataModule2.Table18Epnum.AsInteger, tmpS);  //0056B7E2-F5
+            chain := chain + tmpS;                                   //0056B7FA-03
+            bmk := -1;  //0056B808-18: v150 GetBookmark
+            DataModule2.Table17.IndexName := '';                     //0056B81B-25
+            DataModule2.Table17.FindKey([DataModule2.Table18Epnum.AsInteger]); //0056B82A-B49
+            SetChartAFlat(102 * edi + 2, edi);                       //0056B850-53
+            SetChartAFlat(102 * edi + 3, DataModule2.Table17Nummer.AsInteger); //0056B85A-67
+            ChartAShort(edi, 193)^ := Copy(UpperCase(DataModule2.Table17Geschlecht.AsString), 1, 40); //0056B86E-87D
+            SetChartAFlat(102 * edi + 7, 0);                         //0056B8BC-BE
+            SetChartAFlat(102 * edi + 8, 0);                         //0056B8C5-C7
+            ChartAShort(edi, 152)^ := Copy(DataModule2.Table17IDNR.AsString, 1, 40); //0056B8CE-F06
+            SetChartAFlat(102 * edi + 10, ChartAFlat(102 * (edi - 1) + 3)); //0056B90B-12 (d3 of the partner row edi-1)
+            SetChartAFlat(102 * edi + 11, DataModule2.Table18Nummer.AsInteger); //0056B919-26
+            SetChartAFlat(102 * edi + 12, pIdx);                     //0056B92D-30
+            if gvar_0253692C = 'Nachgr1' then                        //0056B937-48
+            begin
+              SetChartAFlat(102 * edi + 0, (gvar_011AE330 - 1) + ardy); //0056B94A-53
+              SetChartAFlat(102 * edi + 1, colx);                    //0056B95A-5D
+            end;
+            if gvar_0253692C = 'Nachgr2' then                        //0056B964-75
+            begin
+              SetChartAFlat(102 * edi + 0, colx);                    //0056B977-7A
+              SetChartAFlat(102 * edi + 1, (gvar_011AE330 - 1) + ardy); //0056B981-8A
+            end;
+            if gvar_0061F2BC = 1 then                                //0056B991-98
+            begin
+              tmpS := gvar_02536B9C + '\bilder\b' + IntToStr(ChartAFlat(102 * edi + 3)) + 'a.jpg'; //0056B99E-2D
+              if FileExists(tmpS) then                               //0056B9D7-E2
+              begin
+                tmpS := gvar_02536B9C + '\bilder\b' + IntToStr(ChartAFlat(102 * edi + 3)) + 'a.jpg'; //0056B9E6-A0F (recomputed)
+                ChartAShort(edi, 322)^ := Copy(tmpS, 1, 50);         //0056BA1F-44
+              end;
+            end;
+            for i0 := 0 to 19 do                                     //0056BA49-64
+              ChartSlotAnsi(i0)^ := '';
+            { 0056BA66-B82: DEAD block - guarded by cmp [ebp-0C],0 which
+              is never 0 here (20 from the slot-clear loop); skipped. }
+            for i0 := 1 to 19 do                                     //0056BA85-ACC
+            begin
+              tmpS := Trim(ChartSlotAnsi(i0)^);                      //0056BA91-9E
+              if tmpS <> '' then
+                ChartAAnsi(102 * edi + 17)^ := ChartAAnsi(102 * edi + 17)^ + #13#10 + ChartSlotAnsi(i0)^; //0056BAA7-C7
+            end;
+            SetChartAFlat(102 * edi + 5, gvar_011AE330);             //0056BAD4-DD
+            Inc(edi);                                                //0056BAE4
+            Inc(colx);                                               //0056BAE5
+            if colx > gvar_011AE31C then                             //0056BAE8-96
+              gvar_011AE31C := colx;                                 //0056BAF3
+            // 0056BB03: v1A0 GotoBookmark(bmk) = no-op
+            bmk := -1;  //0056BB0E-1E: v150 GetBookmark
+            if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'M' then //0056BB21-50
+            begin
+              DataModule2.Table17.IndexName := 'vat';                 //0056BB5B
+              if DataModule2.Table17.FindKey([pnun]) then             //0056BB6D
+                while (not DataModule2.Table17.Eof) and               //0056BC3F-5B
+                      (DataModule2.Table17Vater.AsInteger = pnun) do  //0056BC5D-6D
+                begin
+                  rowMark := DataModule2.Table17Mutter.AsInteger;      //0056BB96-A3
+                  if rowMark = 0 then                                  //0056BBA5
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056BBA7-E4
+                    if Pos(tmpS, nextChain) = 0 then                   //0056BBC5
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056BBD1-E4
+                      nextChain := nextChain + tmpS2;                  //0056BBE9-F2
+                    end;
+                  end
+                  else if rowMark = DataModule2.Table18Epnum.AsInteger then //0056BBF9-17
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056BC19
+                    nextChain := nextChain + tmpS;                     //0056BC26-3A
+                  end;
+                  DataModule2.Table17.Next;                            //0056BC3F
+                end;
+            end
+            else if UpperCase(DataModule2.Table17Geschlecht.AsString) = 'W' then //0056BC73-A2
+            begin
+              DataModule2.Table17.IndexName := 'mut';                 //0056BCAD
+              if DataModule2.Table17.FindKey([pnun]) then             //0056BCC9
+                while (not DataModule2.Table17.Eof) and               //0056BD82-8D
+                      (DataModule2.Table17Mutter.AsInteger = pnun) do //0056BDAF-BF
+                begin
+                  rowMark := DataModule2.Table17Vater.AsInteger;       //0056BCE8-F2
+                  if rowMark = 0 then                                  //0056BCF5
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056BCF9-D03
+                    if Pos(tmpS, nextChain) = 0 then                   //0056BD11-1F
+                    begin
+                      sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS2); //0056BD23-36
+                      nextChain := nextChain + tmpS2;                  //0056BD3B-44
+                    end;
+                  end
+                  else if rowMark = DataModule2.Table18Epnum.AsInteger then //0056BD4B-67
+                  begin
+                    sub_005637C4(DataModule2.Table17Nummer.AsInteger, tmpS); //0056BD6B
+                    nextChain := nextChain + tmpS;                     //0056BD78-8C
+                  end;
+                  DataModule2.Table17.Next;                            //0056BD91
+                end;
+            end;
+            DataModule2.Table17.IndexName := '';                      //0056BDC5
+            // 0056BDE1: v1A0 GotoBookmark(bmk) = no-op
+            DataModule2.Table18.Next;                                 //0056BDE7
+          end;  // while Table18
+        end;    // FindKey([pnun])
+        Inc(chunkIdx);                                               //0056BE1B
+        Dec(cnt);                                                    //0056BE1E
+      end;
+    end;
+    chain := nextChain;                                              //0056BE27-2D
+    nextChain := '';                                                 //0056BE32-35
+    Inc(gvar_011AE330);                                              //0056BE3A
+    colx := 1;                                                       //0056BE40
+    gvar_011AE344 := edi;                                            //0056BE47
+  end;                                                               //0056BE4D-58
+
+  { Phase 3 (0056BE5E-BF24): tail bookkeeping }
+  Screen.Cursor := crDefault;                                        //0056BE5E-67
+  gvar_011AE328 := 0;                                                //0056BE6C-6E
+  edi := 1;                                                          //0056BE73
+  while ChartAFlat(102 * edi + 2) > 0 do                             //0056BEB6-C1
+  begin
+    if ChartAFlat(102 * edi + 5) > gvar_011AE328 then                //0056BE7A-87
+      gvar_011AE328 := ChartAFlat(102 * edi + 5);                    //0056BE89-93
+    gvar_02522AD8[edi] := ChartAFlat(102 * edi + 0);                 //0056BE99-A0
+    gvar_0252C718[edi] := ChartAFlat(102 * edi + 1);                 //0056BEA7-AE
+    Inc(edi);                                                        //0056BEB5
+  end;
+  ShowMessage(IntToStr(gvar_011AE328) + ' Generationen / ' +        //0056BEC3-F0
+    IntToStr(gvar_011AE344 - 1) + ' Personen gefunden');
+  gvar_011AE32C := PaintBox1.Canvas;                                 //0056BF15-24
+end;
+
+procedure TForm13.kek_ord;
+var
+  esi, edx, eax, ecx: Integer;
+begin
+  { 005686F0: for esi = gvar_011AE328-1 downto 1, walk rows on the
+    1976670 anchor = grid B row[r] dword[5] ([eax-14] = [r][0],
+    [eax-1AC] = [r-1][0], [eax-8] = [r][3], [eax-1A0] = [r-1][3],
+    [eax+190] = [r+1][3], [eax+8] = [r][7], [eax+0C] = [r][8]): }
+  esi := gvar_011AE328 - 1;                            //005686F7-FA
+  while esi >= 1 do
+  begin
+    for edx := 1 to gvar_011AE344 do                   //005686FF-68
+    begin
+      eax := edx;  // anchor 1976670 = row(r) dword[5]
+      ecx := gvar_019764C4[eax][5];                    //0056870E
+      if (ecx < gvar_011AE328) and                     //00568710-12 jge
+         (gvar_019764C4[eax - 1][5] = ecx) and         //00568714-1A jne
+         (gvar_019764C4[eax][3] > 0) and               //0056871C-20
+         (gvar_019764C4[eax - 1][3] > 0) and           //00568722-29
+         (gvar_019764C4[eax + 1][3] > 0) and           //0056872B-32
+         (gvar_019764C4[eax][0] <= gvar_019764C4[eax - 1][0]) and //00568734-3D jg
+         (gvar_019764C4[eax][7] = 0) and               //0056873F-43
+         (gvar_019764C4[eax][8] = 0) then              //00568745-49
+      begin
+        ecx := gvar_011AE334 + gvar_0061F118;          //0056874B-51
+        ecx := ecx + ecx;                              //00568757
+        gvar_019764C4[eax][0] := ecx +                 //00568759-5F
+          gvar_019764C4[eax - 1][0];
+      end;
+    end;
+    Dec(esi);                                          //0056876A-6D
+  end;
+end;
+
+procedure TForm13.Proband1Click(ARoot, AOther: Integer);
+begin
+  { 005729E4. The original pushed the Sender object argument
+    into an extra stack slot, which is ignored by the body. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005729F0
+  Form1.aus1.Click;                                   //005729F7-1E
+  if DataModule2.Table1.RecordCount >= 2 then         //00572A21-36
+    vorf_erm2(ARoot, AOther)                          //00572A44-4A
+  else
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.'); //00572A38-42
+end;
+
+procedure TForm13.Button7Click(Sender: TObject);
+begin
+  { 00573120: Linie dunnern - Strichbreite verkleinern, aber nicht unter 1. }
+  if (PaintBox1.Canvas.Pen.Width - 1) > 0 then
+  begin
+    PaintBox1.Canvas.Pen.Width := PaintBox1.Canvas.Pen.Width - 1;
+    PaintBox1.Refresh;
+  end;
+end;
+
+procedure TForm13.vorf_erm2(ARoot, AOther: Integer);
+var
+  chunk, numStr: AnsiString;
+  n, i: Integer;
+begin
+  { 00572A78. Collects the ancestors of ARoot in gvar_011AE2BC as
+    a sequence of 6-digit numbers, each followed by a '*' (7 chars per
+    block). Marriage partners (Epnum chunks) are appended as well.
+    Afterwards sam2 walks the ancestors of AOther and compares them
+    against this list, setting gvar_02536B94 := 1 on the first match. }
+  gvar_011AE2BC := '';                                 //00572AAB
+  DataModule2.Table17.Open;                            //00572AB5-BD
+  DataModule2.Table17.IndexName := '';                 //00572AC2-CC
+  DataModule2.Table18.Open;                            //00572AD1-D9
+  DataModule2.Table18.IndexName := 'num';              //00572ADE-E6
+  if DataModule2.Table17.FindKey([ARoot]) then         //00572AFA-B07
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572B0C-20
+    gvar_011AE2BC := numStr + '*';                     //00572B25-32
+  end;
+  i := 1;                                              //00572B37
+  while Length(gvar_011AE2BC) >= 7 * i do              //00572B3C-4F
+  begin
+    chunk := Copy(gvar_011AE2BC, 7 * i - 6, 6);        //00572B55-B2
+    if Trim(chunk) = '000000' then                     //00572B73-8B
+    begin
+      sam2(AOther);                                    //00572D3B-41
+      Exit;                                            //00572D46
+    end;
+    n := StrToInt(chunk);                              //00572B91-FA
+    if n > 0 then                                      //00572BBB-BF1
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572BC1-D5
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572BE2-EC
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572BF3-C0C
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C0E-24
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572C25-2F
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572C36-4B
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C4C-67
+        end;
+      end;
+      if n <> ARoot then                               //00572C68-6B
+      begin
+        if DataModule2.Table18.FindKey([n]) then       //00572C71-85
+        begin
+          { 00572C92/D1F: head tests Table18Nummer = ARoot; Eof is
+            checked only after Next, in the body tail. }
+          while (not DataModule2.Table18.Eof) and      //00572D0E-1D
+                (DataModule2.Table18Nummer.AsInteger = ARoot) do //00572D1F-2F
+          begin
+            if DataModule2.Table18Epnum.AsInteger > 0 then  //00572C97-A1
+            begin
+              sub_005637C4(DataModule2.Table18Epnum.AsInteger, numStr); //00572CA8-CBA
+              if Pos(numStr, gvar_011AE2BC) = 0 then    //00572CC0-CD
+                gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572CCF-00
+            end;
+            DataModule2.Table18.Next;                  //00572D01-09
+          end;
+        end;
+      end;
+    end;
+    Inc(i);                                            //00572D35-36
+  end;
+  sam2(AOther);                                        //00572D3B-41
+end;
+
+procedure TForm13.SpeedButton3Click(Sender: TObject);
+var
+  ZoomSave: Extended;  //00573463 [ebp-28]
+  PageTotal: Integer;   //005734FA [ebp-10], Kopie [ebp-1C]
+  PageContent: Integer; //0057333 [ebp-0C, von Sub_00573314]
+  DrawUsedY: Integer;    //005733E3 [ebp-14]
+  DrawStep: Integer;     //005733E6 [ebp-18]
+  DrawFlag: Boolean;     //005736D8 [ebp-1]
+
+  procedure WritePage; //0057316C (verschachtelt), [ebp+8] = SpeedButton3-Kontext
+  var
+    canvas: TCanvas;   //00573173 [ebx] -> gvar_011AE32C
+  begin
+    if DrawFlag then                                   //00573187-E2
+      WPPDFPrinter1.EndDoc;
+    WPPDFPrinter1.StartPage(PageContent, PageTotal, 0, $64, $64); //0057319D-B9 [vmt+4C]
+    canvas := WPPDFPrinter1.Canvas;                     //005731C4-64 (005373F4)
+    gvar_011AE32C := canvas;                            //005731C9-CE
+    canvas.Font.Name := PaintBox1.Canvas.Font.Name;      //005731CE-FC
+    if gvar_0253692C = 'Vorgr1' then
+      vz1(canvas)                                       //0057320D-2A
+    else if gvar_0253692C = 'Vorgr2' then
+      vz2(canvas)                                       //0057322C-55
+    else if gvar_0253692C = 'Nachgr1' then
+      nz1(canvas)                                       //00573257-80
+    else if gvar_0253692C = 'Nachgr2' then
+      nz2(canvas);                                      //00573282-B6
+    DrawFlag := True;                                   //005732AB-B2
+  end;
+
+  procedure Sub_00573314; //00573314 (verschachtelt): Inhalts-/Seitenhoehe
+  begin
+    if gvar_0253692C = 'Vorgr1' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 +
+        gvar_011AE340                                   //0057332A-44
+    else if gvar_0253692C = 'Vorgr2' then
+      PageContent := (gvar_011AE320 + 1) * (gvar_011AE334 + gvar_0061F118) +
+        gvar_011AE340                                   //0057335A-77
+    else if gvar_0253692C = 'Nachgr1' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 +
+        gvar_011AE340                                   //0057338D-A7
+    else if gvar_0253692C = 'Nachgr2' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE320 +
+        gvar_011AE340;                                  //005733BD-D7
+    if (not DrawFlag) or (DrawUsedY + DrawStep > PageTotal) then
+      WritePage;                                        //005733DA-05 (0057316C)
+    //0057340A: [ebp-14] += [ebp-18]; im Original ohne Initialisierung
+    DrawUsedY := DrawUsedY + DrawStep;
+  end;
+
+begin
+  { 00573450: PDF-Ausgabe des Graphen: Alle Masstaebe umrechnen auf
+    0.63-Faktor (Zoom), bereiten den PDF-Drucker je nach Aufrufmodus
+    vor und fertig die Seite(n) in WPPDFPrinter1.Canvas. Danach Zoom
+    zuruecksetzen und Form13.Refresh. }
+  gvar_011AE320 := 0;
+  ZoomSave := gvar_0061F120;
+  if gvar_0253692C = 'Vorgr1' then                     //00573480-91
+  begin
+    gvar_0061F120 := 0.63;                              //00573493
+    WPPDFPrinter1.Filename := 'VGr1.pdf';               //005734B0
+    vr1;                                                //005734C8
+    PageTotal := (gvar_011AE320 + 1) *                  //005734CD-F8
+      (gvar_0253637C * gvar_011AE318 + gvar_0061F114 +
+      gvar_011AE318 + gvar_011AE348) + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Vorgr2' then                //00573502-13
+  begin
+    gvar_0061F120 := 0.63;                              //00573515
+    WPPDFPrinter1.Filename := 'VGr2.pdf';               //00573532
+    Vr2;                                                //0057354A
+    PageTotal := (gvar_0253637C * gvar_011AE318 +       //0057354F-78
+      gvar_0061F114 + gvar_011AE318 + gvar_011AE348) *
+      gvar_0061F2F0 + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Nachgr1' then               //00573580-91
+  begin
+    gvar_0061F120 := 0.63;                              //00573593
+    WPPDFPrinter1.Filename := 'NGr1.pdf';               //005735B0
+    nr1;                                                //005735C8
+    PageTotal := (gvar_011AE320 + 1) *                  //005735CD-F8
+      (gvar_0253637C * gvar_011AE318 + gvar_0061F114 +
+      gvar_011AE318 + gvar_011AE348) + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Nachgr2' then               //005735FF-10
+  begin
+    gvar_0061F120 := 0.63;                              //00573612
+    WPPDFPrinter1.Filename := 'NGr2.pdf';               //0057362F
+    nr2;                                                //00573647
+    PageTotal := (gvar_0253637C * gvar_011AE318 +       //0057364C-75
+      gvar_0061F114 + gvar_011AE318 + gvar_011AE348) *
+      gvar_0061F2F0 + gvar_011AE33C;
+  end;
+  WPPDFPrinter1.SetLicenseLibrary('Ahnw50.dll');         //00573678-86 (00537710)
+  WPPDFRegisterLicense('Heribert Reitmeier',            //0057368B-95 (00536D90)
+    'A144arg6fm45afqf96d4@80B340EF');
+  if WPPDFPrinter1.Field70 then                        //0057369A-B2
+    WPPDFPrinter1.Field70 := False;                     //005736AA-AD (00537824)
+  WPPDFPrinter1.CanvasReference := wprefScreen;         //005736BB (byte[+64] := 0)
+  WPPDFPrinter1.StartDocument;                          //005736BF-64 (005379E0, vmt+40)
+  DrawFlag := False;                                    //005736D8
+  DrawUsedY := 0;                                       //00573400? im Original
+  DrawStep := 0;                                        //nicht sichtbar ([ebp-14/-18])
+  try                                                   //005736C4-CF
+    Sub_00573314;                                       //005736DC-E2
+  finally                                               //005736EB-F4
+    if DrawFlag then
+      WPPDFPrinter1.EndDoc;                             //005736F6-A? (00538C98, vmt+48)
+    WPPDFPrinter1.FinishDocument;                       //00573704-F (00538D00, vmt+54)
+    gvar_0061F120 := ZoomSave;                           //0057371A-30
+    gvar_011AE32C := PaintBox1.Canvas;                   //00573737-46
+    PaintBox1.Refresh;                                   //0057374B-54
+  end;
+end;
+
+procedure TForm13.sam2(AOther: Integer);
+var
+  chunk, numStr, tmpS: AnsiString;
+  n, i: Integer;
+begin
+  { 00572D98. Walks the ancestors of AOther (6-digit number blocks
+    separated by '*'), building the list in gvar_011AE2C0 and comparing
+    against the ancestor list in gvar_011AE2BC (Vorfahren of ARoot, set
+    up by vorf_erm2). A match sets gvar_02536B94 := 1 and aborts with
+    both lists left intact; exhaustion clears both lists. }
+  gvar_011AE2C0 := '';                                 //00572DB2-C2
+  DataModule2.Table17.Open;                            //00572DC7-D4
+  DataModule2.Table17.IndexName := '';                 //00572DD9-E8
+  DataModule2.Table18.Open;                            //00572DED-FA
+  DataModule2.Table18.IndexName := 'num';              //00572DFF-11
+  if DataModule2.Table17.FindKey([AOther]) then        //00572E16-2F
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572E38-4D
+    tmpS := numStr + '*';                              //00572E4A-5A
+    if Pos(tmpS, gvar_011AE2BC) > 0 then               //00572E5F-6D
+    begin
+      gvar_02536B94 := 1;                              //00572E71-76
+      Exit;                                            //00572E7C
+    end;
+    gvar_011AE2C0 := numStr + '*';                     //00572E81-A5
+  end;
+  i := 1;                                              //00572EAA-AF
+  while Length(gvar_011AE2C0) >= 7 * i do              //00572EAF-BF
+  begin
+    chunk := Copy(gvar_011AE2C0, 7 * i - 6, 6);        //00572EC5-DB
+    if Trim(chunk) = '000000' then                     //00572EE0-EF8
+    begin
+      gvar_011AE2BC := '';                             //00573072-77
+      gvar_011AE2C0 := '';                             //0057307C-7E
+      Exit;                                            //00573083 (finally part)
+    end;
+    n := StrToInt(chunk);                              //00572EFE-FA
+    if n > 0 then                                      //00572F23-25
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572F2B-44
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572F51-63
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572F67-7C
+          tmpS := numStr + '*';                        //00572F81-89
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //00572F8E-9C
+          begin
+            gvar_02536B94 := 1;                        //00572FA0-A5
+            Exit;                                      //00572FAB
+          end;
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572FB2-C7
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00572FCC-00
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572FE0-FF2
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572FF6-00573008
+          tmpS := numStr + '*';                        //00573010-18
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //0057301D-2B
+          begin
+            gvar_02536B94 := 1;                        //0057302F-34
+            Exit;                                      //0057303A
+          end;
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //0057303E-53
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00573058-67
+        end;
+      end;
+    end;
+    Inc(i);                                            //0057306C-6D
+  end;
+  gvar_011AE2BC := '';                                 //00573072-77
+  gvar_011AE2C0 := '';                                 //0057307C-7E
+end;
+
+procedure TForm13.Symm;
+var
+  r, esi, eax, edx, ecx, edi: Integer;
+begin
+  { 00568834: two backward row walks over grid B (gvar_019764C4),
+    from row gvar_011AE344 downto 1 (Step $198).
+    Grid B local offsets at the [esi][5] anchor ebx:
+      [ebx] = [esi][5], [ebx+8] = [esi][7], [ebx+0C] = [esi][8],
+      [ebx-14] = [esi][0]; the second walk anchors at [esi][7]:
+      [eax-8] = [esi][5], [eax-10] = [esi][3], [eax-1A0] = [esi-1][5],
+      [eax-1A8] = [esi-1][3], [eax-1B4] = [esi-1][0],
+      [eax-1C] = [esi][0]. Row-index terms [T*8 + 19764C4] translate
+    to flat dword index 2*T (ChartBFlat). gvar_011AE334 and
+    gvar_0061F118 are read as plain dword integers throughout. }
+
+  { Part 1 (00568847-905). }
+  for r := gvar_011AE344 downto 1 do
+  begin
+    esi := r;
+    if gvar_011AE330 > 2 then                            //00568851-58
+    begin
+      if gvar_019764C4[esi][5] < gvar_011AE328 then      //0056885E-66 jge
+      begin
+        edi := gvar_019764C4[esi][7];                    //00568897
+        if (edi > 0) and (gvar_019764C4[esi][8] > 0) then //0056889A-A2
+        begin
+          //005688A4-D5: midpoint move
+          eax := Round((ChartBFlat(102 * gvar_019764C4[esi][8]) -
+                        ChartBFlat(102 * gvar_019764C4[esi][7])) / 2.0) +
+                 ChartBFlat(102 * edi);
+          gvar_019764C4[esi][0] := eax;                  //005688D5
+        end;
+        eax := gvar_019764C4[esi][0];                    //005688E4
+        ecx := eax div (gvar_011AE334 + gvar_0061F118);  //005688E8-E8 idiv
+        if ecx > gvar_011AE31C then                      //005688EF-F5 jle
+          gvar_011AE31C := ecx - 1;                      //005688F7-F8
+      end;
+    end;
+  end;
+
+  { Part 2 (0056889D-971). }
+  for r := gvar_011AE344 downto 1 do
+  begin
+    esi := r;
+    if (gvar_019764C4[esi][7] = 0) and                   //00568923-25
+       (gvar_019764C4[esi][8] = 0) then                  //00568927-2B
+    begin
+      edx := gvar_019764C4[esi][5];                      //0056892D
+      if (edx < gvar_011AE328) and                       //00568930-36 jge
+         (edx = gvar_019764C4[esi - 1][5]) and           //00568938-3E jne
+         (gvar_019764C4[esi][3] > 0) and                 //00568940-44
+         (gvar_019764C4[esi - 1][3] > 0) and             //00568946-4D
+         (gvar_019764C4[esi - 1][0] >= gvar_019764C4[esi][0]) then //0056894F-58 jl
+      begin
+        edx := gvar_019764C4[esi - 1][0];                //0056894F
+        gvar_019764C4[esi][0] := edx + gvar_011AE334 +    //0056895A-66
+          gvar_0061F118;
+      end;
+    end;
+  end;
+end;
+
+procedure TForm13.kek_ord_2;
+var
+  ecx, esi, edx, eax, ebx: Integer;
+begin
+  { 00568774: counter trap makes EXACTLY two row walks (esi = V-1-V =
+    -1; the bottom dec ecx/inc esi pair drives ecx = V-1 then V-2).
+    Conditions like kek_ord but keyed on ecx: [r][5] and [r-1][5]
+    must both equal ecx. Then [r][0] := [r-1][0] + sum, and [r-1][0]
+    is nudged +/- sum depending on the parity of [r][2]
+    ([eax-0C] = row[r] dword[2]; and 80000001 idiom = sign-corrected
+    odd test). }
+  ecx := gvar_011AE328;                                //0056877C
+  esi := -1;                                           //0056877E-83
+  while esi <> 0 do
+  begin
+    for edx := 1 to gvar_011AE344 do                   //0056878A-1F
+    begin
+      eax := edx;
+      ebx := gvar_019764C4[eax][5];                    //0056879D
+      if (ebx < gvar_011AE328) and                     //0056879F-A1 jge
+         (ecx = gvar_019764C4[eax][5]) and             //005687A3-A5
+         (ecx = gvar_019764C4[eax - 1][5]) and         //005687A7-AD
+         (gvar_019764C4[eax][3] > 0) and               //005687AF-B3
+         (gvar_019764C4[eax - 1][3] > 0) then          //005687B5-BC
+      begin
+        gvar_019764C4[eax][0] :=                       //005687BE-D0
+          gvar_019764C4[eax - 1][0] +
+          gvar_011AE334 + gvar_0061F118;
+        ebx := gvar_019764C4[eax][2] and 80000001;     //005687D3-E2
+        if ebx = 0 then                                //005687E3-E5 jne
+          gvar_019764C4[eax - 1][0] :=                 //005687E7-F9
+            gvar_019764C4[eax - 1][0] +
+            gvar_011AE334 + gvar_0061F118
+        else
+          gvar_019764C4[eax - 1][0] :=                 //00568801-13
+            gvar_019764C4[eax - 1][0] -
+            gvar_011AE334 - gvar_0061F118;
+      end;
+    end;
+    Dec(ecx);                                          //00568825
+    Inc(esi);                                          //00568826
+  end;
+end;
+
+procedure TForm13.Verwandtschaft1Click(Sender: TObject);
+var
+  curNum, eli: Integer;
+  s, s2: AnsiString;
+begin
+  { 0057249C. Compares the ancestors of the current person (Table1)
+    and the person whose number is in gvar_011AE2C4 (asked for by the
+    caller / input dialog), showing both captions and the result
+    message. The final verdict comes from vorf_erm2/sam2 via
+    gvar_02536B94. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005724C8-E2
+  Form1.aus1.Click;                                    //005724E7-F6
+  curNum := DataModule2.Table1Nummer.AsInteger;        //005724F9-08
+  s := DataModule2.Table1Name.AsString + ' ' +         //00572509-8
+       DataModule2.Table1Vornamen.AsString;            //CatN3 00572537-8
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //00572541-60
+    s := s + ' * ' + DataModule2.Table1Gebjahr.AsString //00572562-8A
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //0057258C-D5
+    s := s + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005725AD-D0
+  s := s + ' [DS: ' + IntToStr(curNum) + ']';          //005725D5-F8
+  eli := curNum;                                       //005725FD (esi copy)
+  // [ebp-10] AnsiString is cleared, never read: omitted.
+  if gvar_011AE2C4 = 0 then                            //00572608-0F
+    Exit;
+  eli := gvar_011AE2C4;                                //00572623 (ebx; try/except noise)
+  if not DataModule2.Table1.FindKey([gvar_011AE2C4]) then //00572651-62
+  begin
+    ShowMessage('Datensatz-Nummer nicht vorhanden');   //0057266B-70
+    DataModule2.Table1.FindKey([eli]);                 //00572675-86
+    Exit;                                              //0057268B
+  end;
+  DataModule2.Table1.FindKey([eli]);                   //00572690-A1
+  if gvar_011AE2C4 = curNum then                       //005726A6-A9
+  begin
+    MessageDlg('Die beiden Personen sind identisch.',  //005726AB-BB
+               mtInformation, [mbOK], 0);
+    Exit;                                              //005726C0
+  end;
+  gvar_02536B94 := 0;                                  //005726C5-CC
+  Screen.Cursor := crHourGlass;                        //005726CE-E9
+  Proband1Click(curNum, gvar_011AE2C4);                //005726DE-E9 (Sender pushed)
+  DataModule2.Table1.FindKey([gvar_011AE2C4]);         //005726EE-F8
+  s2 := DataModule2.Table1Name.AsString + ' ' +        //00572704-24
+        DataModule2.Table1Vornamen.AsString;
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //0057273C-53
+    s2 := s2 + ' * ' + DataModule2.Table1Gebjahr.AsString //0057275D-85
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //00572787-A6
+    s2 := s2 + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005727A8-C6
+  s2 := s2 + ' [DS: ' + IntToStr(gvar_011AE2C4) + ']'; //005727D0-F2
+  DataModule2.Table1.FindKey([eli]);                   //005727F7-08
+  Screen.Cursor := crDefault;                          //0057280D-16
+  gvar_0253692C := '';                                 //0057281B-20
+  if gvar_02536B94 = 0 then                            //00572825-2D
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //0057282F-59
+                'sind nicht blutsverwandt.')
+  else
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //00572860-8A
+                'sind blutsverwandt.');
+end;
+
+procedure TForm13.Button8Click(Sender: TObject);
+begin
+  { 005730D4: Linie dicker machen - Strichbreite erhohen, max. 3. }
+  if PaintBox1.Canvas.Pen.Width < 3 then
+  begin
+    PaintBox1.Canvas.Pen.Width := PaintBox1.Canvas.Pen.Width + 1;
+    PaintBox1.Refresh;
+  end;
+end;
+
+procedure TForm13.Vorf_erm1(AGens, AShift: Integer);
+var
+  StartNum: Integer;    //00563D38 [ebp-10]
+  GenLimit: Integer;    //00563D12 [ebp-8] (EDX)
+  SlotShift: Integer;   //00563D0F [ebp-0C] (ECX)
+  MaxSlot: Integer;     //00563E1F [ebp-14]
+  TermFlag: Integer;    //00563D3D [ebp-18]
+  ParentCount: Integer; //00563D40 [ebp-1C]
+  Partner: AnsiString;  //00563E17 [ebp-20]
+  IterLeft: Integer;    //00563E5F [ebp-24]
+  line, dRes, sVerbind: AnsiString;  //[ebp-15C/-158, -188, -144]
+  sv: ShortString;      //00563EF0 [ebp-12C] LStrToString-Puffer
+  p, q: PByte;          //00563E67 ebx / 00563D4C
+  edi: Integer;         //00563E62 Zeilenindex
+  n, v, j, t, prevNum: Integer;
+begin
+  { 00563CF8: Vorfahrenspiegel: BFS ueber den TPersonRec-Spiegel
+    (gvar_0061F30C, Zeile r = 61F30C + $214*(r-1) = 61F0F8 + $214*r).
+    Ausgangszeile 1 = Table1-Datensatz StartNum; Vater einer Zeile r
+    landet in Zeile 2*r (+0-Ebene 61F0F8-Pool), Mutter in Zeile 2*r+1
+    (61F30C-Pool). Pro Zeile: FindKey Table1, Name/Geschlecht (trim+
+    uppercase, max. $28), IDNR/Religion in die Zeile, HeckTeil
+    Table10 (Index 'num'): nur wenn Epnum = Nummer der Vorzeile; per
+    Table10Verbind 'Ehes'->'ooS '/'oo ' (Sa/H-Datum) bzw. 'and'->
+    'o-o ' (H-Datum); Partnerzelle [Zeile r-1]+$189 nur Geschlecht
+    'W'. danach Slot-Loop j = 0..$28 (Round(j^2)) und Vater/Mutter-
+    Expansionsmorph. AShift ([ebp-0C]) skaliert die Slotbasis
+    Round(MaxSlot^2)*AShift + edi - Round(MaxSlot^2). Deviations:
+    init-Loop [q-$10]/[q-8] (Zeile 0 Schwanz +$204/+$20C, vor der
+    1-basierten recon-Spiegelfamilie) nur fuer t > 1; Partner-/Epnum-
+    Vorzeilenzugriff fuer edi = 1 uebersprungen; Strcat-Varianten
+    via Delphikat; GetText + UpperCase/Trim zusammengefasst. }
+  GenLimit := AGens;                                     //00563D12
+  SlotShift := AShift;                                   //00563D0F
+  StartNum := DataModule2.Table1Nummer.AsInteger;        //00563D26-38
+  TermFlag := 0;                                         //00563D3B-3D
+  ParentCount := 1;                                      //00563D40
+  q := PByte(PChar(@gvar_0061F30C));                     //00563D4C
+  t := $13880;                                           //00563D47
+  repeat
+    PInteger(q)^ := 0;                                   //00563D53
+    if t > 1 then                                        //00563D57 Deviation
+    begin
+      PInteger(PChar(q) - $10)^ := 0;                    //00563D57
+      PInteger(PChar(q) - 8)^ := 0;                      //00563D5C
+    end;
+    (PChar(q) + $137)^ := #0;                            //00563D5F
+    PInteger(PChar(q) + $C)^ := 0;                       //00563D68
+    PInteger(PChar(q) + 8)^ := 0;                        //00563D6D
+    PInteger(PChar(q) + $10)^ := 0;                      //00563D72
+    PInteger(PChar(q) + $14)^ := 0;                      //00563D77
+    PInteger(PChar(q) + 4)^ := 0;                        //00563D7C
+    (PChar(q) + $189)^ := #0;                            //00563D7F
+    Inc(q, $214);                                        //00563D86
+    Dec(t);                                              //00563D8C
+  until t = 0;
+  DataModule2.Table1.Open;                               //00563D8F-59
+  DataModule2.Table1.IndexName := '';                    //00563DA8
+  DataModule2.Table1.FindKey([StartNum]);                //00563DC8
+  DataModule2.Table10.Open;                              //00563DDA
+  DataModule2.Table10.IndexName := 'num';                //00563DF1
+  PInteger(PChar(AncestorRec(1)) + 8)^ := 1;             //00563DF6 [61F314]
+  SetAncestorNum(1, DataModule2.Table1Nummer.AsInteger); //00563E00-12
+  Partner := '';                                         //00563E17
+  MaxSlot := -1;                                         //00563E1F
+  Screen.Cursor := crHourGlass;                          //00563E26-31
+  IterLeft := Round(Power(2.0, GenLimit)) - 1;           //00563E36-56
+  if IterLeft > 0 then                                   //00563E57-59
+  begin
+    edi := 1;                                            //00563E62
+    repeat
+      p := AncestorRec(edi);                             //00563E67
+      n := PInteger(p)^;                                 //00563E6C
+      if n > 0 then
+      begin
+        DataModule2.Table1.FindKey([n]);                 //00563E7D-8C
+        n := DataModule2.Table1Nummer.AsInteger;         //00563E91-A3
+        PInteger(p)^ := n;                               //00563EA3
+        sv := Trim(UpperCase(DataModule2.Table1Geschlecht.AsString)); //00563EA5-EF
+        if Length(sv) > $28 then SetLength(sv, $28);     //00563F03
+        PShortString(PChar(p) + $137)^ := sv;            //00563EFB
+        sv := DataModule2.Table1IDNR.AsString;           //00563F08-44
+        if Length(sv) > $28 then SetLength(sv, $28);
+        PShortString(PChar(p) + $10E)^ := sv;            //00563F3C
+        sv := DataModule2.Table1Religion.AsString;       //00563F49-85
+        if Length(sv) > $28 then SetLength(sv, $28);
+        PShortString(PChar(p) + $160)^ := sv;            //00563F7D
+        PInteger(PChar(p) + 8)^ := edi;                  //00563F8A
+        v := DataModule2.Table1Vater.AsInteger;          //00563F8D-F9
+        if v > 0 then                                    //00563FA1
+          PInteger(PChar(p) + 4)^ := 1                   //00563FB9
+        else if DataModule2.Table1Mutter.AsInteger > 0 then  //00563FB7
+          PInteger(PChar(p) + 4)^ := 1;
+      end
+      else
+      begin
+        PInteger(p)^ := 0;                               //00563FC2-64
+        PInteger(PChar(p) + 8)^ := edi;                  //00563FC6
+      end;
+      DataModule2.Table10.First;                         //00563FC9-D6
+      if PShortString(PChar(p) + $137)^ = 'W' then       //00563FDB-F0
+      begin
+        if DataModule2.Table10.FindKey([n]) then         //00563FF6-18
+        begin
+          prevNum := 0;                                  //Deviation, edi = 1
+          if edi > 1 then
+            prevNum := PInteger(PChar(p) - $214)^;       //00564035 [ebx-$214]
+          while (not DataModule2.Table10.Eof) and        //0056439E-9C
+                (DataModule2.Table10Nummer.AsInteger = n) do
+          begin
+            if DataModule2.Table10Epnum.AsInteger = prevNum then  //00564023-3B
+            begin
+              sVerbind := DataModule2.Table10Verbind.AsString;    //00564041-59
+              if Pos('Ehes', sVerbind) > 0 then           //00564064-6B
+              begin
+                if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or  //00564071-A1
+                   (Trim(DataModule2.Table10Saort.AsString) <> '') then //005640BB-D3
+                begin
+                  line := DataModule2.Table10Satag.AsString + '.' +     //005640D9-48
+                          DataModule2.Table10Samonat.AsString + '.' +
+                          DataModule2.Table10Sajahr.AsString;
+                  sub_00563A0C(line, dRes);              //00564159
+                  Partner := 'ooS ' + dRes;              //0056416C
+                  Partner := Partner + ' ' +             //00564171-9F
+                    DataModule2.Table10Saort.AsString;
+                end
+                else
+                begin
+                  line := DataModule2.Table10Htag.AsString + '.' +      //005641A9-18
+                          DataModule2.Table10Hmonat.AsString + '.' +
+                          DataModule2.Table10Hjahr.AsString;
+                  sub_00563A0C(line, dRes);              //00564229
+                  Partner := 'oo ' + dRes;               //00564237
+                  Partner := Partner + ' ' +             //00564241-6F
+                    DataModule2.Table10Hort.AsString;
+                end;
+              end
+              else if Pos('and', sVerbind) > 0 then      //00564291-A3
+              begin
+                line := DataModule2.Table10Htag.AsString + '.' +         //005642A9-18
+                        DataModule2.Table10Hmonat.AsString + '.' +
+                        DataModule2.Table10Hjahr.AsString;
+                sub_00563A0C(line, dRes);                //00564329
+                Partner := 'o-o ' + dRes;                //00564337
+                Partner := Partner + ' ' +               //00564341-6F
+                  DataModule2.Table10Hort.AsString;
+              end;
+              Break;                                     //005643B8
+            end;
+            DataModule2.Table10.Next;                    //00564376-83
+          end;
+          if Trim(Partner) <> '' then                    //005643CF-E4
+            if edi > 1 then                              //Deviation, edi = 1
+            begin
+              sv := Partner;                             //005643E6-F4
+              if Length(sv) > $28 then SetLength(sv, $28);
+              PShortString(PChar(p) - $8B)^ := sv;       //005643FF Zeile edi-1, +$189
+            end;
+        end;
+      end;
+      Partner := '';                                     //0056440C-14
+      for j := 0 to $28 do                               //00564414-7D
+        if (edi >= Round(Power(2.0, j))) and (j > MaxSlot) then  //00564416-5A
+        begin
+          PInteger(PChar(p) + $C)^ := j + 1;             //0056445C
+          MaxSlot := j;                                  //00564462
+          if ParentCount = 0 then                        //00564465-69
+            TermFlag := 1                                //0056446B
+          else
+            ParentCount := 0;                            //00564474-76
+        end;
+      if TermFlag = 1 then Break;                        //0056447F-83
+      j := Round(Power(2.0, MaxSlot));                   //00564489-A9
+      v := j * SlotShift + (edi - Round(Power(2.0, MaxSlot)));   //005644AB-D3
+      PInteger(PChar(p) + $10)^ := v;                    //005644D5
+      PInteger(PChar(p) + $14)^ := edi;                  //005644D8
+      if n > 0 then                                      //005644F7-FA
+      begin
+        v := DataModule2.Table1Vater.AsInteger;          //005644FC-0E
+        if v > 0 then
+        begin
+          PInteger(PChar(AncestorRec(2 * edi)))^ := v;   //00564524
+          Inc(ParentCount);                              //0056452B
+        end;
+        v := DataModule2.Table1Mutter.AsInteger;         //0056452E-42
+        if v > 0 then
+        begin
+          PInteger(PChar(AncestorRec(2 * edi + 1)))^ := v;  //00564556
+          Inc(ParentCount);                              //0056455D
+        end;
+      end;
+      Inc(edi);                                          //00564560
+      Dec(IterLeft);                                     //00564567
+    until IterLeft = 0;                                  //0056456A
+  end;
+  if MaxSlot + 1 < GenLimit then                         //00564570-77
+    GenLimit := MaxSlot;                                 //00564579-7C
+  DataModule2.Table1.FindKey([StartNum]);                //0056457F-98
+  Screen.Cursor := crDefault;                            //0056459D-A6
+  if GenLimit > 3 then                                   //005645AB-B1
+    Button1.Visible := True;
+end;
+
+procedure TForm13.memein(AValue: Integer);
+var
+  relPrefix, conn: string;
+  ebp14, s, s2, line: AnsiString;
+begin
+  { 00566220: fills Memo1 with the current Table17 person's data lines
+    and (for chart modes) the marriage records of the person with the
+    spouse whose number equals AValue, walking Table18 by index 'num'.
+    EBP aliases as in the listing; field offsets mapped in Unit2. }
+  Memo1.Clear;                                      //0056624C-54
+  relPrefix := '';                                  //0056625E [ebp-10]:ShortStr
+  if gvar_0061F2D4 = 1 then                         //0056625E-65
+  begin
+    s := DataModule2.Table17Religion.AsString;      //00566267-74
+    if s <> '' then                                 //00566277-7B
+    begin
+      s := s + ', ';                                //0056627D-9C (Cat3)
+      relPrefix := Copy(s, 1, 5);                   //005662A6-B7 +PStrNCpy 5
+    end;
+  end;
+  ebp14 := '';                                      //005662CC-D4 [ebp-14]
+  s := DataModule2.Table17Name.AsString +           //005662D4-E7
+       ' ' +                                        //005662ED
+       DataModule2.Table17Vornamen.AsString +       //005662F2-67
+       relPrefix;                                   //00566268? [ebp-130]
+  Memo1.Lines.Add(s);                               //0056632F-43
+  if gvar_0061F2CC = 1 then                         //00566346-4D
+  begin
+    s2 := DataModule2.Table17Beruf.AsString;        //0056634F-5F
+    if Trim(s2) <> '' then                          //00566362-7A
+      ebp14 := DataModule2.Table17Beruf.AsString;   //0056637C-89
+  end;
+  if gvar_0061F2D0 = 1 then                         //0056638C-93
+  begin
+    s2 := DataModule2.Table17Hausname.AsString;     //00566395-A5
+    if Trim(s2) <> '' then                          //005663A8-C0
+    begin
+      if ebp14 = '' then                            //005663C2-C6
+        ebp14 := DataModule2.Table17Hausname.AsString  //005663C8-D5
+      else
+        ebp14 := ebp14 + ' ' +                      //005663DA-4E (Cat3)
+          DataModule2.Table17Hausname.AsString;
+    end;
+  end;
+  if Length(ebp14) > 0 then                         //00566408-0C
+    Memo1.Lines.Add(ebp14);                         //0056640E-1F
+  if (Trim(DataModule2.Table17Gebjahr.AsString) <> '') or  //00566422-4D
+     (Trim(DataModule2.Table17Gebort.AsString) <> '') then
+  begin
+    line := '* ' +                                  //00566480-E5 CatN 5
+      DataModule2.Table17Gebtag.AsString + '.' +
+      DataModule2.Table17Gebmonat.AsString + '.' +
+      DataModule2.Table17Gebjahr.AsString;
+    sub_00563A0C(line, s);                          //005664F6
+    line := s + ' ' +                               //005664FB-52 CatN 4
+      DataModule2.Table17Gebort.AsString;
+    Memo1.Lines.Add(line);                          //00566535-43
+  end
+  else if (Trim(DataModule2.Table17Taufjahr.AsString) <> '') or  //00566546-71
+          (Trim(DataModule2.Table17Taufort.AsString) <> '') then
+  begin
+    line := '~ ' +                                  //005665A4-59 CatN 5
+      DataModule2.Table17Tauftag.AsString + '.' +
+      DataModule2.Table17Taufmonat.AsString + '.' +
+      DataModule2.Table17Taufjahr.AsString;
+    sub_00563A0C(line, s);                          //0056661A
+    line := s + ' ' +                               //0056661F-25
+      DataModule2.Table17Taufort.AsString;
+    Memo1.Lines.Add(line);                          //00566659-67
+  end;
+  if (Trim(DataModule2.Table17Stjahr.AsString) <> '') or  //0056666A-95
+     (Trim(DataModule2.Table17Stort.AsString) <> '') then
+  begin
+    line := '+ ' +                                  //005666C8-2D CatN 5
+      DataModule2.Table17Sttag.AsString + '.' +
+      DataModule2.Table17Stmonat.AsString + '.' +
+      DataModule2.Table17Stjahr.AsString;
+    sub_00563A0C(line, s);                          //0056673E
+    line := s + ' ' +                               //00566743-49
+      DataModule2.Table17Stort.AsString;
+    Memo1.Lines.Add(line);                          //0056677D-B
+  end
+  else if (Trim(DataModule2.Table17Begjahr.AsString) <> '') or  //00566793-BE
+          (Trim(DataModule2.Table17Begort.AsString) <> '') then
+  begin
+    line := '# ' +                                  //005667F1-56 CatN 5
+      DataModule2.Table17Begtag.AsString + '.' +
+      DataModule2.Table17Begmonat.AsString + '.' +
+      DataModule2.Table17Begjahr.AsString;
+    sub_00563A0C(line, s);                          //00566867
+    line := s + ' ' +                               //0056686C-72
+      DataModule2.Table17Begort.AsString;
+    Memo1.Lines.Add(line);                          //005668A6-B4
+  end;                                              //005668B7
+  if Pos('Vorgr', gvar_0253692C) > 0 then           //005668B7-05
+  begin
+    if AValue > 0 then                              //0056690B-0F
+    begin
+      DataModule2.Table18.IndexName := 'num';       //00566915-22
+      DataModule2.Table18.First;                    //0056692F
+      if DataModule2.Table18.FindKey([              //00566934-5E
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                //0056696B-7C
+        while (not DataModule2.Table18.Eof) and     //00566DEA-99 head/rec
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                            //0056699D6 (005669D6)
+          if Pos('Ehe',                             //005669A0-BE
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                           //005669C7-D3
+          if conn = 'oo' then                      //005669DD-EF AStrCmp
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //005669F5-53
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566A53-C5 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00566AFB
+              line := s + ' ' +                    //00566B00-BA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00566B3A-B
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //00566B50-8C
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566BAE-5 CatN 5
+                DataModule2.Table18Htag.AsString + '.' +
+                DataModule2.Table18Hmonat.AsString + '.' +
+                DataModule2.Table18Hjahr.AsString;
+              sub_00563A0C(line, s);                //00566C56
+              line := s + ' ' +                    //00566C5B-C1
+                DataModule2.Table18Hort.AsString;
+              Memo1.Lines.Add(line);               //00566C95-A3
+            end
+            else
+              Memo1.Lines.Add(conn);               //00566CA8-FE
+          end;                                     //00566CCD
+          if conn = 'o-o' then                     //00566CCD-DF AStrCmp
+          begin
+            line := conn + ' ' +                   //00566CE5-C7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //00566D8D
+            line := s + ' ' +                      //00566D92-8
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00566DCC-DA
+          end;
+          DataModule2.Table18.Next;                //00566DDD-E5
+        end;                                       //00566E1F
+      end;
+    end;
+  end;                                               //00566E1F
+  if Pos('Nachgr', gvar_0253692C) > 0 then           //00566E1F-33
+  begin
+    if AValue > 0 then                               //00566E39-3D
+    begin
+      DataModule2.Table18.IndexName := 'num';        //00566E43-50
+      DataModule2.Table18.First;                     //00566E5D
+      if DataModule2.Table18.FindKey([               //00566E62-8C
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                 //00566E99-AA
+        while (not DataModule2.Table18.Eof) and      //0056743E-4D head
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                             //00566ECA-F4
+          if Pos('Ehe',
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                            //00566EF5-FE
+          if conn = 'oo' then                       //00566F0B-1D
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //00566F23-81
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' (S) ' +              //00566F81-79 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00567029
+              line := s + ' ' +                    //0056702E-FA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00567068-76
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //0056707E-D6
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              if DataModule2.Table18Htag.AsString = 'HK' then  //005670DC-FF
+              begin
+                line := conn + ' ' +               //00567202-9 CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005672AA
+                line := s + ' ' +                  //005672AF-B5
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005672E9-F7
+              end
+              else
+              begin
+                line := conn + ' (K) ' +           //00567105-AD CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005671AD
+                line := s + ' ' +                  //005671B2-B8
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005671EC-FA
+              end;
+            end
+            else
+              Memo1.Lines.Add(conn);               //005672FC-31
+          end;                                     //00567321
+          if conn = 'o-o' then                     //00567321-33
+          begin
+            line := conn + ' ' +                   //00567339-F7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //005673E1
+            line := s + ' ' +                      //005673E6-EC
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00567420-2E
+          end;
+          DataModule2.Table18.Next;                //00567431-39
+        end;                                       //00567473
+      end;
+    end;
+  end;
+end;
+
+procedure TForm13.zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas);
+var
+  ebp10, ebp14, ebp1C, ebp18, i, ebxv: Integer;
+  line: AnsiString;
+begin
+  { 005675D8: word-wraps Lines of Memo1 into ChartSlotAnsi(0..24) slots,
+    breaking at ' ', ',', '-', '.' so each segment fits
+    Round(AVal1 * gvar_0253636C) - 5 pixel columns (measured with
+    ACanvas, where line 0 gets fsBold). A line without any of the four
+    separators that does not fit is skipped entirely (0056772A).
+    AVal2 (ecx at entry) is dead - the compiler just saves it. Slots
+    beyond the first one of an overflowing line get '#' appended when
+    they come from line 0 (005678FF). Tail updates gvar_02536378/37C.
+    EBP aliases: [ebp-8] line, [ebp-0C] i, [ebp-10] ebp10, [ebp-14]
+    ebp14, [ebp-18] ebp18, [ebp-1C] ebp1C, [ebp+8] ACanvas. }
+  ACanvas.Font.Name := gvar_0061F2EC;               //00567602-0E
+  ebp18 := 5;                                       //00567613 [ebp-18]
+  gvar_02536378 := 0;                               //0056761A-1C
+  ebp1C := Round(AVal1 * gvar_0253636C);            //00567624-34 [ebp-1C]
+  ebp10 := 0;                                       //00567639 [ebp-10]
+  ebp14 := 0;                                       //0056763E [ebp-14]
+  for i := 0 to Memo1.Lines.Count - 1 do            //0056764F-70 [ebp-0C]
+  begin
+    line := Memo1.Lines[i];                         //00567677-8E [ebp-8]
+    ACanvas.Font.Style := [];                       //0056768F-9D
+    if i = 0 then                                   //0056769D-A3
+      ACanvas.Font.Style := [fsBold];               //005676A8-B9
+    if ACanvas.TextWidth(line) < ebp1C - ebp18 then //005676B9-CC
+    begin
+      ChartSlotAnsi(ebp10)^ := line;                //005676CE-DB
+      Inc(ebp10);                                   //005676E0
+      Continue;                                     //005676E3 -> 00567977
+    end;
+    if (Pos(' ', line) = 0) and                     //005676E8-2A
+       (Pos(',', line) = 0) and
+       (Pos('-', line) = 0) and
+       (Pos('.', line) = 0) then
+      Continue;                                     //0056772A -> 00567977
+    // first split 00567730-7822 (no '#' marker on this segment)
+    ebp14 := 0;                                     //00567744? implicit
+    for ebxv := 1 to Length(line) - 1 do            //00567735-BA
+    begin
+      if line[ebxv] in [' ', ',', '-', '.'] then    //00567742-60
+      begin
+        if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //00567762-B3
+           ebp1C - ebp18 then
+          ebp14 := ebxv;                            //0056778D
+      end
+      else
+        Continue;
+      if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >=   //00567790-B6
+         ebp1C - ebp18 then
+        Break;                                      //005677B6
+    end;
+    ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005677BC-D2
+    if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //005677D7-F2
+      Inc(ebp10);
+    line := Trim(Copy(line, ebp14 + 1, Length(line)));   //005677F5-89
+    while Trim(line) <> '' do                       //00567962-71 -> 00567827
+    begin
+      if ACanvas.TextWidth(line) < ebp1C - ebp18 then    //00567827-3A
+        ebp14 := Length(line) + 1                   //0056783C-45
+      else
+      begin
+        for ebxv := 1 to Length(Trim(line)) - 1 do  //0056784D-68
+        begin
+          if line[ebxv] in [' ', ',', '-', '.'] then  //0056786A-88
+          begin
+            if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //0056788A-B8
+               ebp1C - ebp18 then
+              ebp14 := ebxv;                          //005678B5
+          end
+          else
+            Continue;
+          if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >= //005678B8-DE
+             ebp1C - ebp18 then
+            Break;                                    //005678DE
+        end;
+      end;
+      ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005678E4-FA
+      if i = 0 then                                   //005678FF-19
+        ChartSlotAnsi(ebp10)^ :=
+          ChartSlotAnsi(ebp10)^ + '#';                //0056790F-14
+      if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //0056791C-37
+        Inc(ebp10);
+      line := Trim(Copy(line, ebp14 + 1, Length(line)));   //00567937-57
+    end;                                              //00567962-77
+  end;
+  gvar_02536378 := ebp10;                           //00567983-86
+  if gvar_02536378 > gvar_0253637C then             //0056798B-9D
+    gvar_0253637C := gvar_02536378;
+end;
+
+procedure TForm13.FormCreate(Sender: TObject);
+begin
+  //00570740: Anfangsmasse und Zeichenstift vorbereiten.
+  gvar_02536380 := $35C;
+  gvar_02536384 := $258;
+  gvar_011AE31C := 0;
+  gvar_011AE324 := 0;
+  gvar_011AE318 := 0;
+  gvar_0253637C := 0;
+  PaintBox1.Height := $64;
+  PaintBox1.Width := $64;
+  PaintBox1.Color := $FFFFFF;
+  PaintBox1.Canvas.Pen.Width := 1;
+end;
+
+procedure TForm13.Vorf_erm;
+var
+  ebp24: AnsiString;    //[ebp-24] 6-Zeichen-Codeketten (root + Vater/Mutter)
+  ebp28: AnsiString;    //[ebp-28] '*'-Kette der gefunden (订PersNum2Str)
+  sName, sTmp, sTmp2, s6a, sPath: AnsiString; //[-138][-150/-154/-158/-15C/-140][-178]
+  sGender, sEbp158, sEbp15C, sEbp154: AnsiString; //[-188/184/18C], [-158], [-15C], [-154]
+  eA: Extended;         //[ebp-10..8] tbyte-Ebene (Summe Generation)
+  eB: Extended;         //[ebp-20..18] tbyte (vor Generation)
+  eCalc: Extended;      //[ebp-168]
+  pa, pb, pc: PChar;    //00567A86 ebx / 00567A92 esi / 00567A8B [ebp-2C]
+  pnum: Integer;        //00567B44 ebx
+  v, vV, vM: Integer;
+  edi, esi, ebxv, t: Integer;
+  sv: ShortString;      //[-138] LStrToString-Puffer
+begin
+  { 00567A30: chart-Aufbau 'Vorgr1'/'Vorgr2': binary-BFS in den drei
+    Chart-Gittern A (gvar_011AE1C4, $198-Stride), B (019764C4) und
+    C-Spiegel (015924E4): je Zeile edi Table17.FindKey aus 6-Zeichen-
+    Codes in [ebp-24]; Grid-Offsets in flat-Dwortformel: [ebx*8+X] =
+    X + $198*edi, dword-Index (X - $11AE1C4) div 4 (A) bzw. C-Spiegel
+    [(X - $15924E4) div 4 + 102*edi]. [ebp-10]/[ebp-20] sind zaeh-
+    lungweise tbyte-Extended (eA/eB). Boundary-Test 2^ebxv - 1 = edi
+    (ebxv laeuft 1..$14), Levels size 2^(g-1); Modulo-Slot
+    ebx mod 2^(gen-1) + 2^(gen-1)*gvar_011AE34C -> A-Zeile +$38.
+    Deviations: exception-frame-LStrArrayClr entfaellt (lokale Ansi-
+    Strings), Zwischenstringketten [-13C/-150...] zusammengezogen,
+    word-Prefix-Char ueber PWord statt mov word, ss Gender-AStrCmp
+    ueber Delphi-Vergleich, tbyte-Init/Кopie durch Extended-Zuwei-
+    sung, FindKey-Struct ([ebp-148]+[ebp-144] byte) nebst [ebx*8+
+    11AE285] Wword-Speicherkonstanten $4D01/'M' und $5701/'W'. }
+  gvar_011AE31C := 0;                                    //00567A53-5A
+  gvar_011AE324 := 0;                                    //00567A5C
+  Screen.Cursor := crHourGlass;                          //00567A61-6C
+  if gvar_0061F2BC = 1 then                              //00567A71-78
+    Inc(gvar_011AE334, $A);                              //00567A7A
+  pa := PChar(@gvar_011AE1C4) + $1A0;                    //00567A81-86
+  pc := PChar(@gvar_015924E4);                           //00567A8B-8B
+  pb := PChar(@gvar_019764C4) + $1A0;                    //00567A92
+  for t := 1 to $2710 do                                 //00567A81-2C
+  begin
+    PInteger(pa)^ := 0;                                  //00567A99 [ebx]
+    PInteger(pc)^ := 0;                                  //00567AA0 [eax]
+    PInteger(pb)^ := 0;                                  //00567AA4 [esi]
+    PInteger(pa + 4)^ := 0;                              //00567AA8 [ebx+4]
+    PInteger(pb + 4)^ := 0;                              //00567AAD [esi+4]
+    (pa + $13A)^ := #0;                                  //00567AB0
+    (pb + $13A)^ := #0;                                  //00567AB7
+    (pa + $90)^ := #0;                                   //00567ABE
+    (pb + $90)^ := #0;                                   //00567AC5
+    PInteger(pa + $20)^ := 0;                            //00567ACD [ebx+20]
+    PInteger(pb + $20)^ := 0;                            //00567AD3 [esi+20]
+    PInteger(pa - 8)^ := 0;                              //00567AD8 [ebx-8]
+    PInteger(pc - 8)^ := 0;                              //00567ADF [eax-8]
+    PInteger(pb - 8)^ := 0;                              //00567AE5 [esi-8]
+    PInteger(pa - 4)^ := 0;                              //00567AEA [ebx-4]
+    PInteger(pc - 4)^ := 0;                              //00567AF2 [eax-4]
+    PInteger(pb - 4)^ := 0;                              //00567AF7 [esi-4]
+    PInteger(pa + $14)^ := 0;                            //00567AFC [ebx+14]
+    PInteger(pb + $14)^ := 0;                            //00567B01 [esi+14]
+    PInteger(pa + $18)^ := 0;                            //00567B06 [ebx+18]
+    PInteger(pb + $18)^ := 0;                            //00567B0B [esi+18]
+    PInteger(pa + $0C)^ := 0;                            //00567B10 [ebx+0C]
+    PInteger(pb + $0C)^ := 0;                            //00567B15 [esi+0C]
+    Inc(pb, $198);                                       //00567B18
+    Inc(pc, $198);                                       //00567B1E
+    Inc(pa, $198);                                       //00567B25
+  end;
+  pnum := DataModule2.Table1Nummer.AsInteger;            //00567B32-44
+  gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text);      //00567B46-63
+  gvar_011AE34C := StrToInt(Form12.SpinEdit2.Text);      //00567B68-91
+  DataModule2.Table17.IndexName := '';                   //00567B92-A1
+  DataModule2.Table17.First;                             //00567BA6-B3
+  gvar_011AE330 := 1;                                    //00567BB8-C2
+  sub_005637C4(pnum, ebp24);                             //00567BC2-C7
+  eA := 0;                                               //00567BCC-E0 (tbyte)
+  eB := 0;                                               //00567BDA-E0 (tbyte)
+  edi := 1;                                              //00567BE4
+  esi := 0;                                              //00567BE9
+  gvar_011AE344 := 0;                                    //00567BED
+  ebp28 := '';                                           //00567BF2-F5
+  while edi < Power(2.0, gvar_0061F2F0) do               //005681A0-C9
+  begin
+    sv := DataModule2.Table17IDNR.AsString;              //00567BFF-C2 [9D0]
+    if Length(sv) > 28 then SetLength(sv, 28);           //00567C3F PStrNCpy 28
+    ChartAShort(edi, $98)^ := sv;                        //00567C2D-3F
+    s6a := Copy(ebp24, 6 * (edi - 1) + 1, 6);            //00567C44-5E
+    v := StrToInt(s6a);                                  //00567C63-69
+    if v = 0 then                                        //00567C6E-70
+    begin
+      ebp24 := ebp24 + '000000000000';                   //00567C72-7F
+      SetChartAFlat(102 * edi + 3, 0);                    //00567C81 [11AE1D0]
+      SetChartAFlat(102 * edi + 7, 0);                    //00567C8A [11AE1E0]
+      SetChartAFlat(102 * edi + 8, 0);                    //00567C93 [11AE1E4]
+    end
+    else
+    begin
+      sTmp := Copy(ebp24, 6 * (edi - 1) + 1, 6);         //00567C9F-B9 [-14C]
+      v := StrToInt(sTmp);                               //00567CBE-C4
+      DataModule2.Table17.FindKey([v]);                  //00567CD6-EB
+      v := DataModule2.Table17Nummer.AsInteger;          //00567CF0
+      sub_005637C4(v, sTmp);                             //00567CFF-D08?? [-150]
+      sTmp := sTmp + '*';                                //00567D0D-18
+      if Pos(ebp28, sTmp) = 0 then                       //00567D1D-2D
+      begin
+        sub_005637C4(v, sEbp154);                        //00567D44-4A [-154]
+        ebp28 := ebp28 + '*' + sEbp154;                  //00567D4F-62 CatN3
+      end;
+      Inc(gvar_011AE344);                                //00567D67
+      vV := DataModule2.Table17Vater.AsInteger;          //00567D70-7F [948]
+      sub_005637C4(vV, sEbp158);                         //00567D82-88 [-158]
+      vM := DataModule2.Table17Mutter.AsInteger;         //00567D93-A2 [94C]
+      sub_005637C4(vM, sEbp15C);                         //00567DA5-B [-15C]
+      ebp24 := ebp24 + sEbp158 + sEbp15C;                //00567DB0-BE CatN3
+      SetChartAFlat(102 * edi + 7, 0);                    //00567DC3-C5 [11AE1E0]
+      if vV > 0 then                                     //00567DD9-DE
+        SetChartAFlat(102 * edi + 7, edi * 2);            //00567DE2-96
+      SetChartAFlat(102 * edi + 8, 0);                    //00567DED-F0 [11AE1E4]
+      if vM > 0 then                                     //00567E05-A
+        SetChartAFlat(102 * edi + 8, edi * 2 + 1);        //00567E0C-11
+      SetChartAFlat(102 * edi + 3, v);                    //00567E2A [11AE1D0]
+      Inc(esi);                                          //00567E31
+      if gvar_0253692C = 'Vorgr1' then                   //00567E32-43
+      begin
+        SetChartAFlat(102 * edi + 1, esi);                //00567E45 [11AE1C8]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 103))^ := esi;  //00567E4C [1592348]
+        SetChartAFlat(102 * edi, gvar_011AE330 + 2);               //00567E53-5B [11AE1C4]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 104))^ := gvar_011AE330 + 2;  //00567E62 [1592344]
+      end;
+      if gvar_0253692C = 'Vorgr2' then                    //00567E69-7A
+      begin
+        SetChartAFlat(102 * edi, esi);                     //00567E7C [11AE1C4]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 104))^ := esi;  //00567E83 [1592344]
+        SetChartAFlat(102 * edi + 1, gvar_0061F2F0 - gvar_011AE330 + 1);  //00567E8A-96 [11AE1C8]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 103))^ := gvar_0061F2F0 - gvar_011AE330 + 1;  //00567E9D [1592348]
+      end;
+      eCalc := vV + eA;                                   //00567EB6-C1 [-168]
+      eA := vM + eCalc;                                   //00567EDA-63 [-10]
+    end;
+    if gvar_0061F2BC = 1 then                             //00567EF2-F9
+    begin
+      sPath := gvar_02536B9C + '\bilder\b' + IntToStr(v) + 'a.jpg';  //00567EFF-33
+      if FileExists(sPath) then                           //00567F38-45
+      begin
+        sv := sPath;                                      //00567F80-FA
+        if Length(sv) > 80 then SetLength(sv, 80);        //00567FA5 PStrNCpy $50
+        ChartAShort(edi, $142)^ := sv;                    //00567F9C-A5
+      end;
+    end;
+    SetChartAFlat(102 * edi + 5, gvar_011AE330);           //00567FAA-F6 [11AE1D8]
+    SetChartAFlat(102 * edi + 2, edi);                     //00567FB6 [11AE1CC]
+    PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 102))^ := edi;  //00567FBD [159234C]
+    sv := DataModule2.Table17IDNR.AsString;               //00567FC4-ED
+    if Length(sv) > 28 then SetLength(sv, 28);            //00568001 28
+    ChartAShort(edi, $98)^ := sv;                         //00567FF2
+    eCalc := gvar_011AE34C * Power(2.0, gvar_011AE330 - 1);         //00568006-32 [-168]
+    v := edi mod Round(Power(2.0, gvar_011AE330 - 1));             //00568039-71
+    PExtended(PChar(@gvar_011AE1C4) + 408 * edi + $38)^ := v + eCalc;  //0056807D-8B
+    sGender := DataModule2.Table17Geschlecht.AsString;    //00568093-B7 [958]
+    if UpperCase(sGender) = 'M' then                      //005680BC-CC
+      PWord(PChar(@gvar_011AE1C4) + 408 * edi + $C1)^ := $4D01;  //005680CE
+    sGender := DataModule2.Table17Geschlecht.AsString;    //005680D8-FC
+    if UpperCase(sGender) = 'W' then                      //005680F6-111
+      PWord(PChar(@gvar_011AE1C4) + 408 * edi + $C1)^ := $5701;  //00568113
+    ebxv := 1;                                            //0056811D
+    repeat
+      if Power(2.0, ebxv) - 1.0 = edi then                //00568122-51
+      begin
+        eB := eA;                                         //00568153-63 (tbyte)
+        if eA > 0 then                                    //00568167-73
+        begin
+          eA := 0;                                        //00568175-7D
+          esi := 0;                                       //00568181
+          Inc(gvar_011AE330);                             //00568183
+        end;
+        Break;                                            //00568189
+      end;
+      Inc(ebxv);                                          //0056818B
+    until ebxv = $15;                                     //0056818C-8F
+    if eB = 0 then Break;                                 //00568191-9D
+    Inc(edi);                                             //0056819F
+  end;
+  if Printer.Canvas <> gvar_011AE32C then                 //005681CF-DF
+  begin
+    if eB > 0 then                                        //005681E5-1
+      ShowMessage(IntToStr(gvar_011AE330 - 1) + ' Generationen / ' +
+        IntToStr(Round(Length(ebp28) / 7)) + ' Personen gefunden')  //005681F3-56
+    else
+      ShowMessage(IntToStr(gvar_011AE330) + ' Generationen / ' +
+        IntToStr(Round(Length(ebp28) / 7)) + ' Personen gefunden');  //00568268-C4
+    if eB > 0 then                                        //0056825B-66
+      gvar_011AE328 := gvar_011AE330 - 1                  //00568261 wait: [-28]...
+    else
+      gvar_011AE328 := gvar_011AE330;                     //005682CF-D4
+  end;
+  if gvar_0253692C = 'Vorgr1' then                        //005682D9
+  begin
+    edi := 1;                                             //005682EC
+    if gvar_011AE330 - gvar_011AE328 - 1 <> 0 then        //005682F1-FD
+    begin
+      gvar_011AE324 := 0;                                 //005682FF
+      while ChartAFlat(102 * edi + 2) > 0 do              //00568344-3F
+      begin
+        SetChartAFlat(102 * edi + 1, ChartAFlat(102 * edi + 1) - gvar_011AE328 + gvar_011AE330);  //00568308-1B
+        if ChartAFlat(102 * edi + 1) > gvar_011AE324 then  //00568322-32
+          gvar_011AE324 := ChartAFlat(102 * edi + 1);      //00568334-3E
+        Inc(edi);                                          //00568343
+      end;
+    end;
+  end;
+  if gvar_0253692C = 'Vorgr2' then                        //00568351
+  begin
+    edi := 1;                                             //00568364
+    if gvar_011AE330 - gvar_011AE328 - 1 <> 0 then        //00568369-75
+    begin
+      gvar_011AE324 := 0;                                 //00568377
+      while ChartAFlat(102 * edi + 5) <= gvar_011AE328 do  //005683BC-CC
+      begin
+        SetChartAFlat(102 * edi + 1, ChartAFlat(102 * edi + 1) + gvar_011AE330 - gvar_0061F2F0);  //00568380-93
+        if ChartAFlat(102 * edi + 1) > gvar_011AE324 then  //0056839A-AA
+          gvar_011AE324 := ChartAFlat(102 * edi + 1);      //005683AC-B6
+        Inc(edi);                                          //005683BB
+      end;
+    end;
+  end;
+  Screen.Cursor := crDefault;                             //005683CE-DC
+  gvar_011AE32C := PaintBox1.Canvas;                      //005683DC-F0
+  PaintBox1.Refresh;                                      //005683F0-F9
+end;
+
+procedure TForm13.Button1Click(Sender: TObject);
+begin
+  //005707C0: zwischen symmetrisch / asymmetrisch umschalten.
+  if gvar_0061F2DC <> 0 then
+    gvar_0061F2DC := 0
+  else
+    gvar_0061F2DC := 1;
+  if gvar_0061F2DC <> 0 then
+    Button1.Caption := 'asym.'
+  else
+    Button1.Caption := 'symm.';
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.Button2Click(Sender: TObject);
+begin
+  { 00570838: Verschiebungen in beiden Achsen -> Graphik neu zeichnen. }
+  Inc(gvar_011AE338, 10);
+  Inc(gvar_0061F110, 10);
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.SpeedButton2Click(Sender: TObject);
+begin
+  //0057082C: nur Form13 schliessen.
+  Close;
+end;
+
+procedure TForm13.FormShow(Sender: TObject);
+begin
+  //00570294: Tabellen oeffnen, Skaliermasse setzen und je nach
+  //Aufrufmodus (gvar_0253692C) das Bild vorbereiten.
+  gvar_02536388 := 0;
+  Button1.Visible := False;
+  DataModule2.Table17.Open;
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table18.Open;
+  DataModule2.Table1Nummer.Value; //05702F3: Feldzugriff ohne Verwertung des Ergebnisses
+  gvar_0061F2F4 := 0;
+  gvar_0061F2F8 := 0;
+  gvar_0061F120 := 0.63; //Listing 7AE147AE/0A147AE14/3FFE](Extended)
+  gvar_0061F11C := Round(gvar_0061F120 * 6);
+  gvar_011AE338 := $14;
+  gvar_011AE334 := Round(gvar_0061F120 * 120);
+  if gvar_0253692C = 'Vorgr1' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Vorf_erm;
+  end;
+  if gvar_0253692C = 'Vorgr2' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Vorf_erm;
+  end;
+  if gvar_0253692C = 'Nachgr1' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Nach_erm;
+  end;
+  if gvar_0253692C = 'Nachgr2' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Nach_erm;
+  end;
+end;
+
+procedure TForm13.SpeedButton12Click(Sender: TObject);
+begin
+  //00570694: Zeichensatz waehlen (fuer Bild und Druck gleicher Stift).
+  gvar_011AE32C.Font.Name := 'Arial';                     //005706A6-BC
+  if FontDialog1.Execute then
+    gvar_0061F2EC := FontDialog1.Font.Name;
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.UpDown1Click;
+begin
+  { 005661E8: Zoom herabsetzen, aber nicht unter 1. }
+  if gvar_0061F120 > 1 then
+    gvar_0061F120 := gvar_0061F120 - 0.1;
+end;
+
+procedure TForm13.SpeedButton1Click(Sender: TObject);
+begin
+  { 005704A8: Druckvorbereitung schafft die Aufrufkontexte und
+    Graphik auf dem Drucker drucken. }
+  if not PrintDialog1.Execute then                        //005704B2-C2
+  begin
+    gvar_0253636C := 1.0;                                 //0057061E-39
+    gvar_011AE32C := PaintBox1.Canvas;                     //0057063C-48
+    Exit;                                                 //0057064D
+  end;
+  gvar_011AE32C := Printer.Canvas;                        //005704C8-D2
+  try                                                     //005704D7-E2
+    if gvar_0253692C = 'Vorgr1' then
+      vr1;                                                //005704E5-FD
+    if gvar_0253692C = 'Vorgr2' then
+      Vr2;                                                //00570502-1A
+    if gvar_0253692C = 'Nachgr1' then
+      nr1;                                                //0057051F-37
+    if gvar_0253692C = 'Nachgr2' then
+      nr2;                                                //0057053C-55
+    Printer.BeginDoc;                                     //00570559-E2
+    if gvar_0253692C = 'Vorgr1' then
+      vz1(Printer.Canvas);                                //00570563-85
+    if gvar_0253692C = 'Vorgr2' then
+      vz2(Printer.Canvas);                                //0057058A-C2
+    if gvar_0253692C = 'Nachgr1' then
+      nz1(Printer.Canvas);                                //005705B1-FA
+    if gvar_0253692C = 'Nachgr2' then
+      nz2(Printer.Canvas);                                //005705D8-FA
+  finally                                                 //00570617-38
+    Printer.EndDoc;                                       //0057060C-16
+  end;
+end;
+
+procedure TForm13.FormClose(sender:tobject;var action:tcloseaction);
+begin
+  //00570728: Form12 schliessen und Form13 unsichtbar stellen.
+  { gvar_0061F0F8^ ist Form12; gvar_0061F10C ist Form13. }
+  Form12.Close;
+  Form13.Hide;
+end;
+
+procedure TForm13.Button3Click(Sender: TObject);
+begin
+  { 00570854: Vertikale Verschiebung zuruecksetzen -> Graphik neu zeichnen. }
+  if gvar_0061F110 > 30 then
+  begin
+    Dec(gvar_0061F110, 10);
+    PaintBox1.Refresh;
+  end;
+  if gvar_011AE334 > 60 then
+  begin
+    Dec(gvar_011AE338, 10);
+    PaintBox1.Refresh;
+  end;
+end;
+
+procedure TForm13.vr1;
+var
+  i, row, eaxv, ebp14, ebpC: Integer;
+  byteFlag: Byte;
+  fScale: Extended;
+  tmp: AnsiString;
+begin
+  { 00570D1C: the "Vorgeneration 1" variant of Vr2 (0056904C). Same
+    skeleton - canvas/font metrics, per-row memein/zerleg fill of grid
+    A, 10000-row grid C copy, sub_00568FD4 scan, scrollbar setup - but
+    the metric constants are swapped/shuffled: gvar_0061F118 = 30 and
+    gvar_0061F114 = 20 (Vr2: 20/30). The bitmap scale gvar_011AE32C
+    gate and the printer branch (fScale = 0x4001.. mantissa C0 -> 7.0)
+    are identical in shape. Registers/EBP slots as in the listing. }
+  tmp := '';                                        //00570D25-2A [ebp-18]
+  Screen.Cursor := crHourGlass;                     //00570D40-4B
+  fScale := 1.0;                                    //00570D50-5B [ebx]
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570D61-76
+    fScale := 1.13;                                 //00570D78-B5
+  gvar_011AE33C := Round(gvar_0061F120 * 45 * fScale);  //00570D8B-A0
+  gvar_011AE340 := 20;                              //00570DA5
+  gvar_0061F118 := Round(gvar_0061F120 * 30 * fScale);  //00570DAF-C4
+  gvar_0061F114 := Round(gvar_0061F120 * 20 * fScale);  //00570DC9-DE
+  gvar_011AE334 := Round(gvar_0061F120 * 120 * fScale)  //00570DE3-FE
+    + gvar_011AE338;
+  if gvar_0061F2BC = 1 then                         //00570E03-0A
+    Inc(gvar_011AE334, 10);                         //00570E0C
+  gvar_011AE348 := 0;                               //00570E13-1A
+  gvar_0253637C := 0;                               //00570E1A-21
+  gvar_011AE318 := 0;                               //00570E21-27
+  gvar_02536364 := ScrollBar1.Position;             //00570E28-37
+  gvar_02536368 := ScrollBar2.Position;             //00570E3C-4B
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570E50-65
+  begin
+    gvar_02536364 := 0;                             //00570E67-6E
+    gvar_02536368 := 0;                             //00570E6E-75
+  end;                                              //00570E75
+  gvar_011AE32C.Font.Name := 'Arial';               //00570E75-B2
+  gvar_011AE32C.Font.Size :=                     //00570E87-A6
+    Round(gvar_0061F120 * 9 * fScale);
+  gvar_011AE318 := 2 - gvar_011AE32C.Font.Height;   //00570EAB-ED
+  if Printer.Canvas = gvar_011AE32C then            //00570EC2-D2
+  begin
+    fScale := 7.0;                                  //00570ED4-DF (mant. C0, exp 4001)
+    gvar_011AE32C.Font.Name := 'Arial';             //00570EE5-F2
+    gvar_011AE32C.Font.Size :=                  //00570EF7-25
+      Round(gvar_0061F120 * 9);
+    ebpC := PaintBox1.Canvas.Pen.Width;             //00570F26-31 [ebp-0C]
+    gvar_011AE32C.Pen.Width := Round(ebpC * 7.0);   //00570F31-47
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570F4C-61
+    fScale := 1.13;                                 //00570F63-70
+  row := 1;                                         //00570F76 [ebp-8]
+  while gvar_011AE1C4[row][2] > 0 do                //00571052-5E
+  begin
+    for i := 0 to 19 do                             //00570F82-B1
+    begin
+      ChartSlotAnsi(i)^ := '';                      //00570F91-93
+      // target [ebx(11AE35C+4i) + eax*8 - $150] = row string slot
+      ChartAAnsi(102 * row + 19 + i)^ := '';        //00570F98-F8
+    end;
+    ebp14 := gvar_011AE1C4[row][3];                 //00570FB1-F5 [ebp-14]
+    byteFlag := 0;                                  //00570FBF [ebp-10]
+    DataModule2.Table17.FindKey([ebp14]);           //00570FC3-D5
+    memein(gvar_011AE1C4[row - 1][3]);              //00570FDA-E4
+    zerleg(gvar_011AE334, gvar_011AE318,            //00570FE9-FFE
+      gvar_011AE32C);
+    ChartAAnsi(102 * row + 18)^ :=                  //00571003-10
+      ChartSlotAnsi(0)^;
+    for i := 0 to 12 do                             //00571015-4D edi=13
+    begin
+      tmp := Trim(ChartSlotAnsi(i + 1)^);           //00571024-29 [ebp-18]
+      if Length(tmp) > 0 then                       //0057102E-32 (jbe)
+        ChartAAnsi(102 * row + 19 + i)^ := tmp;     //00571034-41
+    end;
+    Inc(row);                                       //0057104F
+  end;
+  if gvar_0061F2BC = 1 then                         //00571064-6B
+    gvar_011AE348 := Round(                         //0057106D-C2
+      (gvar_0253637C * gvar_011AE318 +
+       gvar_011AE318) * 4 / 5);
+  for row := 1 to 10000 do                          //00571097-C7
+  begin
+    eaxv := gvar_015924E4[row][2];                  //005710A8-AA
+    SetChartAFlat(102 * row + 2, eaxv);             //005710AA-edx? [ebx]
+    eaxv := gvar_015924E4[row][0];                  //005710AC-AF [esi-8]
+    SetChartAFlat(102 * row, eaxv);                 //005710AF-B5
+    eaxv := gvar_015924E4[row][1];                  //005710B2-B5 [esi-4]
+    SetChartAFlat(102 * row + 1, eaxv);             //005710B5-9C
+  end;
+  sub_00568FD4;                                     //005710C9
+  row := 1;                                         //005710CE [ebp-8]
+  gvar_011AE320 := 0;                               //005710D5-D7
+  while gvar_011AE1C4[row][2] > 0 do                //005710DC-40C
+  begin
+    eaxv := gvar_011AE1C4[row][0];                  //005710DE
+    if eaxv > gvar_011AE320 then                    //005710E5-EB jle
+      gvar_011AE320 := eaxv;                        //005710ED-28
+    Inc(row);                                       //005710FD
+  end;
+  Dec(gvar_011AE320);                               //0057110E
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;    //00571114-2E
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;   //00571135-4F
+  ScrollBar1.SmallChange := 20;                     //00571156-5F
+  ScrollBar2.SmallChange := 20;                     //00571162-7A
+  Screen.Cursor := crDefault;                       //0057117A-83
+end;
+
+procedure TForm13.SpeedButton13Click(Sender: TObject);
+begin
+  { 00572478: Druckdialog anzeigen. }
+  PrinterSetupDialog1.Execute;
+end;
+
+procedure TForm13.vz1(AValue: TCanvas); //005711D4
+{ The listing keeps grid B in edi = gvar_0197665C (= gvar_019764C4 + 408,
+  i.e. the frame pointer used by vz2) with esi = 51*row as the stride:
+  [edi + esi*8 + X] = gvar_019764C4[row][offset div 4], identical to the
+  vz2 offset map (-190â†’d2, -198â†’d0, -194â†’d1, -18Câ†’d3, -184â†’d5,
+  -17C/-178â†’d7/d8, -170/-16Câ†’d10/d11, -160/-15Câ†’d14/d15, -158â†’word16,
+  -0D7â†’ShortString@193, -100â†’@152, -56â†’@322, -150â†’ptrs@72).
+  Differences vs vz2: scroll offsets are zeroed first and only loaded
+  when the canvases match; no 'W' drop line and no above-box connector;
+  child lines are orthogonal 3-segment connectors from the box's right
+  edge (B0+334, [ebp-68]) via B0+334+118/2; the extrema are swapped:
+  gvar_011AE324 = max (B1-33C+368) div (37C*318+114+318+348) and
+  gvar_011AE31C = plain max of B5. EBP aliases: [ebp-8] = AValue. }
+var
+  row, i, child, tw, ebp14, rightX, cnt2: Integer;
+  slotRow, slotI, q1, q2: Integer;     // [ebp-10] / [ebp-0C]
+  tmpIn, tmpName, tName, tVor: AnsiString;
+  sTitle: AnsiString;                  // [ebp-54]
+  wasSchon: AnsiString;                // [ebp-20]
+  tmpStr: AnsiString;                  // [ebp-0CC]/[ebp-0DC]
+  ssID: ShortString;                   // [ebp-0A4]
+  img: TImage;                         // [ebp-24]
+  aRect: TRect;                        // [ebp-35]
+  ratio: Extended;                     // [ebp-0B8]
+  extOver: packed record Lo, Hi: Cardinal; W: Word; end; // FloatToStr build-up
+  extVal: Extended absolute extOver;   // [esp push block]
+begin
+  { 005711D4: draws the ancestor chart columns ("Vorfahren", variant 1)
+    into AValue using the grid-B copy of grid A. }
+  Screen.Cursor := crHourGlass;                                     //0057120E-19
+  PaintBox1.Canvas.Brush.Color := $FFFFFF;                          //0057121E-35
+  PaintBox1.Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height)); //0057123A-60
+  gvar_02536364 := 0;                                               //00571265-67
+  gvar_02536368 := 0;                                               //0057126C-6E
+  if PaintBox1.Canvas = AValue then begin                           //00571273-85
+    gvar_02536364 := ScrollBar1.Position;                           //00571287-96
+    gvar_02536368 := ScrollBar2.Position;                           //0057129B-AA
+  end;
+  { Copy grid A -> grid B (identical to vz2's build loop). }
+  row := 1;                                                         //005712AF
+  while gvar_011AE1C4[row][2] > 0 do begin                          //005712B4-:418 (jmp 005712B4 -> 0057140C)
+    gvar_019764C4[row][2] := gvar_011AE1C4[row][2];                 //005712B9-C3
+    gvar_019764C4[row][3] := gvar_011AE1C4[row][3];                 //005712C3-CA
+    gvar_019764C4[row][5] := gvar_011AE1C4[row][5];                 //005712D1-D8
+    ChartBShort(row, 193)^ := ChartAShort(row, 193)^;               //005712DF-EF (@PStrNCpy cl=$28)
+    gvar_019764C4[row][14] := gvar_011AE1C4[row][14];               //005712F4-FB
+    gvar_019764C4[row][15] := gvar_011AE1C4[row][15];               //00571302-:09
+    gvar_019764C4[row][16] := (gvar_019764C4[row][16] and $FFFF0000) or (gvar_011AE1C4[row][16] and $0000FFFF); //00571310-18 (word copy)
+    ChartBShort(row, 152)^ := ChartAShort(row, 152)^;               //00571320-:30 (@PStrNCpy cl=$28)
+    gvar_019764C4[row][10] := gvar_011AE1C4[row][10];               //00571335-3C
+    gvar_019764C4[row][11] := gvar_011AE1C4[row][11];               //00571343-4A
+    for i := 0 to 19 do                                             //00571351-6B (@CopyArray, 20 dwords, String)
+      ChartBAnsi(102 * row + 18 + i)^ := ChartAAnsi(102 * row + 18 + i)^;
+    gvar_019764C4[row][7] := gvar_011AE1C4[row][7];                 //00571370-77
+    gvar_019764C4[row][8] := gvar_011AE1C4[row][8];                 //0057137E-85
+    ChartBShort(row, 322)^ := ChartAShort(row, 322)^;               //0057138C-99 (@PStrNCpy cl=$32=50)
+    gvar_019764C4[row][0] := (gvar_011AE1C4[row][0] - 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340 - gvar_02536364; //0057139E-C4
+    gvar_019764C4[row][1] := (gvar_011AE1C4[row][1] - 1) * (gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348 + gvar_0061F114) + gvar_011AE33C - gvar_02536368; //005713CB-:04
+    Inc(row);                                                       //0057140B
+  end;
+  AValue.Pen.Color := 0;                                            //0057141E-26
+  DataModule2.Table17.FindKey([gvar_011AE368]);                     //0057142B-47
+  tmpIn := DataModule2.Table17Name.AsString;                        //0057144C-66
+  sub_00563868(tmpIn, tName);                                       //00571466-:6C
+  tVor := DataModule2.Table17Vornamen.AsString;                     //00571474-8E
+  sTitle := 'Vorfahren von ' + tName + ' ' + tVor;                  //0057144C-99 (@LStrCatN)
+  AValue.TextOut(Round(gvar_0253636C * 30) - gvar_02536364 - 8,     //0057149E-E1
+    Round(gvar_0253636C * 5) - gvar_02536368, sTitle);
+  gvar_011AE324 := 0;                                               //005714E6-8E
+  gvar_011AE31C := 0;                                               //005714ED-EF
+  { Minimum of B[row][0] over active rows. }
+  ebp14 := 100000; // $186A0                                        //005714F4
+  row := 1;                                                         //005714F9
+  while gvar_019764C4[row][2] > 0 do begin                          //005714FE-29 (jmp 005714FE -> 0057151E)
+    if (gvar_019764C4[row][3] > 0) and (ebp14 > gvar_019764C4[row][0]) then //00571500-11
+      ebp14 := gvar_019764C4[row][0];                               //00571513-16
+    Inc(row);                                                       //0057151D
+  end;
+  { Shift all x coordinates so the leftmost box sits at gvar_011AE340. }
+  row := 1;                                                         //0057152B
+  if ebp14 > gvar_011AE340 then                                     //00571530-36
+    while gvar_019764C4[row][2] > 0 do begin                        //00571538-63 (jmp 0057153 -> 00571563)
+      if gvar_019764C4[row][3] > 0 then                             //0057153A-42
+        gvar_019764C4[row][0] := gvar_019764C4[row][0] - gvar_02536364 - ebp14 + gvar_011AE340; //00571544-5B
+      Inc(row);                                                     //00571562
+    end;
+  { Child connector loops: orthogonal 3-line connectors from the right
+    box edge to the B[row][7]/B[row][8] children. }
+  row := 1;                                                         //00571570
+  while gvar_019764C4[row][2] > 0 do begin                          //00571575-96 (jmp 00571575 -> 0057198B)
+    child := gvar_019764C4[row][7];                                 //005716B4-B4 (imul eax,[edi+esi*8-17C],33)
+    if (gvar_019764C4[row][5] < gvar_011AE328) and (child > 0) then begin //0057157A-95
+      rightX := gvar_019764C4[row][0] + gvar_011AE334;              //005715DF-EC ([ebp-68])
+      cnt2 := gvar_0253637C * gvar_011AE318 + gvar_011AE318;        //005715A9-BA
+      AValue.MoveTo(Round((rightX) * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[row][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //0057159B-:05
+      AValue.LineTo(Round((rightX + gvar_0061F118 / 2) * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[row][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //0057160A-82
+      AValue.LineTo(Round((rightX + gvar_0061F118 / 2) * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[child][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //00571687-:07 (child = B[row][7])
+      AValue.LineTo(Round(gvar_019764C4[child][0] * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[child][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //0057170C-7D
+    end;
+    child := gvar_019764C4[row][8];                                 //005718BC (imul eax,[edi+esi*8-178],33)
+    if (gvar_019764C4[row][5] < gvar_011AE328) and (child > 0) then begin //00571782-9D
+      rightX := gvar_019764C4[row][0] + gvar_011AE334;              //005717E7-F4 ([ebp-68])
+      cnt2 := gvar_0253637C * gvar_011AE318 + gvar_011AE318;        //005717B1-C2
+      AValue.MoveTo(Round(rightX * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[row][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //005717A3-0D
+      AValue.LineTo(Round((rightX + gvar_0061F118 / 2) * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[row][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //00571812-8A
+      AValue.LineTo(Round((rightX + gvar_0061F118 / 2) * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[child][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //0057188F-0F
+      AValue.LineTo(Round(gvar_019764C4[child][0] * gvar_0253636C),
+        Round(gvar_0253636C * (gvar_019764C4[child][1] + (gvar_011AE348 * gvar_0253636C + cnt2) / 2))); //00571914-85
+    end;
+    Inc(row);                                                       //0057198A
+  end;
+  { Extrema, person text, photo, 20 names, M/W boxes (like vz2 loop 3). }
+  row := 1;                                                         //0057199C
+  while gvar_019764C4[row][2] > 0 do begin                          //005719A1-74 (jmp 005719A1 -> 00572274)
+    if (gvar_019764C4[row][1] - gvar_011AE33C + gvar_02536368) div (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) > gvar_011AE324 then //005719A6-DD (idiv)
+      gvar_011AE324 := (gvar_019764C4[row][1] - gvar_011AE33C + gvar_02536368) div (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348); //005719E5-1D (identical recompute)
+    if gvar_019764C4[row][5] > gvar_011AE31C then                   //00571A24-31
+      gvar_011AE31C := gvar_019764C4[row][5];                       //00571A33-3D
+    DataModule2.Table17.FindKey([gvar_019764C4[row][3]]);           //00571A42-62
+    if gvar_019764C4[row][3] > 0 then begin                         //00571A67-6F
+      wasSchon := '';                                               //00571A75-78 (@LStrClr)
+      if gvar_0061F2C0 = 1 then begin                               //00571A7D-84
+        extOver.Lo := gvar_019764C4[row][14];                       //00571A96
+        extOver.Hi := gvar_019764C4[row][15];                       //00571A8F
+        extOver.W := Word(gvar_019764C4[row][16] and $FFFF);        //00571A86-: (10-byte push)
+        wasSchon := 'K: ' + FloatToStr(extVal);                     //00571A9D-B0
+      end;
+      if gvar_0061F2C4 = 1 then begin                               //00571AB5-BC
+        if wasSchon = '' then
+          wasSchon := 'DS: ' + IntToStr(gvar_019764C4[row][3])      //00571AC4-E3
+        else
+          wasSchon := wasSchon + ' DS: ' + IntToStr(gvar_019764C4[row][3]); //00571AE5-:07
+      end;
+      if gvar_0061F2C8 = 1 then                                     //00571B0C-13
+        if ChartBShort(row, 152)^ > ' ' then begin                  //00571B19-2A (@PStrCmp vs ' ', jbe skip)
+          if wasSchon = '' then begin                               //00571B2C-30
+            ssID := 'ID: ';                                         //00571B32-3D (@PStrCpy)
+            ssID := Copy(ssID + ChartBShort(row, 152)^, 1, $2C);    //00571B42-54 (@PStrNCat cl=$2C=44)
+            wasSchon := ssID;                                       //00571B59-67 (@LStrFromString)
+          end
+          else begin                                                //00571B69-94
+            tmpStr := ChartBShort(row, 152)^;                       //00571B71-81 (@LStrFromString)
+            wasSchon := wasSchon + ' ID: ' + tmpStr;                //00571B69-94 (@LStrCatN)
+          end;
+        end;
+      AValue.Font.Size := Round(gvar_0061F120 * 9) - 1;             //00571B99-3
+      AValue.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + 2,
+        Round(gvar_019764C4[row][1] * gvar_0253636C) + AValue.Font.Height - 2,
+        wasSchon);                                                  //00571BB8-:00
+      AValue.Font.Size := Round(gvar_0061F120 * 9);                 //00571C05-:1E
+      if (gvar_0061F2BC = 1) and (ChartBShort(row, 322)^ > ' ') then begin //00571C23-3E (@PStrCmp ' ', jbe skip)
+        img := TImage.Create(Self);                                 //00571C44-4E (AOwner in ECX)
+        tmpStr := ChartBShort(row, 322)^;                           //00571C56-60 (@LStrFromString)
+        img.Picture.LoadFromFile(tmpStr);                           //00571C65-74
+        if img.Picture.Graphic is TJPEGImage then begin             //00571C79-93
+          q1 := img.Picture.Graphic.Height;                         //00571C99-CAA ([ebp-64])
+          ratio := img.Height / q1;                                 //00571CB3-B8 (fdivrp) -> [ebp-0B8]
+          q2 := Round(img.Picture.Graphic.Width * ratio);           //00571CCD-D6
+          img.Width := q2;                                          //00571CE3-:E8 (TControl.SetWidth)
+        end;
+        q1 := Round((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //00571CED-:0D (shl 2, fdiv 5, 64-bit)
+        q2 := Round(img.Picture.Graphic.Width / img.Height
+          * (gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //00571D44-77
+        aRect := Rect(Round((gvar_019764C4[row][0] + 4) * gvar_0253636C),   //ALeft  00571DD7-FA
+          Round((gvar_019764C4[row][1] + 2) * gvar_0253636C),               //ATop   00571DB3-D6
+          Round((gvar_019764C4[row][0] + q2) * gvar_0253636C),              //ARight 00571D7C-B2
+          Round((gvar_019764C4[row][1] + q1) * gvar_0253636C));             //ABottom 00571D2F-:3A
+        img.Proportional := True;                                   //00571E01-06 (TImage.SetProportional)
+        AValue.StretchDraw(aRect, img.Picture.Graphic);             //00571E0B-1D
+        img.Free;                                                   //00571E22-25
+      end;
+      slotRow := 0;                                                 //00571E2A-2C
+      slotI := 0;                                                   //00571E2F-31
+      repeat                                                        //00571E34-.			(esi := edi here)
+        AValue.Font.Style := [];                                    //00571E36-42 (byte 005723EC = 0)
+        if slotI = 0 then                                           //00571E47-5E
+          AValue.Font.Style := [fsBold];                            //00571E4D-59 (byte 005723C8 = 1)
+        if slotI = 0 then                                           //00571E5E-62
+          if RightStr(ChartBAnsi(102 * row + 18)^, 1) = '#' then begin //00571E64-8E
+            ChartBAnsi(102 * row + 18)^ := Copy(ChartBAnsi(102 * row + 18)^, 1, Length(ChartBAnsi(102 * row + 18)^) - 1); //00571E90-BC (LStrCopy, len-1)
+            AValue.Font.Style := [fsBold];                          //00571EC1-CD
+          end;
+        if slotI = 1 then                                           //00571ED2-D6
+          if RightStr(ChartBAnsi(102 * row + 19)^, 1) = '#' then begin //00571ED8-FD
+            ChartBAnsi(102 * row + 19)^ := Copy(ChartBAnsi(102 * row + 19)^, 1, Length(ChartBAnsi(102 * row + 19)^) - 1); //00571F04-30
+            AValue.Font.Style := [fsBold];                          //00571F35-41
+          end;
+        if slotI = 2 then                                           //00571F46-4A
+          if RightStr(ChartBAnsi(102 * row + 20)^, 1) = '#' then begin //00571F4C-71
+            ChartBAnsi(102 * row + 20)^ := Copy(ChartBAnsi(102 * row + 20)^, 1, Length(ChartBAnsi(102 * row + 20)^) - 1); //00571F78-:04
+            AValue.Font.Style := [fsBold];                          //00571FA9-B5
+          end;
+        if slotI = 3 then                                           //00571FBA-BE
+          if RightStr(ChartBAnsi(102 * row + 21)^, 1) = '#' then begin //00571FC0-EA
+            ChartBAnsi(102 * row + 21)^ := Copy(ChartBAnsi(102 * row + 21)^, 1, Length(ChartBAnsi(102 * row + 21)^) - 1); //00571FEC-18
+            AValue.Font.Style := [fsBold];                          //0057201D-29
+          end;
+        tw := AValue.TextWidth(ChartBAnsi(102 * row + 18 + slotI)^); //0057202E-40
+        ebp14 := Round((gvar_011AE334 * gvar_0253636C - tw) / 2);    //00572043-61 (fsubrp) -> [ebp-14]
+        AValue.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + ebp14,
+          Round((gvar_019764C4[row][1] + 3 + slotRow * gvar_011AE318 + gvar_011AE348) * gvar_0253636C),
+          Trim(ChartBAnsi(102 * row + 18 + slotI)^));               //00572064-D3
+        Inc(slotRow);                                               //005720D8
+        Inc(slotI);                                                 //005720DB
+      until slotI = 20;                                             //005720E1-E5 (cmp $14)
+      AValue.Pen.Color := 0;                                        //005720EB-F3
+      AValue.Brush.Style := bsClear;                                //005720F8-:00 (SetStyle dl=1)
+      if ChartBShort(row, 193)^ = 'M' then                          //00572105-1E (@AStrCmp 'M')
+        AValue.Rectangle(Round(gvar_019764C4[row][0] * gvar_0253636C),
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C)); //00572124-B0
+      if ChartBShort(row, 193)^ = 'W' then                          //005721B5-CB (@AStrCmp 'W')
+        AValue.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15); //005721D1-61
+      AValue.Pen.Color := 0;                                        //00572266-6E
+    end;
+    Inc(row);                                                       //00572273
+  end;
+  ScrollBar1.Max := (gvar_011AE31C + 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; //00572285-:A9
+  ScrollBar2.Max := (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) * gvar_011AE324 + gvar_011AE33C; //005722AE-:E3
+  Screen.Cursor := crDefault;                                       //005722E8-FE
+end;
+
+procedure TForm13.vz2(AValue: TCanvas); //00569504
+{ Each grid-B row addressed in the listing as [esi + edi*8 - X] with
+  edi = 51*row (esi = base + 408) maps to the row-local offsets:
+      -190 -18C -184 -198 -194 -17C -178 -170 -16C -160 -15C -158
+      -> dword  2   3   5   0   1   7   8  10  11  14  15  word16
+      -0D7 -> ShortString @193, -100 -> ShortString @152,
+      -56 -> ShortString @322, -150 -> AnsiString ptrs @72 (dwords 18..37).
+  EBP alias: [ebp-8] = AValue (EDX), [ebp-4] = Self. }
+var
+  row, i, child, tw, ebp14: Integer;
+  slotRow, slotI, q1, q2: Integer;     // [ebp-10] / [ebp-0C]
+  ratio: Extended;                     // [ebp-0B4]
+  tmpIn, tmpName, tName, tVor: AnsiString;
+  sTitle: AnsiString;                  // [ebp-54]
+  wasSchon: AnsiString;                // [ebp-20]
+  tmpStr: AnsiString;                  // [ebp-0A4]/[ebp-0DC]
+  ssID: ShortString;                   // [ebp-0A0]
+  img: TImage;                         // [ebp-24]
+  aRect: TRect;                        // [ebp-35]
+  extOver: packed record Lo, Hi: Cardinal; W: Word; end; // FloatToStr build-up
+  extVal: Extended absolute extOver;   // [esp push block]
+begin
+  { 00569504: draws the ancestor chart into AValue, working entirely on
+    a copy of grid A in grid B (every B[row][k] below is gvar_019764C4). }
+  Screen.Cursor := crHourGlass;                                     //00569530-49
+  gvar_02536364 := ScrollBar1.Position;                             //0056954E-5D
+  gvar_02536368 := ScrollBar2.Position;                             //00569562-71
+  if PaintBox1.Canvas <> AValue then begin                          //00569576-88
+    gvar_02536364 := 0;                                             //0056958A-91
+    gvar_02536368 := 0;                                             //00569591-93
+  end;
+  PaintBox1.Canvas.Brush.Color := $FFFFFF;                          //00569598-AF
+  PaintBox1.Canvas.FillRect(Rect(0, 0, PaintBox1.Width, PaintBox1.Height)); //005695B4-F1
+  AValue.Pen.Color := 0;                                            //005695F1-F9
+  DataModule2.Table17.FindKey([gvar_011AE368]);                     //005695FE-621C
+  tmpIn := DataModule2.Table17Name.AsString;                        //00569621-3B
+  sub_00563868(tmpIn, tName);                                       //0056963B-46
+  tVor := DataModule2.Table17Vornamen.AsString;                     //00569649-67
+  sTitle := 'Vorfahren von ' + tName + ' ' + tVor;                  //00569621-71 (@LStrCatN)
+  AValue.TextOut(Round(gvar_0253636C * 30) - gvar_02536364 - 8,     //00569673-B6
+    Round(gvar_0253636C * 5) - gvar_02536368, sTitle);
+  gvar_011AE324 := 0;                                               //005696BB-C4
+  gvar_011AE31C := 0;                                               //005696C2-C4
+  { Copy grid A -> grid B. }
+  row := 1;                                                         //005696C9
+  while gvar_011AE1C4[row][2] > 0 do begin                          //005696CE-9832
+    gvar_019764C4[row][2] := gvar_011AE1C4[row][2];                 //005696D3-D6
+    gvar_019764C4[row][3] := gvar_011AE1C4[row][3];                 //005696DD-E4
+    gvar_019764C4[row][5] := gvar_011AE1C4[row][5];                 //005696EB-F2
+    ChartBShort(row, 193)^ := ChartAShort(row, 193)^;               //005696F9-709 (@PStrNCpy cl=$28)
+    gvar_019764C4[row][14] := gvar_011AE1C4[row][14];               //0056970E-15
+    gvar_019764C4[row][15] := gvar_011AE1C4[row][15];               //0056971C-23
+    gvar_019764C4[row][16] := (gvar_019764C4[row][16] and $FFFF0000) or (gvar_011AE1C4[row][16] and $0000FFFF); //0056972A-32 (word copy)
+    ChartBShort(row, 152)^ := ChartAShort(row, 152)^;               //0056973A-74A (@PStrNCpy cl=$28)
+    gvar_019764C4[row][10] := gvar_011AE1C4[row][10];               //0056974F-56
+    gvar_019764C4[row][11] := gvar_011AE1C4[row][11];               //0056975D-64
+    for i := 0 to 19 do                                             //0056976B-85 (@CopyArray, 20 dwords, String)
+      ChartBAnsi(102 * row + 18 + i)^ := ChartAAnsi(102 * row + 18 + i)^;
+    gvar_019764C4[row][7] := gvar_011AE1C4[row][7];                 //0056978A-91
+    gvar_019764C4[row][8] := gvar_011AE1C4[row][8];                 //00569798-9F
+    ChartBShort(row, 322)^ := ChartAShort(row, 322)^;               //005697A6-B3 (@PStrNCpy cl=$32=50)
+    gvar_019764C4[row][0] := (gvar_011AE1C4[row][0] - 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340 - gvar_02536364; //005697B8-DEC
+    gvar_019764C4[row][1] := (gvar_011AE1C4[row][1] - 1) * (gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348 + gvar_0061F114) + gvar_011AE33C - gvar_02536368; //005697E5-981E
+    Inc(row);                                                       //00569825
+  end;
+  { Minimum of B[row][0] over active rows. }
+  ebp14 := 100000; // $186A0                                        //00569838
+  row := 1;                                                         //0056983D
+  while gvar_019764C4[row][2] > 0 do begin                          //00569842-6D jmp 00569862
+    if (gvar_019764C4[row][3] > 0) and (ebp14 > gvar_019764C4[row][0]) then //00569844-5A
+      ebp14 := gvar_019764C4[row][0];                               //00569857-5A
+    Inc(row);                                                       //00569861
+  end;
+  { Shift all x coordinates so the leftmost box sits at gvar_011AE340. }
+  row := 1;                                                         //0056986F
+  if ebp14 > gvar_011AE340 then                                     //00569874-7A
+    while gvar_019764C4[row][2] > 0 do begin                        //0056987C-A7 jmp 005698A7
+      if gvar_019764C4[row][3] > 0 then                             //0056987E-86
+        gvar_019764C4[row][0] := gvar_019764C4[row][0] - gvar_02536364 - ebp14 + gvar_011AE340; //00569888-9F
+      Inc(row);                                                     //005698A6
+    end;
+  { Loop 1: connector line above every active box (center-top up), plus
+    the 'W' female drop line below the box. }
+  row := 1;                                                         //005698B4
+  while gvar_019764C4[row][2] > 0 do begin                          //005698B9-9AA1 (jmp 005698B9 -> 00569A96)
+    if gvar_019764C4[row][3] > 0 then begin                         //005698BE-C6
+      if gvar_019764C4[row][5] < gvar_011AE328 then                 //005698CC-D9 (jge 0056998C skips the pair)
+        if (gvar_019764C4[row][7] > 0) or (gvar_019764C4[row][8] > 0) then begin //005698DF-F4
+          AValue.MoveTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C),
+            Round(gvar_019764C4[row][1] * gvar_0253636C));          //005698FA-:37
+          AValue.LineTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C),
+            Round((gvar_019764C4[row][1] - gvar_0061F114 / 2) * gvar_0253636C)); //0056993C-87 (fsubp: B1 - half)
+        end;
+      if (row > 1) and (ChartBShort(row, 193)^ = 'W') then begin    //0056998C-AE (@AStrCmp 'W')
+        AValue.MoveTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318) * gvar_0253636C) + gvar_011AE348 - 1); //005699B4-:19
+        AValue.LineTo(Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_0061F114 / 2) * gvar_0253636C) + gvar_011AE348); //00569A1E-:90
+      end;
+    end;
+    Inc(row);                                                       //00569A95
+  end;
+  { Loop 2a: connector down to the B[row][7] child. }
+  row := 1;                                                         //00569AA7
+  while gvar_019764C4[row][2] > 0 do begin                          //00569AAC-9F0E (jmp 00569AC -> 00569F03)
+    child := gvar_019764C4[row][7];                                 //00569B22-25
+    if (gvar_019764C4[row][5] < gvar_011AE328) and (child > 0) then begin //00569AB1-CC
+      AValue.MoveTo(Round((gvar_019764C4[row][1] - gvar_0061F114 / 2) * gvar_0253636C),
+        Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C)); //00569AD2-BD
+      AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+        Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_0061F114 / 2) * gvar_0253636C)
+        + Round(gvar_011AE348 * gvar_0253636C));                    //00569B22-BB
+      if PaintBox1.Canvas = AValue then                             //00569BB0-C2
+        AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318) * gvar_0253636C - 1
+          + gvar_011AE348 * gvar_0253636C))                         //00569BC8-C49
+      else
+        AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318) * gvar_0253636C - 1
+          + gvar_011AE348 * gvar_0253636C));                        //00569C53-C70 (identical, no inc)
+    end;
+    child := gvar_019764C4[row][8];                                 //00569D4A-4D
+    if (gvar_019764C4[row][5] < gvar_011AE328) and (child > 0) then begin //00569CD9-CF4
+      AValue.MoveTo(Round((gvar_019764C4[row][1] - gvar_0061F114 / 2) * gvar_0253636C),
+        Round((gvar_019764C4[row][0] + gvar_011AE334 / 2) * gvar_0253636C)); //00569CFA-D45
+      AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+        Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_0061F114 / 2) * gvar_0253636C)
+        + Round(gvar_011AE348 * gvar_0253636C));                    //00569D4A-DD3
+      if PaintBox1.Canvas = AValue then                             //00569DD8-EA
+        AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318) * gvar_0253636C - 1
+          + gvar_011AE348 * gvar_0253636C))                         //00569DF0-E71 (no inc)
+      else
+        AValue.LineTo(Round((gvar_019764C4[child][0] + gvar_011AE334 / 2) * gvar_0253636C),
+          Round((gvar_019764C4[child][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318) * gvar_0253636C - 1
+          + gvar_011AE348 * gvar_0253636C) + 1);                    //00569E7B-EFD (inc eax => y+1)
+    end;
+    Inc(row);                                                       //00569F02
+  end;
+  { Loop 3: tracked extrema, TextOut of the person text, photo, names,
+    M/W boxes. }
+  row := 1;                                                         //00569F14
+  while gvar_019764C4[row][2] > 0 do begin                          //00569F19-7DE (jmp 00569F19 -> 0056A7DE)
+    if (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_011AE334 + gvar_0061F114) > gvar_011AE31C then //00569F1E-48 (idiv)
+      gvar_011AE31C := (gvar_019764C4[row][0] - gvar_011AE340 + gvar_02536364) div (gvar_0061F114 + gvar_011AE334); //00569F4A-71 (identical recompute)
+    if gvar_019764C4[row][5] > gvar_011AE324 then                   //00569F76-83
+      gvar_011AE324 := gvar_019764C4[row][5];                       //00569F85-8F
+    DataModule2.Table17.FindKey([gvar_019764C4[row][3]]);           //00569F94-B4
+    if gvar_019764C4[row][3] > 0 then begin                         //00569FB9-C1
+      wasSchon := '';                                               //00569FC7-CA (@LStrClr)
+      if gvar_0061F2C0 = 1 then begin                               //00569FCF-D6
+        extOver.Lo := gvar_019764C4[row][14];                       //00569FE8
+        extOver.Hi := gvar_019764C4[row][15];                       //00569FE1
+        extOver.W := Word(gvar_019764C4[row][16] and $FFFF);        //00569FD8-: (10-byte push)
+        wasSchon := 'K: ' + FloatToStr(extVal);                     //00569FEF-A007
+      end;
+      if gvar_0061F2C4 = 1 then begin                               //0056A007-0E
+        if wasSchon = '' then
+          wasSchon := 'DS: ' + IntToStr(gvar_019764C4[row][3])      //0056A016-35
+        else
+          wasSchon := wasSchon + ' DS: ' + IntToStr(gvar_019764C4[row][3]); //0056A037-59
+      end;
+      if gvar_0061F2C8 = 1 then                                     //0056A05E-65
+        if ChartBShort(row, 152)^ > ' ' then begin                  //0056A06B-7C (@PStrCmp vs ' ', jbe skip)
+          if wasSchon = '' then begin                               //0056A07E-82
+            ssID := 'ID: ';                                         //0056A084-8F (@PStrCpy)
+            ssID := Copy(ssID + ChartBShort(row, 152)^, 1, $2C);    //0056A094-A6 (@PStrNCat cl=$2C=44)
+            wasSchon := ssID;                                       //0056A0AB-B9 (@LStrFromString)
+          end
+          else begin                                                //0056A0BB-E6
+            tmpStr := ChartBShort(row, 152)^;                       //0056A0C3-D8 (@LStrFromString)
+            wasSchon := wasSchon + ' ID: ' + tmpStr;                //0056A0BB-E6 (@LStrCatN)
+          end;
+        end;
+      AValue.Font.Size := Round(gvar_0061F120 * 9) - 1;             //0056A0EB-:09
+      AValue.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + 2,
+        Round(gvar_019764C4[row][1] * gvar_0253636C) + AValue.Font.Height - 2,
+        wasSchon);                                                  //0056A10A-52
+      AValue.Font.Size := Round(gvar_0061F120 * 9);                 //0056A157-70
+      if (gvar_0061F2BC = 1) and (ChartBShort(row, 322)^ > ' ') then begin //0056A175-:90 (@PStrCmp ' ', jbe skip)
+        img := TImage.Create(Self);                                 //0056A196-:A0 (AOwner in ECX)
+        tmpStr := ChartBShort(row, 322)^;                           //0056A1A8-B7 (@LStrFromString)
+        img.Picture.LoadFromFile(tmpStr);                           //0056A1BD-C6
+        if img.Picture.Graphic is TJPEGImage then begin             //0056A1CB-:E9
+          q1 := img.Picture.Graphic.Height;                         //0056A1EB-1FC ([ebp-64])
+          ratio := img.Height / q1;                                 //0056A208-:0A (fdivrp) -> [ebp-0B4]
+          q2 := Round(img.Picture.Graphic.Width * ratio);           //0056A21D-236
+          img.Width := q2;                                          //0056A23B-:40 (TControl.SetWidth)
+        end;
+        q1 := Round((gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //0056A245-:6A (shl 2, fdiv 5, 64-bit)
+        q2 := Round(img.Picture.Graphic.Width / img.Height
+          * (gvar_0253637C * gvar_011AE318 + gvar_011AE318) * 4 / 5); //0056A29C-A2D5
+        aRect := Rect(Round((gvar_019764C4[row][0] + 4) * gvar_0253636C),   //ALeft  0056A335-59
+          Round((gvar_019764C4[row][1] + 2) * gvar_0253636C),               //ATop   0056A311-34
+          Round((gvar_019764C4[row][0] + q2) * gvar_0253636C),              //ARight 0056A2DC-:10
+          Round((gvar_019764C4[row][1] + q1) * gvar_0253636C));             //ABottom 0056A297-:A0
+        img.Proportional := True;                                   //0056A35F-64 (TImage.SetProportional)
+        AValue.StretchDraw(aRect, img.Picture.Graphic);             //0056A366-7B
+        img.Free;                                                   //0056A380-83
+      end;
+      slotRow := 0;                                                 //0056A388-8F
+      slotI := 0;                                                   //0056A38D-8F
+      repeat                                                        //0056A392-63F
+        AValue.Font.Style := [];                                    //0056A394-:A0 (byte 0056A95C = 0)
+        if slotI = 0 then                                           //0056A3A5-BC
+          AValue.Font.Style := [fsBold];                            //0056A3AB-B7 (byte 0056A904 = 1)
+        if slotI = 0 then                                           //0056A3BC-C0
+          if RightStr(ChartBAnsi(102 * row + 18)^, 1) = '#' then begin //0056A3C2-EC
+            ChartBAnsi(102 * row + 18)^ := Copy(ChartBAnsi(102 * row + 18)^, 1, Length(ChartBAnsi(102 * row + 18)^) - 1); //0056A3EE-1A (LStrCopy, len-1)
+            AValue.Font.Style := [fsBold];                          //0056A41F-2B
+          end;
+        if slotI = 1 then                                           //0056A430-34
+          if RightStr(ChartBAnsi(102 * row + 19)^, 1) = '#' then begin //0056A436-60
+            ChartBAnsi(102 * row + 19)^ := Copy(ChartBAnsi(102 * row + 19)^, 1, Length(ChartBAnsi(102 * row + 19)^) - 1); //0056A462-8E
+            AValue.Font.Style := [fsBold];                          //0056A493-9F
+          end;
+        if slotI = 2 then                                           //0056A4A4-A8
+          if RightStr(ChartBAnsi(102 * row + 20)^, 1) = '#' then begin //0056A4AA-D4
+            ChartBAnsi(102 * row + 20)^ := Copy(ChartBAnsi(102 * row + 20)^, 1, Length(ChartBAnsi(102 * row + 20)^) - 1); //0056A4D6-:02
+            AValue.Font.Style := [fsBold];                          //0056A507-13
+          end;
+        if slotI = 3 then                                           //0056A518-1C
+          if RightStr(ChartBAnsi(102 * row + 21)^, 1) = '#' then begin //0056A51E-48
+            ChartBAnsi(102 * row + 21)^ := Copy(ChartBAnsi(102 * row + 21)^, 1, Length(ChartBAnsi(102 * row + 21)^) - 1); //0056A54A-76
+            AValue.Font.Style := [fsBold];                          //0056A57B-87
+          end;
+        tw := AValue.TextWidth(ChartBAnsi(102 * row + 18 + slotI)^); //0056A58C-A1
+        ebp14 := Round((gvar_011AE334 * gvar_0253636C - tw) / 2);    //0056A5A1-BF (fsubrp) -> [ebp-14]
+        AValue.TextOut(Round(gvar_019764C4[row][0] * gvar_0253636C) + ebp14,
+          Round((gvar_019764C4[row][1] + 3 + slotRow * gvar_011AE318 + gvar_011AE348) * gvar_0253636C),
+          Trim(ChartBAnsi(102 * row + 18 + slotI)^));               //0056A5C2-31
+        Inc(slotRow);                                               //0056A636
+        Inc(slotI);                                                 //0056A639
+      until slotI = 20;                                             //0056A63F-43 (cmp $14)
+      AValue.Pen.Color := 0;                                        //0056A649-51
+      AValue.Brush.Style := bsClear;                                //0056A656-5E (SetStyle dl=1)
+      if ChartBShort(row, 193)^ = 'M' then                          //0056A663-7C (@AStrCmp 'M')
+        AValue.Rectangle(Round(gvar_019764C4[row][0] * gvar_0253636C),
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C)); //0056A682-:14
+      if ChartBShort(row, 193)^ = 'W' then                          //0056A719-2F (@AStrCmp 'W')
+        AValue.RoundRect(Round(gvar_019764C4[row][0] * gvar_0253636C),
+          Round(gvar_019764C4[row][1] * gvar_0253636C),
+          Round((gvar_019764C4[row][0] + gvar_011AE334) * gvar_0253636C),
+          Round((gvar_019764C4[row][1] + gvar_0253637C * gvar_011AE318 + gvar_011AE318 + gvar_011AE348) * gvar_0253636C), 15, 15); //0056A735-CB
+      AValue.Pen.Color := 0;                                        //0056A7D0-D8
+    end;
+    Inc(row);                                                       //0056A7DD
+  end;
+  ScrollBar1.Max := (gvar_011AE31C + 1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; //0056A7EF-:13
+  ScrollBar2.Max := (gvar_0253637C * gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) * gvar_011AE324 + gvar_011AE33C; //0056A818-44
+  Screen.Cursor := crDefault;                                       //0056A852-68
+end;
+
+procedure TForm13.Vr2;
+var
+  i, row, eaxv, ebp14, ebpC: Integer;
+  byteFlag: Byte;
+  fScale: Extended;
+  tmp: AnsiString;
+begin
+  { 0056904C: prepares the chart canvas/font metrics ("Verkleinerung"
+    fScale = 0x3FFF/0x80000000... = 1.0, or 1.13 when the drawing
+    canvas differs from PaintBox1.Canvas), then walks the active rows
+    of grid A filling the row-local string slots via memein/zerleg,
+    copies the first 3 dwords of each grid-C row over grid A's first
+    3 dwords, calls sub_00569010, finds the maximum dword[0], and
+    sets the scrollbars.
+    Registers used: EDX/EAX/EBX/ESI/ECX/EDI as in the listing. }
+  tmp := '';                                        //00569055-57 [ebp-18]:LStrClr?$0
+  Screen.Cursor := crHourGlass;                     //00569070-7B
+  fScale := 1.0;                                    //00569080-8B
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00569094-A6
+    fScale := 1.13;                                 //005690A8-B5
+  gvar_011AE33C := Round(gvar_0061F120 * 45 * fScale);  //005690BB-D0
+  gvar_011AE340 := 20;                              //005690D5
+  gvar_0061F118 := Round(gvar_0061F120 * 20 * fScale);  //005690DF-F4
+  gvar_0061F114 := Round(gvar_0061F120 * 30 * fScale);  //005690F9-10E
+  gvar_011AE334 := Round(gvar_0061F120 * 120 * fScale)  //00569113-2E
+    + gvar_011AE338;
+  if gvar_0061F2BC = 1 then                         //00569133-3A
+    Inc(gvar_011AE334, 10);                         //0056913C
+  gvar_011AE348 := 0;                               //00569143-45
+  gvar_0253637C := 0;                               //0056914A-4C
+  gvar_011AE318 := 0;                               //00569151-53
+  gvar_02536364 := 0;                               //00569158-5A
+  gvar_02536368 := 0;                               //0056915F-61
+  if PaintBox1.Canvas = gvar_011AE32C then          //00569166-7B
+  begin
+    gvar_02536364 := ScrollBar1.Position;           //0056917D-8C
+    gvar_02536368 := ScrollBar2.Position;           //00569191-A0
+  end;
+  gvar_011AE32C.Font.Name := 'Arial';                //005691A5-B2
+  gvar_011AE32C.Font.Size :=                     //005691B7-D6
+    Round(gvar_0061F120 * 9 * fScale);
+  gvar_011AE318 := 2 - gvar_011AE32C.Font.Height;   //005691DB-ED
+  if Printer.Canvas = gvar_011AE32C then            //005691F2-700
+  begin
+    fScale := 6.0;                                  //00569215-0F
+    gvar_011AE32C.Font.Name := 'Arial';             //0056921D-22
+    gvar_011AE32C.Font.Size :=                  //00569227-42
+      Round(gvar_0061F120 * 9);
+    ebpC := PaintBox1.Canvas.Pen.Width;             //00569247-5E
+    gvar_011AE32C.Pen.Width := Round(ebpC * 6.0);   //00569261-77
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then         //0056927C-91
+    fScale := 1.13;                                 //00569293-A0
+  row := 1;                                         //005692A6-AD
+  while gvar_011AE1C4[row][2] > 0 do                //00569382-8E
+  begin
+    for i := 0 to 19 do                             //005692B2-DF
+    begin
+      ChartSlotAnsi(i)^ := '';                      //005692C1-C3
+      // target [ebx(11AE35C+4i) + eax*8 - $150] = row string slot
+      ChartAAnsi(102 * row + 19 + i)^ := '';        //005692C8-D3
+    end;
+    ebp14 := gvar_011AE1C4[row][3];                 //005692E1-EC
+    byteFlag := 0;                                  //005692EF
+    DataModule2.Table17.FindKey([ebp14]);           //005692F3-305
+    memein(gvar_011AE1C4[row - 1][3]);              //0056930A-14
+    zerleg(gvar_011AE334, gvar_011AE318,            //00569319-2E
+      gvar_011AE32C);
+    ChartAAnsi(102 * row + 18)^ :=                  //00569333-40
+      ChartSlotAnsi(0)^;
+    for i := 0 to 18 do                             //00569345-7D
+    begin
+      tmp := Trim(ChartSlotAnsi(i + 1)^);           //00569354-59
+      if Length(tmp) > 0 then                       //0056935E-62
+        ChartAAnsi(102 * row + 19 + i)^ := tmp;     //00569364-71
+    end;
+    Inc(row);                                       //0056937F
+  end;
+  if gvar_0061F2BC = 1 then                         //00569394-9B
+    gvar_011AE348 := Round(                         //0056939D-C2
+      (gvar_0253637C * gvar_011AE318 +
+       gvar_011AE318) * 4 / 5);
+  for row := 1 to 10000 do                          //005693C7-F7
+  begin
+    eaxv := gvar_015924E4[row][2];                  //005693D8-DA
+    SetChartAFlat(102 * row + 2, eaxv);             //005693DA-DC
+    eaxv := gvar_015924E4[row][0];                  //005693DC-DF
+    SetChartAFlat(102 * row, eaxv);                 //005693DF-E2
+    eaxv := gvar_015924E4[row][1];                  //005693E2-E5
+    SetChartAFlat(102 * row + 1, eaxv);             //005693E5-E8
+  end;
+  sub_00569010;                                     //005693F9
+  row := 1;                                         //005693FE
+  gvar_011AE320 := 0;                               //00569405-07
+  while gvar_011AE1C4[row][2] > 0 do                //00569430-3C
+  begin
+    eaxv := gvar_011AE1C4[row][0];                  //0056940E-15
+    if eaxv > gvar_011AE320 then                    //00569415-1B jle
+      gvar_011AE320 := eaxv;                        //0056941D-28
+    Inc(row);                                       //0056942D
+  end;
+  Dec(gvar_011AE320);                               //0056943E
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;    //00569444-65
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;   //00569465-86
+  ScrollBar1.SmallChange := 20;                     //00569486-98
+  ScrollBar2.SmallChange := 20;                     //00569498-AA
+  Screen.Cursor := crDefault;                       //005694AA-B3
+end;
+
+function NachfNode(I: Integer): PNachfNode;
+begin
+  { node I of the BFS grid, I = 1..10000 (IDR: imul eax,esi,25 = $25
+    dwords stride $94, base 01044CE8). }
+  Result := @gvar_01044CE8[I];
+end;
+
+procedure TForm13.nachf_neu(AGen: Integer);
+var
+  NodeI, Row, Col, Buf, LastM: Integer;     // esi, ebp-10, ebp-14, ebp-38, ebp-40
+  GenIdx, I, Count, NumCh, P1, P2: Integer; // edi, ebp-0C, ebp-50, chunk num, ebp-44, ebp-48
+  StartNum, MaxRow, Pers: Integer;          // ebp-8, stat edx, ebp-4C
+  s, s1, s2, s3: AnsiString;
+  Node: PNachfNode;
+begin
+  { 00564668-8F prologue: edx (AGen) -> [ebp-4], ebx = DataModule2 hook. }
+  StartNum := DataModule2.Table1Nummer.AsInteger;                    //00564692-9F (+534)
+  for I := 1 to 10000 do                                             //005646A2-F2 (esi=$2710)
+    FillChar(gvar_01044CE8[I], $94, 0);                              //dwords 0..$28 + beide ShortString-Len-Bytes
+  gvar_0061F2F0 := AGen;                                             //005646F3-F8
+  gvar_0061F110 := 80;                                               //005646FB-02 ($50)
+  DataModule2.Table1.IndexName := '';                                //00564705-0C
+  DataModule2.Table10.IndexName := 'num';                            //00564711-1E
+  DataModule2.Table1.FindKey([StartNum]);                            //00564723-37
+  for I := 1 to 50 do                                                //0056473C-51 (esi=$32)
+    gvar_0061F1F0[I] := '';                                          //00564746-51
+  NodeI := 1; Row := 1; Col := 1; GenIdx := 1; Buf := 1;             //00564753-6B
+  Node := NachfNode(NodeI);                                          //00564772-78
+  Node^.Nummer := StartNum;                                          //00564775-78
+  Node^.Row := Row;                                                  //0056477F-85
+  Node^.Col := Col;                                                  //0056478C-92
+  Node^.Ref1 := DataModule2.Table1Vater.AsInteger;                   //00564799-A9 (+538)
+  Node^.Ref2 := DataModule2.Table1Mutter.AsInteger;                  //005647B0-C0 (+53C)
+  Node^.Flag1 := 0;                                                  //005647C7-CC
+  Node^.Order := Buf;                                                //005647D3-D9
+  Node^.Flag2 := 0;                                                  //005647E0-E5
+  s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50); //005647EC-838 (+548, cl=$32)
+  PShortString(@Node^.Raw[0])^ := s;                                 //0056482C-38 (@PStrNCpy)
+  P1 := Buf;                                                         //0056483D-40
+  Inc(NodeI); Inc(Col); Inc(Buf);                                    //00564843-47
+  sub_005637C4(StartNum, s1);                                        //0056484A-57
+  sub_005637C4(0, s2);                                               //0056485E-6E
+  sub_005637C4(0, s3);                                               //00564871-81
+  gvar_0061F1F0[GenIdx] := s1 + s2 + s3;                             //0056487E-90 @LStrCatN 3
+  DataModule2.Table1.DisableControls;                                //00564895-9A
+  { Ehepartner des Starters: Table10-Cursor, Nummer = StartNum. }
+  if DataModule2.Table10.FindKey([StartNum]) then                    //0056489F-B6
+    while DataModule2.Table10Nummer.AsInteger = StartNum do          //00564FBA-CA (+3B4)
+    begin
+      Node := NachfNode(NodeI);                                      //005648D5-D8
+      Node^.Nummer := DataModule2.Table10Epnum.AsInteger;            //005648C8-D8 (+3B8)
+      Node^.Row := Row;                                              //005648DF-E5
+      Node^.Col := Col;                                              //005648EC-F2
+      Node^.Ref1 := 0;                                               //005648F9-FE
+      Node^.Ref2 := 0;                                               //00564905-0A
+      Node^.Flag1 := 0;                                              //00564911-16
+      Node^.Order := Buf;                                            //0056491D-23
+      Node^.Flag2 := 1;                                              //0056492A-2D
+      P2 := Buf;                                                     //00564938-3B
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then      //0056493E-77
+        PShortString(@Node^.Raw[0])^ := AnsiString('W')              //00564974-77 (word 5701)
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then    //00564983-B2
+          PShortString(@Node^.Raw[0])^ := AnsiString('M');           //005649B9-BC (word 4D01)
+      { Partnerzeile des Spouse-Knotens. }
+      if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or                //005649C6-1E (+3D8)
+         (Trim(DataModule2.Table10Saort.AsString) <> '') then              //00564A03-1E (+3DC)
+      begin
+        s1 := 'ooS ' + DataModule2.Table10Satag.AsString + '.' +           //00564A24-7E (+3D0/3D4)
+              DataModule2.Table10Sajahr.AsString + ' ' +                   //00564A78-83 (+3D8)
+              DataModule2.Table10Saort.AsString;                           //00564A8B-9C (+3DC)
+        PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);                  //00564AAC-D4 (@PStrNCpy $32)
+      end
+      else
+        if (Trim(DataModule2.Table10Hjahr.AsString) <> '') or              //00564ADE-B3 (+3C4)
+           (Trim(DataModule2.Table10Hort.AsString) <> '') then             //00564B1B-36 (+3C8)
+        begin
+          if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then   //00564B3C-61 (+3E4)
+          begin
+            s1 := 'ooK ' + DataModule2.Table10Htag.AsString + '.' +        //00564B67-C1 (+3BC/3C0)
+                  DataModule2.Table10Hjahr.AsString + ' ' +                //00564BC1-D9 (+3C4)
+                  DataModule2.Table10Hort.AsString;                        //00564BCE-D9 (+3C8)
+            PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);              //00564C05-D4
+          end
+          else
+            if Pos('and', DataModule2.Table10Verbind.AsString) > 0 then    //00564C21-46
+            begin
+              s1 := 'o-o ' + DataModule2.Table10Hjahr.AsString;            //00564C4C-70 @LStrCat3
+              PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);            //00564C75-8D
+            end;
+        end
+        else
+          if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then   //00564CA4-C9
+            PShortString(@Node^.Raw[51])^ := AnsiString('oo');             //00564CCB-E0 (3-byte movs)
+      Inc(NodeI); Inc(Col); Inc(Buf);                                      //00564CE1-E5
+      sub_005637C4(DataModule2.Table10Epnum.AsInteger, s1);                //00564CF9-08 (+3B8)
+      gvar_0061F1F0[GenIdx] := gvar_0061F1F0[GenIdx] + s1 + '            ';  //00564CE8-D1E @LStrCatN 3
+      { Kinder des Paares (Person, Spouse) -> Slot GenIdx+1. }
+      DataModule2.Table1.IndexName := '';                                  //00564D23-2A
+      DataModule2.Table1.FindKey([StartNum]);                              //00564D2F-41
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then       //00564D48-77
+      begin
+        DataModule2.Table1.IndexName := 'vat';                             //00564D82-8C
+        DataModule2.Table1.FindKey([StartNum]);                            //00564D91-A5
+        while (not DataModule2.Table1.Eof) and                             //00564E37-43
+              (DataModule2.Table1Vater.AsInteger = StartNum) do            //00564E49-59
+        begin
+          if DataModule2.Table1Mutter.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00564DAF-CD
+          begin
+            sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);          //00564DC1-DE
+            sub_005637C4(P1, s2);                                          //00564DEE-02
+            sub_005637C4(P2, s3);                                          //00564E0E-11
+            gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00564DC0-E28
+          end;
+          DataModule2.Table1.Next;                                         //00564E2D-32
+        end;
+      end
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then     //00564E64-93
+        begin
+          DataModule2.Table1.IndexName := 'mut';                           //00564E9E-A8
+          DataModule2.Table1.FindKey([StartNum]);                          //00564EAD-C1
+          while (not DataModule2.Table1.Eof) and                           //00564EF4-5F
+                (DataModule2.Table1Mutter.AsInteger = StartNum) do         //00564F61-71
+          begin
+            if DataModule2.Table1Vater.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00564ECB-E7
+            begin
+              sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);        //00564EEB-05
+              sub_005637C4(P2, s2);                                        //00564F10-1E
+              sub_005637C4(P1, s3);                                        //00564F24-2D
+              gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00564EEB-F38
+            end;
+            DataModule2.Table1.Next;                                       //00564F49-4E
+          end;
+        end;
+      DataModule2.Table1.IndexName := '';                                  //00564F77-7E
+      DataModule2.Table1.FindKey([StartNum]);                              //00564F83-95
+      DataModule2.Table10.Next;                                            //00564F9C-A4
+    end;
+  { Kinder des Starters ohne Partner. }
+  DataModule2.Table1.IndexName := '';                                      //00564FD0-EA
+  DataModule2.Table1.FindKey([StartNum]);                                  //00564FD9-FF0
+  if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then           //00564FF5-24
+  begin
+    DataModule2.Table1.IndexName := 'vat';                                 //0056502F-39
+    DataModule2.Table1.FindKey([StartNum]);                                //0056503E-52
+    while (not DataModule2.Table1.Eof) and                                 //005650DA-E1
+          (DataModule2.Table1Vater.AsInteger = StartNum) do                //005650E7-F7
+    begin
+      if DataModule2.Table1Mutter.AsInteger = 0 then                       //0056505C-6B
+      begin
+        sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);              //0056506D-87
+        sub_005637C4(P1, s2);                                              //00565098-9B
+        sub_005637C4(P2, s3);                                              //005650A0-AC
+        gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //0056506D-C6
+      end;
+      DataModule2.Table1.Next;                                             //005650CB-D0
+    end;
+  end
+  else
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then         //00565102-31
+    begin
+      DataModule2.Table1.IndexName := 'mut';                               //0056513C-46
+      DataModule2.Table1.FindKey([StartNum]);                              //0056514B-5F
+      while (not DataModule2.Table1.Eof) and                               //005651E7-EE
+            (DataModule2.Table1Mutter.AsInteger = StartNum) do             //005651F0-FA
+      begin
+        if DataModule2.Table1Vater.AsInteger = 0 then                      //00565169-78
+        begin
+          sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);            //0056517A-94
+          sub_005637C4(P2, s2);                                            //005651A5-A8
+          sub_005637C4(P1, s3);                                            //005651B3-BC
+          gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //0056517A-C7
+        end;
+        DataModule2.Table1.Next;                                           //005651D8-DD
+      end;
+    end;
+  DataModule2.Table1.IndexName := '';                                      //00565206-0D
+  { Generationsloop: slot GenIdx haelt die 18-Zeichen-Chunks
+    [Nummer][Vater-Idx][Mutter-Idx]; Ehepartner-Chunks mit 12 Leerzeichen
+    Padding landen in der eigenen Liste, Kinder-Chunks in Slot GenIdx+1 }
+  Inc(GenIdx);                                                             //00565212
+  while GenIdx <= AGen do                                                  //00565213-16
+  begin
+    Inc(Row);                                                              //0056521C-1F
+    Col := 1;                                                              //0056521F-26
+    s := Trim(gvar_0061F1F0[GenIdx]);                                      //00565226-38
+    if s = '' then                                                         //00565238-3F
+      Break;                                                               //-> 00565FF4
+    LastM := 0;                                                            //00565251-53
+    Count := Round(Length(gvar_0061F1F0[GenIdx]) / 18);                    //00565256-7D
+    I := 1;                                                                //00565284
+    while Count > 0 do                                                     //0056527B-86
+    begin
+      Node := NachfNode(NodeI);                                            //00565288-8B
+      NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //0056528B-AF
+      DataModule2.Table1.FindKey([NumCh]);                                 //005652BA-CB
+      Node^.Nummer := DataModule2.Table1Nummer.AsInteger;                  //005652D0-E0
+      Node^.Row := Row;                                                    //005652E7-ED
+      Node^.Col := Col;                                                    //005652F4-FA
+      Node^.Ref1 := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 7, 6));    //00565301-27
+      Node^.Ref2 := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 13, 6));   //0056533C-62
+      Node^.Flag1 := 1;                                                    //00565377-7A
+      Node^.Order := Buf;                                                  //00565385-8B
+      Node^.Flag2 := 0;                                                    //00565392-97
+      s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50);  //0056539E-EA
+      PShortString(@Node^.Raw[0])^ := s;                                   //005653D8-EA
+      P1 := Buf;                                                           //005653EF-F2
+      if Node^.Ref2 <> LastM then                                          //005653F5-FA
+      begin
+        Node^.Flag3 := 1;                                                  //00565404-12
+        LastM := Node^.Ref2;                                               //00565415-1D
+      end;
+      Inc(NodeI); Inc(Col); Inc(Buf);                                      //0056541F-23
+      { Ehepartner des geparsten (IndexName '')-Personen. }
+      if DataModule2.Table10.FindKey([NumCh]) then                         //00565426-69
+        while DataModule2.Table10Nummer.AsInteger = NumCh do               //00565C72-B2
+        begin
+          DataModule2.Table1.FindKey([DataModule2.Table10Epnum.AsInteger]);  //0056547B-99
+          Node := NachfNode(NodeI);                                        //005654AB-AE
+          Node^.Nummer := DataModule2.Table10Epnum.AsInteger;              //0056549E-A8
+          Node^.Row := Row;                                                //005654B5-BB
+          Node^.Col := Col;                                                //005654C2-C8
+          Node^.Ref1 := 0;                                                 //005654CF-D4
+          Node^.Ref2 := 0;                                                 //005654DB-E0
+          Node^.Flag1 := 0;                                                //005654E7-EC
+          Node^.Order := Buf;                                              //005654F3-F9
+          Node^.Flag2 := 1;                                                //00565500-03
+          s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50);  //0056550E-43
+          PShortString(@Node^.Raw[0])^ := s;                               //00565548-5A
+          P2 := Buf;                                                       //0056555F-62
+          { Partnerzeile - Datenformatierung ueber sub_00563A0C. }
+          if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or           //00565565-B0
+             (Trim(DataModule2.Table10Saort.AsString) <> '') then          //005655A5-BD
+          begin
+            s1 := 'ooS ' + DataModule2.Table10Satag.AsString + '.' +       //005655C3-28
+                  DataModule2.Table10Samonat.AsString + '.' +              //005655E6-28 (+3D4)
+                  DataModule2.Table10Sajahr.AsString;                      //00565617 (+3D8)
+            sub_00563A0C(s1, s3);                                          //0056562D-3E
+            s1 := s3 + ' ' + DataModule2.Table10Saort.AsString;            //0056563E-68 (@LStrCatN 4)
+            PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);              //00565672-98
+          end
+          else
+            if (Trim(DataModule2.Table10Hjahr.AsString) <> '') or          //005656A4-F1
+               (Trim(DataModule2.Table10Hort.AsString) <> '') then         //005656E4-F1
+            begin
+              if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then  //00565702-25
+              begin
+                s1 := 'ooK ' + DataModule2.Table10Htag.AsString + '.' +    //0056572D-C7
+                      DataModule2.Table10Hmonat.AsString + '.' +           //00565763-D7 (+3C0)
+                      DataModule2.Table10Hjahr.AsString;                   //00565781 (+3C4)
+                sub_00563A0C(s1, s3);                                      //00565797-A7
+                s1 := s3 + ' ' + DataModule2.Table10Hort.AsString;         //005657A8-C7
+                PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);          //005657DC-ED
+              end
+              else
+                if Pos('and', DataModule2.Table10Verbind.AsString) > 0 then  //0056580E-31
+                begin
+                  s1 := 'o-o ' + DataModule2.Table10Hjahr.AsString;        //00565839-5D @LStrCat3
+                  PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);        //00565862-78
+                end;
+            end
+            else
+              if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then  //00565891-D9
+                PShortString(@Node^.Raw[51])^ := AnsiString('oo');           //005658CC-D5 (3-byte movs)
+          Inc(NodeI); Inc(Col); Inc(Buf);                                   //005658CE-D2
+          sub_005637C4(DataModule2.Table10Epnum.AsInteger, s1);             //005658D9-E6
+          gvar_0061F1F0[GenIdx] := gvar_0061F1F0[GenIdx] + s1 + '            ';  //005658D5-56590B
+          { Kinder des Paares (Person, Spouse) -> Slot GenIdx+1. }
+          DataModule2.Table1.IndexName := '';                               //00565895-565917
+          NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //0056591D-46 (chunk field 1..6 again)
+          DataModule2.Table1.FindKey([NumCh]);                              //0056594B-5C
+          if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then    //00565968-99
+          begin
+            DataModule2.Table1.IndexName := 'vat';                          //0056599B-A5
+            DataModule2.Table1.FindKey([NumCh]);                            //005659AA-EA
+            while (not DataModule2.Table1.Eof) and                          //00565A7C-88
+                  (DataModule2.Table1Vater.AsInteger = NumCh) do            //00565A8E-CE
+            begin
+              if DataModule2.Table1Mutter.AsInteger = DataModule2.Table10Epnum.AsInteger then  //005659F4-0F
+              begin
+                sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);       //00565A14-2E
+                sub_005637C4(P1, s2);                                       //00565A39-42
+                sub_005637C4(P2, s3);                                       //00565A54-61
+                gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565A61-69
+              end;
+              DataModule2.Table1.Next;                                      //00565A72-81
+            end;
+          end
+          else
+            if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then  //00565AD9-08
+            begin
+              DataModule2.Table1.IndexName := 'mut';                        //00565B13-1D
+              DataModule2.Table1.FindKey([NumCh]);                          //00565B22-62
+              while (not DataModule2.Table1.Eof) and                        //00565BF4-5FC
+                    (DataModule2.Table1Mutter.AsInteger = NumCh) do         //00565C02-42
+              begin
+                if DataModule2.Table1Vater.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00565B6C-88
+                begin
+                  sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);     //00565B8C-A0
+                  sub_005637C4(P2, s2);                                     //00565BB1-BBF
+                  sub_005637C4(P1, s3);                                     //00565BCB-D3
+                  gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565B8C-E5
+                end;
+                DataModule2.Table1.Next;                                    //00565BEA-F4
+              end;
+            end;
+          DataModule2.Table1.IndexName := '';                               //00565C48-4F
+          DataModule2.Table10.Next;                                         //00565C54-60
+        end;
+      { Kinder der Person ohne Partner. }
+      DataModule2.Table1.IndexName := '';                                   //00565CB8-CBF
+      NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //00565CCB-E7
+      DataModule2.Table1.FindKey([NumCh]);                                  //00565CFA-D04
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then        //00565D09-3D
+      begin
+        DataModule2.Table1.IndexName := 'vat';                              //00565D43-4D
+        DataModule2.Table1.FindKey([NumCh]);                                //00565D52-D82
+        while (not DataModule2.Table1.Eof) and                              //00565E10-21
+              (DataModule2.Table1Vater.AsInteger = NumCh) do                //00565E27-65
+        begin
+          if DataModule2.Table1Mutter.AsInteger = 0 then                    //00565D9C-A9
+          begin
+            sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);           //00565DAD-DCE
+            sub_005637C4(P1, s2);                                           //00565DD8-DE1
+            sub_005637C4(P2, s3);                                           //00565DE6-DEF
+            gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565DAD-E06
+          end;
+          DataModule2.Table1.Next;                                          //00565E0B-10
+        end;
+      end
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then      //00565E72-96
+        begin
+          DataModule2.Table1.IndexName := 'mut';                            //00565EAC-B6
+          DataModule2.Table1.FindKey([NumCh]);                              //00565EBB-0A
+          while (not DataModule2.Table1.Eof) and                            //00565F7E-87
+                (DataModule2.Table1Mutter.AsInteger = NumCh) do             //00565F8C-CA
+          begin
+            if DataModule2.Table1Vater.AsInteger = 0 then                   //00565F05-14
+            begin
+              sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);         //00565F16-2A
+              sub_005637C4(P2, s2);                                         //00565F35-49
+              sub_005637C4(P1, s3);                                         //00565F4F-58
+              gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565F16-6F
+            end;
+            DataModule2.Table1.Next;                                        //00565F74-79
+          end;
+        end;
+      DataModule2.Table1.IndexName := '';                                   //00565FD2-D9
+      Inc(I); Dec(Count);                                                   //00565FDE-E4
+    end;
+    Inc(GenIdx);                                                            //00565FEA
+  end;
+  { Statistik: solange Order (D04) > 0, Row/Nummer der Knoten 1..n. }
+  MaxRow := 0;                                                              //00565FF4-FD
+  I := 1;                                                                   //00565FF6-FB
+  Pers := 0;                                                                //00565FFD
+  while gvar_01044CE8[I].Order > 0 do                                       //00566023-2E
+  begin
+    if MaxRow < gvar_01044CE8[I].Row then                                   //00566002-0E
+      MaxRow := gvar_01044CE8[I].Row;                                       //0056600B-0E
+    if gvar_01044CE8[I].Nummer > 0 then                                     //00566015-1D
+      Inc(Pers);                                                            //0056601F
+    Inc(I);                                                                 //00566022
+  end;
+  s := IntToStr(GenIdx - 1) + ' Generation(en) / ' + IntToStr(Pers) +       //00566030-72 @LStrCatN 4
+       ' Personen gefunden';
+  ShowMessage(s);                                                           //00566072-78
+  DataModule2.Table1.EnableControls;                                        //0056607D-87
+end;
+
+procedure TForm13.Button4Click(Sender: TObject);
+var
+  Jpeg: TJPEGImage;     //00570928 [ebp-8]
+  row: Integer;         //005708BA eax
+  b, d: Integer;        //005708CD ebx / 005708E4 edx
+  fn: AnsiString;       //00570B22 [ebp-14]
+begin
+  { 00570890: Graphik als JPEG-Datei speichern. Max-Ausdehnung der
+    Zeilen ermitteln, grosses Bitmap erzeugen, Graphik einzeichnen,
+    JPEG davon ableiten und nach SaveDialog speichern. }
+  gvar_0253635C := 0;                                    //005708BE-D3
+  gvar_02536360 := 0;                                    //005708C3-E7
+  row := 1;                                              //005708BA
+  while ChartAFlat(102 * row + 2) > 0 do                 //005708CB-0F
+  begin
+    b := ChartAFlat(102 * row);                          //005708CD-DD
+    if b > gvar_0253635C then
+      gvar_0253635C := b;                                //005708D4-E2
+    d := ChartAFlat(102 * row + 1);                      //005708E4-0F
+    if d > gvar_02536360 then
+      gvar_02536360 := d;                                //005708EB-FD
+    Inc(row);                                            //00570903
+  end;
+  Jpeg := TJPEGImage.Create;                             //00570911-68
+  gvar_011AE358 := TBitmap.Create;                       //00570920-B2
+  gvar_011AE358.Width := (gvar_011AE334 + gvar_0061F118) *
+    gvar_0253635C + gvar_011AE33C;                        //00570931-4D
+  gvar_011AE358.Height := (gvar_0253637C * gvar_011AE318 +
+    gvar_011AE318 + gvar_011AE348 + gvar_0061F114) *
+    gvar_02536360 + gvar_011AE340;                        //00570950-83
+  gvar_011AE358.Canvas.Font.Size := Round(gvar_0061F120 * 7); //00570986-A8
+  gvar_011AE32C := gvar_011AE358.Canvas;                 //005709AD-B7
+  if gvar_0253692C = 'Vorgr1' then                       //005709BC-D4
+  begin
+    vr1;                                                 //005709CF-D9
+    vz1(gvar_011AE358.Canvas);                           //005709D9-E7
+  end;
+  if gvar_0253692C = 'Vorgr2' then                       //005709EC-1C
+  begin
+    Vr2;                                                 //005709FF-17
+    vz2(gvar_011AE358.Canvas);                           //00570A09-28
+  end;
+  if gvar_0253692C = 'Nachgr1' then                      //00570A1C-2D
+  begin
+    nr1;                                                 //00570A2F-47
+    nz1(gvar_011AE358.Canvas);                           //00570A39-58
+  end;
+  if gvar_0253692C = 'Nachgr2' then                      //00570A4C-5D
+  begin
+    nr2;                                                 //00570A5F-77
+    nz2(gvar_011AE358.Canvas);                           //00570A69-88
+  end;
+  try                                                    //00570A7C-CF
+    Jpeg.Performance := jpBestSpeed;                     //00570A8A-8F
+    Jpeg.CompressionQuality := 90;                       //00570A94-B1 (byte $5A)
+    Jpeg.Assign(gvar_011AE358);                          //00570A9B-19
+    SaveDialog1.FileName := '';                          //00570AA9-B2
+    SaveDialog1.DefaultExt := 'jpg';                     //00570AB7-C5
+    SaveDialog1.Filter := 'Grafik-Dateien (*.jpg)|*.jpg'; //00570ACA-E1
+    SaveDialog1.Options := [ofOverwritePrompt];          //00570ADD-EA (0x2)
+    if SaveDialog1.Execute then                          //00570AEB-F4
+    begin
+      fn := Trim(SaveDialog1.FileName);                  //00570AF6-14
+      if fn > '.jpg' then                                //00570B12-1C (LStrCmp + jbe)
+        Jpeg.SaveToFile(SaveDialog1.FileName);           //00570B1E-34
+    end;
+  finally                                                //00570B37-4C
+    Jpeg.Free;                                           //00570B44-47
+  end;
+end;
+
+procedure TForm13.PaintBox1Paint(Sender:TObject);
+begin
+  { 00570C14: Retina-Dispatcher; je nach Aufrufmodus (gvar_0253692C)
+    zeichnen und auf PaintBox1 ausgeben. }
+  if gvar_0253692C = 'Vorgr1' then             //00570C1A-2B
+  begin
+    vr1;                                       //00570C31
+    vz1(PaintBox1.Canvas);                     //00570C36-44
+  end;
+  if gvar_0253692C = 'Vorgr2' then             //00570C49-5A
+  begin
+    Vr2;                                       //00570C60
+    vz2(PaintBox1.Canvas);                     //00570C65-73
+  end;
+  if gvar_0253692C = 'Nachgr1' then            //00570C78-89
+  begin
+    nr1;                                       //00570C8F
+    nz1(PaintBox1.Canvas);                     //00570C94-A2
+  end;
+  if gvar_0253692C = 'Nachgr2' then            //00570CA7-B8
+  begin
+    nr2;                                       //00570CBE
+    nz2(PaintBox1.Canvas);                     //00570CC3-D1
+  end;
+end;
+
+procedure TForm13.Button6Click(Sender: TObject);
+begin
+  { 00572448: Zoom ein. }
+  gvar_0061F120 := gvar_0061F120 + 0.13;
+  PaintBox1.Refresh;
+end;
+
+procedure TForm13.Button5Click(Sender: TObject);
+begin
+  { 00572404: Zoom aus. }
+  if gvar_0061F120 > 0.5 then
+  begin
+    gvar_0061F120 := gvar_0061F120 - 0.13;
+    PaintBox1.Refresh;
+  end;
+end;
+
+{ 00573848 Finalization (Listing L15904+):
+  - Refcount-Guard [253638C] (inc, nur bei 0 initialisieren) um die
+    Freigabebloecke.
+  - @FinalizeArray ueber die Chart-Gitter (je 10000 Elemente, Element-
+    stripper = Vorf_erm-linked ShortString-Record 'vor' @5637A0) auf
+    gvar_0213E95C / 01D5A7DC (Nachfahren-Gitter), gvar_0197665C
+    (Grid-B Rohbuffer $197664C4+... rows buffer), gvar_015924DC
+    (Grid-C) und gvar_011AE35C (Grid-A 011AE1C4 + $198-Stride).
+  - @FinalizeArray String[?] je 20 Elemente auf gvar_011AE2C8
+    (Slot-AnsiStrings 011AE2C8 + 4*I, siehe ChartSlotAnsi),
+  - LStrClr auf gvar_011AE2C0/2BC/0061F2EC/F2E8/F2E4/F2E0.
+  - @FinalizeArray je 50 AnsiString-Elemente auf gvar_0061F1F4 und
+    gvar_0061F12C.
+  Deviation: in der Recon sind die 408/$214-Stride-Gitter statische
+  Records ohne verwaltete Felder bzw. deren Freigabe erfolgt durch
+  den Delphi-RTTI/Exit-Handler; der End-Block ist deshalb leer und
+  nur als Dokumentstempel erhalten. }
+initialization
+finalization
+end.

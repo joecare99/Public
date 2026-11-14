@@ -2,7 +2,7 @@ program Msgdlg;
 
 uses
   Forms,
-  Frm_MsgDlgMAIN in '..\source\MSGDLG\Frm_MsgDlgMAIN.PAS' {MainForm};
+  Frm_MsgDlgMAIN in '..\source\MSGDLG\Frm_MsgDlgMAIN.pas' {MainForm};
 
 {$E EXE}
 

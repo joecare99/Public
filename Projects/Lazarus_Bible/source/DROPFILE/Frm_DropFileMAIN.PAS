@@ -8,11 +8,11 @@ interface
 
 uses
 {$IFnDEF FPC}
-  Windows,
+  Windows, ShellAPI,
 {$ELSE}
   LCLIntf, LCLType,
 {$ENDIF}
-  ShellAPI,  SysUtils,  Classes, Graphics, Controls,
+  SysUtils,  Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
@@ -46,16 +46,23 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-{ Tell Windows this window can accept drag-and-drop files }
-{ Disable drag-and-drop files (recommended) }
+{ Tell the window it can accept drag-and-drop files.
+  Unter Windows uebernimmt das ShellAPI (DragAcceptFiles), unter der LCL
+  genuegt die Eigenschaft AllowDropFiles. }
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+  {$IFDEF FPC}
+  AllowDropFiles := True;
+  {$ELSE}
   DragAcceptFiles(Handle, True);
+  {$ENDIF}
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
+  {$IFNDEF FPC}
   DragAcceptFiles(Handle, False);
+  {$ENDIF}
 end;
 
 procedure TMainForm.FormDropFiles(Sender: TObject;

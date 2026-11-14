@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Sketch.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\SKETCH\Frm_SketchMAIN.PAS">
+			<DCCReference Include="..\source\Sketch\Frm_SketchMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

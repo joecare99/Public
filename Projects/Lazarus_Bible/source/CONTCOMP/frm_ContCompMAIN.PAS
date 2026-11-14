@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
-  TMainForm = class(TForm)
+  TfrmContCompMain = class(TForm)
     ScrollBox1: TScrollBox;
     Label1: TLabel;
     RadioButton1: TRadioButton;
@@ -41,7 +41,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmContCompMain: TfrmContCompMain;
 
 implementation
 
@@ -69,12 +69,14 @@ begin
     ListBox.Items.Add(Components[I].Name);
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmContCompMain.FormCreate(Sender: TObject);
 begin
   ListControls(ScrollBoxControls, ScrollBox1);
   ListComponents(ScrollBoxComponents, ScrollBox1);
-  ListControls(FormControls, MainForm);
-  ListComponents(FormComponents, MainForm);
+  { Bezogen auf die aktuelle Instanz - als eingebettetes Formular ist
+    die globale Variable frmContCompMain nicht gesetzt. }
+  ListControls(FormControls, Self);
+  ListComponents(FormComponents, Self);
 end;
 
 end.

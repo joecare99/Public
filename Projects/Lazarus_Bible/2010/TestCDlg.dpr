@@ -1,8 +1,8 @@
 program TestCDlg; 
 uses 
   Forms, 
-  COLORDLG in '..\Source\COLORDLG\COLORDLG.PAS' {ColorDlgForm}, 
-  Frm_TestCdlgMAIN in '..\Source\COLORDLG\Frm_TestCdlgMAIN.PAS' {MainForm}; 
+  COLORDLG in '..\source\COLORDLG\COLORDLG.pas' {ColorDlgForm}, 
+  Frm_TestCdlgMAIN in '..\source\COLORDLG\Frm_TestCdlgMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

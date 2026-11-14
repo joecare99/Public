@@ -47,7 +47,7 @@
 				<ContainerId>RC</ContainerId>
 				<Form>ERRMSG.res</Form>
 			</RcCompile>
-			<DCCReference Include="..\Source\STRRES\Frm_StrresMAIN.PAS">
+			<DCCReference Include="..\source\STRRES\Frm_StrresMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<RcCompile Include="..\ERRMSG.RC">

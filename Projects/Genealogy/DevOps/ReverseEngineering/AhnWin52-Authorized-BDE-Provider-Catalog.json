@@ -1,0 +1,3061 @@
+{
+  "CompletedUtc": "2026-10-18T11:00:20.4469226Z",
+  "Root": "C:\\ProgramData\\AHNENWIN Test",
+  "Provider": "Delphi 9 BDE 5.2.0.2",
+  "ReadOnly": true,
+  "TableCount": 29,
+  "RecordValuesLogged": false,
+  "Results": [
+    {
+      "File": "adp.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 1,
+      "FieldCount": 3,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nummer",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Av",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Am",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        }
+      ],
+      "IndexCount": 3,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nummer",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Adopv",
+          "Fields": "Av",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "Adopm",
+          "Fields": "Am",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-adp-db.log"
+    },
+    {
+      "File": "ahntab.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 43,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "n",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "num",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": true
+        },
+        {
+          "Ordinal": 2,
+          "Name": "name",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "vornamen",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "code",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "geschlecht",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "religion",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "beruf",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Lebensorte",
+          "DataTypeCode": 1,
+          "Size": 80,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "gebtag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "gebmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "gebjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "gebort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "tauftag",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 14,
+          "Name": "taufort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 15,
+          "Name": "taufpat",
+          "DataTypeCode": 1,
+          "Size": 55,
+          "Required": false
+        },
+        {
+          "Ordinal": 16,
+          "Name": "htag1",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 17,
+          "Name": "hmonat1",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 18,
+          "Name": "hjahr1",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 19,
+          "Name": "hort1",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 20,
+          "Name": "trauz1",
+          "DataTypeCode": 1,
+          "Size": 55,
+          "Required": false
+        },
+        {
+          "Ordinal": 21,
+          "Name": "htag2",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 22,
+          "Name": "hmonat2",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 23,
+          "Name": "hjahr2",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 24,
+          "Name": "hort2",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 25,
+          "Name": "trauz2",
+          "DataTypeCode": 1,
+          "Size": 55,
+          "Required": false
+        },
+        {
+          "Ordinal": 26,
+          "Name": "htag3",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 27,
+          "Name": "hmonat3",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 28,
+          "Name": "hjahr3",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 29,
+          "Name": "hort3",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 30,
+          "Name": "trauz3",
+          "DataTypeCode": 1,
+          "Size": 55,
+          "Required": false
+        },
+        {
+          "Ordinal": 31,
+          "Name": "sttag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 32,
+          "Name": "stmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 33,
+          "Name": "stjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 34,
+          "Name": "stort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 35,
+          "Name": "stalter",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 36,
+          "Name": "todesurs",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 37,
+          "Name": "begrtag",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 38,
+          "Name": "begrort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 39,
+          "Name": "quelle",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 40,
+          "Name": "sonstiges",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 41,
+          "Name": "kommentar",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 42,
+          "Name": "tx",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "n",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "ein",
+          "Fields": "name;gebjahr;gebmonat;gebtag",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-ahntab-db.log"
+    },
+    {
+      "File": "alfls.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 7,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Dsn",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Kn",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Namvorn",
+          "DataTypeCode": 1,
+          "Size": 125,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Geb",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Sterb",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Kmt",
+          "DataTypeCode": 1,
+          "Size": 100,
+          "Required": false
+        }
+      ],
+      "IndexCount": 3,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr;Dsn",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Ds",
+          "Fields": "Dsn",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "namvg",
+          "Fields": "Namvorn;Geb",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-alfls-db.log"
+    },
+    {
+      "File": "AWD.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 4,
+      "FieldCount": 52,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nummer",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Vater",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Mutter",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Name",
+          "DataTypeCode": 1,
+          "Size": 45,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Vornamen",
+          "DataTypeCode": 1,
+          "Size": 45,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Geschlecht",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Religion",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Beruf",
+          "DataTypeCode": 1,
+          "Size": 70,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Gebtag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Gebmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Gebjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Gebort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Tauftag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "Taufmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 14,
+          "Name": "Taufjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 15,
+          "Name": "Taufort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 16,
+          "Name": "Taufpat",
+          "DataTypeCode": 1,
+          "Size": 120,
+          "Required": false
+        },
+        {
+          "Ordinal": 17,
+          "Name": "Lebensort",
+          "DataTypeCode": 1,
+          "Size": 80,
+          "Required": false
+        },
+        {
+          "Ordinal": 18,
+          "Name": "Sttag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 19,
+          "Name": "Stmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 20,
+          "Name": "Stjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 21,
+          "Name": "Stort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 22,
+          "Name": "Todesurs",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 23,
+          "Name": "Begtag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 24,
+          "Name": "Begmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 25,
+          "Name": "Begjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 26,
+          "Name": "Begort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 27,
+          "Name": "Quelleg",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 28,
+          "Name": "Quellet",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 29,
+          "Name": "Quelles",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 30,
+          "Name": "Quelleb",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 31,
+          "Name": "Kommentar",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 32,
+          "Name": "Lebt",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 33,
+          "Name": "Bild",
+          "DataTypeCode": 17,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 34,
+          "Name": "Namex",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 35,
+          "Name": "IDNR",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 36,
+          "Name": "Kistat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 37,
+          "Name": "Hausname",
+          "DataTypeCode": 1,
+          "Size": 70,
+          "Required": false
+        },
+        {
+          "Ordinal": 38,
+          "Name": "Adr1",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 39,
+          "Name": "Adr2",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 40,
+          "Name": "PLZ",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 41,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 42,
+          "Name": "Adrzus",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 43,
+          "Name": "Indj",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 44,
+          "Name": "Indm",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 45,
+          "Name": "Indt",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 46,
+          "Name": "Alter",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 47,
+          "Name": "Tel",
+          "DataTypeCode": 1,
+          "Size": 25,
+          "Required": false
+        },
+        {
+          "Ordinal": 48,
+          "Name": "Ema",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 49,
+          "Name": "Ur",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 50,
+          "Name": "Quelle",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 51,
+          "Name": "Rufname",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        }
+      ],
+      "IndexCount": 9,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nummer",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "gebo",
+          "Fields": "Gebort",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "vat",
+          "Fields": "Vater;Indj;Indm;Indt",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "mut",
+          "Fields": "Mutter;Indj;Indm;Indt",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "gebnam",
+          "Fields": "Indj;Indm;Indt;Name;Vornamen",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "geba",
+          "Fields": "Name;Vornamen;Gebjahr;Gebmonat;Gebtag;Taufjahr;Taufmonat;Tauftag",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "namgeb",
+          "Fields": "Name;Vornamen;Gebjahr;Indj;Indm;Indt",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "vato",
+          "Fields": "Vater;Gebjahr;Gebmonat;Gebtag;Taufjahr;Taufmonat;Tauftag",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "muto",
+          "Fields": "Mutter;Gebjahr;Gebmonat;Gebtag;Taufjahr;Taufmonat;Tauftag",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-awd-db.log"
+    },
+    {
+      "File": "chnt.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 168,
+      "FieldCount": 4,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "FELD001",
+          "DataTypeCode": 1,
+          "Size": 25,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "FELD002",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "FELD003",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        }
+      ],
+      "IndexCount": 1,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr",
+          "Unique": true,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-chnt-db.log"
+    },
+    {
+      "File": "FKHF.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 5,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Name",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Zeit",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "N",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Bekenn",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Name;Ort;Zeit;N",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "namort",
+          "Fields": "Name;Ort",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-fkhf-db.log"
+    },
+    {
+      "File": "FKMG.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 127,
+      "FieldCount": 2,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "TX",
+          "DataTypeCode": 1,
+          "Size": 100,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "ABK",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        }
+      ],
+      "IndexCount": 1,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "TX",
+          "Unique": true,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-fkmg-db.log"
+    },
+    {
+      "File": "FOKO.DBF",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 14,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "GV",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "MNR",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "NAME",
+          "DataTypeCode": 1,
+          "Size": 32,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "BEKENN",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "STAAT",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "PLZ_KZ",
+          "DataTypeCode": 1,
+          "Size": 6,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "ORT",
+          "DataTypeCode": 1,
+          "Size": 24,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "TER",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "MK",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "VON",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "BIS",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "ZTRL",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "KORRDAT",
+          "DataTypeCode": 1,
+          "Size": 8,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "STD",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "NAM",
+          "Fields": "",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "ORT",
+          "Fields": "",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-foko-dbf.log"
+    },
+    {
+      "File": "ftab.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 2,
+      "FieldCount": 19,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "N",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Fv",
+          "DataTypeCode": 1,
+          "Size": 6,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Fm",
+          "DataTypeCode": 1,
+          "Size": 6,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Fk",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Fn",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "H",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Ho",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Hq",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "S",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "So",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Sq",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Sch",
+          "DataTypeCode": 1,
+          "Size": 15,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Scho",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "Schq",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 14,
+          "Name": "Vb",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 15,
+          "Name": "Indj",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 16,
+          "Name": "Indm",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 17,
+          "Name": "Htz",
+          "DataTypeCode": 1,
+          "Size": 120,
+          "Required": false
+        },
+        {
+          "Ordinal": 18,
+          "Name": "Stz",
+          "DataTypeCode": 1,
+          "Size": 120,
+          "Required": false
+        }
+      ],
+      "IndexCount": 4,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "N",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "verb",
+          "Fields": "Vb",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "m",
+          "Fields": "Fm;Indj;Indm",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "v",
+          "Fields": "Fv;Indj;Indm",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-ftab-db.log"
+    },
+    {
+      "File": "gede.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 2,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Typ",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Inh",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        }
+      ],
+      "IndexCount": 1,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Typ",
+          "Unique": true,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-gede-db.log"
+    },
+    {
+      "File": "gedh.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 3,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Z",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "A",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "N",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Z",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "AA",
+          "Fields": "A",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-gedh-db.log"
+    },
+    {
+      "File": "lc.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 2,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "lo",
+          "Fields": "Ort",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-lc-db.log"
+    },
+    {
+      "File": "lfbh.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 7,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Nm",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Prob",
+          "DataTypeCode": 1,
+          "Size": 6,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Eh",
+          "DataTypeCode": 1,
+          "Size": 70,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Ix",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Nam",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Aus",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        }
+      ],
+      "IndexCount": 4,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "na",
+          "Fields": "Nam;Ix",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "pro",
+          "Fields": "Prob",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "nnm",
+          "Fields": "Nm",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-lfbh-db.log"
+    },
+    {
+      "File": "LOC - Kopie.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 7,
+      "FieldCount": 13,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "PLZ",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Land",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "RegBez",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Gov",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Bland",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Gde",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Pfr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Lkr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Abk",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Lg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Bg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Maid",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Ort",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Ort_",
+          "Fields": "Ort",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-loc-kopie-db.log"
+    },
+    {
+      "File": "LOC.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 7,
+      "FieldCount": 13,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "PLZ",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Land",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "RegBez",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Gov",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Bland",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Gde",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Pfr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Lkr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Abk",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Lg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Bg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Maid",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Ort",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Ort_",
+          "Fields": "Ort",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-loc-db.log"
+    },
+    {
+      "File": "loc2.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 13,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Ort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "PLZ",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Land",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "RegBez",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "FOKO_ID",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Bland",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Gde",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Pfr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Lkr",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Abk",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Lg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Bg",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Maid",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Ort",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Ort_",
+          "Fields": "Ort",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-loc2-db.log"
+    },
+    {
+      "File": "MRG.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 4,
+      "FieldCount": 23,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Numr",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Nummer",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Epnum",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Htag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Hmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Hjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Hort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Trauz",
+          "DataTypeCode": 1,
+          "Size": 120,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Satag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Samonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Sajahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Saort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Satrauz",
+          "DataTypeCode": 1,
+          "Size": 120,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "Verbind",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        },
+        {
+          "Ordinal": 14,
+          "Name": "Schtag",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 15,
+          "Name": "Schmonat",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        },
+        {
+          "Ordinal": 16,
+          "Name": "Schjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 17,
+          "Name": "Schort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 18,
+          "Name": "Hqu",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 19,
+          "Name": "Saqu",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 20,
+          "Name": "Schqu",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        },
+        {
+          "Ordinal": 21,
+          "Name": "Indj",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 22,
+          "Name": "Indm",
+          "DataTypeCode": 1,
+          "Size": 2,
+          "Required": false
+        }
+      ],
+      "IndexCount": 6,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Numr",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "mh",
+          "Fields": "Nummer;Hjahr;Hmonat;Htag;Sajahr;Samonat;Satag",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "ep",
+          "Fields": "Epnum",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "num",
+          "Fields": "Nummer;Indj;Indm",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "epn",
+          "Fields": "Epnum;Indj;Indm",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "nm",
+          "Fields": "Nummer",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-mrg-db.log"
+    },
+    {
+      "File": "ndh.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 1,
+      "FieldCount": 1,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Hofname",
+          "DataTypeCode": 1,
+          "Size": 100,
+          "Required": false
+        }
+      ],
+      "IndexCount": 1,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Hofname",
+          "Unique": true,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-ndh-db.log"
+    },
+    {
+      "File": "ng2h.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 10,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "N",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Lf",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Nr",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Bn",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Ep",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Elt",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Absz",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Ord",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "K",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "E",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        }
+      ],
+      "IndexCount": 3,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "N",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "nru",
+          "Fields": "Nr",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "bnu",
+          "Fields": "Bn",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-ng2h-db.log"
+    },
+    {
+      "File": "NM.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 3,
+      "FieldCount": 1,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Name",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Name",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Nam_",
+          "Fields": "Name",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-nm-db.log"
+    },
+    {
+      "File": "nol.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 3,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "No",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Zus",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "namort",
+          "Fields": "No",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-nol-db.log"
+    },
+    {
+      "File": "NUMRES.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 1,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Num",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        }
+      ],
+      "IndexCount": 1,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Num",
+          "Unique": true,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-numres-db.log"
+    },
+    {
+      "File": "occ.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 2,
+      "FieldCount": 2,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "NN",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Occ",
+          "DataTypeCode": 1,
+          "Size": 70,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "NN",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "ber",
+          "Fields": "Occ",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-occ-db.log"
+    },
+    {
+      "File": "OUTP.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 5,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nr",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Zeile",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Nm",
+          "DataTypeCode": 1,
+          "Size": 25,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Nm2",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Nm3",
+          "DataTypeCode": 1,
+          "Size": 50,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nr",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "Valf",
+          "Fields": "Nm3;Nm",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-outp-db.log"
+    },
+    {
+      "File": "over.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 17,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nn",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Nummer",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Name",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Gebtag",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Gebmonat",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Gebjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Gebort",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Sttag",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Stmonat",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Stjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Stort",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Htag",
+          "DataTypeCode": 1,
+          "Size": 7,
+          "Required": false
+        },
+        {
+          "Ordinal": 12,
+          "Name": "Hmonat",
+          "DataTypeCode": 1,
+          "Size": 3,
+          "Required": false
+        },
+        {
+          "Ordinal": 13,
+          "Name": "Hjahr",
+          "DataTypeCode": 1,
+          "Size": 4,
+          "Required": false
+        },
+        {
+          "Ordinal": 14,
+          "Name": "Hort",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        },
+        {
+          "Ordinal": 15,
+          "Name": "Hname",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 16,
+          "Name": "Geschlecht",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        }
+      ],
+      "IndexCount": 3,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nn",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "ngh",
+          "Fields": "Name;Gebjahr;Gebmonat;Gebtag;Hjahr;Hmonat;Htag",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "dsn",
+          "Fields": "Nummer",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-over-db.log"
+    },
+    {
+      "File": "repso.db",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 5,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Z",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Nr",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Inh",
+          "DataTypeCode": 1,
+          "Size": 255,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Inh2",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Alt",
+          "DataTypeCode": 1,
+          "Size": 30,
+          "Required": false
+        }
+      ],
+      "IndexCount": 4,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Z",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "ih",
+          "Fields": "Inh",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "nro",
+          "Fields": "Nr",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "alt_",
+          "Fields": "Alt",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-repso-db.log"
+    },
+    {
+      "File": "sour.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 2,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Nn",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Quelle",
+          "DataTypeCode": 1,
+          "Size": 150,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Nn",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "qu",
+          "Fields": "Quelle",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-sour-db.log"
+    },
+    {
+      "File": "sour2.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 11,
+      "FieldCount": 12,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "N",
+          "DataTypeCode": 14,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Titel",
+          "DataTypeCode": 1,
+          "Size": 80,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Abk",
+          "DataTypeCode": 1,
+          "Size": 80,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Ereig",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Von",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Bis",
+          "DataTypeCode": 1,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Standort",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Publ",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 8,
+          "Name": "Rep",
+          "DataTypeCode": 1,
+          "Size": 60,
+          "Required": false
+        },
+        {
+          "Ordinal": 9,
+          "Name": "Bem",
+          "DataTypeCode": 16,
+          "Size": 10,
+          "Required": false
+        },
+        {
+          "Ordinal": 10,
+          "Name": "Bestand",
+          "DataTypeCode": 1,
+          "Size": 40,
+          "Required": false
+        },
+        {
+          "Ordinal": 11,
+          "Name": "Med",
+          "DataTypeCode": 1,
+          "Size": 20,
+          "Required": false
+        }
+      ],
+      "IndexCount": 2,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "N",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "tit",
+          "Fields": "Titel",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-sour2-db.log"
+    },
+    {
+      "File": "VORF.DB",
+      "Provider": "BDE 5.2.0.2",
+      "OpenSucceeded": true,
+      "ErrorClass": null,
+      "DBIErrorCode": null,
+      "RecordCount": 0,
+      "FieldCount": 8,
+      "Fields": [
+        {
+          "Ordinal": 0,
+          "Name": "Pp",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 1,
+          "Name": "Lfdn",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 2,
+          "Name": "Nummer",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 3,
+          "Name": "Kek",
+          "DataTypeCode": 6,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 4,
+          "Name": "Gen",
+          "DataTypeCode": 3,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 5,
+          "Name": "Kekr",
+          "DataTypeCode": 6,
+          "Size": 0,
+          "Required": false
+        },
+        {
+          "Ordinal": 6,
+          "Name": "Geschlecht",
+          "DataTypeCode": 1,
+          "Size": 1,
+          "Required": false
+        },
+        {
+          "Ordinal": 7,
+          "Name": "Hd",
+          "DataTypeCode": 1,
+          "Size": 100,
+          "Required": false
+        }
+      ],
+      "IndexCount": 4,
+      "Indexes": [
+        {
+          "Name": "",
+          "Fields": "Pp",
+          "Unique": true,
+          "Descending": false
+        },
+        {
+          "Name": "lfn",
+          "Fields": "Lfdn",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "genx",
+          "Fields": "Gen",
+          "Unique": false,
+          "Descending": false
+        },
+        {
+          "Name": "dsn",
+          "Fields": "Nummer;Kek",
+          "Unique": false,
+          "Descending": false
+        }
+      ],
+      "ManifestFileCount": 170,
+      "Added": 0,
+      "Removed": 0,
+      "Changed": 0,
+      "ProbeLog": "C:\\Users\\Mir\\.copilot\\session-state\\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\\files\\ahnwin-catalog-vorf-db.log"
+    }
+  ]
+}

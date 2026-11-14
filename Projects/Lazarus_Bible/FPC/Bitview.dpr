@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_BitViewMAIN in '..\source\BITVIEW\Frm_BitViewMAIN.PAS' {frmBitmapViewerMain};
+  Frm_BitViewMAIN in '..\source\Bitview\Frm_BitViewMAIN.pas' {frmBitmapViewerMain};
 {$E EXE}
 
 begin

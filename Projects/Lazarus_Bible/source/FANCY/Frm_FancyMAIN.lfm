@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmFancyMain: TfrmFancyMain
   Left = 136
   Top = 153
   Caption = 'Fancy RadioButton Groups'
@@ -10,7 +10,6 @@ object MainForm: TMainForm
   Font.Height = -13
   Font.Name = 'Arial'
   Font.Style = []
-  PixelsPerInch = 96
   object Panel1: TPanel
     Left = 8
     Top = 8
@@ -19,7 +18,6 @@ object MainForm: TMainForm
     BevelInner = bvLowered
     BevelWidth = 4
     BorderStyle = bsSingle
-    TabOrder = 0
     object RadioButton1: TRadioButton
       Left = 48
       Top = 16
@@ -64,7 +62,6 @@ object MainForm: TMainForm
     BevelWidth = 3
     BorderWidth = 2
     BorderStyle = bsSingle
-    TabOrder = 1
     object RadioButton5: TRadioButton
       Left = 48
       Top = 24
@@ -147,4 +144,4 @@ object MainForm: TMainForm
     Kind = bkClose
     Layout = blGlyphBottom
   end
-end
+end

@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Dropfile.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DROPFILE\Frm_DropFileMAIN.PAS">
+			<DCCReference Include="..\source\DROPFILE\Frm_DropFileMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -1,7 +1,7 @@
 program PageTab; 
 uses 
   Forms, 
-  Frm_PageTabMain in '..\Source\PageTab\Frm_PageTabMain.pas' {MainForm}; 
+  Frm_PageTabMain in '..\source\PageTab\Frm_PageTabMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

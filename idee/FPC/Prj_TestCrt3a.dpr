@@ -6,7 +6,7 @@ program Prj_TestCrt3a;
   {$E exe}
 {$ENDIF}
 
- {$APPTYPE CONSOLE}
+{$APPTYPE CONSOLE}
 
 uses
   {$IFDEF FPC}

@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_Toolbar3MAIN in '..\Source\TOOLBAR3\Frm_Toolbar3MAIN.PAS' {MainForm};
+  Frm_Toolbar3MAIN in '..\source\Toolbar3\Frm_Toolbar3MAIN.pas' {MainForm};
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

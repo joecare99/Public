@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Capslock.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\CAPSLOCK\Frm_CapslockMAIN.PAS">
+			<DCCReference Include="..\source\Capslock\Frm_CapslockMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

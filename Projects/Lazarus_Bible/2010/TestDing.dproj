@@ -38,7 +38,7 @@
 			<DelphiCompile Include="TestDing.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DING\Frm_TestDingMain.pas">
+			<DCCReference Include="..\source\DING\Frm_TestDingMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -84,7 +84,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\PALETTE\Frm_PaletteMain.PAS">
+        <DCCReference Include="..\source\PALETTE\Frm_PaletteMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

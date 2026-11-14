@@ -1,0 +1,15 @@
+* Konvertiere Datei V:\Daten\Sprachen\Delphi\Delphi Bible\DXE2\Aboutex.dpr *
+Alle Unit-Dateien gefunden
+* Berichtigung der verwendeten Units für Datei V:\Daten\Sprachen\Delphi\Delphi Bible\DXE2\Aboutex.dpr *
+
+*** Converting unit files belonging to project/package ***
+* Konvertiere Datei V:\Daten\Sprachen\Delphi\Delphi Bible\source\ABOUTEX\ABOUT.PAS *
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+Fixed unit name from About to ABOUT.
+* Konvertiere Datei V:\Daten\Sprachen\Delphi\Delphi Bible\source\ABOUTEX\Frm_AboutExMAIN.PAS *
+Zeichenschreibweise von Unit "About" auf "ABOUT" korrigiert.
+Unit "Windows" mit "LCLIntf, LCLType, LMessages" im uses Abschnitt ersetzt.
+* Berichtigung der verwendeten Units für Datei V:\Daten\Sprachen\Delphi\Delphi Bible\source\ABOUTEX\ABOUT.PAS *
+* Berichtigung der verwendeten Units für Datei V:\Daten\Sprachen\Delphi\Delphi Bible\source\ABOUTEX\Frm_AboutExMAIN.PAS *
+Konvertierung benötigte: 00:00:02
+Conversion Ready.

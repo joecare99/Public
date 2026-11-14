@@ -1,18 +1,17 @@
-Dwight,  
-Gabler,  
+Dwight, 2005 MAY 21 
+Gabler, 1945 SEP 12 
 Müller, 1810 
 Müller, 1833 EST 
 Müller, 1860 ABT 
 Müller, 1900 BEF 
 Müller, 1933 MAY 01 
-Müller, 1961 EST 
+Müller, 1958 JUL 05 
 Müller, 1995 EST 
-Mustermann, 1935 EST 
-Mustermann, 1970 EST 
-Mustermann, 1972 EST 
-Mustermann, 1997 EST 
-Mustermann, 2005 EST 
-Schüchter, 1964 EST 
-Schüchter, 1964 EST 
-Schüchter, 1967 EST 
-Stradonitz von , 1902 EST 
+Mustermann, 1939 JUN 6 
+Mustermann, 1965 
+Mustermann, 1968 SEP 12 
+Mustermann, 1996 JUN 3 
+Mustermann, 2003 MAR 15 
+Schüchter, 1962 AUG 9 
+Schüchter, 1966 FEB 19 
+von Stradonitz, 1892 JUN 28 

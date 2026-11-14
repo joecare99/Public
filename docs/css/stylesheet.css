@@ -1,0 +1,146 @@
+.calibre {
+  margin: 0;
+  padding: 0;
+}
+.calibre1 {
+  display: block;
+  font-size: 0.83333em;
+  margin: 0 5pt;
+  padding: 0;
+}
+.calibre2 {
+  height: auto;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+.calibre3 {
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}
+.calibre4 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}
+.calibre5 {
+  font-style: italic;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}
+.g-fr {
+  display: inline;
+  font-family: Liberation Serif, serif;
+  font-size: 0.41667em;
+  height: 28.409cm;
+  left: -1.139cm;
+  position: relative;
+  top: -1.259cm;
+  width: 19.279cm;
+  margin: 0;
+  padding: 0;
+}
+.p-contents_20_heading {
+  display: block;
+  font-family: "Liberation Sans";
+  font-size: 1.55em;
+  font-weight: bold;
+  line-height: 1.2;
+  text-indent: 0;
+  margin: 0.423cm 0 0.212cm;
+  padding: 0;
+}
+.p-p {
+  display: block;
+  font-family: Liberation Serif, serif;
+  font-size: 1em;
+  text-indent: 0;
+  margin: 0 0 0 0.499cm;
+  padding: 0;
+}
+.p-p1 {
+  display: block;
+  font-family: Liberation Serif, serif;
+  font-size: 1.2em;
+  line-height: 115%;
+  text-align: justify;
+  margin: 0 0 0.247cm;
+  padding: 0;
+}
+.p-p2 {
+  display: block;
+  font-family: "Liberation Serif";
+  font-size: 2.4em;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0.353cm 0 0.212cm;
+  padding: 0;
+}
+.p-p3 {
+  display: block;
+  font-family: "Liberation Sans";
+  font-size: 2.4em;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0.423cm 0 0.212cm;
+  padding: 0;
+}
+.p-p4 {
+  background-color: transparent;
+  display: block;
+  font-family: Liberation Serif, serif;
+  font-size: 1.55em;
+  line-height: 115%;
+  text-align: justify;
+  text-indent: 0;
+  margin: 0 4.3cm 0.247cm 3.9cm;
+  padding: 0;
+}
+.p-p5 {
+  background-color: transparent;
+  display: block;
+  font-family: Liberation Serif, serif;
+  font-size: 1.2em;
+  line-height: 115%;
+  text-align: justify;
+  text-indent: 0;
+  margin: 0 4.3cm 0.247cm 3.9cm;
+  padding: 0;
+}
+.p-text_20_body {
+  display: block;
+  font-family: "Liberation Serif", serif;
+  font-size: 1.2em;
+  line-height: 115%;
+  text-align: justify;
+  margin: 0 0 0.247cm;
+  padding: 0;
+}
+.p-title {
+  display: block;
+  font-family: "Liberation Sans";
+  font-size: 2.4em;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0.423cm 0 0.212cm;
+  padding: 0;
+}
+.s-t {
+  font-family: Liberation Serif, serif;
+  font-style: italic;
+  font-variant: small-caps;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}
+.s-t1 {
+  font-size: 0.91667em;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+}

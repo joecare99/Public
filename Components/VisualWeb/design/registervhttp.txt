@@ -1,2 +1,0 @@
-tvisualhttpclient.png
-tfphttpserver.png

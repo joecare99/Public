@@ -1,7 +1,7 @@
 program Fancy; 
 uses 
   Forms, 
-  Frm_FancyMAIN in '..\Source\FANCY\Frm_FancyMAIN.PAS' {MainForm}; 
+  Frm_FancyMAIN in '..\source\FANCY\Frm_FancyMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

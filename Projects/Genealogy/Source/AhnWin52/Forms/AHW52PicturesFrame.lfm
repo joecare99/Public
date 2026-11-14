@@ -1,0 +1,321 @@
+object AHW52PicturesFrame: TAHW52PicturesFrame
+  Left = 0
+  Height = 1255
+  Top = 0
+  Width = 1877
+  ClientHeight = 1255
+  ClientWidth = 1877
+  DesignTimePPI = 168
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  ParentFont = False
+  TabOrder = 0
+  object Image2: TImage
+    Left = 13
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image3: TImage
+    Left = 163
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image4: TImage
+    Left = 312
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image5: TImage
+    Left = 461
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image6: TImage
+    Left = 611
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image7: TImage
+    Left = 760
+    Height = 129
+    Top = 29
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image13: TImage
+    Left = 760
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image12: TImage
+    Left = 611
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image11: TImage
+    Left = 461
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image10: TImage
+    Left = 312
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image9: TImage
+    Left = 163
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image8: TImage
+    Left = 13
+    Height = 129
+    Top = 196
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image14: TImage
+    Left = 13
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image15: TImage
+    Left = 163
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image16: TImage
+    Left = 312
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image17: TImage
+    Left = 461
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image18: TImage
+    Left = 611
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image19: TImage
+    Left = 760
+    Height = 129
+    Top = 365
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image26: TImage
+    Left = 909
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image25: TImage
+    Left = 760
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image24: TImage
+    Left = 611
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image23: TImage
+    Left = 461
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image22: TImage
+    Left = 312
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image21: TImage
+    Left = 163
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Image20: TImage
+    Left = 13
+    Height = 129
+    Top = 533
+    Width = 119
+    OnClick = ImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Label94: TLabel
+    Left = 917
+    Height = 1
+    Top = 107
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Visible = False
+  end
+  object Label95: TLabel
+    Left = 917
+    Height = 1
+    Top = 21
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label96: TLabel
+    Left = 917
+    Height = 1
+    Top = 149
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Visible = False
+  end
+  object Label97: TLabel
+    Left = 917
+    Height = 1
+    Top = 192
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Visible = False
+  end
+  object Label98: TLabel
+    Left = 917
+    Height = 1
+    Top = 64
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label72: TLabel
+    Left = 11
+    Height = 1
+    Top = 0
+    Width = 1
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+end

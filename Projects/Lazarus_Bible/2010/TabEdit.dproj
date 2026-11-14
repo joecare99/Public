@@ -42,10 +42,10 @@
 			<DelphiCompile Include="TabEdit.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\TABEDIT\Frm_AboutTabedit.PAS">
+			<DCCReference Include="..\source\TABEDIT\Frm_AboutTabedit.pas">
 				<Form>frmAboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\TABEDIT\Frm_TabeditMain.PAS">
+			<DCCReference Include="..\source\TABEDIT\Frm_TabeditMain.pas">
 				<Form>frmMainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

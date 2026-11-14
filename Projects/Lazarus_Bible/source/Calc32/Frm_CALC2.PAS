@@ -112,6 +112,22 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
+{$IFDEF FPC}
+{ Delphi kennt IntToBin (Zahl -> Binaertext mit fester Stellenzahl).
+  Free Pascal stellt die Funktion nicht bereit; hier als Ersatz. }
+function IntToBin(Value: LongInt; Digits: Integer): string;
+var
+  I: Integer;
+begin
+  SetLength(Result, Digits);
+  for I := Digits downto 1 do
+  begin
+    Result[I] := Char(Ord('0') + (Value and 1));
+    Value := Value shr 1;
+  end;
+end;
+{$ENDIF}
+
 const
 
 { -2147483648 }

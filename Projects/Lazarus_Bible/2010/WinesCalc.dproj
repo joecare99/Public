@@ -42,7 +42,7 @@
 			<DelphiCompile Include="WinesCalc.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\WinesCalc\Frm_WinesCalcMain.pas">
+			<DCCReference Include="..\source\WinesCalc\Frm_WinesCalcMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

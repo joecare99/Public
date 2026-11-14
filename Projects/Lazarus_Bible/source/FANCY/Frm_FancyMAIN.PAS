@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, ExtCtrls, Buttons;
 
 type
-  TMainForm = class(TForm)
+  TfrmFancyMain = class(TForm)
     Panel1: TPanel;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
@@ -36,7 +36,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmFancyMain: TfrmFancyMain;
 
 implementation
 

@@ -49,16 +49,16 @@
 			<DelphiCompile Include="Tabs.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\tabs\Frm_TabsMAIN.PAS">
+			<DCCReference Include="..\source\TABS\Frm_TabsMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\tabs\Frm_ABOUT.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_ABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\tabs\Frm_OPTIONS.PAS">
+			<DCCReference Include="..\source\TABS\Frm_OPTIONS.pas">
 				<Form>OptionsDialog</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\tabs\TABSUNIT.PAS"/>
+			<DCCReference Include="..\source\TABS\TabsUnit.pas"/>
 			<DCCReference Include="..\source\Inidata\Inidata.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>

@@ -1,13 +1,31 @@
 unit Frm_StaticDemoMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TStaticDemoForm = class(TForm)
     StaticText2: TStaticText;
     StaticText1: TStaticText;
     StaticText3: TStaticText;
@@ -17,24 +35,27 @@ type
     procedure StaticText1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure StaticText1Click(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
   end;
 
 var
-  MainForm: TMainForm;
+  StaticDemoForm: TStaticDemoForm;
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 var
   SavedStyle: TStaticBorderStyle;
 
 { Change static text border style to indicate its selection }
-procedure TMainForm.StaticText1MouseDown(Sender: TObject;
+procedure TStaticDemoForm.StaticText1MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   with Sender as TStaticText do
@@ -47,7 +68,7 @@ begin
 end;
 
 { Reset static text border style when mouse button released }
-procedure TMainForm.StaticText1MouseUp(Sender: TObject;
+procedure TStaticDemoForm.StaticText1MouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   with Sender as TStaticText do
@@ -55,11 +76,11 @@ begin
 end;
 
 { Make a sound when text object is clicked }
-procedure TMainForm.StaticText1Click(Sender: TObject);
+procedure TStaticDemoForm.StaticText1Click(Sender: TObject);
 var
   S: String;
 begin
-  MessageBeep(0);
+  Beep;
   S := TStaticText(Sender).Name;
   ShowMessage('You selected ' + S);
 end;

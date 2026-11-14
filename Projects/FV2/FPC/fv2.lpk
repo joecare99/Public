@@ -29,7 +29,7 @@
       </CodeGeneration>
     </CompilerOptions>
     <Version Minor="1"/>
-    <Files Count="26">
+    <Files Count="46">
       <Item1>
         <Filename Value="..\source\Fv2\fv2sysmsg.pas"/>
         <UnitName Value="fv2sysmsg"/>
@@ -136,6 +136,86 @@
         <Filename Value="..\source\Fv2\include\w32smsg.inc"/>
         <Type Value="Include"/>
       </Item26>
+      <Item27>
+        <Filename Value="..\source\Fv2\cls_fv2canvas.pas"/>
+        <UnitName Value="cls_fv2canvas"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\source\Fv2\cls_fv2controls.pas"/>
+        <UnitName Value="cls_fv2controls"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\source\Fv2\cls_fv2stdctrls.pas"/>
+        <UnitName Value="cls_fv2stdctrls"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\source\Fv2\cls_fv2forms.pas"/>
+        <UnitName Value="cls_fv2forms"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\source\Fv2\cls_fv2application.pas"/>
+        <UnitName Value="cls_fv2application"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\source\Fv2\cls_fv2dialogs.pas"/>
+        <UnitName Value="cls_fv2dialogs"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\source\Fv2\cls_fv2editors.pas"/>
+        <UnitName Value="cls_fv2editors"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\source\Fv2\cls_fv2menus.pas"/>
+        <UnitName Value="cls_fv2menus"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\source\Fv2\cls_fv2messages.pas"/>
+        <UnitName Value="cls_fv2messages"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\source\Fv2\cls_fv2app.pas"/>
+        <UnitName Value="cls_fv2app"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\source\Fv2\cls_fv2input.pas"/>
+        <UnitName Value="cls_fv2input"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\source\Fv2\cls_fv2validate.pas"/>
+        <UnitName Value="cls_fv2validate"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\source\Fv2\cls_fv2consts.pas"/>
+        <UnitName Value="cls_fv2consts"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\source\Fv2\cls_fv2stddlg.pas"/>
+        <UnitName Value="cls_fv2stddlg"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\source\Fv2\cls_fv2histlist.pas"/>
+        <UnitName Value="cls_fv2histlist"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\source\Fv2\cls_fv2drivers.pas"/>
+        <UnitName Value="cls_fv2drivers"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\source\Fv2\cls_fv2.pas"/>
+        <UnitName Value="cls_fv2"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\source\Fv2\cls_fv2gadgets.pas"/>
+        <UnitName Value="cls_fv2gadgets"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\source\Fv2\cls_fv2glob.pas"/>
+        <UnitName Value="cls_fv2glob"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\source\Fv2\cls_fv2.pas"/>
+        <UnitName Value="cls_fv2"/>
+      </Item46>
     </Files>
     <LazDoc Paths="..\source\Fv2\FPDoc"/>
     <i18n>

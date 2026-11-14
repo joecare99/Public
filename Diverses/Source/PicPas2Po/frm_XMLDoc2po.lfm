@@ -1,7 +1,7 @@
 object frmXml2PoMain: TfrmXml2PoMain
-  Left = 0
+  Left = 889
   Height = 716
-  Top = 0
+  Top = 114
   Width = 1119
   ActiveControl = edtSourceDir
   Caption = 'frmXml2PoMain'
@@ -11,7 +11,7 @@ object frmXml2PoMain: TfrmXml2PoMain
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '2.0.0.4'
+  LCLVersion = '3.4.0.0'
   object pnlTop: TPanel
     Left = 0
     Height = 43
@@ -99,7 +99,7 @@ object frmXml2PoMain: TfrmXml2PoMain
           Width = 142
           ColWidths = (
             64
-            78
+            74
           )
         end
         inherited edtXmlFileDetail: TMemo
@@ -116,14 +116,14 @@ object frmXml2PoMain: TfrmXml2PoMain
     end
   end
   object pnlProcessing: TPanel
-    Left = 450
+    Left = 455
     Height = 673
     Top = 43
-    Width = 256
+    Width = 664
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 673
-    ClientWidth = 256
+    ClientWidth = 664
     TabOrder = 2
     object btnProcessXml2Po: TBitBtn
       Left = 0
@@ -142,44 +142,61 @@ object frmXml2PoMain: TfrmXml2PoMain
       Action = actXmlProcessPo2X
       Caption = '<'
     end
+    inline fraPoFile1: TfraPoFile
+      Left = 32
+      Height = 673
+      Width = 632
+      Align = alRight
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      ClientHeight = 673
+      ClientWidth = 632
+      TabOrder = 1
+      inherited pnlRightTop: TPanel
+        Width = 632
+        ClientWidth = 632
+        inherited cbxSelectLanguage: TComboBox
+          Left = 107
+          Height = 23
+          Top = 3
+          Width = 448
+          ItemHeight = 15
+        end
+        inherited edtProjectName: TEdit
+          Left = 3
+          Height = 23
+          Top = 3
+        end
+        inherited tlbPoFile: TToolBar
+          Left = 558
+          Height = 26
+          Top = 3
+        end
+      end
+      inherited edtPoFile: TMemo
+        Left = 3
+        Height = 631
+        Top = 35
+        Width = 626
+        Lines.Strings = (
+          'Memo2'
+        )
+      end
+      inherited lblBottom: TLabel
+        Left = 3
+        Top = 669
+        Width = 626
+      end
+    end
   end
-  inline fraPoFile1: TfraPoFile
-    Left = 706
+  object Splitter1: TSplitter
+    Left = 450
     Height = 673
     Top = 43
-    Width = 413
-    Align = alRight
-    ClientHeight = 673
-    ClientWidth = 413
-    TabOrder = 3
-    inherited pnlRightTop: TPanel
-      Width = 413
-      ClientWidth = 413
-      inherited cbxSelectLanguage: TComboBox
-        Width = 229
-      end
-      inherited edtProjectName: TEdit
-        Text = 'ppManual'
-      end
-      inherited tlbPoFile: TToolBar
-        Left = 339
-      end
-    end
-    inherited edtPoFile: TMemo
-      Height = 631
-      Width = 407
-      Lines.Strings = (
-        'Memo2'
-      )
-    end
-    inherited lblBottom: TLabel
-      Top = 669
-      Width = 407
-    end
+    Width = 5
   end
   object alsXmlProcess: TActionList
-    left = 466
-    top = 82
+    Left = 466
+    Top = 82
     object actXmlProcessX2Po: TAction
       Category = 'XmlProcess'
       Caption = 'X2Po'
@@ -192,7 +209,7 @@ object frmXml2PoMain: TfrmXml2PoMain
     end
   end
   object dlgSelectDirectory: TSelectDirectoryDialog
-    left = 1024
-    top = 8
+    Left = 1024
+    Top = 8
   end
 end

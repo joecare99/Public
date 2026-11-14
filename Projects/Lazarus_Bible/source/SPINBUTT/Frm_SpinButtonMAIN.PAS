@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmSpinButtonMain }
 
-  TMainForm = class(TForm)
+  TfrmSpinButtonMain = class(TForm)
   {$IFNDEF FPC}
     UpDown1: TSpinButton;
    {$ELSE}
@@ -48,7 +48,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmSpinButtonMain: TfrmSpinButtonMain;
 
 implementation
 
@@ -62,7 +62,7 @@ const
   minCount = -99;
   maxCount = 99;
 
-procedure TMainForm.SetSpinButtonCaption;
+procedure TfrmSpinButtonMain.SetSpinButtonCaption;
 begin
   {$IFnDEF FPC}
   SpinLabel.Caption := IntToStr(Count);
@@ -71,7 +71,7 @@ begin
   {$ENDIF}
 end;
 
-procedure TMainForm.ResetCount;
+procedure TfrmSpinButtonMain.ResetCount;
 begin
   {$IFnDEF FPC}
   Count := 0;
@@ -80,29 +80,29 @@ begin
   {$ENDIF}
 end;
 
-procedure TMainForm.UpDown1Changing(Sender: TObject; var AllowChange: Boolean);
+procedure TfrmSpinButtonMain.UpDown1Changing(Sender: TObject; var AllowChange: Boolean);
 begin
   SetSpinButtonCaption;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmSpinButtonMain.FormCreate(Sender: TObject);
 begin
   ResetCount;
 end;
 
-procedure TMainForm.UpDown1DownClick(Sender: TObject);
+procedure TfrmSpinButtonMain.UpDown1DownClick(Sender: TObject);
 begin
   if Count > minCount then Dec(Count);
   SetSpinButtonCaption;
 end;
 
-procedure TMainForm.UpDown1UpClick(Sender: TObject);
+procedure TfrmSpinButtonMain.UpDown1UpClick(Sender: TObject);
 begin
   if Count < maxCount then Inc(Count);
   SetSpinButtonCaption;
 end;
 
-procedure TMainForm.BitBtn1Click(Sender: TObject);
+procedure TfrmSpinButtonMain.BitBtn1Click(Sender: TObject);
 begin
   ResetCount;
   SetSpinButtonCaption;

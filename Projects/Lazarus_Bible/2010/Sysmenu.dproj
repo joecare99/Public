@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Sysmenu.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\SysMenu\Frm_SysmenuMain.pas">
+			<DCCReference Include="..\source\SysMenu\Frm_SysmenuMain.pas">
 				<Form>Form1</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmPaletteMain: TfrmPaletteMain
   Left = 270
   Height = 122
   Top = 192

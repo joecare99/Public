@@ -1,8 +1,8 @@
 program Calc32_2; 
 uses 
   Forms, 
-  Frm_CALC2 in '..\Source\CALC32\Frm_CALC2.PAS' {CalcForm}, 
-  Frm_Calc2ABOUT in '..\Source\CALC32\Frm_Calc2ABOUT.PAS' {AboutForm}; 
+  Frm_CALC2 in '..\source\Calc32\Frm_CALC2.pas' {CalcForm}, 
+  Frm_Calc2ABOUT in '..\source\Calc32\Frm_Calc2ABOUT.pas' {AboutForm}; 
 {$E EXE} 
 {$R *.RES} 
 {$E EXE} 

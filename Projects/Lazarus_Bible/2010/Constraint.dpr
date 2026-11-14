@@ -1,7 +1,7 @@
 program Constraint; 
 uses 
   Forms, 
-  frm_ConstraintMain in '..\Source\Constraint\frm_ConstraintMain.pas' {MainForm}; 
+  frm_ConstraintMain in '..\source\Constraint\frm_ConstraintMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

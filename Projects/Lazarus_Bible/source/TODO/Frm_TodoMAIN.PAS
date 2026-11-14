@@ -9,14 +9,36 @@
 
 unit Frm_TodoMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  StdCtrls, Menus, Dialogs, Clipbrd, SysUtils, Printers, Frm_About;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ Buttons,
+
+  StdCtrls,
+ Menus,
+  Dialogs,
+  PortablePrintDialog,
+  Clipbrd,
+ SysUtils,
+ Printers,
+ TODO_Frm_ABOUT,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TMainTodoForm = class(TForm)
     SrcList: TListBox;
     DstList: TListBox;
     SrcLabel: TLabel;
@@ -46,8 +68,6 @@ type
     EditMenu: TMenuItem;
     EditUndo: TMenuItem;
     EditDelete: TMenuItem;
-    PrintDialog1: TPrintDialog;
-    PrinterSetupDialog1: TPrinterSetupDialog;
     FilePrinterSetup: TMenuItem;
     procedure IncludeBtnClick(Sender: TObject);
     procedure ExcludeBtnClick(Sender: TObject);
@@ -93,18 +113,25 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  MainForm: TMainTodoForm;
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 const
   title = 'To Do';
 
 {- Private procedures }
 
-procedure TMainForm.SetCaption;
+procedure TMainTodoForm.SetCaption;
 begin
   if Length(TodoFilename) = 0 then
     MainForm.Caption := title
@@ -113,7 +140,7 @@ begin
       Lowercase(ExtractFilename(TodoFilename));
 end;
 
-procedure TMainForm.EnableMenu;
+procedure TMainTodoForm.EnableMenu;
 var
   I: Integer;
 begin
@@ -133,21 +160,21 @@ begin
   end;
 end;
 
-procedure TMainForm.ReadFile;
+procedure TMainTodoForm.ReadFile;
 begin
   SrcList.Items.LoadFromFile(TodoFilename);
   DstList.Items.LoadFromFile(DoneFilename);
   FileDirty := False;
 end;
 
-procedure TMainForm.WriteFile;
+procedure TMainTodoForm.WriteFile;
 begin
   SrcList.Items.SaveToFile(TodoFilename);
   DstList.Items.SaveToFile(DoneFilename);
   FileDirty := False;
 end;
 
-procedure TMainForm.SaveAsFile;
+procedure TMainTodoForm.SaveAsFile;
 begin
   if FileSaveDialog.Execute then
   begin
@@ -158,7 +185,7 @@ begin
   end;
 end;
 
-procedure TMainForm.SaveFile;
+procedure TMainTodoForm.SaveFile;
 begin
   if FileDirty then
   begin
@@ -169,7 +196,7 @@ begin
   end;
 end;
 
-procedure TMainForm.CloseTodoFile;
+procedure TMainTodoForm.CloseTodoFile;
 var
   Result: Word;   { MessageDlg function return result }
 begin
@@ -195,7 +222,7 @@ begin
   end;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TMainTodoForm.FormCreate(Sender: TObject);
 begin
   TodoFilename := '';   { No file currently open }
   DoneFilename := '';
@@ -204,7 +231,7 @@ begin
   UndoList := TStringList.Create;
 end;
 
-procedure TMainForm.IncludeBtnClick(Sender: TObject);
+procedure TMainTodoForm.IncludeBtnClick(Sender: TObject);
 var
   Index: Integer;
 begin
@@ -214,7 +241,7 @@ begin
   FileDirty := True;
 end;
 
-procedure TMainForm.ExcludeBtnClick(Sender: TObject);
+procedure TMainTodoForm.ExcludeBtnClick(Sender: TObject);
 var
   Index: Integer;
 begin
@@ -224,7 +251,7 @@ begin
   FileDirty := True;
 end;
 
-procedure TMainForm.IncAllBtnClick(Sender: TObject);
+procedure TMainTodoForm.IncAllBtnClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -236,7 +263,7 @@ begin
   FileDirty := True;
 end;
 
-procedure TMainForm.ExcAllBtnClick(Sender: TObject);
+procedure TMainTodoForm.ExcAllBtnClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -248,7 +275,7 @@ begin
   FileDirty := True;
 end;
 
-procedure TMainForm.MoveSelected(List: TCustomListBox;
+procedure TMainTodoForm.MoveSelected(List: TCustomListBox;
           Items: TStrings);
 var
   I: Integer;
@@ -262,7 +289,7 @@ begin
   FileDirty := True;
 end;
 
-procedure TMainForm.SetButtons;
+procedure TMainTodoForm.SetButtons;
 var
   SrcEmpty, DstEmpty: Boolean;
 begin
@@ -274,14 +301,14 @@ begin
   ExAllBtn.Enabled := not DstEmpty;
 end;
 
-function TMainForm.GetFirstSelection(List: TCustomListBox): Integer;
+function TMainTodoForm.GetFirstSelection(List: TCustomListBox): Integer;
 begin
   for Result := 0 to List.Items.Count - 1 do
     if List.Selected[Result] then Exit;
-  Result := LB_ERR;
+  Result := -1;  { keine Auswahl (Delphi: LB_ERR) }
 end;
 
-procedure TMainForm.SetItem(List: TListBox; Index: Integer);
+procedure TMainTodoForm.SetItem(List: TListBox; Index: Integer);
 var
   MaxIndex: Integer;
 begin
@@ -289,14 +316,14 @@ begin
   begin
     SetFocus;
     MaxIndex := List.Items.Count - 1;
-    if Index = LB_ERR then Index := 0
+    if Index < 0 then Index := 0        { Delphi: LB_ERR = -1 }
     else if Index > MaxIndex then Index := MaxIndex;
     Selected[Index] := True;
   end;
   SetButtons;
 end;
 
-procedure TMainForm.FileOpenClick(Sender: TObject);
+procedure TMainTodoForm.FileOpenClick(Sender: TObject);
 begin
   if FileOpenDialog.Execute then
   begin
@@ -312,34 +339,34 @@ begin
   end;
 end;
 
-procedure TMainForm.FileSaveAsClick(Sender: TObject);
+procedure TMainTodoForm.FileSaveAsClick(Sender: TObject);
 begin
   SaveAsFile;
 end;
 
-procedure TMainForm.FileSaveClick(Sender: TObject);
+procedure TMainTodoForm.FileSaveClick(Sender: TObject);
 begin
   SaveFile;
 end;
 
-procedure TMainForm.FileExitClick(Sender: TObject);
+procedure TMainTodoForm.FileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.FormCloseQuery( Sender: TObject;
+procedure TMainTodoForm.FormCloseQuery( Sender: TObject;
           var CanClose: Boolean);
 begin
   CloseTodoFile;
   CanClose := not FileDirty;
 end;
 
-procedure TMainForm.FileNewClick(Sender: TObject);
+procedure TMainTodoForm.FileNewClick(Sender: TObject);
 begin
   CloseTodoFile;
 end;
 
-procedure TMainForm.AddBitBtnClick(Sender: TObject);
+procedure TMainTodoForm.AddBitBtnClick(Sender: TObject);
 var
   S: string;
 begin
@@ -353,7 +380,7 @@ begin
   end;
 end;
 
-procedure TMainForm.EditBitBtnClick(Sender: TObject);
+procedure TMainTodoForm.EditBitBtnClick(Sender: TObject);
 var
   S: string;
   I: Integer;
@@ -377,7 +404,7 @@ begin
   end;
 end;
 
-procedure TMainForm.DeleteBitBtnClick(Sender: TObject);
+procedure TMainTodoForm.DeleteBitBtnClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -391,18 +418,18 @@ begin
   end;
 end;
 
-procedure TMainForm.FileMenuClick(Sender: TObject);
+procedure TMainTodoForm.FileMenuClick(Sender: TObject);
 begin
   EnableMenu;  { Enable/disable commands before menu opens }
 end;
 
-procedure TMainForm.FormDestroy(Sender: TObject);
+procedure TMainTodoForm.FormDestroy(Sender: TObject);
 begin
   if UndoList <> nil then
     UndoList.Free;
 end;
 
-procedure TMainForm.EditUndoClick(Sender: TObject);
+procedure TMainTodoForm.EditUndoClick(Sender: TObject);
 begin
   with UndoList do
   if Count > 0 then
@@ -413,45 +440,46 @@ begin
   end;
 end;
 
-procedure TMainForm.EditMenuClick(Sender: TObject);
+procedure TMainTodoForm.EditMenuClick(Sender: TObject);
 begin
   EditUndo.Enabled  := UndoList.Count > 0;
 end;
 
-procedure TMainForm.HelpAboutClick(Sender: TObject);
+procedure TMainTodoForm.HelpAboutClick(Sender: TObject);
 begin
+  if AboutForm = nil then
+    AboutForm := TAboutTodoForm.Create(Self);
   AboutForm.ShowModal;
 end;
 
-procedure TMainForm.EditDeleteClick(Sender: TObject);
+procedure TMainTodoForm.EditDeleteClick(Sender: TObject);
 begin
   DeleteBitBtn.Click;
 end;
 
-procedure TMainForm.FilePrintClick(Sender: TObject);
+procedure TMainTodoForm.FilePrintClick(Sender: TObject);
 var
-  FPrn: System.Text;  { Printer output text file }
+  PrintLines: TStringList;
   I: Integer;
 begin
-  if PrintDialog1.Execute then
-  begin
-    AssignPrn(FPrn);  { Direct Write/Writeln to FPrn }
-    Rewrite(FPrn);    { Open printer output file }
-    try
-      Writeln(FPrn, MainForm.Caption);  { Title }
-      Writeln(FPrn);  { Print blank line }
-      with SrcList do
-      for I := 0 to Items.Count - 1 do
-        Writeln(FPrn, Items[I]);  { Print line }
-    finally
-      CloseFile(FPrn);  { Close printer output file }
-    end;
+  PrintLines := TStringList.Create;
+  try
+    PrintLines.Add(SrcLabel.Caption);
+    for I := 0 to SrcList.Items.Count - 1 do
+      PrintLines.Add(SrcList.Items[I]);
+    PrintLines.Add('');
+    PrintLines.Add(DstLabel.Caption);
+    for I := 0 to DstList.Items.Count - 1 do
+      PrintLines.Add(DstList.Items[I]);
+    TPortablePrintDialog.Execute(Self, Caption, PrintLines);
+  finally
+    PrintLines.Free;
   end;
 end;
 
-procedure TMainForm.FilePrinterSetupClick(Sender: TObject);
+procedure TMainTodoForm.FilePrinterSetupClick(Sender: TObject);
 begin
-  PrinterSetupDialog1.Execute;
+  TPortablePrintDialog.SelectPrinter(Self);
 end;
 
 end.

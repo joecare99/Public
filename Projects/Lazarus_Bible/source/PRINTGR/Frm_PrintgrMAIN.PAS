@@ -10,19 +10,18 @@ uses
   {$IFNDEF FPC}
   Windows,
   {$ELSE}
-  LCLIntf, LCLType, PrintersDlgs,
+  LCLIntf, LCLType,
   {$ENDIF}
   SysUtils, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, Menus, Printers;
 
 type
-  TMainForm = class(TForm)
+  TfrmPrintgrMain = class(TForm)
     MainMenu1: TMainMenu;
     File1: TMenuItem;
     Print1: TMenuItem;
     N1: TMenuItem;
     Exit1: TMenuItem;
-    PrintDialog1: TPrintDialog;
     procedure Print1Click(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -33,7 +32,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmPrintgrMain: TfrmPrintgrMain;
 
 implementation
 
@@ -43,7 +42,7 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.PaintGraphics(C: TCanvas;
+procedure TfrmPrintgrMain.PaintGraphics(C: TCanvas;
   ScaleX, ScaleY: Integer);
 var
   R: TRect;
@@ -83,29 +82,35 @@ begin
   end;
 end;
 
-procedure TMainForm.Print1Click(Sender: TObject);
+procedure TfrmPrintgrMain.Print1Click(Sender: TObject);
 var
   ScaleX, ScaleY: Integer;
 begin
-  if PrintDialog1.Execute then
-  Printer.BeginDoc;
+  { Fehlt kein Drucker (z. B. in WSL) oder das OS-Backend, bricht der
+    Druck dennoch sauber ab statt mit einer Access Violation. }
   try
-    ScaleX := GetDeviceCaps(Printer.Canvas.Handle,
-      logPixelsX) div PixelsPerInch;
-    ScaleY := GetDeviceCaps(Printer.Canvas.Handle,
-      logPixelsY) div PixelsPerInch;
-    PaintGraphics(Printer.Canvas, ScaleX, ScaleY);
-  finally
-    Printer.EndDoc;
+    Printer.BeginDoc;
+    try
+      ScaleX := GetDeviceCaps(Printer.Canvas.Handle,
+        logPixelsX) div PixelsPerInch;
+      ScaleY := GetDeviceCaps(Printer.Canvas.Handle,
+        logPixelsY) div PixelsPerInch;
+      PaintGraphics(Printer.Canvas, ScaleX, ScaleY);
+    finally
+      Printer.EndDoc;
+    end;
+  except
+    on E: Exception do
+      ShowMessage('Drucken nicht moeglich (' + E.ClassName + '): ' + E.Message);
   end;
 end;
 
-procedure TMainForm.FormPaint(Sender: TObject);
+procedure TfrmPrintgrMain.FormPaint(Sender: TObject);
 begin
   PaintGraphics(Canvas, 1, 1);
 end;
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TfrmPrintgrMain.Exit1Click(Sender: TObject);
 begin
   Close;
 end;

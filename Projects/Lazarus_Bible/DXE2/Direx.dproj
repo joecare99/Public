@@ -90,10 +90,10 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\DIREX\Frm_DirExMAIN.PAS">
+			<DCCReference Include="..\source\DIREX\Frm_DirExMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\DIREX\Frm_DIRDLG.PAS">
+			<DCCReference Include="..\source\DIREX\Frm_DIRDLG.pas">
 				<Form>DirDlgForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

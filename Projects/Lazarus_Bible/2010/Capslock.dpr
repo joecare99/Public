@@ -1,7 +1,7 @@
 program Capslock; 
 uses 
   Forms, 
-  Frm_CapslockMAIN in '..\Source\CAPSLOCK\Frm_CapslockMAIN.PAS' {MainForm}; 
+  Frm_CapslockMAIN in '..\source\Capslock\Frm_CapslockMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

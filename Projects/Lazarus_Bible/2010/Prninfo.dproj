@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Prninfo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\PRNINFO\Frm_PrnInfoMAIN.PAS">
+			<DCCReference Include="..\source\PRNINFO\Frm_PrnInfoMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -1,0 +1,63 @@
+object AHW52SiblingsFrame: TAHW52SiblingsFrame
+  Left = 0
+  Height = 1255
+  Top = 0
+  Width = 1877
+  DesignTimePPI = 168
+  ClientHeight = 1255
+  ClientWidth = 1877
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  ParentFont = False
+    object Label26: TLabel
+      Left = 267
+      Height = 1
+      Top = 36
+      Width = 1
+      Color = clSilver
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+    end
+    object StringGrid4: TStringGrid
+      Left = 260
+      Height = 408
+      Hint = 'Doppelclick auf Name (oder Eingabetaste) wechselt zur ausgewählten Person'
+      Top = 105
+      Width = 531
+      HelpContext = 33
+      DefaultRowHeight = 24
+      FixedCols = 0
+      FixedRows = 0
+      Font.Color = clBlack
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
+      ParentFont = False
+      ParentShowHint = False
+      RowCount = 1
+      ScrollBars = ssVertical
+      ShowHint = True
+      TabOrder = 0
+      TabStop = False
+      TitleFont.Color = clBlack
+      TitleFont.Height = -21
+      TitleFont.Name = 'Arial'
+      OnDblClick = StringGrid4DblClick
+      ColWidths = (
+        72
+        327
+        85
+        85
+        44
+      )
+    end
+end
