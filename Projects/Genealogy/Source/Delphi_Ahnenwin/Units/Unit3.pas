@@ -13469,7 +13469,275 @@ begin
       DataModule2.Table1.Post;                     //00599743..974F
     end;
   end;
-  {G2C14}
+  if Pos('1 BIRT', zeile) > 0 then                 //00599755..9764 jle->9773
+    ctx := 'B';                                    //00599766..976E [ebp-38]
+  if (Pos('2 DATE', zeile) > 0) and                //00599773..9782 jle->9847
+     (ctx = 'B') then                              //00599788..9795 jne->9847
+  begin
+    sub_00577934(TrimRight(Copy(zeile, 8,          //0059979B..97D0
+      Length(zeile))));
+    DataModule2.Table1.Edit;                       //005997D5..97DF
+    DataModule2.Table1Gebtag.AsString := gvar_02536624;   //005997E4..97F9 [554]
+    DataModule2.Table1Gebmonat.AsString := gvar_02536628; //005997FF..9814 [558]
+    DataModule2.Table1Gebjahr.AsString := gvar_0253662C;  //0059981A..982F [55C]
+    DataModule2.Table1.Post;                       //00599835..9841
+  end;
+  if (Pos('2 PLAC', zeile) > 0) and                //00599847..9856 jle->98D2
+     (ctx = 'B') then                              //00599858..9865 jne->98D2
+  begin
+    DataModule2.Table1.Edit;                       //00599867..9871
+    DataModule2.Table1Gebort.AsString :=           //00599876..98BA [560]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //005998C0..98CC
+  end;
+  schl := '';                                      //005998D2..98D5 [ebp-3C]
+  if (Pos('2 SOUR @', zeile) > 0) and              //005998DA..98E9 jle->99D0
+     (ctx = 'B') then                              //005998EF..98FC jne->99D0
+  begin
+    Form1.Repso2.IndexName := 'ih';                //00599902..9914
+    if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then //00599919..997A je->99D0
+    begin
+      DataModule2.Table1.Edit;                     //0059997C..9986
+      DataModule2.Table1Quelleg.AsString :=        //0059998B..99B8 [5A0]
+        Form1.Repso2inh2.AsString;
+      DataModule2.Table1.Post;                     //005999BE..99CA
+    end;
+  end;
+  if (Pos('2 SOUR', zeile) > 0) and                //005999D0..99DF jle->9A70
+     (Pos('@', zeile) = 0) and                     //005999E5..99F4 jne->9A70
+     (ctx = 'B') then                              //005999F6..9A03 jne->9A70
+  begin
+    DataModule2.Table1.Edit;                       //00599A05..9A0F
+    DataModule2.Table1Quelleg.AsString :=          //00599A14..9A58 [5A0]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //00599A5E..9A6A
+  end;
+  if (Pos('2 COMM', zeile) > 0) and                //00599A70..9A7F jle->9B38
+     (ctx = 'B') then                              //00599A85..9A92 jne->9B38
+  begin
+    DataModule2.Table1.Edit;                       //00599A98..9AA2
+    DataModule2.Table1Kommentar.AsString :=        //00599AA7..9B20 [5B0]
+      DataModule2.Table1Kommentar.AsString +
+      Trim(Copy(zeile, 8, Length(zeile))) + #13#10;
+    DataModule2.Table1.Post;                       //00599B26..9B32
+  end;
+  if (Pos('1 CHR', zeile) > 0) or                  //00599B38..9B47 jg->9B5A
+     (Pos('1 BAPT', zeile) > 0) then               //00599B49..9B58 jle->9B67
+    ctx := 'C';                                    //00599B5A..9B62 [ebp-38]
+  if (Pos('2 DATE', zeile) > 0) and                //00599B67..9B76 jle->9C3B
+     (ctx = 'C') then                              //00599B7C..9B89 jne->9C3B
+  begin
+    sub_00577934(TrimRight(Copy(zeile, 8,          //00599B8F..9BC4
+      Length(zeile))));
+    DataModule2.Table1.Edit;                       //00599BC9..9BD3
+    DataModule2.Table1Tauftag.AsString := gvar_02536624;   //00599BD8..9BED [564]
+    DataModule2.Table1Taufmonat.AsString := gvar_02536628; //00599BF3..9C08 [568]
+    DataModule2.Table1Taufjahr.AsString := gvar_0253662C;  //00599C0E..9C23 [56C]
+    DataModule2.Table1.Post;                       //00599C29..9C35
+  end;
+  if (Pos('2 PLAC', zeile) > 0) and                //00599C3B..9C4A jle->9CC6
+     (ctx = 'C') then                              //00599C4C..9C59 jne->9CC6
+  begin
+    DataModule2.Table1.Edit;                       //00599C5B..9C65
+    DataModule2.Table1Taufort.AsString :=          //00599C6A..9CAE [570]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //00599CB4..9CC0
+  end;
+  if Pos('2 _GODP ', zeile) > 0 then               //00599CC6..9CD5 jle->9DFD
+  begin
+    DataModule2.Table1.Edit;                       //00599CDB..9CE5
+    if Trim(DataModule2.Table1Taufpat.AsString) <> '' then //00599CEA..9D1A jbe->9DA1
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //00599D20..9D99 [574]
+        DataModule2.Table1Taufpat.AsString + ', ' +
+        Copy(zeile, 9, Length(Trim(zeile)));
+      //00599D9F jmp->9DEB
+    end
+    else
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //00599DA1..9DE5 [574]
+        Trim(Copy(zeile, 9, Length(Trim(zeile))));
+    end;
+    DataModule2.Table1.Post;                       //00599DEB..9DF7
+  end;
+  if Pos('1 GODP ', zeile) > 0 then                //00599DFD..9E0C jle->9F34
+  begin
+    DataModule2.Table1.Edit;                       //00599E12..9E1C
+    if Trim(DataModule2.Table1Taufpat.AsString) <> '' then //00599E21..9E51 jbe->9ED8
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //00599E57..9ED0 [574]
+        DataModule2.Table1Taufpat.AsString + ', ' +
+        Copy(zeile, 8, Length(Trim(zeile)));
+      //00599ED6 jmp->9F22
+    end
+    else
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //00599ED8..9F1C [574]
+        Trim(Copy(zeile, 8, Length(Trim(zeile))));
+    end;
+    DataModule2.Table1.Post;                       //00599F22..9F2E
+  end;
+  if Pos('2 GODP ', zeile) > 0 then                //00599F34..9F43 jle->A06B
+  begin
+    DataModule2.Table1.Edit;                       //00599F49..9F53
+    if Trim(DataModule2.Table1Taufpat.AsString) <> '' then //00599F58..9F88 jbe->A00F
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //00599F8E..A007 [574]
+        DataModule2.Table1Taufpat.AsString + ', ' +
+        Copy(zeile, 8, Length(Trim(zeile)));
+      //0059A00D jmp->A059
+    end
+    else
+    begin
+      DataModule2.Table1Taufpat.AsString :=        //0059A00F..A053 [574]
+        Trim(Copy(zeile, 8, Length(Trim(zeile))));
+    end;
+    DataModule2.Table1.Post;                       //0059A059..A065
+  end;
+  schl := '';                                      //0059A06B..A06E [ebp-3C]
+  if (Pos('2 SOUR @', zeile) > 0) and              //0059A073..A082 jle->A169
+     (ctx = 'C') then                              //0059A088..A095 jne->A169
+  begin
+    Form1.Repso2.IndexName := 'ih';                //0059A09B..A0AD
+    if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then //0059A0B2..A113 je->A169
+    begin
+      DataModule2.Table1.Edit;                     //0059A115..A11F
+      DataModule2.Table1Quellet.AsString :=        //0059A124..A151 [5A4]
+        Form1.Repso2inh2.AsString;
+      DataModule2.Table1.Post;                     //0059A157..A163
+    end;
+  end;
+  if (Pos('2 SOUR', zeile) > 0) and                //0059A169..A178 jle->A209
+     (Pos('@', zeile) = 0) and                     //0059A17E..A18D jne->A209
+     (ctx = 'C') then                              //0059A18F..A19C jne->A209
+  begin
+    DataModule2.Table1.Edit;                       //0059A19E..A1A8
+    DataModule2.Table1Quellet.AsString :=          //0059A1AD..A1F1 [5A4]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059A1F7..A203
+  end;
+  if (Pos('2 COMM', zeile) > 0) and                //0059A209..A218 jle->A2D1
+     (ctx = 'C') then                              //0059A21E..A22B jne->A2D1
+  begin
+    DataModule2.Table1.Edit;                       //0059A231..A23B
+    DataModule2.Table1Kommentar.AsString :=        //0059A240..A2B9 [5B0]
+      DataModule2.Table1Kommentar.AsString +
+      Trim(Copy(zeile, 8, Length(zeile))) + #13#10;
+    DataModule2.Table1.Post;                       //0059A2BF..A2CB
+  end;
+  if Pos('1 DEAT', zeile) > 0 then                 //0059A2D1..A2E0 jle->A2EF
+    ctx := 'S';                                    //0059A2E2..A2EA [ebp-38]
+  if (Pos('2 DATE', zeile) > 0) and                //0059A2EF..A2FE jle->A3C3
+     (ctx = 'S') then                              //0059A304..A311 jne->A3C3
+  begin
+    sub_00577934(TrimRight(Copy(zeile, 8,          //0059A317..A34C
+      Length(zeile))));
+    DataModule2.Table1.Edit;                       //0059A351..A35B
+    DataModule2.Table1Sttag.AsString := gvar_02536624;     //0059A360..A375 [57C]
+    DataModule2.Table1Stmonat.AsString := gvar_02536628;   //0059A37B..A390 [580]
+    DataModule2.Table1Stjahr.AsString := gvar_0253662C;    //0059A396..A3AB [584]
+    DataModule2.Table1.Post;                       //0059A3B1..A3BD
+  end;
+  if (Pos('2 PLAC', zeile) > 0) and                //0059A3C3..A3D2 jle->A44E
+     (ctx = 'S') then                              //0059A3D4..A3E1 jne->A44E
+  begin
+    DataModule2.Table1.Edit;                       //0059A3E3..A3ED
+    DataModule2.Table1Stort.AsString :=            //0059A3F2..A436 [588]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059A43C..A448
+  end;
+  if (Pos('2 CAUS', zeile) > 0) and                //0059A44E..A45D jle->A4D9
+     (ctx = 'S') then                              //0059A45F..A46C jne->A4D9
+  begin
+    DataModule2.Table1.Edit;                       //0059A46E..A478
+    DataModule2.Table1Todesurs.AsString :=         //0059A47D..A4C1 [58C]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059A4C7..A4D3
+  end;
+  schl := '';                                      //0059A4D9..A4DC [ebp-3C]
+  if (Pos('2 SOUR @', zeile) > 0) and              //0059A4E1..A4F0 jle->A5D7
+     (ctx = 'S') then                              //0059A4F6..A503 jne->A5D7
+  begin
+    Form1.Repso2.IndexName := 'ih';                //0059A509..A51B
+    if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then //0059A520..A581 je->A5D7
+    begin
+      DataModule2.Table1.Edit;                     //0059A583..A58D
+      DataModule2.Table1Quelles.AsString :=        //0059A592..A5BF [5A8]
+        Form1.Repso2inh2.AsString;
+      DataModule2.Table1.Post;                     //0059A5C5..A5D1
+    end;
+  end;
+  if (Pos('2 SOUR', zeile) > 0) and                //0059A5D7..A5E6 jle->A677
+     (Pos('@', zeile) = 0) and                     //0059A5EC..A5FB jne->A677
+     (ctx = 'S') then                              //0059A5FD..A60A jne->A677
+  begin
+    DataModule2.Table1.Edit;                       //0059A60C..A616
+    DataModule2.Table1Quelles.AsString :=          //0059A61B..A65F [5A8]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059A665..A671
+  end;
+  if (Pos('2 COMM', zeile) > 0) and                //0059A677..A686 jle->A73F
+     (ctx = 'S') then                              //0059A68C..A699 jne->A73F
+  begin
+    DataModule2.Table1.Edit;                       //0059A69F..A6A9
+    DataModule2.Table1Kommentar.AsString :=        //0059A6AE..A727 [5B0]
+      DataModule2.Table1Kommentar.AsString +
+      Trim(Copy(zeile, 8, Length(zeile))) + #13#10;
+    DataModule2.Table1.Post;                       //0059A72D..A739
+  end;
+  if Pos('1 BURI', zeile) > 0 then                 //0059A73F..A74E jle->A75D
+    ctx := 'U';                                    //0059A750..A758 [ebp-38]
+  if (Pos('2 DATE', zeile) > 0) and                //0059A75D..A76C jle->A831
+     (ctx = 'U') then                              //0059A772..A77F jne->A831
+  begin
+    sub_00577934(TrimRight(Copy(zeile, 8,          //0059A785..A7BA
+      Length(zeile))));
+    DataModule2.Table1.Edit;                       //0059A7BF..A7C9
+    DataModule2.Table1Begtag.AsString := gvar_02536624;    //0059A7CE..A7E3 [590]
+    DataModule2.Table1Begmonat.AsString := gvar_02536628;  //0059A7E9..A7FE [594]
+    DataModule2.Table1Begjahr.AsString := gvar_0253662C;   //0059A804..A819 [598]
+    DataModule2.Table1.Post;                       //0059A81F..A82B
+  end;
+  if (Pos('2 PLAC', zeile) > 0) and                //0059A831..A840 jle->A8BC
+     (ctx = 'U') then                              //0059A842..A84F jne->A8BC
+  begin
+    DataModule2.Table1.Edit;                       //0059A851..A85B
+    DataModule2.Table1Begort.AsString :=           //0059A860..A8A4 [59C]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059A8AA..A8B6
+  end;
+  schl := '';                                      //0059A8BC..A8BF [ebp-3C]
+  if (Pos('2 SOUR @', zeile) > 0) and              //0059A8C4..A8D3 jle->A9BA
+     (ctx = 'U') then                              //0059A8D9..A8E6 jne->A9BA
+  begin
+    Form1.Repso2.IndexName := 'ih';                //0059A8EC..A8FE
+    if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then //0059A903..A964 je->A9BA
+    begin
+      DataModule2.Table1.Edit;                     //0059A966..A970
+      DataModule2.Table1Quelleb.AsString :=        //0059A975..A9A2 [5AC]
+        Form1.Repso2inh2.AsString;
+      DataModule2.Table1.Post;                     //0059A9A8..A9B4
+    end;
+  end;
+  if (Pos('2 SOUR', zeile) > 0) and                //0059A9BA..A9C9 jle->AA5A
+     (Pos('@', zeile) = 0) and                     //0059A9CF..A9DE jne->AA5A
+     (ctx = 'U') then                              //0059A9E0..A9ED jne->AA5A
+  begin
+    DataModule2.Table1.Edit;                       //0059A9EF..A9F9
+    DataModule2.Table1Quelleb.AsString :=          //0059A9FE..AA42 [5AC]
+      Trim(Copy(zeile, 8, Length(zeile)));
+    DataModule2.Table1.Post;                       //0059AA48..AA54
+  end;
+  if (Pos('2 COMM', zeile) > 0) and                //0059AA5A..AA69 jle->AB22
+     (ctx = 'U') then                              //0059AA6F..AA7C jne->AB22
+  begin
+    DataModule2.Table1.Edit;                       //0059AA82..AA8C
+    DataModule2.Table1Kommentar.AsString :=        //0059AA91..AB0A [5B0]
+      DataModule2.Table1Kommentar.AsString +
+      Trim(Copy(zeile, 8, Length(zeile))) + #13#10;
+    DataModule2.Table1.Post;                       //0059AB10..AB1C
+  end;
+  {G2C17}
 end;
 
 
