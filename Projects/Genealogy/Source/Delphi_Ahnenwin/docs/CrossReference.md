@@ -354,7 +354,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `NList`  @`00595720`
   - done `OList`  @`00595FB4`
   - done `indi`  @`005967C8`
-  - open `gedein2`  @`00596994`
+  - done `gedein2`  @`00596994`
   - done `gedein`  @`0059D218`
   - done `gedausx`  @`005A634C`
   - done `gedaus`  @`005A7C40`
