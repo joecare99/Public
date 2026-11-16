@@ -47,6 +47,7 @@ type
     procedure zsa(ALine: AnsiString; var AErgebnis: AnsiString); //00577834
     procedure ansl(AIn: AnsiString; var AOut: AnsiString); //005832F8
     function Ziff(AIn: AnsiString): Integer; //0057D410
+    function Ziff2(AIn: AnsiString): Integer; //0057D4B4
     procedure sour(AIn: AnsiString); //005BF434
     procedure gedein_5; //005BFB94
     procedure famn; //0057D560
@@ -6538,6 +6539,16 @@ begin
   Result := StrToIntDef(RightStr(Trim(Copy(AIn, 10, Length(AIn))), -1), 0);
 end;
 
+function TForm3.Ziff2(AIn: AnsiString): Integer;
+var
+  s: AnsiString;
+begin
+  { Extracts the person number of an INDI line ("0 @I123@ INDI"): the digits
+    from position 5 up to the closing "@". }
+  s := Copy(AIn, 5, Length(Trim(AIn)));
+  Result := StrToIntDef(Copy(s, 1, Pos('@', s) - 1), 0);
+end;
+
 procedure TForm3.famn;
 var
   husn, wifn: Integer;
@@ -12931,7 +12942,410 @@ begin
     zeile := zst;                                  //0057F0E4..F0EA
   end;
   //0057F100 jmp->FED7 - Eintritt in die Bedingung der Pre-Pass-Schleife
-  {GNC01}
+  while Pos('0 TRLR', zeile) = 0 do                //0057FED7..FEE6 je->F105
+  begin
+    if Pos('@ INDI', zeile) > 0 then               //0057F105..F114 jle->F1BB
+    begin
+      inc(gvar_02536864);                          //0057F11A
+      ctx := '';                                   //0057F120..F123 [ebp-10]
+      idnr := StrToInt(Copy(zeile, 5, Pos('@ INDI', zeile) - 5)); //0057F128..F153 [ebp-20]
+      inc(indnr);                                  //0057F156 [ebp-24]
+      Form1.Repso2.Append;                         //0057F159..F166 [8C0]
+      Form1.Repso2nr.AsInteger := indnr;           //0057F16B..F17D [8C8]
+      Form1.Repso2alt.AsString := IntToStr(idnr);  //0057F183..F1A0 [8D4]
+      Form1.Repso2.Post;                           //0057F1A6..F1B5
+    end;
+    if Pos('0 @F', zeile) > 0 then                 //0057F1BB..F1CA jle->F1D2
+      inc(gvar_02536868);                          //0057F1CC
+    if Pos('1 SOUR @S', zeile) > 0 then            //0057F1D2..F1E1 jle->F2E6
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F1E7..F1F9 [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F1FE..F245 jne->F2E6
+      begin
+        Form1.Repso2.Append;                       //0057F24B..F258
+        Form1.Repso2nr.AsInteger := indnr;         //0057F25D..F26F [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F275..F292 [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F298..F2CB [8CC]
+        Form1.Repso2.Post;                         //0057F2D1..F2E0
+      end;
+    end;
+    if Pos('2 SOUR @S', zeile) > 0 then            //0057F2E6..F2F5 jle->F3FA
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F2FB..F30D [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F312..F359 jne->F3FA
+      begin
+        Form1.Repso2.Append;                       //0057F35F..F36C
+        Form1.Repso2nr.AsInteger := indnr;         //0057F371..F383 [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F389..F3A6 [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F3AC..F3DF [8CC]
+        Form1.Repso2.Post;                         //0057F3E5..F3F4
+      end;
+    end;
+    if Pos('1 REPO @R', zeile) > 0 then            //0057F3FA..F409 jle->F50E
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F40F..F421 [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F426..F46D jne->F50E
+      begin
+        Form1.Repso2.Append;                       //0057F473..F480
+        Form1.Repso2nr.AsInteger := indnr;         //0057F485..F497 [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F49D..F4BA [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F4C0..F4F3 [8CC]
+        Form1.Repso2.Post;                         //0057F4F9..F508
+      end;
+    end;
+    if Pos('3 _LOC @P', zeile) > 0 then            //0057F50E..F51D jle->F63A
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F523..F535 [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F53A..F587 jne->F63A
+      begin
+        Form1.Repso2.Append;                       //0057F58D..F59A
+        Form1.Repso2nr.AsInteger := indnr;         //0057F59F..F5B1 [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F5B7..F5DA [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F5E0..F61F [8CC]
+        Form1.Repso2.Post;                         //0057F625..F634
+      end;
+    end;
+    if Pos('1 NOTE @N', zeile) > 0 then            //0057F63A..F649 jle->F76C
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F64F..F661 [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F666..F6B9 jne->F76C
+      begin
+        Form1.Repso2.Append;                       //0057F6BF..F6CC
+        Form1.Repso2nr.AsInteger := indnr;         //0057F6D1..F6E3 [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F6E9..F70C [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F712..F751 [8CC]
+        Form1.Repso2.Post;                         //0057F757..F766
+      end;
+    end;
+    if Pos('2 NOTE @N', zeile) > 0 then            //0057F76C..F77B jle->F89E
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057F781..F793 [8C0]
+      if not Form1.Repso2.FindKey([Trim(Copy(zeile, 8, 14))]) then //0057F798..F7EB jne->F89E
+      begin
+        Form1.Repso2.Append;                       //0057F7F1..F7FE
+        Form1.Repso2nr.AsInteger := indnr;         //0057F803..F815 [8C8]
+        Form1.Repso2alt.AsString := IntToStr(idnr); //0057F81B..F83E [8D4]
+        Form1.Repso2inh.AsString := Trim(Copy(zeile, 8, 14)); //0057F844..F883 [8CC]
+        Form1.Repso2.Post;                         //0057F889..F898
+      end;
+    end;
+    if (Pos('0 @N', zeile) > 0) and                //0057F89E..F8AD jle->FA1D
+       (Pos('0 @NI', zeile) = 0) then              //0057F8B3..F8C2 jne->FA1D
+    begin
+      gvar_02536850 := Trim(Copy(zeile, 3, 14));   //0057F8C8..F8FD
+      gvar_02536850 := LeftStr(gvar_02536850, Length(gvar_02536850) - 5); //0057F902..F92C
+      ReadLn(gvar_02536670, zeile);                //0057F931..F948 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //0057F94D..F958
+      zeile := zst;                                //0057F95D..F966
+      Form1.Repso2.IndexName := 'ih';              //0057F96B..F97D [8C0]
+      if Form1.Repso2.FindKey([gvar_02536850]) then //0057F982..F9AA je->FA1D
+      begin
+        Form1.Repso2.Edit;                         //0057F9AC..F9B9
+        Form1.Repso2inh2.AsString := Trim(Copy(zeile, 8, Length(zeile))); //0057F9BE..FA02 [8D0]
+        Form1.Repso2.Post;                         //0057FA08..FA17
+      end;
+    end;
+    if Pos('0 @S', zeile) > 0 then                 //0057FA1D..FA2C jle->FB9B
+    begin
+      gvar_02536850 := Trim(Copy(zeile, 3, 14));   //0057FA32..FA67
+      gvar_02536850 := LeftStr(gvar_02536850, Length(gvar_02536850) - 5); //0057FA6C..FA96
+      ReadLn(gvar_02536670, zeile);                //0057FA9B..FAB2 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //0057FAB7..FAC2
+      zeile := zst;                                //0057FAC7..FAD0
+      if gvar_02536650 = 1 then                    //0057FAD5..FADC jne->FAE9
+        zeile := Utf8ToAnsi(zeile);                //0057FADE..FAE4
+      Form1.Repso2.IndexName := 'ih';              //0057FAE9..FAFB [8C0]
+      if Form1.Repso2.FindKey([gvar_02536850]) then //0057FB00..FB28 je->FB9B
+      begin
+        Form1.Repso2.Edit;                         //0057FB2A..FB37
+        Form1.Repso2inh2.AsString := Trim(Copy(zeile, 8, Length(zeile))); //0057FB3C..FB80 [8D0]
+        Form1.Repso2.Post;                         //0057FB86..FB95
+      end;
+    end;
+    if Pos('0 @P', zeile) > 0 then                 //0057FB9B..FBAA jle->FD05
+    begin
+      gvar_02536850 := Trim(Copy(zeile, 3, 14));   //0057FBB0..FBE5
+      gvar_02536850 := LeftStr(gvar_02536850, Length(gvar_02536850) - 5); //0057FBEA..FC14
+      ReadLn(gvar_02536670, zeile);                //0057FC19..FC30 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //0057FC35..FC40
+      zeile := zst;                                //0057FC45..FC4E
+      Form1.Repso2.IndexName := 'ih';              //0057FC53..FC65 [8C0]
+      if Form1.Repso2.FindKey([gvar_02536850]) then //0057FC6A..FC92 je->FD05
+      begin
+        Form1.Repso2.Edit;                         //0057FC94..FCA1
+        Form1.Repso2inh2.AsString := Trim(Copy(zeile, 8, Length(zeile))); //0057FCA6..FCEA [8D0]
+        Form1.Repso2.Post;                         //0057FCF0..FCFF
+      end;
+    end;
+    if Pos('0 @NI', zeile) > 0 then                //0057FD05..FD14 jle->FD8C
+    begin
+      ctx := 'NI';                                 //0057FD16..FD1E [ebp-10]
+      gvar_02536850 := Trim(Copy(zeile, 3, 14));   //0057FD23..FD58
+      gvar_02536850 := LeftStr(gvar_02536850, Length(gvar_02536850) - 5); //0057FD5D..FD87
+    end;
+    if (Pos('1 CON', zeile) > 0) and               //0057FD8C..FD9B jle->FE9F
+       (ctx = 'NI') then                           //0057FDA1..FDAE jne->FE9F
+    begin
+      Form1.Repso2.IndexName := 'ih';              //0057FDB4..FDC6 [8C0]
+      if Form1.Repso2.FindKey([gvar_02536850]) then //0057FDCB..FDF3 je->FE9F
+      begin
+        Form1.Repso2.Edit;                         //0057FDF9..FE06
+        Form1.Repso2inh2.AsString := Form1.Repso2inh2.AsString +
+          Trim(Copy(zeile, 8, Length(zeile))) + #13#10; //0057FE0B..FE84 [8D0]
+        Form1.Repso2.Post;                         //0057FE8A..FE99
+      end;
+    end;
+    ReadLn(gvar_02536670, zeile);                  //0057FE9F..FEB6 @ReadLString+@ReadLn+@IOTest
+    zeile := Trim(zeile);                          //0057FEBB..FED2
+  end;
+  gvar_02536430 := '';                             //0057FEEC..FEF1
+  Reset(gvar_02536670);                            //0057FEF6..FF00 @ResetText+@IOTest
+  {0057FF05..00580703: Header-Schleife - liest den Headertext bis zur ersten '@ INDI'-Zeile}
+  while True do
+  begin
+    ReadLn(gvar_02536670, zeile);                  //0057FF05..FF1C @ReadLString+@ReadLn+@IOTest
+    zsa(zeile, zst);                               //0057FF21..FF2C
+    zeile := zst;                                  //0057FF31..FF3A
+    if Pos('@ INDI', zeile) > 0 then               //0057FF3F..FF4E jg->00580708
+      Break;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 FILE' then //0057FF54..FF8E jne->FFD8
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Datei: ' +
+        Copy(zeile, 8, Length(zeile)) + #13#10;    //0057FF90..FFD3
+    if Pos('DATE', ucase(zeile)) > 0 then          //0057FFD8..FFFA jle->00580060
+    begin
+      sub_00577934(Copy(zeile, 8, Length(zeile))); //0057FFFC..00580020
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Datum: ' +
+        gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C; //00580025..005B
+    end;
+    if UpperCase(Copy(zeile, 1, 6)) = '1 SOUR' then //00580060..009A jne->00DF
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Quelle: ' +
+        Copy(zeile, 8, Length(zeile));             //0058009C..00DA
+    if UpperCase(Copy(zeile, 1, 6)) = '1 DEST' then //005800DF..0119 jne->015E
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Ziel: ' +
+        Copy(zeile, 8, Length(zeile));             //0058011B..0159
+    if (UpperCase(Copy(zeile, 1, 6)) = '1 NAME') and //0058015E..0198 jne->021E
+       (Trim(Copy(zeile, 8, Length(zeile))) <> '') then //0058019E..01D4 jbe->021E
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Einsender: ' +
+        #13#10 + Copy(zeile, 8, Length(zeile));    //005801D6..0219
+    if (UpperCase(Copy(zeile, 1, 6)) = '1 ADDR') and //0058021E..0258 jne->02D0
+       (Trim(Copy(zeile, 8, Length(zeile))) <> '') then //0058025A..0290 jbe->02D0
+      gvar_02536430 := gvar_02536430 + #13#10 +
+        Copy(zeile, 8, Length(zeile));             //00580292..02CB
+    if (UpperCase(Copy(zeile, 1, 6)) = '2 CONT') and //005802D0..030A jne->0382
+       (Trim(Copy(zeile, 8, Length(zeile))) <> '') then //0058030C..0342 jbe->0382
+      gvar_02536430 := gvar_02536430 + #13#10 +
+        Copy(zeile, 8, Length(zeile));             //00580344..037D
+    if UpperCase(Copy(zeile, 1, 6)) = '1 GEDC' then //00580382..03BC jne->0539
+    begin
+      gvar_02536430 := gvar_02536430 + #13#10 + 'GEDCOM: '; //005803C2..03DC
+      ReadLn(gvar_02536670, zeile);                //005803E1..03F8 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //005803FD..0408
+      zeile := zst;                                //0058040D..0416
+      if UpperCase(Copy(zeile, 1, 6)) = '2 VERS' then //0058041B..0455 jne->0495
+        gvar_02536430 := gvar_02536430 + Copy(zeile, 8, Length(zeile)) + ' '; //00580457..0490
+      ReadLn(gvar_02536670, zeile);                //00580495..04AC @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //005804B1..04BC
+      zeile := zst;                                //005804C1..04CA
+      if UpperCase(Copy(zeile, 1, 6)) = '2 FORM' then //005804CF..0509 jne->0539
+        gvar_02536430 := gvar_02536430 + Copy(zeile, 8, Length(zeile)); //0058050B..0534
+    end;
+    if Pos('_EXTENDED_LOCATIONS', zeile) > 0 then  //00580539..0548 jle->0570
+    begin
+      extflag := 1;                                //0058054A
+      gvar_02536430 := gvar_02536430 + #13#10 +
+        'Erweiterung: EXTENDED_LOCATIONS';         //00580551..056B
+    end;
+    if Pos('1 CHAR ', UpperCase(zeile)) > 0 then   //00580570..0590 jle->0057FF05
+    begin
+      gvar_02536430 := gvar_02536430 + #13#10 + 'Zeichensatz: ' +
+        Copy(zeile, 8, Length(zeile));             //00580596..05D4
+      if Pos('1 CHAR IBM', UpperCase(zeile)) > 0 then //005805D9..05F9 jle->060A
+        gvar_02536848 := 'ibm';                    //005805FB..0605
+      if Pos('1 CHAR ASC', UpperCase(zeile)) > 0 then //0058060A..062A jle->063B
+        gvar_02536848 := 'asci';                   //0058062C..0636
+      if Pos('1 CHAR UTF', UpperCase(zeile)) > 0 then //0058063B..065B jle->066C
+        gvar_02536848 := 'utf';                    //0058065D..0667
+      if Pos('1 CHAR ANSI', UpperCase(zeile)) > 0 then //0058066C..068C jle->069D
+        gvar_02536848 := 'ansi';                   //0058068E..0698
+      if Pos('1 CHAR ANSEL', UpperCase(zeile)) > 0 then //0058069D..06BD jle->06CE
+        gvar_02536848 := 'ansel';                  //005806BF..06C9
+      if Pos('1 CHAR UNIC', UpperCase(zeile)) > 0 then //005806CE..06EE jle->0057FF05
+        gvar_02536848 := 'unic';                   //005806F4..06FE
+    end;
+  end;                                             //00580703 jmp->0057FF05
+  gvar_02536430 := gvar_02536430 + #13#10 + #13#10 +
+    IntToStr(gvar_02536864) + ' Personen';         //00580708..073D
+  gvar_02536430 := gvar_02536430 + #13#10 +
+    IntToStr(gvar_02536868) + ' Familien';         //00580742..0772
+  Form1.Label19.Caption := '';                     //00580777..0786
+  Form1.Label19.Refresh;                           //0058078B..0798
+  ShowMessage(gvar_02536430);                      //0058079D..07A2
+  gvar_02536430 := '';                             //005807A7..07AC
+  gvar_0253684C := '';                             //005807B1..07B6
+  gvar_02536854 := '';                             //005807BB..07C0
+  Form1.Label18.Visible := True;                   //005807C5..07D4
+  Form1.Label18.Caption := '0 %';                  //005807D9..07EB
+  Form1.Label18.Refresh;                           //005807F0..07FD
+  Form1.Label19.Visible := True;                   //00580802..0811
+  Form1.Label19.Caption := 'Gedcom einlesen  ';    //00580816..0828
+  Form1.Label19.Refresh;                           //0058082D..083A
+  {0058083F..1C43: Hauptschleife ueber alle GEDCOM-Zeilen: INDI-Datensaetze anlegen}
+  while True do
+  begin
+    if Pos('@ INDI', zeile) > 0 then               //0058083F..084E jle->0978
+    begin
+      inc(letztnr);                                //00580854
+      inc(fortschritt);                            //00580857
+      Form1.Label18.Caption :=
+        IntToStr(Round(fortschritt / (gvar_02536864 + gvar_02536868) * 100)) + ' %'; //0058085A..08B1
+      Form1.Label18.Refresh;                       //005808B6..08C3
+      gvar_0253683C := 0;                          //005808C8..08CA
+      gvar_02536840 := 0;                          //005808CF..08D1
+      DataModule2.Table1.Append;                   //005808D6..08DB
+      DataModule2.Table1Nummer.AsInteger := letztnr; //005808E0..08ED
+      DataModule2.Table1Vater.AsInteger := 0;      //005808F3..08FF
+      DataModule2.Table1Mutter.AsInteger := 0;     //00580905..0911
+      DataModule2.Table1Lebt.AsString := 'n';      //00580917..0926
+      DataModule2.Table25.Append;                  //0058092C..0934
+      DataModule2.Table25A.AsInteger := Ziff2(zeile); //00580939..094F
+      DataModule2.Table25N.AsInteger := letztnr;   //00580955..0962
+      DataModule2.Table25.Post;                    //00580968..0972
+    end;
+    gvar_02536850 := '';                           //00580978..097D
+    if Pos('1 SOUR @', zeile) > 0 then             //00580982..0991 jle->0AF7
+    begin
+      Form1.Repso2.IndexName := 'ih';              //00580997..09A9
+      if Form1.Repso2.FindKey([Trim(Copy(zeile, 8, Length(zeile)))]) then //005809AE..0A06 je->0A30
+        gvar_02536850 := Form1.Repso2inh2.AsString; //00580A08..0A2B
+      if Pos(gvar_02536850, DataModule2.Table1Quelle.AsString) = 0 then //00580A30..0A55 jne->0AF7
+      begin
+        if Trim(DataModule2.Table1Quelle.AsString) <> '' then //00580A5B..0A86 jbe->0AE1
+          DataModule2.Table1Quelle.AsString := Trim(
+            DataModule2.Table1Quelle.AsString + '; ' + gvar_02536850) //00580A88..0ADF jmp->0AF7
+        else
+          DataModule2.Table1Quelle.AsString := gvar_02536850; //00580AE1..0AF1
+      end;
+    end;
+    if UpperCase(Copy(zeile, 3, 4)) = 'REFN' then  //00580AF7..0B31 jne->0BEA
+      if Trim(gvar_0253684C) = '' then             //00580B37..0B4E jne->0B96
+        gvar_0253684C := 'REFN: ' +
+          Copy(zeile, 8, Length(Trim(zeile)))      //00580B50..0B94 jmp->0BEA
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'REFN: ' +
+          Copy(zeile, 8, Length(Trim(zeile)));     //00580B96..0BE5
+    if UpperCase(Copy(zeile, 3, 3)) = 'RIN' then   //00580BEA..0C24 jne->0CDD
+      if Trim(gvar_0253684C) = '' then             //00580C2A..0C41 jne->0C89
+        gvar_0253684C := 'RIN: ' +
+          Copy(zeile, 7, Length(Trim(zeile)))      //00580C43..0C87 jmp->0CDD
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'RIN: ' +
+          Copy(zeile, 7, Length(Trim(zeile)));     //00580C89..0CD8
+    if Pos('1 ADOP', ucase(zeile)) > 0 then        //00580CDD..0CFF jle->0D0B
+      gvar_02536840 := 1;                          //00580D01
+    if UpperCase(Copy(zeile, 3, 4)) = 'NAME' then  //00580D0B..0D45 jne->0D72
+      if Length(Trim(zeile)) > 7 then              //00580D47..0D63 jle->0D72
+        Nam(zeile, ptmp);                          //00580D65..0D6D
+    if UpperCase(Copy(zeile, 3, 4)) = 'TITL' then  //00580D72..0DAC jne->0E49
+      if Trim(gvar_0253684C) = '' then             //00580DB2..0DC9 jne->0DFA
+        gvar_0253684C :=
+          Copy(zeile, 8, Length(Trim(zeile)))      //00580DCB..0DF8 jmp->0E49
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 +
+          Copy(zeile, 8, Length(Trim(zeile)));     //00580DFA..0E44
+    if UpperCase(Copy(zeile, 3, 4)) = 'SEX' then   //00580E49..0E83 jne->0E92
+      Sex(zeile, ptmp);                            //00580E85..0E8D
+    if UpperCase(Copy(zeile, 3, 4)) = 'RELI' then  //00580E92..0ECC jne->0F8D
+    begin
+      reli := Trim(Copy(zeile, 8, Length(zeile))); //00580ED2..0EF9
+      if Pos('römi', zeile) > 0 then               //00580EFE..0F0D jle->0F1C
+        reli := 'rk';                              //00580F0F..0F17
+      if Length(reli) > 2 then                     //00580F1C..0F27 jle->0F7A
+        if Trim(gvar_0253684C) = '' then           //00580F29..0F40 jne->0F56
+          gvar_0253684C := 'Bekenntnis: ' + reli   //00580F42..0F54 jmp->0F8D
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Bekenntnis: ' + reli; //00580F56..0F78 jmp->0F8D
+      else
+        DataModule2.Table1Religion.AsString := reli; //00580F7A..0F87
+    end;
+    if UpperCase(Copy(zeile, 3, 4)) = 'IDNO' then  //00580F8D..0FC7 jne->111A
+      if Length(Trim(Copy(zeile, 8, Length(Trim(zeile))))) > 10 then //00580FCD..101B jg->1067
+        DataModule2.Table1IDNR.AsString := Copy(zeile, 8, Length(Trim(zeile))); //0058101D..1062 jmp->111A
+      else
+        if Trim(gvar_0253684C) = '' then           //00581067..107E jne->10C6
+          gvar_0253684C := 'IDNO: ' + Copy(zeile, 8, Length(Trim(zeile))); //00581080..10C4 jmp->111A
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'IDNO: ' + Copy(zeile, 8, Length(Trim(zeile))); //005810C6..1115
+    if (Pos('1 ADOP', zeile) > 0) and              //0058111A..1129 jle->11A9
+       (Pos('2 FAMC', zeile) > 0) then             //0058112B..113A jle->11A9
+      gvar_02536854 := gvar_02536854 +
+        RightStr('000000' + Copy(zeile, 10, Length(zeile) - 10), 6) + '*'; //0058113C..11A4
+    if (Pos('2 ADDR', zeile) > 0) or               //005811A9..11B8 jg->11CB
+       (Pos('1 ADR1', zeile) > 0) then             //005811BA..11C9 jle->120B
+      DataModule2.Table1Adr1.AsString := Trim(Copy(zeile, 8, 20)); //005811CB..1205
+    if Pos('1 ADR2', zeile) > 0 then               //0058120B..121A jle->125C
+      DataModule2.Table1Adr2.AsString := Trim(Copy(zeile, 8, 20)); //0058121C..1256
+    if Pos('1 ADR3', zeile) > 0 then               //0058125C..126B jle->12AD
+      DataModule2.Table1PLZ.AsString := Trim(Copy(zeile, 8, 20)); //0058126D..12A7
+    if Pos('1 ADR4', zeile) > 0 then               //005812AD..12BC jle->12FE
+      DataModule2.Table1Ort.AsString := Trim(Copy(zeile, 8, 20)); //005812BE..12F8
+    if Pos('1 ADR5', zeile) > 0 then               //005812FE..130D jle->134F
+      DataModule2.Table1Adrzus.AsString := Trim(Copy(zeile, 8, 20)); //0058130F..1349
+    if Pos('2 EMAIL', zeile) > 0 then              //0058134F..135E jle->13A5
+      DataModule2.Table1Ema.AsString := Trim(Copy(zeile, 9, Length(zeile))); //00581360..139F
+    if Pos('1 EMA', zeile) > 0 then                //005813A5..13B4 jle->13FB
+      DataModule2.Table1Ema.AsString := Trim(Copy(zeile, 7, Length(zeile))); //005813B6..13F5
+    if (Pos('2 PHON', zeile) > 0) or               //005813FB..140A jg->141D
+       (Pos('1 PHON', zeile) > 0) then             //0058140C..141B jle->145D
+      DataModule2.Table1Tel.AsString := Trim(Copy(zeile, 8, 20)); //0058141D..1457
+    if Pos('1 URL', zeile) > 0 then                //0058145D..146C jle->14B3
+      DataModule2.Table1Ur.AsString := Trim(Copy(zeile, 7, Length(zeile))); //0058146E..14AD
+    if UpperCase(Copy(zeile, 3, 4)) = 'BIRT' then  //005814B3..14ED jne->14FC
+      Birt(zeile, ptmp);                           //005814EF..14F7
+    if (UpperCase(Copy(zeile, 3, 4)) = 'BAPM') or  //005814FC..1536 je->1574
+       (UpperCase(Copy(zeile, 3, 3)) = 'CHR') then //00581538..1572 jne->1585
+      Bapm(zeile, extflag, ptmp);                  //00581574..1580
+    if UpperCase(Copy(zeile, 3, 4)) = 'DEAT' then  //00581585..15BF jne->15CE
+      Deat(zeile, ptmp);                           //005815C1..15C9
+    if UpperCase(Copy(zeile, 3, 4)) = 'BURI' then  //005815CE..1608 jne->1617
+      Buri(zeile, ptmp);                           //0058160A..1612
+    if UpperCase(Copy(zeile, 3, 4)) = 'OCCU' then  //00581617..1651 jne->1703
+    begin
+      inc(gvar_0253683C);                          //00581657
+      if gvar_0253683C > 1 then                    //0058165D..1664 jle->16DD
+        if Trim(gvar_0253684C) = '' then           //00581666..167D jne->16A6
+          gvar_0253684C := 'Beruf: ' + Occu(zeile, ptmp) //0058167F..16A4 jmp->1703
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Beruf: ' + Occu(zeile, ptmp); //005816A6..16DB jmp->1703
+      else
+        DataModule2.Table1Beruf.AsString := Occu(zeile, ptmp); //005816DD..16FD
+    end;
+    if UpperCase(Copy(zeile, 3, 4)) = 'EVEN' then  //00581703..173D jne->1749
+      Even(zeile);                                 //0058173F..1744
+    if UpperCase(Copy(zeile, 3, 4)) = 'GRAD' then  //00581749..1783 jne->1792
+      Grad(zeile);                                 //00581785..178D
+    if UpperCase(Copy(zeile, 3, 4)) = 'EDUC' then  //00581792..17CC jne->17DB
+      Educ(zeile);                                 //005817CE..17D6
+    if UpperCase(Copy(zeile, 3, 4)) = 'PROP' then  //005817DB..1815 jne->1824
+      Prop(zeile, ptmp);                           //00581817..181F
+    if UpperCase(Copy(zeile, 3, 4)) = 'RESI' then  //00581824..185E jne->186D
+      Resi(zeile, ptmp);                           //00581860..1868
+    if UpperCase(Copy(zeile, 3, 4)) = 'CHAN' then  //0058186D..18A7 jne->18B6
+      Chan(zeile, ptmp);                           //005818A9..18B1
+    if UpperCase(Copy(zeile, 1, 6)) = '1 NOTE' then //005818B6..18F0 jne->18FF
+      Note(zeile, ptmp);                           //005818F2..18FA
+    if Pos('2 CONT', zeile) > 0 then               //005818FF..190E jle->195F
+      gvar_0253684C := gvar_0253684C + #13#10 +
+        Copy(zeile, 8, Length(Trim(zeile)));       //00581910..195A
+    if Pos('2 CONC', zeile) > 0 then               //0058195F..196E jle->19BF
+      gvar_0253684C := gvar_0253684C + ' ' +
+        Copy(zeile, 8, Length(Trim(zeile)));       //00581970..19BA
+    if UpperCase(Copy(zeile, 3, 4)) = 'FAMS' then  //005819BF..19F9 jne->1A54
+    begin
+      zeile := Trim(Copy(zeile, 10, Length(zeile))); //005819FB..1A33
+      ptmp := Copy(zeile, 1, Length(zeile) - 1);   //00581A38..1A4F
+    end;
+    if UpperCase(Copy(zeile, 3, 4)) = 'FAMC' then  //00581A54..1A8E jne->1AE9
+    {GNC07}
 end;
 
 procedure TForm3.gedein2;
