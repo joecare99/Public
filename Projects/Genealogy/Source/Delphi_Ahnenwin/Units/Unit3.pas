@@ -33,7 +33,7 @@ type
     procedure Bapm(AIn: AnsiString; AFlag: Integer; var AEs: AnsiString); //005797B0
     procedure Birt(AIn: AnsiString; var AEs: AnsiString); //00578E28
     procedure Sex(AIn: AnsiString; var AEs: AnsiString); //00578C84
-    procedure Occu(AIn: AnsiString; var AEs: AnsiString); //0057B5C8
+    function Occu(AIn: AnsiString): AnsiString; //0057B5C8
     procedure Buri(AIn: AnsiString; var AEs: AnsiString); //0057AC40
     procedure Deat(AIn: AnsiString; var AEs: AnsiString); //0057A258
     procedure Nam(AIn: AnsiString; var AEs: AnsiString); //00578A48
@@ -1101,14 +1101,15 @@ begin
   DataModule2.Table1Geschlecht.AsString := AEs;
 end;
 
-procedure TForm3.Occu(AIn: AnsiString; var AEs: AnsiString);
+function TForm3.Occu(AIn: AnsiString): AnsiString;
 var
   s, t: AnsiString;
 begin
   { Reads a GEDCOM section "1 OCCU" up to the next "1" line and collects
     the sub-lines Date/Place/Note/Cont in the comment strings
-    gvar_02536430 ("Beruf: " prefix in gvar_0253684C). The next "1" line is
-    left in s for further disposal (return value via AEs). }
+    gvar_02536430 ("Beruf: " prefix in gvar_0253684C). Returns the
+    occupation text (gvar_02536430); the next "1" line is left in s and
+    stored to gvar_02536430 for further disposal. }
   gvar_02536430 := Trim(Copy(AIn, 8, Length(AIn)));
   ReadLn(gvar_02536670, s);
   zsa(s, t);
@@ -1141,7 +1142,7 @@ begin
     zsa(s, t);
     s := t;
   end;
-  AEs := gvar_02536430;
+  Result := gvar_02536430;
   gvar_02536430 := s;
   { The original sets the low word of gvar_02536844 to $2A01; the
     reconstruction writes the complete value. Deviation with no
@@ -13263,16 +13264,16 @@ begin
         if Trim(gvar_0253684C) = '' then           //00580F29..0F40 jne->0F56
           gvar_0253684C := 'Bekenntnis: ' + reli   //00580F42..0F54 jmp->0F8D
         else
-          gvar_0253684C := gvar_0253684C + #13#10 + 'Bekenntnis: ' + reli; //00580F56..0F78 jmp->0F8D
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Bekenntnis: ' + reli //00580F56..0F78 jmp->0F8D
       else
         DataModule2.Table1Religion.AsString := reli; //00580F7A..0F87
     end;
     if UpperCase(Copy(zeile, 3, 4)) = 'IDNO' then  //00580F8D..0FC7 jne->111A
       if Length(Trim(Copy(zeile, 8, Length(Trim(zeile))))) > 10 then //00580FCD..101B jg->1067
-        DataModule2.Table1IDNR.AsString := Copy(zeile, 8, Length(Trim(zeile))); //0058101D..1062 jmp->111A
+        DataModule2.Table1IDNR.AsString := Copy(zeile, 8, Length(Trim(zeile))) //0058101D..1062 jmp->111A
       else
         if Trim(gvar_0253684C) = '' then           //00581067..107E jne->10C6
-          gvar_0253684C := 'IDNO: ' + Copy(zeile, 8, Length(Trim(zeile))); //00581080..10C4 jmp->111A
+          gvar_0253684C := 'IDNO: ' + Copy(zeile, 8, Length(Trim(zeile))) //00581080..10C4 jmp->111A
         else
           gvar_0253684C := gvar_0253684C + #13#10 + 'IDNO: ' + Copy(zeile, 8, Length(Trim(zeile))); //005810C6..1115
     if (Pos('1 ADOP', zeile) > 0) and              //0058111A..1129 jle->11A9
@@ -13313,11 +13314,11 @@ begin
       inc(gvar_0253683C);                          //00581657
       if gvar_0253683C > 1 then                    //0058165D..1664 jle->16DD
         if Trim(gvar_0253684C) = '' then           //00581666..167D jne->16A6
-          gvar_0253684C := 'Beruf: ' + Occu(zeile, ptmp) //0058167F..16A4 jmp->1703
+          gvar_0253684C := 'Beruf: ' + Occu(zeile) //0058167F..16A4 jmp->1703
         else
-          gvar_0253684C := gvar_0253684C + #13#10 + 'Beruf: ' + Occu(zeile, ptmp); //005816A6..16DB jmp->1703
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Beruf: ' + Occu(zeile) //005816A6..16DB jmp->1703
       else
-        DataModule2.Table1Beruf.AsString := Occu(zeile, ptmp); //005816DD..16FD
+        DataModule2.Table1Beruf.AsString := Occu(zeile); //005816DD..16FD
     end;
     if UpperCase(Copy(zeile, 3, 4)) = 'EVEN' then  //00581703..173D jne->1749
       Even(zeile);                                 //0058173F..1744
@@ -13345,7 +13346,164 @@ begin
       ptmp := Copy(zeile, 1, Length(zeile) - 1);   //00581A38..1A4F
     end;
     if UpperCase(Copy(zeile, 3, 4)) = 'FAMC' then  //00581A54..1A8E jne->1AE9
-    {GNC07}
+    begin
+      zeile := Trim(Copy(zeile, 10, Length(zeile))); //00581A90..1AC8
+      ptmp := Copy(zeile, 1, Length(zeile) - 1);   //00581ACD..1AE4
+    end;
+    if (Pos('0 TRLR', zeile) > 0) or               //00581AE9..1AF8 jg->1B0B
+       (Pos('@ _LOC', zeile) > 0) then             //00581AFA..1B09 jle->1B2F
+    begin
+      if DataModule2.Table1.State in [dsEdit, dsInsert] then //00581B0B..1B1C jae->1C48
+        DataModule2.Table1.Post;                   //00581B22..1B24
+      Break;                                       //00581B2A jmp->1C48
+    end;
+    zeile := gvar_02536430;                        //00581B2F..1B38
+    if gvar_02536844 = 0 then                      //00581B3D..1B44 jne->1B80
+    begin
+      ReadLn(gvar_02536670, zeile);                //00581B46..1B5D @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //00581B62..1B6D
+      zeile := zst;                                //00581B72..1B7B
+    end;
+    gvar_02536844 := 0;                            //00581B80
+    if Pos('0 @F', zeile) > 0 then                 //00581B87..1B96 jle->1BBC
+    begin
+      if DataModule2.Table1.State in [dsEdit, dsInsert] then //00581B98..1BA9 jae->1C48
+        DataModule2.Table1.Post;                   //00581BAF..1BB1
+      Break;                                       //00581BB7 jmp->1C48
+    end;
+    if Copy(zeile, 1, 1) = '0' then                //00581BBC..1BE5 jne->083F
+    begin
+      if Trim(gvar_0253684C) <> '' then            //00581BEB..1C02 jbe->1C1A
+        DataModule2.Table1Kommentar.AsString := gvar_0253684C; //00581C04..1C14
+      gvar_0253684C := '';                         //00581C1A..1C1F
+      if DataModule2.Table1.State in [dsEdit, dsInsert] then //00581C24..1C35 jae->083F
+        DataModule2.Table1.Post;                   //00581C3B..1C3D
+    end;
+  end;                                             //00581C43 jmp->083F
+  {00581C48..1D5A: FAM-Schleife - @F-Datensaetze zaehlen mit Fortschrittsanzeige, Abbruch bei TRLR/_LOC}
+  while True do
+  begin
+    if Pos('0 @F', zeile) > 0 then                 //00581C48..1C57 jle->1CD1
+    begin
+      famn;                                        //00581C59..1C5B
+      inc(fortschritt);                            //00581C60
+      Form1.Label18.Caption :=
+        IntToStr(Round(fortschritt / (gvar_02536864 + gvar_02536868) * 100)) + ' %'; //00581C63..1CBA
+      Form1.Label18.Refresh;                       //00581CBF..1CCC
+    end;
+    if (Pos('0 TRLR', zeile) > 0) or               //00581CD1..1CE0 jg->1CF3
+       (Pos('@ _LOC', zeile) > 0) then             //00581CE2..1CF1 jle->1D10
+    begin
+      if DataModule2.Table1.State in [dsEdit, dsInsert] then //00581CF3..1D04 jae->1D5F
+        DataModule2.Table1.Post;                   //00581D06..1D08
+      Break;                                       //00581D0E jmp->1D5F
+    end;
+    if gvar_02536844 = 0 then                      //00581D10..1D17 jne->1D53
+    begin
+      ReadLn(gvar_02536670, zeile);                //00581D19..1D30 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //00581D35..1D40
+      zeile := zst;                                //00581D45..1D4E
+    end;
+    gvar_02536844 := 0;                            //00581D53
+  end;                                             //00581D5A jmp->1C48
+  Reset(gvar_02536670);                            //00581D5F..1D69 @ResetText+@IOTest
+  //00581D6E jmp->1DA1 (Eintrittssprung zur Bedingung)
+  while Pos('0 @P', zeile) = 0 do                  //00581DA1..1DB0 je->1D70
+  begin
+    ReadLn(gvar_02536670, zeile);                  //00581D70..1D87 @ReadLString+@ReadLn+@IOTest
+    if Pos('0 TRLR', zeile) > 0 then Break;        //00581D8C..1D9B jg->2302
+  end;
+  //00581DB2 jmp->2302 (Eintrittssprung zur Bedingung)
+  {00581DB7..2311: Orts-Schleife (PLAC): Felder NAME/_FCNTY/_FCTRY/_ABBR/POST/_FSTAE/_GOV/LONG/LATI bis TRLR}
+  while Pos('0 TRLR', zeile) > 0 do                //00582302..2311 jg->1DB7
+  begin
+    if Pos('0 TRLR', zeile) > 0 then Break;        //00581DB7..1DC6 jg->2317
+    if Pos('@ _LOC', zeile) > 0 then               //00581DCC..1DDB jle->2289
+    begin
+      gvar_02536430 := '';                         //00581DE1..1DE6
+      if DataModule2.Table13.State in [dsEdit, dsInsert] then //00581DEB..1DFF jae->1E09
+        DataModule2.Table13.Post;                  //00581E01..1E03
+      ReadLn(gvar_02536670, zeile);                //00581E09..1E20 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //00581E25..1E30
+      zeile := zst;                                //00581E35..1E3E
+      if Pos('0 TRLR', zeile) > 0 then Break;      //00581E43..1E52 jg->2317
+      //00581E58 jmp->225A (Eintrittssprung zur Bedingung)
+      while Copy(zeile, 1, 1) >= '1' do            //0058225A..2283 jae->1E5D
+      begin
+        if Pos('1 NAME ', zeile) > 0 then          //00581E5D..1E6C jle->1F05
+        begin
+          gvar_02536430 := Trim(Copy(zeile, 8, Length(zeile))); //00581E72..1EAC
+          if DataModule2.Table13.FindKey([gvar_02536430]) then //00581EB1..1ED1 je->1EE2
+            DataModule2.Table13.Edit               //00581ED3..1EE0 jmp->1EEF
+          else
+            DataModule2.Table13.Append;            //00581EE2..1EEA
+          DataModule2.Table13Ort.AsString := gvar_02536430; //00581EEF..1EFF
+        end;
+        if (Pos('1 _FCNTY', zeile) > 0) and        //00581F05..1F14 jle->1F63
+           (Trim(gvar_02536430) <> '') then        //00581F16..1F2D jbe->1F63
+          DataModule2.Table13Lkr.AsString :=
+            Copy(zeile, 10, Length(zeile));        //00581F2F..1F5D
+        if (Pos('1 _FCTRY', zeile) > 0) and        //00581F63..1F72 jle->1FC1
+           (Trim(gvar_02536430) <> '') then        //00581F74..1F8B jbe->1FC1
+          DataModule2.Table13Land.AsString :=
+            Copy(zeile, 10, Length(zeile));        //00581F8D..1FBB
+        if (Pos('1 _ABBR', zeile) > 0) and         //00581FC1..1FD0 jle->201F
+           (Trim(gvar_02536430) <> '') then        //00581FD2..1FE9 jbe->201F
+          DataModule2.Table13Abk.AsString :=
+            Copy(zeile, 9, Length(zeile));         //00581FEB..2019
+        if (Pos('1 POST', zeile) > 0) or           //0058201F..202E jg->2041
+           (Pos('1 _FPOST', zeile) > 0) then       //00582030..203F jle->208E
+          if Trim(gvar_02536430) <> '' then        //00582041..2058 jbe->208E
+            DataModule2.Table13PLZ.AsString :=
+              Copy(zeile, 8, Length(zeile));       //0058205A..2088
+        if (Pos('1 _FSTAE', zeile) > 0) and        //0058208E..209D jle->20EC
+           (Trim(gvar_02536430) <> '') then        //0058209F..20B6 jbe->20EC
+          DataModule2.Table13Bland.AsString :=
+            Copy(zeile, 10, Length(zeile));        //005820B8..20E6
+        if (Pos('1 _GOV', zeile) > 0) and          //005820EC..20FB jle->214A
+           (Trim(gvar_02536430) <> '') then        //005820FD..2114 jbe->214A
+          DataModule2.Table13Maid.AsString :=
+            Copy(zeile, 17, Length(zeile));        //00582116..2144
+        if (Pos('2 LONG ', zeile) > 0) and         //0058214A..2159 jle->21A8
+           (Trim(gvar_02536430) <> '') then        //0058215B..2172 jbe->21A8
+          DataModule2.Table13Lg.AsString :=
+            Copy(zeile, 8, Length(zeile));         //00582174..21A2
+        if (Pos('2 LATI ', zeile) > 0) and         //005821A8..21B7 jle->2206
+           (Trim(gvar_02536430) <> '') then        //005821B9..21D0 jbe->2206
+          DataModule2.Table13Bg.AsString :=
+            Copy(zeile, 8, Length(zeile));         //005821D2..2200
+        ReadLn(gvar_02536670, zeile);              //00582206..221D @ReadLString+@ReadLn+@IOTest
+        zsa(zeile, zst);                           //00582222..222D
+        zeile := zst;                              //00582232..223B
+        if Pos('0 TRLR', zeile) > 0 then Break;    //00582240..224F jg->2289
+        { The original sets the low word of gvar_02536844 to $2A01; the
+          reconstruction writes the complete value. Deviation with no
+          visible effect. }
+        gvar_02536844 := $2A01;                    //00582251
+      end;
+    end;
+    if DataModule2.Table13.State in [dsEdit, dsInsert] then //00582289..229D jae->22A7
+      DataModule2.Table13.Post;                    //0058229F..22A1
+    if gvar_02536844 = 0 then                      //005822A7..22AE jne->22FB
+    begin
+      ReadLn(gvar_02536670, zeile);                //005822B0..22C7 @ReadLString+@ReadLn+@IOTest
+      zsa(zeile, zst);                             //005822CC..22D7
+      zeile := zst;                                //005822DC..22E5
+      if Pos('0 TRLR', zeile) > 0 then Break;      //005822EA..22F9 jg->2317
+    end;
+    gvar_02536844 := 0;                            //005822FB
+  end;
+  CloseFile(gvar_02536670);                        //00582317..2321 @Close+@IOTest
+  Form1.Label18.Visible := False;                  //00582326..2335 SetVisible(0)
+  Form1.listen_akt;                                //0058233A..2341
+  Form1.Label19.Visible := False;                  //00582346..2355
+  Form1.anzeigen;                                  //0058235A..2361
+  Screen.Cursor := crDefault;                      //00582366..236F xor edx
+  { SEH-Rahmen/Epilog (00582374..23F6: xor eax,eax, SEH-Freigabe, 7x @LStrArrayClr
+    ab [ebp-418]/[ebp-288]/[ebp-1E0]/[ebp-0F4]/[ebp-38]/[ebp-2C]/[ebp-10],
+    823E9 jmp @HandleFinally, 823EE jmp 82381, Epilog pop edi/esi/ebx,
+    mov esp,ebp, pop ebp, ret) - nicht transkribiert. }
+  {GNC11}
 end;
 
 procedure TForm3.gedein2;

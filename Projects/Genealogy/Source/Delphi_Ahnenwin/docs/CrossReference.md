@@ -329,7 +329,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `Chan`  @`0057CC58`
   - done `Note`  @`0057CF58`
   - done `famn`  @`0057D560`
-  - open `gedein_neu`  @`0057EDEC`
+  - done `gedein_neu`  @`0057EDEC`
   - done `sub_00582C24`  @`00582C24`
   - done `ansl`  @`005832F8`
   - done `ans`  @`005836E8`
