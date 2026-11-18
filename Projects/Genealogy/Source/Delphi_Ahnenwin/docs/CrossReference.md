@@ -10,12 +10,12 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit1
 
-- methods: 283, reconstructed: 269, open: 14
+- methods: 283, reconstructed: 272, open: 11
 
   - done `sub_005D3148`  @`005D3148`
   - done `sub_005D31EC`  @`005D31EC`
   - done `sdx`  @`005D34D8`
-  - open `sub_005D39D8`  @`005D39D8`
+  - done `sub_005D39D8`  @`005D39D8`
   - done `sub_005D3A70`  @`005D3A70`
   - done `drucken2Click`  @`005D3ED0`
   - done `gridanp`  @`005D3EF8`
@@ -51,7 +51,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - open `Prfen1Click`  @`005D9778`
   - done `Edit1DblClick`  @`005DCBD4`
   - done `Edit2DblClick`  @`005DCC94`
-  - open `datsich`  @`005DCD54`
+  - done `datsich`  @`005DCD54`
   - open `Sikoein`  @`005DF5EC`
   - done `SicherungsDateieinlesen1Click`  @`005E1D2C`
   - done `Datensichern1Click`  @`005E1DC0`
@@ -61,7 +61,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `TabSheet6Enter`  @`005E28CC`
   - done `DBGrid1DblClick`  @`005E2C2C`
   - done `roem`  @`005E2CA4`
-  - open `spitzbas`  @`005E3454`
+  - done `spitzbas`  @`005E3454`
   - done `basahnen`  @`005E4AB8`
   - done `aspitz`  @`005E4C30`
   - done `pspitz`  @`005E4D60`
@@ -484,7 +484,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit13
 
-- methods: 53, reconstructed: 52, open: 1
+- methods: 53, reconstructed: 53, open: 0
 
   - done `sub_005637C4`  @`005637C4`
   - done `sub_00563868`  @`00563868`
@@ -536,7 +536,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `sam2`  @`00572D98`
   - done `Button8Click`  @`005730D4`
   - done `Button7Click`  @`00573120`
-  - open `sub_0057316C`  @`0057316C`
+  - done `sub_0057316C`  @`0057316C`
   - done `sub_00573314`  @`00573314`
   - done `SpeedButton3Click`  @`00573450`
 
@@ -731,9 +731,9 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit26
 
-- methods: 8, reconstructed: 7, open: 1
+- methods: 8, reconstructed: 8, open: 0
 
-  - open `sub_0054F810`  @`0054F810`
+  - done `sub_0054F810`  @`0054F810`
   - done `los`  @`0054F8B4`
   - done `RadioButton3Click`  @`0054F9C8`
   - done `SpeedButton1Click`  @`0054F9FC`
@@ -869,4 +869,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 623, in Arbeit: 1, open: 35
+- methods: 659, reconstructed: 628, in Arbeit: 1, open: 30

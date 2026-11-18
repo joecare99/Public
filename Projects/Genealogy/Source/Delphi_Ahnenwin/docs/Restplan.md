@@ -17,22 +17,22 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 
 | # | Method | Unit | Lines |
 |---|--------|------|------:|
-| 1 | `sub_005D39D8`  | Unit1  | 46  |
-| 2 | `sub_0054F810`  | Unit26 | 60  |
-| 3 | `sub_00573314`  | Unit13 | 72  |
-| 4 | `symm`          | Unit13 | 95  |
-| 5 | `sub_0057316c`  | Unit13 | 117 |
-| 6 | `sub_0056897c`  | Unit13 | 117 |
-| 7 | `sub_00568c9c`  | Unit13 | 127 |
-| 8 | `sub_00568b04`  | Unit13 | 129 |
-| 9 | `sub_00568e3c`  | Unit13 | 175 |
-| 10| `vorf_erm2`     | Unit13 | 225 |
-| 11| `sub_005BEF5C`  | Unit3  | 308 |
+| 1 | `sub_005D39D8`  | Unit1  | 46  | **</br> COMPLETED 2026-11-18 (build green)** |
+| 2 | `sub_0054F810`  | Unit26 | 60  | **</br> COMPLETED 2026-11-18 (build green, nested `Code` in `nach_erm`)** |
+| 3 | `sub_00573314`  | Unit13 | 72  | **</br> COMPLETED 2026-11-18 (build green, nested in `SpeedButton3Click`)** |
+| 4 | `symm`          | Unit13 | 95  | **</br> COMPLETED 2026-11-18 (build green)** |
+| 5 | `sub_0057316c`  | Unit13 | 117 | **</br> COMPLETED 2026-11-18 (build green, nested `WritePage` in `SpeedButton3Click`)** |
+| 6 | `sub_0056897c`  | Unit13 | 117 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 7 | `sub_00568c9c`  | Unit13 | 127 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 8 | `sub_00568b04`  | Unit13 | 129 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 9 | `sub_00568e3c`  | Unit13 | 175 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 10| `vorf_erm2`     | Unit13 | 225 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 11| `sub_005BEF5C`  | Unit3  | 308 | **</br> COMPLETED 2026-11-18 (build green)** |
 | 12| `sub_00582C24`  | Unit3  | 411 | **</br> COMPLETED 2026-10-29 (build green)** |
 | 13| `nam2`          | Unit17 | 486 | **</br> COMPLETED 2026-10-30 (build green)** |
 | 14| `fambeltern`    | Unit17 | 509 | **</br> COMPLETED 2026-10-30 (build green)** |
-| 15| `nr1`           | Unit13 | 658 |
-| 16| `nr2`           | Unit13 | 665 |
+| 15| `nr1`           | Unit13 | 658 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 16| `nr2`           | Unit13 | 665 | **</br> COMPLETED 2026-11-18 (build green)** |
 | 17| `sub_005BC604`  | Unit3  | 1096 | **</br> COMPLETED 2026-10-29 (build green)** |
 | 18| `sub_005BE4B8`  | Unit3  | 645 | **</br> COMPLETED 2026-10-28 (build green)** |
 | 19| `illki`         | Unit3  | 687 | **</br> COMPLETED 2026-10-30 (build green)** |
@@ -291,7 +291,8 @@ independently before the next.
 
 - Unit3  `sub_005BEF5C` 308, `sub_00582C24`  411, `sub_005BC604` 1096,
          `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
-- Unit1  `datsich`, `Sikoein`, `spitzbas`, `listen_akt` (size unconfirmed)
+- Unit1  `datsich` 2157 (done), `Sikoein` 2746, `spitzbas` 1257 (done),
+         `listen_akt` 1681
 - Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
          `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
 - Unit17 `gebstvn`      1281, `gebst`   1248
