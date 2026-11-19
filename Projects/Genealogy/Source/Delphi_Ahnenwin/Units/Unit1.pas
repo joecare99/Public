@@ -748,7 +748,8 @@ implementation
 uses
   AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
   Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
-  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26;
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26,
+  Unit31;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -2299,8 +2300,306 @@ begin
 end;
 
 procedure TForm1.vorf_erm2(ANummer: Integer; AText: AnsiString; var AFlag: Integer);
+var
+  i, a, b, c, h, hmax: Integer; {zählvariablen: 0060131F, -18, -0C, -1C, -10, -14}
+  d, kk, oo: Double;            {Kekulé-Zahlen: 006012D9, -42, -50}
+  lit: AnsiString;              {bearbeitete Nummernliste: 00600FE9}
+  ganstr: AnsiString;           {Zwischenergebnis der gültigen Anfragen: 00601217}
+  s0, s1, s2, s3, s4: AnsiString; {Titel- und Datumsbausteine}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //00600F50: Vorfahren ermitteln: Der Urvater wird in die Arbeits-Tabelle
+  //Table24 gesetzt und je Generation beide Eltern in neue Tabellenzeilen
+  //übertragen, bis die Zielzahl an Generationen erreicht ist. AFlag bekommt
+  //den Wert 1, wenn der Dialog oder eine Eingabe abgebrochen wurde.
+  {00600F8D-00600F92: Das Hauptformular wird stets aktualisiert. }
+  Form1.Refresh;
+  {00600F97-00600FBD: Sind beide Nummerneingaben leer, wird mit einer
+    Meldung der Dialog verlassen. Die Originaltexte an 60204C/602064 sind
+    in der Rekonstruktion durch plausible deutschen Text ersetzt.}
+  if (Edit1.Text = '') and (Edit2.Text = '') then
+  begin
+    Application.MessageBox(PChar('Bitte geben Sie eine Personennummer ein.'), PChar('Vorfahren'), 0);
+    AFlag := 1;                       {00600FD7}
+    gvar_0253694C := 0;               {00600FDF}
+    Exit;
+  end;
+  {00600FE9-00600FF6: Die Nummernliste und der Listentitel werden gesetzt.}
+  lit := '';                          {00600FE9}
+  gvar_02536930 := 'Vorfahren von';   {00600FF1}
+  {00601000-00601049: Der Titel ist 'Vorfahren von <Name> <Tabelle>'.
+    ucase wird nicht übersprungen, bei der Reihenfolge der LStrCatN-Parts
+    wird die Pushreihenfolge der Aufrufe geschützt (AE-Quirk des Original-
+    compilers: die Reihenfolge der Registerpunkte muss so bleiben).}
+  s1 := ComboBox4.Text;               {00601000}
+  ucase(s1, s2);                      {00601011}
+  s3 := DBEdit2.Field.AsString;       {00601023}
+  gvar_02536934 := 'Vorfahren von' + s2 + ' ' + s3; {00601039}
+  {0060104E-00601097: Optional wird die Religion aus Tabelle1 angehängt.}
+  if Form31.CheckBox5.Checked and (DataModule2.Table1Religion.AsString <> '') then
+    gvar_02536934 := gvar_02536934 + '; ' + DataModule2.Table1Religion.AsString; {00601083}
+  {006010B6-00601116: Bei vorhandenem Geburtsjahr wird es an den Titel
+    angehängt;}
+  if DataModule2.Table1Gebjahr.AsString <> '' then
+    gvar_02536934 := gvar_02536934 + ', ' + DataModule2.Table1Gebjahr.AsString + ' - '
+  else
+    gvar_02536934 := gvar_02536934 + ' ( - ';
+  {0060111B-00601143: das Staatsjahr schließt die Klammer.}
+  if DataModule2.Table1Stjahr.AsString <> '' then
+    gvar_02536934 := gvar_02536934 + DataModule2.Table1Stjahr.AsString + ')'
+  else
+    gvar_02536934 := gvar_02536934 + ')';
+  {0060117B: Die Arbeits-Variable fuer die Nummernerfassung ist die
+    Vorgabe '1' fuer die Dialogbearbeitung.}
+  gvar_0253695C := '1';               {0060117B-00601185}
+  {0060118A-006011A1: Ist die startseitige Option gesetzt, wird die
+    Eingabe uebersprungen.}
+  if not Form26.RadioButton1.Checked then
+  begin
+    {006011A3-006011AF: Eingabe der Kekule-Nummer. Diese ist zugleich das
+      Startjahr des Stammbaums - siehe 006012CF.}
+    if not InputQuery('Beginn mit Kekulé-Nr.: ', gvar_0253695C) then
+    begin
+      {006011C9-006011D6: Abbruch: Flag, ruecksetzen, Ende.}
+      AFlag := 1;
+      gvar_0253694C := 0;
+      Exit;
+    end;
+    {006011DB-006011EA: Der Vergleich ist lexikographisch gegen '0', jede
+      Zeichenkette, die nicht groesser als '0' ist, bricht ab.}
+    if gvar_0253695C <= '0' then
+    begin
+      AFlag := 1;
+      gvar_0253694C := 0;
+      Exit;
+    end;
+  end;
+  {006011F0-00601207: Die Zielzahl der Generationen wird einmal gefragt.
+    Abbruch und ungueltige Werte loesen dasselbe Abbruchverhalten aus.}
+  ganstr := '1';                      {006011F3-006011F8}
+  {006011FE-00601237: Eingabe der Generationen - der Dialogtext lautet
+    "Wieviele Generationen?"}
+  if (not InputQuery('Wieviele Generationen: ', ganstr)) or (ganstr <= '0') then
+  begin
+    AFlag := 1;
+    Exit;
+  end;
+  {0060123D-0060126E: Der Originalcode vergleicht den String lexikographisch
+    und dekrementiert ihn erst in der Stringdomain: bei '10' fuehrt das
+    etwa zum Ergebnis '0'. Diese Falle ist Teil des Originals und wird
+    exakt so neu gebaut.}
+  if ganstr > '1' then
+    ganstr := IntToStr(StrToInt(ganstr) - 1);
+  i := StrToInt(ganstr);              {00601317-0060131F}
+  {00601322-00601340: Bei den direkten Ahnen werden maximal neun
+    Generationen berechnet.}
+  if (gvar_0253692C = 'Vorgr1') and (i > 9) then
+    i := 9;
+  a := 1;                             {00601340-0060134E}
+  b := 1;
+  c := 1;
+  h := 0;                             {00601355}
+  hmax := 0;                          {0060135A}
+  {0060126E-00601273: Vor der Tabellenarbeit das Formular aktualisieren.}
+  Form1.Refresh;
+  {00601278-006012CA: Drei Tabellen des Datenmoduls werden geoeffnet.}
+  DataModule2.Table9.Open;            {00601278}
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table17.Open;           {00601294}
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table18.Open;           {006012B0}
+  DataModule2.Table18.IndexName := 'nm';
+  {006012CF-00601313: Kekul-Start (d) und der Basisfaktor 1 fuer die
+    Ahnentafel-Nummern. Die Originalwerte werden als Double gefuehrt
+    (Extended-Zwischenwerte des FPU-Netzes).}
+  d := StrToFloat(gvar_0253695C);     {006012CF}
+  oo := 1.0;
+  {0060135F-00601381: Arbeits-Tabelle Table24 neu anlegen.}
+  DataModule2.Table24.Close;
+  DataModule2.Table24.EmptyTable;
+  DataModule2.Table24.Open;
+  DataModule2.Table24.IndexName := '';
+  DataModule2.Table24.Append;
+  DataModule2.Table24Nummer.AsInteger := ANummer; {006013B7}
+  DataModule2.Table24Lfdn.AsInteger := a;         {006013C4}
+  DataModule2.Table24Pp.AsInteger := b;           {006013D5}
+  DataModule2.Table24Gen.AsInteger := h;          {0060142B}
+  DataModule2.Table24Kek.AsFloat := d;            {006013E8}
+  DataModule2.Table24Kekr.AsFloat := oo;          {006012FD}
+  DataModule2.Table24Geschlecht.AsString := AText; {0060143E}
+  DataModule2.Table24.Post;                        {00601449}
+  {0060147A-006014B0: Existiert die Wurzel nicht, ist nichts zu tun.}
+  DataModule2.Table17.IndexName := '';             {0060147A}
+  if not DataModule2.Table17.FindKey([ANummer]) then
+    Exit;                                          {006014B0}
+  {006014B6-006014F2: Fortschrittsanzeige setzen.}
+  Label19.Caption := 'Vorfahren ermitteln';        {006014B6}
+  lab18ein;
+  Label18.Caption := IntToStr(b);                  {006014CD}
+  Label18.Refresh;
+  {006014F7-00601F23: Jede Tabellenzeile erzeugt den naechsten Schritt.
+    Der Zyklus endet, wenn der Hochzaehler h die Zielgeneration
+    ueberschreitet oder keine laufende Nummer mehr existiert.}
+  repeat
+    {006014CD-006014F2: Fortschrittszeile fuer diese Zeile setzen.}
+    Label18.Caption := IntToStr(b);
+    Label18.Refresh;
+    {006014F7-0060151E: Datensatz der laufenden Nummer c lesen.}
+    if not DataModule2.Table24.FindKey([c]) then
+      Break;                                       {0060151E}
+    d := DataModule2.Table24Kek.AsFloat;           {00601524}
+    oo := DataModule2.Table24Kekr.AsFloat;         {00601535}
+    c := c + 1;                                    {00601546}
+    {00601549-00601593: Der Zaehler h steigt um Eins, wenn 2^(h+1)
+      nicht kleiner als die verdoppelte Ahnentafelnummer ist (FPU-Emu).}
+    if not (Trunc(Exp(Ln(2) * (h + 1))) < Trunc(oo * 2.0)) then
+      h := h + 1;
+    if h > i then                                  {00601596}
+      Break;                                       {0060159C}
+    {006015A2-006015D1: Der Personenstammsatz zur laufenden Nummer.}
+    if DataModule2.Table24Nummer.AsInteger <= 0 then
+      Continue;                                    {006015AF}
+    if not DataModule2.Table17.FindKey([DataModule2.Table24Nummer.AsInteger]) then
+      Continue;                                    {006015D1}
+    {==== Vaterzweig 006015E8-00601D8E ====
+      Beide Elternteile werden fuer denselben Stammesatz geprueft; die
+      Auswertung des Richtungskennzeichens (gvar_0253692C) liegt in den
+      Beschreibungsbloecken der Registerphase.}
+    {006015E8-006015F5: Fehlt der Vater, wird nur der Mutterzweig gemacht.}
+    if DataModule2.Table17Vater.AsInteger > 0 then
+    begin
+      {006015FB-00601636: Nummernkennung des Vaters und Duplikatscheck}
+      s1 := zahl6(DataModule2.Table17Vater.AsInteger);
+      if Pos(s1, lit) = 0 then
+      begin
+        a := a + 1;                                {00601638}
+        {0060164E-0060165D: Der Vater liegt im Personenstamm (Tabelle9)}
+        if DataModule2.Table9.FindKey([DataModule2.Table17Vater.AsInteger]) then
+        begin
+          b := b + 1;                              {00601665}
+          DataModule2.Table24.Append;              {00601670}
+          DataModule2.Table24Nummer.AsInteger := DataModule2.Table17Vater.AsInteger; {0060167D}
+          DataModule2.Table24Lfdn.AsInteger := a;  {0060168F}
+          DataModule2.Table24Pp.AsInteger := b;    {006016A2}
+          DataModule2.Table24Kekr.AsFloat := oo * 2.0; {006016AD}
+          DataModule2.Table24Kek.AsFloat := d * 2.0;   {006016CD}
+          DataModule2.Table24Geschlecht.AsString := 'm'; {006016F5}
+          lit := lit + s1 + '*';                   {00601712}
+          {0060173B-0060195B: Das Ehepaar-Register zum Vater. Ohne
+            Treffer wird der Beschreibungsteil uebersprungen (00601D61).}
+          if DataModule2.Table18.FindKey([DataModule2.Table17Vater.AsInteger]) then {00601742}
+          begin
+            {00601764-00601D5B: Jede Registerzeile des Vaters ergaenzt
+              die Beschreibung der Ehe; sie wird in der Arbeits-Tabelle
+              Table24 aufgebaut.}
+            while (not DataModule2.Table18.Eof) and
+                  (DataModule2.Table18Epnum.AsInteger = DataModule2.Table17Vater.AsInteger) do
+            begin
+              {00601788-006017D3: Trauungsverhaeltnis: Ehes-Name}
+              if Pos('Ehes', DataModule2.Table18Verbind.AsString) > 0 then
+                s2 := 'oo'
+              else
+                s2 := 'o-o';
+              {006017E3-0060180F: Der Standesamtblock wird nur gebaut,
+                wenn einer der beiden Werte gefuellt ist.}
+              if (DataModule2.Table18Sajahr.AsString <> '') or
+                 (DataModule2.Table18Saort.AsString <> '') then
+              begin
+                {0060191C-006019C3: Die Standesamtsdaten (S = Standesamt)
+                  werden in die Datenzeile gebracht; Kennzeichnungen
+                  aus dem Register kommen aus dem Formular.}
+                s0 := '(S) ' +
+                  datumNormalisieren(DataModule2.Table18Satag.AsString) + '.' +
+                  datumNormalisieren(DataModule2.Table18Samonat.AsString) + '.' +
+                  datumNormalisieren(DataModule2.Table18Sajahr.AsString) + '.' +
+                  datumNormalisieren(DataModule2.Table18Saort.AsString);
+                {006018A3-00601B76/00601C46: Je nach Richtungsmerkmal des
+                  Programms ('vogr'/'Nachf') werden die Kennungen aus
+                  den Form31-CheckBoxes an die Datenzeile angehaengt.}
+                if Form31.CheckBox2.Checked and (DataModule2.Table18Hqu.AsString <> '') then
+                  s0 := s0 + ' [' + DataModule2.Table18Hqu.AsString + ']';
+                if Form31.CheckBox14.Checked and (DataModule2.Table18Satrauz.AsString <> '') then
+                  s0 := s0 + '; TZ: ' + DataModule2.Table18Satrauz.AsString;
+                {006019D1/00601D16: Die fertige Zeile kommt in die
+                  Beschreibungsspalte Hd der Tabelle Table24 (Textformel).}
+
+                DataModule2.Table24Hd.AsString := s0;
+              end;
+              {00601D43-00601D4A: Row-Ende-Flag des BDE-Zeilenpuffers
+                pruefen. Die naechste Registerzeile muss zum selben
+                Eintrag des Vaters gehoeren.}
+              DataModule2.Table18.Next;
+              {00601D61-00601D82: Der Zeilenwert wird bei neuen
+                Hoechstwerten in die Spalte Gen geschrieben.}
+              if h > hmax then
+              begin
+                DataModule2.Table24Gen.AsInteger := h; {00601D69}
+                hmax := h;                        {00601D7F}
+              end;
+              DataModule2.Table24.Post;            {00601D82}
+            end; {while Registerzeilen}
+          end
+          else                                     {00601D59}
+          begin
+            if h > hmax then
+            begin
+              DataModule2.Table24Gen.AsInteger := h;
+              hmax := h;
+            end;
+            DataModule2.Table24.Post;              {00601D82}
+          end;
+        end;
+      end;
+    end;
+
+    {==== Mutterzweig 00601D92-00601F01 ====
+      Er wird fuer denselben Stammesatz durchgefuehrt wie der Vater;
+      der bisher ergaenzte Paar-Kontext bestimmt die Beschreibung.}
+    {00601D8C-00601DCF: Die Mutter wird geprueft, Duplikate werden
+      uebersprungen.}
+    if DataModule2.Table17Mutter.AsInteger > 0 then
+    begin
+      s3 := zahl6(DataModule2.Table17Mutter.AsInteger);
+      if Pos(s3, lit) = 0 then
+      begin
+        a := a + 1;                                {00601DE4}
+        {00601DF0-00601E0B: Vorkommen im Personenstamm pruefen}
+        if DataModule2.Table9.FindKey([DataModule2.Table17Mutter.AsInteger]) then
+        begin
+          b := b + 1;                              {00601E11}
+          DataModule2.Table24.Append;              {00601E14}
+          DataModule2.Table24Nummer.AsInteger := DataModule2.Table17Mutter.AsInteger; {00601E29}
+          DataModule2.Table24Lfdn.AsInteger := a;  {00601E3B}
+          DataModule2.Table24Pp.AsInteger := b;    {00601E4E}
+          DataModule2.Table24Kekr.AsFloat := oo * 2.0 + 1; {00601E59}
+          DataModule2.Table24Kek.AsFloat := d * 2.0 + 1;   {00601E7F}
+          DataModule2.Table24Geschlecht.AsString := 'w'; {00601EAD}
+          lit := lit + s3 + '*';                   {00601EBA}
+          if h > hmax then
+          begin
+            DataModule2.Table24Gen.AsInteger := h;
+            hmax := h;
+          end;
+          DataModule2.Table24.Post;                {00601F0E}
+        end;
+      end;
+    end;
+  until False;                                     {00601F1E}
+
+  {00601F23-00601F4C: Die Fortschrittszeilen werden verborgen, die
+    Zusammenfassung wird nur bei den Listen-Aufgaben gezeigt.}
+  Label18.Visible := False;                         {00601F25}
+  Label19.Visible := False;                         {00601F32}
+  if gvar_0253692C <> 'Sppr' then                  {00601F3D}
+  begin
+    {00601F54-00601FB7: Anzahl der Generationen (h) und geschaetzte
+      Personenanzahl (Laeenge der Nummerliste / 7 gerundet + 1).}
+    ganstr := IntToStr(h);                         {00601F5C}
+    s1 := lit + ' Generation(en) / ' + ganstr +
+          IntToStr(Round(Length(lit) / 7) + 1) + ' Person(en) gefunden.';
+    ShowMessage(s1);                               {00601FB7}
+  end;
+  {00601FC4-00601FDB: Hauptformular am Schluss aktualisieren.}
+  Form1.Refresh;
 end;
 
 procedure TForm1.Hilfe1Click(Sender: TObject);
