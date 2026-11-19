@@ -10,7 +10,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit1
 
-- methods: 283, reconstructed: 273, open: 10
+- methods: 283, reconstructed: 274, open: 9
 
   - done `sub_005D3148`  @`005D3148`
   - done `sub_005D31EC`  @`005D31EC`
@@ -133,7 +133,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `QRDefault`  @`005F0170`
   - done `frbestimmtenOrt1Click`  @`005F02D8`
   - done `allePersonen1Click`  @`005F0AA4`
-  - open `listen_akt`  @`005F0AF0`
+  - done `listen_akt`  @`005F0AF0`
   - done `Probandenname1Click`  @`005F26E0`
   - done `allePersonen2Click`  @`005F2E20`
   - done `Browser`  @`005F2E6C`
@@ -589,12 +589,12 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit17
 
-- methods: 10, reconstructed: 7, open: 3
+- methods: 10, reconstructed: 9, open: 1
 
   - done `nam2`  @`0053CC38`
   - done `sub_0053D06C`  @`0053D06C`
-  - open `gebstvn`  @`0053D358`
-  - open `gebst`  @`0053E878`
+  - done `gebstvn`  @`0053D358`
+  - done `gebst`  @`0053E878`
   - done `fambeltern`  @`0053FD18`
   - done `BitBtn2Click`  @`005405A0`
   - open `BitBtn1Click`  @`005405C4`
@@ -869,4 +869,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 629, in Arbeit: 1, open: 29
+- methods: 659, reconstructed: 632, in Arbeit: 1, open: 26

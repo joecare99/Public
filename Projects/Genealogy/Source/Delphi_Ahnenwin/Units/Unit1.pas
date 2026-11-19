@@ -907,7 +907,7 @@ begin
 
   //005F0B9E: alle Ziel-Listen leeren. Die Comboboxen werden - wie im
   //Original - ueber den globalen Form1-Zeiger angesprochen, nicht ueber
-  //Self; ComboBox5 existiert ueberhaupt nicht.
+  //Self; ComboBox5 und ComboBox26 werden im Original nicht geleert.
   Form14.ListBox1.Clear;
   Form28.ListBox1.Clear;
   Form29.ListBox1.Clear;

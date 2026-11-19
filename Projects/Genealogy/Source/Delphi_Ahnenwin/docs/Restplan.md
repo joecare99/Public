@@ -292,10 +292,10 @@ independently before the next.
 - Unit3  `sub_005BEF5C` 308, `sub_00582C24`  411, `sub_005BC604` 1096,
          `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
 - Unit1  `datsich` 2157 (done), `Sikoein` 2746 (done), `spitzbas` 1257 (done),
-         `listen_akt` 1681
+         `listen_akt` 1681 (done)
 - Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
          `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
-- Unit17 `gebstvn`      1281, `gebst`   1248
+- Unit17 `gebstvn`      1281 (done), `gebst`   1248 (done)
 - Unit13 `vz2`  1206, `Nach_ern` 1396, `nz1` 1437, `nchf_neu`  1682
 - Unit19 `Namgeb`, `Namgv`, `alphlist`, `nachf` (sizes unconfirmed)
 - Unit1  `ExcelExport1Click` 1931, `famblattx_daten` 2020,
@@ -681,7 +681,7 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Flow: if Vater[538]>0 or Mutter[53C]>0 -> empty Table14.Append+Post + Inc(gvar_0061EFCC); Vater>0 -> Table3.FindKey + nam2(AIn+'Vater : ') + gebst(AIn+11 spaces) + gvar_0061EFCC+3 (order verbatim per LStrCat3 edx+ecx convention: AIn first, label second); Table10.IndexName='num' + FindKey([Table1Vater]) then while not Eof: Epnum[3B8]=Mutter -> Table14.Append + spouse line block; Table10.Next each round; Mutter>0 -> nam2/gebst mirror + gvar_0061EFCC+3.
 - Spouse-line ladder inside Epnum=Mutter: Pos('Ehes', Verbind[3E4])>0 -> (a) Saort[3DC]/Sajahr[3D8] nonempty -> Table13.FindKey([Saort]) + only when Sajahr<>'' line = AIn + '           oo (S) ' + sub_0053D06C(Satag[3D0]+'.'+Samonat[3D4]+'.'+Sajahr) + TrimRight(' '+Saort); (b) else Hort[3C8]/Hjahr[3C4] nonempty -> Table13.FindKey([Hort]) + only when Hjahr<>'' line with Htag[3BC]='HK' comparison -> '           oo ' plain else '           oo (K) ' + norm(date triplet) + TrimRight(' '+Hort); (c) else line = AIn+'            oo' (12 spaces). Pos('Ehes')<=0 (o-o path): Table13.FindKey([Hort]) then only when Trim(Verbind)<>'' line = AIn + '           (o-o ' + norm(H-tag triplet) + TrimRight(' '+Hort) + ')'. Table14.Post per matching row, faithfully even when nothing written.
 - New helper `procedure sub_0053D06C(ALine; var AErgebnis)` (Units\Unit17.pas, twin of sub_00576FF8/Unit3): date normalizer 0053D06C-0053D2F9 - '..'->'', 'HK'->'HK '+Copy(4,7), 'vo.r'->Copy(1,2)+Copy(4,1)+' '+RightStr(4), 'na.ch'->Copy(1,2)+Copy(4,2)+' '+RightStr(4), leading '.'/blank strip loop Copy(2,9), s[1]>'9' -> dot-strip + Insert(' ') before first char < ':'.
-- Signature correction: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358, 2-param) still TODO stub.
+- Signature corrections: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358) reconstructed as `gebstvn(AIn: AnsiString; AFlag: Integer)` - 2nd register param (ECX) is 0 at all 4 call sites (all inside `BitBtn1Click`) and never read in the body (dead-param quirk, documented in the header comment).
 - AHNGlobals fix: gvar_0061EFCC was AnsiString -> Integer (binary does `inc`/`add 3` - Familienblatt-Zeilenzaehler).
 - Uses extended by StrUtils (RightStr).
 - Verified: build.cmd -unit 17 -> SUCCESS (28735 lines, no Unit17 hints).
