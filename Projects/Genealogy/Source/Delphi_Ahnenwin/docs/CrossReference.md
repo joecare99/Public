@@ -10,7 +10,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit1
 
-- methods: 283, reconstructed: 274, open: 9
+- methods: 283, reconstructed: 275, open: 8
 
   - done `sub_005D3148`  @`005D3148`
   - done `sub_005D31EC`  @`005D31EC`
@@ -176,7 +176,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `ehtest`  @`005FE42C`
   - open `geschachtelt1Click`  @`005FE844`
   - done `GrafikI1Click`  @`00600D58`
-  - open `vorf_erm2`  @`00600F50`
+  - done `vorf_erm2`  @`00600F50`
   - done `Grafikalt1Click`  @`006022BC`
   - done `Hilfe1Click`  @`006023F4`
   - done `Proband1Click`  @`0060243C`

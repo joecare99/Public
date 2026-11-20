@@ -2356,8 +2356,9 @@ begin
   if not Form26.RadioButton1.Checked then
   begin
     {006011A3-006011AF: Eingabe der Kekule-Nummer. Diese ist zugleich das
-      Startjahr des Stammbaums - siehe 006012CF.}
-    if not InputQuery('Beginn mit Kekulé-Nr.: ', gvar_0253695C) then
+      Startjahr des Stammbaums - siehe 006012CF. Der Originalcode hat den
+      Wert-String in ECX an die Funktion uebergeben}
+    if not InputQuery('Vorfahren', 'Beginn mit Kekulé-Nr.: ', gvar_0253695C) then
     begin
       {006011C9-006011D6: Abbruch: Flag, ruecksetzen, Ende.}
       AFlag := 1;
@@ -2378,7 +2379,7 @@ begin
   ganstr := '1';                      {006011F3-006011F8}
   {006011FE-00601237: Eingabe der Generationen - der Dialogtext lautet
     "Wieviele Generationen?"}
-  if (not InputQuery('Wieviele Generationen: ', ganstr)) or (ganstr <= '0') then
+  if (not InputQuery('Vorfahren', 'Wieviele Generationen: ', ganstr)) or (ganstr <= '0') then
   begin
     AFlag := 1;
     Exit;
@@ -2507,11 +2508,15 @@ begin
                 {0060191C-006019C3: Die Standesamtsdaten (S = Standesamt)
                   werden in die Datenzeile gebracht; Kennzeichnungen
                   aus dem Register kommen aus dem Formular.}
-                s0 := '(S) ' +
-                  datumNormalisieren(DataModule2.Table18Satag.AsString) + '.' +
-                  datumNormalisieren(DataModule2.Table18Samonat.AsString) + '.' +
-                  datumNormalisieren(DataModule2.Table18Sajahr.AsString) + '.' +
-                  datumNormalisieren(DataModule2.Table18Saort.AsString);
+                s0 := '(S) ';
+                datumNormalisieren(DataModule2.Table18Satag.AsString, s4);    {0060195B}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Samonat.AsString, s4); {00601971}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Sajahr.AsString, s4);  {0060198E}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Saort.AsString, s4);   {006019AB}
+                s0 := s0 + s4;
                 {006018A3-00601B76/00601C46: Je nach Richtungsmerkmal des
                   Programms ('vogr'/'Nachf') werden die Kennungen aus
                   den Form31-CheckBoxes an die Datenzeile angehaengt.}

@@ -293,7 +293,7 @@ independently before the next.
          `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
 - Unit1  `datsich` 2157 (done), `Sikoein` 2746 (done), `spitzbas` 1257 (done),
          `listen_akt` 1681 (done)
-- Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
+- Unit1  `vorf_erm2`     1076 (done), `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
          `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
 - Unit17 `gebstvn`      1281 (done), `gebst`   1248 (done)
 - Unit13 `vz2`  1206, `Nach_ern` 1396, `nz1` 1437, `nchf_neu`  1682
