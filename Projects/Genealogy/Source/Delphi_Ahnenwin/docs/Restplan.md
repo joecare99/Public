@@ -305,7 +305,7 @@ independently before the next.
 - Unit3  `gedein_neu`, `gedein2`, `gedein`, `gedaus`, `gedausx`,
          `ahndosein`, `osbein`, `adrschreib`, `gedausxv`, `gedausv`,
          `gedein_5`, `ofb3`, `ofb2` (sizes unconfirmed â€” the GEDCOM I/O chain)
-- Unit17 `BitBtn1Click` 4341
+- Unit17 `BitBtn1Click` 4341 (done)
 - Single-`Click` handlers in Unit16, Unit18, Unit20, Unit22, Unit24, Unit33
 
 ## Phase 3 â€” the GEDCOM I/O chain (Unit3, 13 methods)

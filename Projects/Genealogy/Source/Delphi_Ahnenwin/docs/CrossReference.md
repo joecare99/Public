@@ -589,7 +589,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit17
 
-- methods: 10, reconstructed: 9, open: 1
+- methods: 10, reconstructed: 10, open: 0
 
   - done `nam2`  @`0053CC38`
   - done `sub_0053D06C`  @`0053D06C`
@@ -597,7 +597,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `gebst`  @`0053E878`
   - done `fambeltern`  @`0053FD18`
   - done `BitBtn2Click`  @`005405A0`
-  - open `BitBtn1Click`  @`005405C4`
+  - done `BitBtn1Click`  @`005405C4`
   - done `RadioButton1Click`  @`00545014`
   - done `RadioButton2Click`  @`0054510C`
   - done `FormShow`  @`00545204`
