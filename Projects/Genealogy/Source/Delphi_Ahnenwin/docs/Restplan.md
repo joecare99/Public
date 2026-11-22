@@ -17,22 +17,22 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 
 | # | Method | Unit | Lines |
 |---|--------|------|------:|
-| 1 | `sub_005D39D8`  | Unit1  | 46  |
-| 2 | `sub_0054F810`  | Unit26 | 60  |
-| 3 | `sub_00573314`  | Unit13 | 72  |
-| 4 | `symm`          | Unit13 | 95  |
-| 5 | `sub_0057316c`  | Unit13 | 117 |
-| 6 | `sub_0056897c`  | Unit13 | 117 |
-| 7 | `sub_00568c9c`  | Unit13 | 127 |
-| 8 | `sub_00568b04`  | Unit13 | 129 |
-| 9 | `sub_00568e3c`  | Unit13 | 175 |
-| 10| `vorf_erm2`     | Unit13 | 225 |
-| 11| `sub_005BEF5C`  | Unit3  | 308 |
+| 1 | `sub_005D39D8`  | Unit1  | 46  | **</br> COMPLETED 2026-11-18 (build green)** |
+| 2 | `sub_0054F810`  | Unit26 | 60  | **</br> COMPLETED 2026-11-18 (build green, nested `Code` in `nach_erm`)** |
+| 3 | `sub_00573314`  | Unit13 | 72  | **</br> COMPLETED 2026-11-18 (build green, nested in `SpeedButton3Click`)** |
+| 4 | `symm`          | Unit13 | 95  | **</br> COMPLETED 2026-11-18 (build green)** |
+| 5 | `sub_0057316c`  | Unit13 | 117 | **</br> COMPLETED 2026-11-18 (build green, nested `WritePage` in `SpeedButton3Click`)** |
+| 6 | `sub_0056897c`  | Unit13 | 117 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 7 | `sub_00568c9c`  | Unit13 | 127 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 8 | `sub_00568b04`  | Unit13 | 129 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 9 | `sub_00568e3c`  | Unit13 | 175 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 10| `vorf_erm2`     | Unit13 | 225 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 11| `sub_005BEF5C`  | Unit3  | 308 | **</br> COMPLETED 2026-11-18 (build green)** |
 | 12| `sub_00582C24`  | Unit3  | 411 | **</br> COMPLETED 2026-10-29 (build green)** |
 | 13| `nam2`          | Unit17 | 486 | **</br> COMPLETED 2026-10-30 (build green)** |
 | 14| `fambeltern`    | Unit17 | 509 | **</br> COMPLETED 2026-10-30 (build green)** |
-| 15| `nr1`           | Unit13 | 658 |
-| 16| `nr2`           | Unit13 | 665 |
+| 15| `nr1`           | Unit13 | 658 | **</br> COMPLETED 2026-11-18 (build green)** |
+| 16| `nr2`           | Unit13 | 665 | **</br> COMPLETED 2026-11-18 (build green)** |
 | 17| `sub_005BC604`  | Unit3  | 1096 | **</br> COMPLETED 2026-10-29 (build green)** |
 | 18| `sub_005BE4B8`  | Unit3  | 645 | **</br> COMPLETED 2026-10-28 (build green)** |
 | 19| `illki`         | Unit3  | 687 | **</br> COMPLETED 2026-10-30 (build green)** |
@@ -291,10 +291,11 @@ independently before the next.
 
 - Unit3  `sub_005BEF5C` 308, `sub_00582C24`  411, `sub_005BC604` 1096,
          `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
-- Unit1  `datsich`, `Sikoein`, `spitzbas`, `listen_akt` (size unconfirmed)
-- Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
+- Unit1  `datsich` 2157 (done), `Sikoein` 2746 (done), `spitzbas` 1257 (done),
+         `listen_akt` 1681 (done)
+- Unit1  `vorf_erm2`     1076 (done), `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
          `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
-- Unit17 `gebstvn`      1281, `gebst`   1248
+- Unit17 `gebstvn`      1281 (done), `gebst`   1248 (done)
 - Unit13 `vz2`  1206, `Nach_ern` 1396, `nz1` 1437, `nchf_neu`  1682
 - Unit19 `Namgeb`, `Namgv`, `alphlist`, `nachf` (sizes unconfirmed)
 - Unit1  `ExcelExport1Click` 1931, `famblattx_daten` 2020,
@@ -304,7 +305,7 @@ independently before the next.
 - Unit3  `gedein_neu`, `gedein2`, `gedein`, `gedaus`, `gedausx`,
          `ahndosein`, `osbein`, `adrschreib`, `gedausxv`, `gedausv`,
          `gedein_5`, `ofb3`, `ofb2` (sizes unconfirmed â€” the GEDCOM I/O chain)
-- Unit17 `BitBtn1Click` 4341
+- Unit17 `BitBtn1Click` 4341 (done)
 - Single-`Click` handlers in Unit16, Unit18, Unit20, Unit22, Unit24, Unit33
 
 ## Phase 3 â€” the GEDCOM I/O chain (Unit3, 13 methods)
@@ -680,7 +681,7 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Flow: if Vater[538]>0 or Mutter[53C]>0 -> empty Table14.Append+Post + Inc(gvar_0061EFCC); Vater>0 -> Table3.FindKey + nam2(AIn+'Vater : ') + gebst(AIn+11 spaces) + gvar_0061EFCC+3 (order verbatim per LStrCat3 edx+ecx convention: AIn first, label second); Table10.IndexName='num' + FindKey([Table1Vater]) then while not Eof: Epnum[3B8]=Mutter -> Table14.Append + spouse line block; Table10.Next each round; Mutter>0 -> nam2/gebst mirror + gvar_0061EFCC+3.
 - Spouse-line ladder inside Epnum=Mutter: Pos('Ehes', Verbind[3E4])>0 -> (a) Saort[3DC]/Sajahr[3D8] nonempty -> Table13.FindKey([Saort]) + only when Sajahr<>'' line = AIn + '           oo (S) ' + sub_0053D06C(Satag[3D0]+'.'+Samonat[3D4]+'.'+Sajahr) + TrimRight(' '+Saort); (b) else Hort[3C8]/Hjahr[3C4] nonempty -> Table13.FindKey([Hort]) + only when Hjahr<>'' line with Htag[3BC]='HK' comparison -> '           oo ' plain else '           oo (K) ' + norm(date triplet) + TrimRight(' '+Hort); (c) else line = AIn+'            oo' (12 spaces). Pos('Ehes')<=0 (o-o path): Table13.FindKey([Hort]) then only when Trim(Verbind)<>'' line = AIn + '           (o-o ' + norm(H-tag triplet) + TrimRight(' '+Hort) + ')'. Table14.Post per matching row, faithfully even when nothing written.
 - New helper `procedure sub_0053D06C(ALine; var AErgebnis)` (Units\Unit17.pas, twin of sub_00576FF8/Unit3): date normalizer 0053D06C-0053D2F9 - '..'->'', 'HK'->'HK '+Copy(4,7), 'vo.r'->Copy(1,2)+Copy(4,1)+' '+RightStr(4), 'na.ch'->Copy(1,2)+Copy(4,2)+' '+RightStr(4), leading '.'/blank strip loop Copy(2,9), s[1]>'9' -> dot-strip + Insert(' ') before first char < ':'.
-- Signature correction: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358, 2-param) still TODO stub.
+- Signature corrections: recon `procedure gebst` had been parameterless -> corrected to `procedure gebst(AIn: AnsiString)` (interface + stub, listing 0053E878 = `gebst(?:AnsiString)`); gebstvn (0053D358) reconstructed as `gebstvn(AIn: AnsiString; AFlag: Integer)` - 2nd register param (ECX) is 0 at all 4 call sites (all inside `BitBtn1Click`) and never read in the body (dead-param quirk, documented in the header comment).
 - AHNGlobals fix: gvar_0061EFCC was AnsiString -> Integer (binary does `inc`/`add 3` - Familienblatt-Zeilenzaehler).
 - Uses extended by StrUtils (RightStr).
 - Verified: build.cmd -unit 17 -> SUCCESS (28735 lines, no Unit17 hints).
@@ -1020,3 +1021,27 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - **Build-Fixes in Units\Unit3.pas (2026-11-11)**: E2003 `clYellow` (Jahresfilter-Block //005A8D88) — `Graphics,` in die uses aufgenommen, gleiches Muster wie Unit10.pas //Controls, Graphics, Windows und Unit26.pas mit identischem `Form1.DBText1.Color := clYellow`; E2153 ×4 — je ein ueberzaehliges `;` vor `else` in den vier PLAC-then-Zweigen entfernt (Annotationen //005A98A3..98C7, //005A9CF3..9D17, //005AA215..A239, //005AA732..A768).
 - **Verifikation Chunk 9 + Gesamt**: `chk8_gedaus.py` -> 0 bad / 0 order; `jumpcheck7.py 5AD7EF 5AE7B3` -> 57/57 Spruenge, 0 Mismatch, 0 Style; 5-hex-Ziel-Count = 0; `[build] SUCCESS` (E2029 aufgeloest - Person-Loop schliesst in Chunks 8/9).
 - **Open/Unfinished-Liste Unit3 = 2**: gedein2 (00596994) + gedein_neu (0057EDEC); gedausx (005A634C, 2026-11-06) und gedaus (005A7C40, 2026-11-13) sind DONE.
+
+### Unit3 gedein2 (00596994..0059C9B3, GEDCOM-Import 2) - DONE, build green (2026-11-15; Commit ausstehend, SVN down)
+- Voll transkribiert in Units\Unit3.pas (Stub ersetzt, Chunks G2C00..G2C30 verbraucht, Marker `{G2C30}` am Ende; Prozedur schliesst mit `end;` vor `end.` der Unit). Extrakt: `C:\Users\Mir\AppData\Local\Temp\opencode\gedein2.txt` (roh 00596994..0059C9B3 aus Projects_AhnenWin\Unit3.pas), Spruenge: `gedein2-jumps.txt` (283 Branches). Code-Beginn nach Prolog: 005969B8; SEH-Teardown 0059C909..0059C9B3 = Kommentar (KONVENTION, `xor eax,eax` + finally-Cleanup).
+- **Setup**: Var-Block (fname [ebp-0A0], f TextFile [ebp-270], zeile [ebp-34], verarbz [ebp-30], datenz [ebp-2C], indnr [ebp-18], idnr, ctx [ebp-38], schl [ebp-3C], zst [ebp-318], aktnr [ebp-1C], adrz [ebp-12], famkom [ebp-68], utfflag Word [ebp-0E], mansnr [ebp-20], wifesnr [ebp-24], trauz/hqu/verbind, satrauz/saqu/schqu-Snapshots) -> AssignFile(f, OpenDialog1.FileName) + Reset (3 Phasen, L12915/12958/13122) -> Table1/Table5 (Close/EmptyTable/Open) + Repso2 Open/EmptyDataSet + Form1.Refresh -> UI-Fortschritt Label18/19.
+- **Vor-Pass** (00597B14..7C31): `while Pos('@ INDI', zeile) = 0 do ReadLn + zsa + utfflag-Utf8ToAnsi` (Eintrittssprung `//00597BD1 jmp->7C22`), danach fällt die Kontrolle auf den Kettenanfang 00597C33.
+- **Hauptschleife `while True do`** (Struktur-Klammer `{00597C33..C892}`): Kette der Tag-Handler (INDI-Handler mit Fortschritt/`inc(verarbz)`, FAM `0 @F` mit Guard `(mansnr>0) and (wifesnr>0)` + zwei Table5-Bogen + Table1-Kommentar-Bloecken, marr-Kontext mit hqu/saqu/schqu aus Repso2inh2, `2 SOUR`-FindKey-Block) bis `//0059C136..C197 je->C247`.
+- **G2C30 (Abschluss-Chunk 0059C247..0059C904)**: `ReadLn(f, zeile)` -> `if Pos('0 TRLR', zeile) > 0 then` (jle->C860) -> TRLR-Zweig: `Table31.Open` [2A4] -> Guard-Zweizeiler (beide jle->C897) -> **zwei Table5-Bogen** (Append/Post [80], Rec1 Nummer=mansnr/Epnum=wifesnr, Rec2 getauscht, je 20 Felder identisch zur FAM-Kette, Trauz/Satrauz mit Trim) -> **zwei Table1-Kommentar-Bloecke** (`IndexName:=''`, `FindKey` ohne Ergebnispruefung = `Positionierung`, `Edit`, `Table1Kommentar.AsString := ... + famkom`, `Post`) -> `Break; //0059C85E jmp->C897` (Guard-Fail faellt auf das Break durch; Sprungkette jle direkt auf C897). Nicht-TRLR-Zweig: `zeile := Trim(zeile);` -> `if utfflag = 1 then` (jne->7C33) -> `zeile := Utf8ToAnsi(zeile);` -> natuerlicher Fall auf die while-`end;` mit Ruecksprung `//0059C892 jmp->7C33`.
+- **Epilog nach der Schleife** (0059C897..C904): `CloseFile(f)` (@Close+@_IOTest), `Form1.Repso2.Open` [8C0], `Form1.Repso2.EmptyDataSet`, `DataModule2.Table1.First` [5C], `Table1.EnableControls` [5C], `Table5.EnableControls` [80], `Screen.Cursor := crDefault` (xor edx).
+- **Re-Indent bei G2C30**: Einzug der Kette L13142..L14066 um +2 unter die Schleife (925 Zeilen, 532 Kommentare neu nach der Spaltenregel `max(1, 51-len)` ausgerichtet), Header `while True do`/`begin` + temporaeres `end;` via `reindent_g2c30.py` (Anker-assert, CRLF-sicher), Block via `gen_g2c30.py` + edit-Tool.
+- **Verifikation**: `chk_gedein2.py` -> 0 bad / 0 order; `jumpcheck_g2.py 5969B8 59C909 '{G2C30}'` -> **281/281** Spruenge (283 minus Prolog 5969A1 und Teardown C9A8, beide ausserhalb des Bereichs), 0 Mismatch, 0 Style; Marker G2C29=0/G2C30=1; CRLF sauber (bare LF 0); `[build] SUCCESS` (nur bekannte W1036-Fehlinitialisierungen, Zeilen +3 verrueckt).
+- **Open/Unfinished-Liste Unit3 = 1**: gedein_neu (0057EDEC) - letzter Stub, Listing liegt vor (identischer `1 CON` + `gvar_02536850`-Block bei 0057FDB4..FE84).
+
+### Unit3 gedein_neu (0057EDEC..005823F6, GEDCOM-Import neu) - DONE, build green (2026-11-17; Commit ausstehend, SVN down)
+- Voll transkribiert in Units\Unit3.pas (Stub ersetzt, Chunks GNC00..GNC11 verbraucht, Marker `{GNC11}` am Ende; Prozedur schliesst mit `end;` vor `end.` der Unit). Extrakt: `C:\Users\Mir\AppData\Local\Temp\opencode\gedein_neu.txt` (roh 0057EDEC..005823F6 aus Projects_AhnenWin\Unit3.pas, 3238 Zeilen), Spruenge: `gedein_neu-jumps.txt` (180 Branches; 178 im Pruefbereich 0057EE14..00582374, 0057EDF9 aus dem Prolog und 005823EE aus dem Teardown ausserhalb). Code-Beginn nach Prolog: 0057EE14; SEH-Teardown 00582374..005823F6 = Kommentar (KONVENTION, `xor eax,eax` + 7x @LStrArrayClr ab [ebp-418]..[ebp-10] + jmp @HandleFinally + Epilog).
+- **Setup (GNC00/GNC01)**: Var-Block (extflag [ebp-1C] -> Bapm(AFlag), letztnr [ebp-14], fortschritt [ebp-18], zeile [ebp-4], zst [ebp-30], ctx [ebp-10], idnr [ebp-20], indnr [ebp-24], ptmp [ebp-8], reli [ebp-0C]) -> DisableControls/Last -> Append-Entscheidung `MessageDlg('Gedcom-Daten anhaengen ?', mtConfirmation, mbYesNo, 0) = IDYES` -> letztnr (sonst 0 = Tabellen leeren) -> OpenDialog1 Filter `*.ged`; Guard `(not Execute) or (FileName = '')` springt `je->0058235A` auf den geteilten Abbruch-Epilog (anzeigen + crDefault) -> Label19 'Gedcom vorbereiten' -> `AssignFile(gvar_02536670, ...)` + Reset -> Table1/Table5 je Close/EmptyTable nur bei letztnr=0, Table25 immer EmptyTable + IndexName 'AA', Table13 immer EmptyTable + IndexName 'ort_', Repso2 Open/EmptyDataSet -> crHourGlass, gvar_02536864/6868 := 0.
+- **Pre-Pass (GNC01/GNC02, 0057F0A2..FEE6)**: `while Pos('@ INDI', zeile) = 0 do ReadLn+zsa` (Eintrittssprung `//0057F0B9 jmp->F0EF`), danach `while Pos('0 TRLR', zeile) = 0` (Eintritt `//0057F100 jmp->FED7`): inc gvar_02536864 + idnr := StrToInt(Copy(zeile, 5, ...)) + inc indnr -> Repso2-Zeilen (nr/alt), gvar_02536868 zaehlt `0 @F`, Quellen-Kette `1 SOUR @S`/`2 SOUR @S` mit IndexName 'ih' + FindKey -> Repso2inh.
+- **Header-Schleife (GNC03/GNC04, 0057FF05..00580703)**: liest den Headertext bis zur ersten '@ INDI'-Zeile (inkl. identischem `1 CON` + gvar_02536850-Block 0057FDB4..FE84); danach UI: 'N Familien' (IntToStr(gvar_02536868)), ShowMessage(gvar_02536430), Label18/19 sichtbar ('0 %', 'Gedcom einlesen  ').
+- **Hauptschleife (GNC05..GNC08, 0058083F..1C43)**: Tag-Kette ueber alle GEDCOM-Zeilen; `@ INDI` -> Table1.Append (Nummer=letztnr, Vater/Mutter=0, Lebt='n') + Table25.Append (`A := Ziff2(zeile)`, N := letztnr) -> Handler-Kette u.a. `1 SOUR @`/REFN/ADOP/NAME/TITL (GNC05), SEX/RELI/IDNO/FAMC/ADDR/ADRE/EMAIL/PHON/URL (GNC06), BIRT/BAPM/DEAT/BURI/OCCU/EVEN/GRAD/EDUC/PROP/RESI/CHAN + CONT/CONC/FAMS/FAMC (GNC07), `0 TRLR`/`0 @F` (GNC08); Ruecksprung `//00581C43 jmp->083F`.
+- **FAM-Schleife (GNC09, 00581C48..1D5A)**: `@F`-Datensaetze zaehlen mit Fortschrittsanzeige, Abbruch bei TRLR/_LOC; Ruecksprung `//00581D5A jmp->1C48`. Danach Reset + `while Pos('0 @P', zeile) = 0 do ReadLn` (Skip bis zum ersten PLACE-Datensatz, Break bei TRLR; Eintrittsspruenge `//00581D6E jmp->1DA1`, `//00581DB2 jmp->2302`).
+- **Orts-Schleife (GNC10, 00581DB7..2311)**: PLAC-Block mit Zweifach-Tests (Tag + `Trim(gvar_02536430) <> ''`) auf NAME/_FCNTY/_FCTRY/_ABBR/POST/_FSTAE/_GOV/LONG/LATI; Feldschleife `while Copy(zeile, 1, 1) >= '1'` (Eintritt `//00581E58 jmp->225A`); cond-after-body-Spruenge `//00582302..2311 jg->1DB7` und `//0058225A..2283 jae->1E5D` + Body-Top-`Break` (00581DB7..1DC6 jg->2317) spiegeln den toten Code des Originals wortwiederholt.
+- **Abschluss (GNC11, 00582317..236F)**: `CloseFile(gvar_02536670)` (@Close+@_IOTest), Label18/19 aus (SetVisible(0); Komponenten +400=Label18, +404=Label19), `Form1.listen_akt`, `Form1.anzeigen`, `Screen.Cursor := crDefault` (xor edx); danach der SEH-Teardown-Kommentar.
+- **Hilfsfunktionen**: `Ziff2` (0057D4B4) neu - in der Interface-Sektion deklariert (Units\Unit3.pas L50), unterhalb von `Occu` implementiert (L6543): extrahiert die Personennummer aus `0 @I123@ INDI` (Copy ab Pos 5 bis `@`, StrToIntDef); Aufruf `Table25A.AsInteger := Ziff2(zeile)` //00580939..094F. `Occu` (0057B5C8, DONE) dreimal im Beruf-Block: `gvar_0253684C := 'Beruf: ' + Occu(zeile)` //0058167F..16A4, Konkatenation `+ #13#10 + 'Beruf: '` //005816A6..16DB, `Table1Beruf.AsString := Occu(zeile)` //005816DD..16FD.
+- **Verifikation**: `chk_gedein_neu.py` -> 0 bad / 0 order; `jumpcheck_gn.py 57EE14 582374` -> **178/178 Spruenge** (345 annotierte Sites), 0 Mismatch, 0 Style; Marker GNC10=0/GNC11=1; CRLF sauber (bare LF 0); `[build] SUCCESS` (nur bekannte W1036-Fehlinitialisierungen). Bewusste Deviations: `gvar_02536844 := $2A01` (00582251) schreibt den vollstaendigen Wert statt nur das Low-Word (3-zeiliger Hinweis im Code, ohne sichtbare Wirkung); `_GOV` kopiert `Copy(zeile, 17, ...)` nach Table13Maid (Original `mov edx,11` hex, Feld [eax+0A74]) - wortwiederholt uebernommen; `Close` wuerde auf TForm3.Close (0 Parameter) treffen -> `CloseFile` wie bei gedein2/gedaus (E2034-Fix).
+- **Open/Unfinished-Liste Unit3 = 0**: gedein_neu war der letzte Stub; alle Unit3-Stubs (osbein 005B229C, ahndosein 005AFB9C, gedausx 005A634C, gedaus 005A7C40, gedein 0059D218, gedein2 00596994, gedein_neu 0057EDEC) sind DONE.
