@@ -748,7 +748,8 @@ implementation
 uses
   AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
   Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
-  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26;
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26,
+  Unit31;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -833,6 +834,16 @@ begin
   Form1.StringGrid5.Cells[1, anzahl] := nummer;
 end;
 
+{ The local function of the original at the address 005D39D8. It turns a
+  floating point value into its decimal string representation, padded on
+  the left with spaces so that the result is 25 characters wide; longer
+  strings are cut off on the left. The original has no name for it, IDR
+  lists it as sub_005D39D8. }
+function zahl25(wert: Extended): string;
+begin
+  Result := RightStr('                         ' + FloatToStr(wert), 25);
+end;
+
 
 { The method bodies of this unit are reconstructed from the IDR
   listings, method by method. The bodies that are still missing are
@@ -876,8 +887,313 @@ begin
 end;
 
 procedure TForm1.listen_akt;
+var
+  s: string;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005F0AF0: Listen aktualisieren: Cursor und Meldelabel setzen, alle
+  //Ziel-Listen leeren, aus Table17/Table18 die fehlenden Orts-, Berufs-,
+  //Hof- und Quellenbegriffe in die Nachtabellen uebernehmen und zum
+  //Schluss die Combobox-Listen fuellen.
+  Screen.Cursor := crHourGlass;
+  Datenschutzaus1.Click;
+  s := '';                                 //005F0B38: Quirk - s wird nie wieder gelesen.
+  Label19.Visible := True;
+  Label19.Caption := 'Listen aktual.     ';
+  Label19.Refresh;
+
+  DataModule2.Table17.Open;
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table17.First;
+  DataModule2.Table17.Refresh;
+
+  //005F0B9E: alle Ziel-Listen leeren. Die Comboboxen werden - wie im
+  //Original - ueber den globalen Form1-Zeiger angesprochen, nicht ueber
+  //Self; ComboBox5 und ComboBox26 werden im Original nicht geleert.
+  Form14.ListBox1.Clear;
+  Form28.ListBox1.Clear;
+  Form29.ListBox1.Clear;
+  Form36.ListBox1.Clear;
+  Form39.ListBox1.Clear;
+  Form1.ComboBox1.Clear;
+  Form1.ComboBox2.Clear;
+  Form1.ComboBox3.Clear;
+  Form1.ComboBox4.Clear;
+  Form1.ComboBox6.Clear;
+  Form1.ComboBox7.Clear;
+  Form1.ComboBox8.Clear;
+  Form1.ComboBox9.Clear;
+  Form1.ComboBox10.Clear;
+  Form1.ComboBox11.Clear;
+  Form1.ComboBox12.Clear;
+  Form1.ComboBox13.Clear;
+  Form1.ComboBox14.Clear;
+  Form1.ComboBox15.Clear;
+  Form1.ComboBox16.Clear;
+  Form1.ComboBox17.Clear;
+  Form1.ComboBox18.Clear;
+  Form1.ComboBox19.Clear;
+  Form1.ComboBox20.Clear;
+  Form1.ComboBox21.Clear;
+  Form1.ComboBox22.Clear;
+  Form1.ComboBox23.Clear;
+  Form1.ComboBox24.Clear;
+  Form1.ComboBox25.Clear;
+
+  DataModule2.Table12.Close;
+  DataModule2.Table12.EmptyTable;
+  DataModule2.Table12.Open;
+  DataModule2.Table12.IndexName := 'nam_';
+  DataModule2.Table13.Open;
+  DataModule2.Table13.First;
+
+  //005F0DDF: Ortsdatensaetze, die nur aus Leerfeldern bestehen, loeschen.
+  while not DataModule2.Table13.Eof do
+  begin
+    if Trim(DataModule2.Table13Abk.AsString + DataModule2.Table13PLZ.AsString +
+            DataModule2.Table13Gde.AsString + DataModule2.Table13Lkr.AsString +
+            DataModule2.Table13RegBez.AsString + DataModule2.Table13Bland.AsString +
+            DataModule2.Table13Land.AsString + DataModule2.Table13Pfr.AsString +
+            DataModule2.Table13Gov.AsString + DataModule2.Table13Maid.AsString +
+            DataModule2.Table13Lg.AsString + DataModule2.Table13Bg.AsString) = '' then
+      DataModule2.Table13.Delete;
+    DataModule2.Table13.Next;
+  end;
+
+  DataModule2.Table13.Open;
+  DataModule2.Table13.IndexName := 'ort_';
+  DataModule2.Table35.Close;
+  DataModule2.Table35.EmptyTable;
+  DataModule2.Table35.Open;
+  DataModule2.Table35.IndexName := 'ber';
+  DataModule2.Table37.Close;
+  DataModule2.Table37.EmptyTable;
+  DataModule2.Table37.Open;
+  DataModule2.Table37.IndexName := '';
+  DataModule2.Table38.Open;
+  DataModule2.Table38.First;
+
+  //005F0FCE: Quellendatensaetze, die nur aus Leerfeldern bestehen, loeschen.
+  while not DataModule2.Table38.Eof do
+  begin
+    if Trim(DataModule2.Table38Abk.AsString + DataModule2.Table38Ereig.AsString +
+            DataModule2.Table38Von.AsString + DataModule2.Table38Bis.AsString +
+            DataModule2.Table38Standort.AsString + DataModule2.Table38Publ.AsString +
+            DataModule2.Table38Rep.AsString + DataModule2.Table38Bem.AsString +
+            DataModule2.Table38Bestand.AsString + DataModule2.Table38Med.AsString) = '' then
+      DataModule2.Table38.Delete;
+    DataModule2.Table38.Next;
+  end;
+
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+
+  //005F110E: fehlende Eintraege aus Table17 in die Nachtabellen
+  //uebernehmen (Namen zusaetzlich in die Namens-Comboboxen).
+  while not DataModule2.Table17.Eof do
+  begin
+    if Trim(DataModule2.Table17Name.AsString) <> '' then
+      if not DataModule2.Table12.FindKey([Trim(DataModule2.Table17Name.AsString)]) then
+      begin
+        DataModule2.Table12.Append;
+        DataModule2.Table12Name.AsString := Trim(DataModule2.Table17Name.AsString);
+        ComboBox4.Items.Add(Trim(DataModule2.Table17Name.AsString));
+        ComboBox10.Items.Add(Trim(DataModule2.Table17Name.AsString));
+        DataModule2.Table12.Post;
+      end;
+
+    if Trim(DataModule2.Table17Beruf.AsString) <> '' then
+      if not DataModule2.Table35.FindKey([Trim(DataModule2.Table17Beruf.AsString)]) then
+      begin
+        DataModule2.Table35.Append;
+        DataModule2.Table35Occ.AsString := Trim(DataModule2.Table17Beruf.AsString);
+        DataModule2.Table35.Post;
+      end;
+
+    if Trim(DataModule2.Table17Hausname.AsString) <> '' then
+      if not DataModule2.Table37.FindKey([Trim(DataModule2.Table17Hausname.AsString)]) then
+      begin
+        DataModule2.Table37.Append;
+        DataModule2.Table37Hofname.AsString := Trim(DataModule2.Table17Hausname.AsString);
+        DataModule2.Table37.Post;
+      end;
+
+    if Trim(DataModule2.Table17Taufort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table17Taufort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table17Taufort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table17Gebort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table17Gebort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table17Gebort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table17Stort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table17Stort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table17Stort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table17Begort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table17Begort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table17Begort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table17Quelle.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table17Quelle.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table17Quelle.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table17Quellet.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table17Quellet.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table17Quellet.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table17Quelleg.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table17Quelleg.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table17Quelleg.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table17Quelles.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table17Quelles.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table17Quelles.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table17Quelleb.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table17Quelleb.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table17Quelleb.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    DataModule2.Table17.Next;
+  end;
+
+  DataModule2.Table18.Open;
+  DataModule2.Table18.First;
+
+  //005F1B76: dasselbe fuer die Orts- und Quellenfelder von Table18.
+  while not DataModule2.Table18.Eof do
+  begin
+    if Trim(DataModule2.Table18Hort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table18Hort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table18Hort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table18Saort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table18Saort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table18Saort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table18Schort.AsString) <> '' then
+      if not DataModule2.Table13.FindKey([Trim(DataModule2.Table18Schort.AsString)]) then
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := Trim(DataModule2.Table18Schort.AsString);
+        DataModule2.Table13.Post;
+      end;
+
+    if Trim(DataModule2.Table18Hqu.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table18Hqu.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table18Hqu.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table18Saqu.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table18Saqu.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table18Saqu.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    if Trim(DataModule2.Table18Schqu.AsString) <> '' then
+      if not DataModule2.Table38.FindKey([Trim(DataModule2.Table18Schqu.AsString)]) then
+      begin
+        DataModule2.Table38.Append;
+        DataModule2.Table38Titel.AsString := Trim(DataModule2.Table18Schqu.AsString);
+        DataModule2.Table38.Post;
+      end;
+
+    DataModule2.Table18.Next;
+  end;
+
+  DataModule2.Table13.First;
+
+  //005F2095: alle Ortsnamen in die Ort-Comboboxen uebernehmen - hier
+  //ohne Pruefung auf Leerstring, jedes Feld wird eingetragen.
+  while not DataModule2.Table13.Eof do
+  begin
+    ComboBox1.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox2.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox3.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox6.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox7.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox8.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox9.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox16.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox17.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox18.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox19.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox20.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox21.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    ComboBox22.Items.Add(Trim(DataModule2.Table13Ort.AsString));
+    DataModule2.Table13.Next;
+  end;
+
+  DataModule2.Table38.First;
+
+  //005F2414: alle Quellentitel in die Quellen-Comboboxen uebernehmen,
+  //ebenfalls ohne Pruefung auf Leerstring.
+  while not DataModule2.Table38.Eof do
+  begin
+    ComboBox11.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox12.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox13.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox14.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox15.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox23.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox24.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    ComboBox25.Items.Add(Trim(DataModule2.Table38Titel.AsString));
+    DataModule2.Table38.Next;
+  end;
+
+  //005F261F: Abschluss; der Aufraum-Code hinter dem Normalpfad ist nur
+  //die Compiler-Verwaltung der String-Variablen, kein try..finally.
+  tabenab;
+  Label19.Visible := False;
+  Screen.Cursor := crDefault;
 end;
 
 procedure TForm1.ComboBox1Exit;
@@ -1984,8 +2300,311 @@ begin
 end;
 
 procedure TForm1.vorf_erm2(ANummer: Integer; AText: AnsiString; var AFlag: Integer);
+var
+  i, a, b, c, h, hmax: Integer; {zählvariablen: 0060131F, -18, -0C, -1C, -10, -14}
+  d, kk, oo: Double;            {Kekulé-Zahlen: 006012D9, -42, -50}
+  lit: AnsiString;              {bearbeitete Nummernliste: 00600FE9}
+  ganstr: AnsiString;           {Zwischenergebnis der gültigen Anfragen: 00601217}
+  s0, s1, s2, s3, s4: AnsiString; {Titel- und Datumsbausteine}
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //00600F50: Vorfahren ermitteln: Der Urvater wird in die Arbeits-Tabelle
+  //Table24 gesetzt und je Generation beide Eltern in neue Tabellenzeilen
+  //übertragen, bis die Zielzahl an Generationen erreicht ist. AFlag bekommt
+  //den Wert 1, wenn der Dialog oder eine Eingabe abgebrochen wurde.
+  {00600F8D-00600F92: Das Hauptformular wird stets aktualisiert. }
+  Form1.Refresh;
+  {00600F97-00600FBD: Sind beide Nummerneingaben leer, wird mit einer
+    Meldung der Dialog verlassen. Die Originaltexte an 60204C/602064 sind
+    in der Rekonstruktion durch plausible deutschen Text ersetzt.}
+  if (Edit1.Text = '') and (Edit2.Text = '') then
+  begin
+    Application.MessageBox(PChar('Bitte geben Sie eine Personennummer ein.'), PChar('Vorfahren'), 0);
+    AFlag := 1;                       {00600FD7}
+    gvar_0253694C := 0;               {00600FDF}
+    Exit;
+  end;
+  {00600FE9-00600FF6: Die Nummernliste und der Listentitel werden gesetzt.}
+  lit := '';                          {00600FE9}
+  gvar_02536930 := 'Vorfahren von';   {00600FF1}
+  {00601000-00601049: Der Titel ist 'Vorfahren von <Name> <Tabelle>'.
+    ucase wird nicht übersprungen, bei der Reihenfolge der LStrCatN-Parts
+    wird die Pushreihenfolge der Aufrufe geschützt (AE-Quirk des Original-
+    compilers: die Reihenfolge der Registerpunkte muss so bleiben).}
+  s1 := ComboBox4.Text;               {00601000}
+  ucase(s1, s2);                      {00601011}
+  s3 := DBEdit2.Field.AsString;       {00601023}
+  gvar_02536934 := 'Vorfahren von' + s2 + ' ' + s3; {00601039}
+  {0060104E-00601097: Optional wird die Religion aus Tabelle1 angehängt.}
+  if Form31.CheckBox5.Checked and (DataModule2.Table1Religion.AsString <> '') then
+    gvar_02536934 := gvar_02536934 + '; ' + DataModule2.Table1Religion.AsString; {00601083}
+  {006010B6-00601116: Bei vorhandenem Geburtsjahr wird es an den Titel
+    angehängt;}
+  if DataModule2.Table1Gebjahr.AsString <> '' then
+    gvar_02536934 := gvar_02536934 + ', ' + DataModule2.Table1Gebjahr.AsString + ' - '
+  else
+    gvar_02536934 := gvar_02536934 + ' ( - ';
+  {0060111B-00601143: das Staatsjahr schließt die Klammer.}
+  if DataModule2.Table1Stjahr.AsString <> '' then
+    gvar_02536934 := gvar_02536934 + DataModule2.Table1Stjahr.AsString + ')'
+  else
+    gvar_02536934 := gvar_02536934 + ')';
+  {0060117B: Die Arbeits-Variable fuer die Nummernerfassung ist die
+    Vorgabe '1' fuer die Dialogbearbeitung.}
+  gvar_0253695C := '1';               {0060117B-00601185}
+  {0060118A-006011A1: Ist die startseitige Option gesetzt, wird die
+    Eingabe uebersprungen.}
+  if not Form26.RadioButton1.Checked then
+  begin
+    {006011A3-006011AF: Eingabe der Kekule-Nummer. Diese ist zugleich das
+      Startjahr des Stammbaums - siehe 006012CF. Der Originalcode hat den
+      Wert-String in ECX an die Funktion uebergeben}
+    if not InputQuery('Vorfahren', 'Beginn mit Kekulé-Nr.: ', gvar_0253695C) then
+    begin
+      {006011C9-006011D6: Abbruch: Flag, ruecksetzen, Ende.}
+      AFlag := 1;
+      gvar_0253694C := 0;
+      Exit;
+    end;
+    {006011DB-006011EA: Der Vergleich ist lexikographisch gegen '0', jede
+      Zeichenkette, die nicht groesser als '0' ist, bricht ab.}
+    if gvar_0253695C <= '0' then
+    begin
+      AFlag := 1;
+      gvar_0253694C := 0;
+      Exit;
+    end;
+  end;
+  {006011F0-00601207: Die Zielzahl der Generationen wird einmal gefragt.
+    Abbruch und ungueltige Werte loesen dasselbe Abbruchverhalten aus.}
+  ganstr := '1';                      {006011F3-006011F8}
+  {006011FE-00601237: Eingabe der Generationen - der Dialogtext lautet
+    "Wieviele Generationen?"}
+  if (not InputQuery('Vorfahren', 'Wieviele Generationen: ', ganstr)) or (ganstr <= '0') then
+  begin
+    AFlag := 1;
+    Exit;
+  end;
+  {0060123D-0060126E: Der Originalcode vergleicht den String lexikographisch
+    und dekrementiert ihn erst in der Stringdomain: bei '10' fuehrt das
+    etwa zum Ergebnis '0'. Diese Falle ist Teil des Originals und wird
+    exakt so neu gebaut.}
+  if ganstr > '1' then
+    ganstr := IntToStr(StrToInt(ganstr) - 1);
+  i := StrToInt(ganstr);              {00601317-0060131F}
+  {00601322-00601340: Bei den direkten Ahnen werden maximal neun
+    Generationen berechnet.}
+  if (gvar_0253692C = 'Vorgr1') and (i > 9) then
+    i := 9;
+  a := 1;                             {00601340-0060134E}
+  b := 1;
+  c := 1;
+  h := 0;                             {00601355}
+  hmax := 0;                          {0060135A}
+  {0060126E-00601273: Vor der Tabellenarbeit das Formular aktualisieren.}
+  Form1.Refresh;
+  {00601278-006012CA: Drei Tabellen des Datenmoduls werden geoeffnet.}
+  DataModule2.Table9.Open;            {00601278}
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table17.Open;           {00601294}
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table18.Open;           {006012B0}
+  DataModule2.Table18.IndexName := 'nm';
+  {006012CF-00601313: Kekul-Start (d) und der Basisfaktor 1 fuer die
+    Ahnentafel-Nummern. Die Originalwerte werden als Double gefuehrt
+    (Extended-Zwischenwerte des FPU-Netzes).}
+  d := StrToFloat(gvar_0253695C);     {006012CF}
+  oo := 1.0;
+  {0060135F-00601381: Arbeits-Tabelle Table24 neu anlegen.}
+  DataModule2.Table24.Close;
+  DataModule2.Table24.EmptyTable;
+  DataModule2.Table24.Open;
+  DataModule2.Table24.IndexName := '';
+  DataModule2.Table24.Append;
+  DataModule2.Table24Nummer.AsInteger := ANummer; {006013B7}
+  DataModule2.Table24Lfdn.AsInteger := a;         {006013C4}
+  DataModule2.Table24Pp.AsInteger := b;           {006013D5}
+  DataModule2.Table24Gen.AsInteger := h;          {0060142B}
+  DataModule2.Table24Kek.AsFloat := d;            {006013E8}
+  DataModule2.Table24Kekr.AsFloat := oo;          {006012FD}
+  DataModule2.Table24Geschlecht.AsString := AText; {0060143E}
+  DataModule2.Table24.Post;                        {00601449}
+  {0060147A-006014B0: Existiert die Wurzel nicht, ist nichts zu tun.}
+  DataModule2.Table17.IndexName := '';             {0060147A}
+  if not DataModule2.Table17.FindKey([ANummer]) then
+    Exit;                                          {006014B0}
+  {006014B6-006014F2: Fortschrittsanzeige setzen.}
+  Label19.Caption := 'Vorfahren ermitteln';        {006014B6}
+  lab18ein;
+  Label18.Caption := IntToStr(b);                  {006014CD}
+  Label18.Refresh;
+  {006014F7-00601F23: Jede Tabellenzeile erzeugt den naechsten Schritt.
+    Der Zyklus endet, wenn der Hochzaehler h die Zielgeneration
+    ueberschreitet oder keine laufende Nummer mehr existiert.}
+  repeat
+    {006014CD-006014F2: Fortschrittszeile fuer diese Zeile setzen.}
+    Label18.Caption := IntToStr(b);
+    Label18.Refresh;
+    {006014F7-0060151E: Datensatz der laufenden Nummer c lesen.}
+    if not DataModule2.Table24.FindKey([c]) then
+      Break;                                       {0060151E}
+    d := DataModule2.Table24Kek.AsFloat;           {00601524}
+    oo := DataModule2.Table24Kekr.AsFloat;         {00601535}
+    c := c + 1;                                    {00601546}
+    {00601549-00601593: Der Zaehler h steigt um Eins, wenn 2^(h+1)
+      nicht kleiner als die verdoppelte Ahnentafelnummer ist (FPU-Emu).}
+    if not (Trunc(Exp(Ln(2) * (h + 1))) < Trunc(oo * 2.0)) then
+      h := h + 1;
+    if h > i then                                  {00601596}
+      Break;                                       {0060159C}
+    {006015A2-006015D1: Der Personenstammsatz zur laufenden Nummer.}
+    if DataModule2.Table24Nummer.AsInteger <= 0 then
+      Continue;                                    {006015AF}
+    if not DataModule2.Table17.FindKey([DataModule2.Table24Nummer.AsInteger]) then
+      Continue;                                    {006015D1}
+    {==== Vaterzweig 006015E8-00601D8E ====
+      Beide Elternteile werden fuer denselben Stammesatz geprueft; die
+      Auswertung des Richtungskennzeichens (gvar_0253692C) liegt in den
+      Beschreibungsbloecken der Registerphase.}
+    {006015E8-006015F5: Fehlt der Vater, wird nur der Mutterzweig gemacht.}
+    if DataModule2.Table17Vater.AsInteger > 0 then
+    begin
+      {006015FB-00601636: Nummernkennung des Vaters und Duplikatscheck}
+      s1 := zahl6(DataModule2.Table17Vater.AsInteger);
+      if Pos(s1, lit) = 0 then
+      begin
+        a := a + 1;                                {00601638}
+        {0060164E-0060165D: Der Vater liegt im Personenstamm (Tabelle9)}
+        if DataModule2.Table9.FindKey([DataModule2.Table17Vater.AsInteger]) then
+        begin
+          b := b + 1;                              {00601665}
+          DataModule2.Table24.Append;              {00601670}
+          DataModule2.Table24Nummer.AsInteger := DataModule2.Table17Vater.AsInteger; {0060167D}
+          DataModule2.Table24Lfdn.AsInteger := a;  {0060168F}
+          DataModule2.Table24Pp.AsInteger := b;    {006016A2}
+          DataModule2.Table24Kekr.AsFloat := oo * 2.0; {006016AD}
+          DataModule2.Table24Kek.AsFloat := d * 2.0;   {006016CD}
+          DataModule2.Table24Geschlecht.AsString := 'm'; {006016F5}
+          lit := lit + s1 + '*';                   {00601712}
+          {0060173B-0060195B: Das Ehepaar-Register zum Vater. Ohne
+            Treffer wird der Beschreibungsteil uebersprungen (00601D61).}
+          if DataModule2.Table18.FindKey([DataModule2.Table17Vater.AsInteger]) then {00601742}
+          begin
+            {00601764-00601D5B: Jede Registerzeile des Vaters ergaenzt
+              die Beschreibung der Ehe; sie wird in der Arbeits-Tabelle
+              Table24 aufgebaut.}
+            while (not DataModule2.Table18.Eof) and
+                  (DataModule2.Table18Epnum.AsInteger = DataModule2.Table17Vater.AsInteger) do
+            begin
+              {00601788-006017D3: Trauungsverhaeltnis: Ehes-Name}
+              if Pos('Ehes', DataModule2.Table18Verbind.AsString) > 0 then
+                s2 := 'oo'
+              else
+                s2 := 'o-o';
+              {006017E3-0060180F: Der Standesamtblock wird nur gebaut,
+                wenn einer der beiden Werte gefuellt ist.}
+              if (DataModule2.Table18Sajahr.AsString <> '') or
+                 (DataModule2.Table18Saort.AsString <> '') then
+              begin
+                {0060191C-006019C3: Die Standesamtsdaten (S = Standesamt)
+                  werden in die Datenzeile gebracht; Kennzeichnungen
+                  aus dem Register kommen aus dem Formular.}
+                s0 := '(S) ';
+                datumNormalisieren(DataModule2.Table18Satag.AsString, s4);    {0060195B}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Samonat.AsString, s4); {00601971}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Sajahr.AsString, s4);  {0060198E}
+                s0 := s0 + s4 + '.';
+                datumNormalisieren(DataModule2.Table18Saort.AsString, s4);   {006019AB}
+                s0 := s0 + s4;
+                {006018A3-00601B76/00601C46: Je nach Richtungsmerkmal des
+                  Programms ('vogr'/'Nachf') werden die Kennungen aus
+                  den Form31-CheckBoxes an die Datenzeile angehaengt.}
+                if Form31.CheckBox2.Checked and (DataModule2.Table18Hqu.AsString <> '') then
+                  s0 := s0 + ' [' + DataModule2.Table18Hqu.AsString + ']';
+                if Form31.CheckBox14.Checked and (DataModule2.Table18Satrauz.AsString <> '') then
+                  s0 := s0 + '; TZ: ' + DataModule2.Table18Satrauz.AsString;
+                {006019D1/00601D16: Die fertige Zeile kommt in die
+                  Beschreibungsspalte Hd der Tabelle Table24 (Textformel).}
+
+                DataModule2.Table24Hd.AsString := s0;
+              end;
+              {00601D43-00601D4A: Row-Ende-Flag des BDE-Zeilenpuffers
+                pruefen. Die naechste Registerzeile muss zum selben
+                Eintrag des Vaters gehoeren.}
+              DataModule2.Table18.Next;
+              {00601D61-00601D82: Der Zeilenwert wird bei neuen
+                Hoechstwerten in die Spalte Gen geschrieben.}
+              if h > hmax then
+              begin
+                DataModule2.Table24Gen.AsInteger := h; {00601D69}
+                hmax := h;                        {00601D7F}
+              end;
+              DataModule2.Table24.Post;            {00601D82}
+            end; {while Registerzeilen}
+          end
+          else                                     {00601D59}
+          begin
+            if h > hmax then
+            begin
+              DataModule2.Table24Gen.AsInteger := h;
+              hmax := h;
+            end;
+            DataModule2.Table24.Post;              {00601D82}
+          end;
+        end;
+      end;
+    end;
+
+    {==== Mutterzweig 00601D92-00601F01 ====
+      Er wird fuer denselben Stammesatz durchgefuehrt wie der Vater;
+      der bisher ergaenzte Paar-Kontext bestimmt die Beschreibung.}
+    {00601D8C-00601DCF: Die Mutter wird geprueft, Duplikate werden
+      uebersprungen.}
+    if DataModule2.Table17Mutter.AsInteger > 0 then
+    begin
+      s3 := zahl6(DataModule2.Table17Mutter.AsInteger);
+      if Pos(s3, lit) = 0 then
+      begin
+        a := a + 1;                                {00601DE4}
+        {00601DF0-00601E0B: Vorkommen im Personenstamm pruefen}
+        if DataModule2.Table9.FindKey([DataModule2.Table17Mutter.AsInteger]) then
+        begin
+          b := b + 1;                              {00601E11}
+          DataModule2.Table24.Append;              {00601E14}
+          DataModule2.Table24Nummer.AsInteger := DataModule2.Table17Mutter.AsInteger; {00601E29}
+          DataModule2.Table24Lfdn.AsInteger := a;  {00601E3B}
+          DataModule2.Table24Pp.AsInteger := b;    {00601E4E}
+          DataModule2.Table24Kekr.AsFloat := oo * 2.0 + 1; {00601E59}
+          DataModule2.Table24Kek.AsFloat := d * 2.0 + 1;   {00601E7F}
+          DataModule2.Table24Geschlecht.AsString := 'w'; {00601EAD}
+          lit := lit + s3 + '*';                   {00601EBA}
+          if h > hmax then
+          begin
+            DataModule2.Table24Gen.AsInteger := h;
+            hmax := h;
+          end;
+          DataModule2.Table24.Post;                {00601F0E}
+        end;
+      end;
+    end;
+  until False;                                     {00601F1E}
+
+  {00601F23-00601F4C: Die Fortschrittszeilen werden verborgen, die
+    Zusammenfassung wird nur bei den Listen-Aufgaben gezeigt.}
+  Label18.Visible := False;                         {00601F25}
+  Label19.Visible := False;                         {00601F32}
+  if gvar_0253692C <> 'Sppr' then                  {00601F3D}
+  begin
+    {00601F54-00601FB7: Anzahl der Generationen (h) und geschaetzte
+      Personenanzahl (Laeenge der Nummerliste / 7 gerundet + 1).}
+    ganstr := IntToStr(h);                         {00601F5C}
+    s1 := lit + ' Generation(en) / ' + ganstr +
+          IntToStr(Round(Length(lit) / 7) + 1) + ' Person(en) gefunden.';
+    ShowMessage(s1);                               {00601FB7}
+  end;
+  {00601FC4-00601FDB: Hauptformular am Schluss aktualisieren.}
+  Form1.Refresh;
 end;
 
 procedure TForm1.Hilfe1Click(Sender: TObject);
@@ -2591,8 +3210,240 @@ begin
 end;
 
 procedure TForm1.spitzbas;
+var
+  jahr, monat, tag: Word;
+  ds: TDataSet;
+  total, counter: Integer;
+  trenner, datum: string;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005E3454: die Spitzen- bzw. Basis-Ahnen ermitteln: die Personen aus
+  //Table24 (Sppr) bzw. Table9 werden geprueft, in Table27 gesammelt
+  //und danach ueber Form15 in der Vorschau gezeigt.
+  DecodeDate(Date, jahr, monat, tag);
+  if (gvar_0253692C <> 'Sppr') and (gvar_0253692C <> 'basa') then
+    gvar_0253692C := 'Sppo';
+  DataModule2.Table27.Close;
+  DataModule2.Table27.EmptyTable;
+  DataModule2.Table27.Open;
+
+  if gvar_0253692C = 'Sppr' then
+  begin
+    ds := DataModule2.Table24;
+    DataModule2.Table9.Open;
+    DataModule2.Table9.IndexName := '';
+    ds.Open;
+  end
+  else
+  begin
+    ds := DataModule2.Table9;
+    ds.Open;
+    DataModule2.Table9.Open;
+    DataModule2.Table9.IndexName := '';
+    DataModule2.Table9.First;
+  end;
+  ds.First;
+  total := ds.RecordCount;
+  ds.First;
+  DataModule2.Table18.Open;
+  DataModule2.Table8.Open;
+  DataModule2.Table8.IndexName := '';
+  counter := 0;
+  if gvar_02536BA0 > 1 then
+  begin
+    DataModule2.Table8.Filter := 'gebjahr<=' + IntToStr(gvar_02536BA0) +
+      ' and taufjahr<=' + IntToStr(gvar_02536BA0);
+    DataModule2.Table8.Filtered := True;
+    DataModule2.Table9.Filter := 'gebjahr<=' + IntToStr(gvar_02536BA0) +
+      ' and taufjahr<=' + IntToStr(gvar_02536BA0);
+    DataModule2.Table9.Filtered := True;
+    DBText1.Color := $00FFFF;
+  end;
+
+  // Schleife ueber alle Datensaetze
+  while not ds.Eof do
+  begin
+    Label18.Caption := IntToStr(Round(counter / total * 100)) + ' %';
+    Label18.Refresh;
+
+    // Spitz-Ahnen: keine Eltern gefunden
+    if Pos('Spitz', gvar_02536930) > 0 then
+    begin
+      if gvar_0253692C = 'Sppr' then
+        DataModule2.Table9.FindKey([ds.FieldByName('nummer').AsInteger]);
+      if (DataModule2.Table9Vater.AsInteger = 0) and
+         (DataModule2.Table9Mutter.AsInteger = 0) and
+         (Trim(DataModule2.Table9Name.AsString) <> '') and
+         (DataModule2.Table9Name.AsString <> 'NN') then
+      begin
+        trenner := '';
+        DataModule2.Table27.Append;
+        DataModule2.Table27Kn.AsString :=
+          Format('%6s', [IntToStr(DataModule2.Table9Nummer.AsInteger)]);
+        if DataModule2.Table18.FindKey([DataModule2.Table9Nummer.AsInteger]) then
+          if Pos('Ehes', DataModule2.Table18Verbind.AsString) > 0 then
+            trenner := ', oo'
+          else
+            trenner := ', o-o';
+        if gvar_0253692C = 'Sppr' then
+          DataModule2.Table27Namvorn.AsString := '[' +
+            FloatToStr(ds.FieldByName('kek').AsFloat) + '] ' +
+            DataModule2.Table9Name.AsString + ' ' +
+            DataModule2.Table9Vornamen.AsString + ' ' + trenner
+        else
+          DataModule2.Table27Namvorn.AsString := DataModule2.Table9Name.AsString +
+            ' ' + DataModule2.Table9Vornamen.AsString + ' ' + trenner;
+        DataModule2.Table27Kmt.AsString := DataModule2.Table9Lebensort.AsString;
+
+        if (DataModule2.Table9Gebjahr.AsString <> '') or
+           (DataModule2.Table9Gebort.AsString <> '') then
+        begin
+          datumNormalisieren(DataModule2.Table9Gebtag.AsString + '.' +
+            DataModule2.Table9Gebmonat.AsString + '.' +
+            DataModule2.Table9Gebjahr.AsString, datum);
+          DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+            ' * ' + datum + ' ' + DataModule2.Table9Gebort.AsString;
+        end
+        else if (DataModule2.Table9Taufjahr.AsString <> '') or
+                (DataModule2.Table9Taufort.AsString <> '') then
+        begin
+          datumNormalisieren(DataModule2.Table9Tauftag.AsString + '.' +
+            DataModule2.Table9Taufmonat.AsString + '.' +
+            DataModule2.Table9Taufjahr.AsString, datum);
+          DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+            ' ~ ' + datum + ' ' + DataModule2.Table9Taufort.AsString;
+        end;
+
+        if (DataModule2.Table9Stjahr.AsString <> '') or
+           (DataModule2.Table9Stort.AsString <> '') then
+        begin
+          datumNormalisieren(DataModule2.Table9Sttag.AsString + '.' +
+            DataModule2.Table9Stmonat.AsString + '.' +
+            DataModule2.Table9Stjahr.AsString, datum);
+          DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+            ' + ' + datum + ' ' + DataModule2.Table9Stort.AsString;
+        end
+        else if (DataModule2.Table9Begjahr.AsString <> '') or
+                (DataModule2.Table9Begort.AsString <> '') then
+        begin
+          datumNormalisieren(DataModule2.Table9Begtag.AsString + '.' +
+            DataModule2.Table9Begmonat.AsString + '.' +
+            DataModule2.Table9Begjahr.AsString, datum);
+          DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+            ' # ' + datum + ' ' + DataModule2.Table9Begort.AsString;
+        end;
+        DataModule2.Table27.Post;
+      end;
+    end;
+
+    // Basis-Ahnen: keine Verbindung, mindestens 50 Jahre alt
+    DataModule2.Table18.IndexName := 'num';
+    if (Pos('Basis', gvar_02536930) > 0) and
+       (DataModule2.Table9Gebjahr.AsString <> '') and
+       (DataModule2.Table9Stjahr.AsString <> '') and
+       (StrToInt(DataModule2.Table9Stjahr.AsString) -
+        StrToInt(DataModule2.Table9Gebjahr.AsString) >= 50) and
+       (DataModule2.Table9Name.AsString <> '') and
+       (not DataModule2.Table18.FindKey([DataModule2.Table9Nummer.AsInteger])) then
+    begin
+      trenner := '';
+      if UpperCase(DataModule2.Table9Geschlecht.AsString) = 'M' then
+        DataModule2.Table8.IndexName := 'vat';
+      if UpperCase(DataModule2.Table9Geschlecht.AsString) = 'W' then
+        DataModule2.Table8.IndexName := 'mut';
+      if DataModule2.Table8.FindKey([DataModule2.Table9Nummer.AsInteger]) then
+        trenner := '(Nachfahren)';
+      DataModule2.Table27.Append;
+      DataModule2.Table27Kn.AsString :=
+        Format('%6s', [IntToStr(DataModule2.Table9Nummer.AsInteger)]);
+      DataModule2.Table27Namvorn.AsString := DataModule2.Table9Name.AsString + ' ' +
+        DataModule2.Table9Vornamen.AsString + ' ' + trenner;
+      DataModule2.Table27Kmt.AsString := DataModule2.Table9Lebensort.AsString;
+
+      if (DataModule2.Table9Gebjahr.AsString <> '') or
+         (DataModule2.Table9Gebort.AsString <> '') then
+      begin
+        datumNormalisieren(DataModule2.Table9Gebtag.AsString + '.' +
+          DataModule2.Table9Gebmonat.AsString + '.' +
+          DataModule2.Table9Gebjahr.AsString, datum);
+        DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+          ' * ' + datum + ' ' + DataModule2.Table9Gebort.AsString;
+      end
+      else if (DataModule2.Table9Taufjahr.AsString <> '') or
+              (DataModule2.Table9Taufort.AsString <> '') then
+      begin
+        datumNormalisieren(DataModule2.Table9Tauftag.AsString + '.' +
+          DataModule2.Table9Taufmonat.AsString + '.' +
+          DataModule2.Table9Taufjahr.AsString, datum);
+        DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+          ' ~ ' + datum + ' ' + DataModule2.Table9Taufort.AsString;
+      end;
+
+      if (DataModule2.Table9Stjahr.AsString <> '') or
+         (DataModule2.Table9Stort.AsString <> '') then
+      begin
+        datumNormalisieren(DataModule2.Table9Sttag.AsString + '.' +
+          DataModule2.Table9Stmonat.AsString + '.' +
+          DataModule2.Table9Stjahr.AsString, datum);
+        DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+          ' + ' + datum + ' ' + DataModule2.Table9Stort.AsString;
+      end
+      else if (DataModule2.Table9Begjahr.AsString <> '') or
+              (DataModule2.Table9Begort.AsString <> '') then
+      begin
+        datumNormalisieren(DataModule2.Table9Begtag.AsString + '.' +
+          DataModule2.Table9Begmonat.AsString + '.' +
+          DataModule2.Table9Begjahr.AsString, datum);
+        DataModule2.Table27Namvorn.AsString := DataModule2.Table27Namvorn.AsString +
+          ' # ' + datum + ' ' + DataModule2.Table9Begort.AsString;
+      end;
+      DataModule2.Table27.Post;
+    end;
+    Inc(counter);
+    ds.Next;
+  end;
+
+  // Druck vorbereiten
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table8.IndexName := '';
+  Label18.Visible := False;
+  Label19.Visible := False;
+  DataModule2.Table27.Close;
+  gvar_02536B54 := 0;
+  Form16.SpeedButton3.Visible := True;
+  Form16.SpeedButton6.Visible := False;
+  Form15.QRMemo1.Lines.Clear;
+  Form15.QRDBText1.Alignment := taLeftJustify;
+  Form15.QRDBText2.Alignment := taRightJustify;
+  Form15.QuickRep1.DataSet := DataModule2.Table27;
+  Form15.QRDBText1.DataSet := DataModule2.Table27;
+  Form15.QRDBText2.DataSet := DataModule2.Table27;
+  Form15.QRDBText1.DataField := 'namvorn';
+  Form15.QRDBText2.DataField := 'kn';
+  Form15.QRDBText1.AutoSize := True;
+  Form15.QRDBText1.Font.Size := 8;
+  Form15.QRDBText2.Font.Size := 8;
+  Form15.QRDBText1.Left := 55;
+  Form15.QRDBText1.Width := 700;
+  Form15.QRDBText2.Left := 10;
+  Form15.QRDBText2.Width := 40;
+  Form15.QRLabel1.Caption := gvar_02536930;
+  Form15.QRBand1.Height := 32;
+  Form15.QRLabel3.Caption := 'Basis-Ahnen';
+  if Pos('Spitz', gvar_02536930) > 0 then
+    Form15.QRLabel3.Caption := 'Spitzen-Ahnen';
+  if gvar_02536934 <> '' then
+    Form15.QRLabel2.Caption := gvar_02536934;
+  DataModule2.Table27.Open;
+  DataModule2.Table27.IndexName := 'ds';
+  if gvar_0253692C <> 'Sppr' then
+    DataModule2.Table27.IndexName := 'Namvg';
+  Form15.QuickRep1.Page.Columns := 1;
+  { Form15.QuickRep1.OnPreview := showpreview } // 2AC/2A8
+  Form15.QRDBText1.Font.Size := 10;
+  Form15.QRDBText2.Font.Size := 10;
+  gvar_02536B54 := 0;
+  { Form15.QuickRep1.Preview; - die Vorschau ist im
+    Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm1.basahnen(ASender: TObject);
@@ -7220,8 +8071,352 @@ begin
 end;
 
 procedure TForm1.Sikoein;
+var
+  laufnummer, i, idx, alt: Integer;
+  line, trenn, puffer, s1, s2: string;
+  f: TextFile;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005DF5EC: Einlesen einer .hej-Sicherungsdatei. Zuerst wird die
+  //Personentabelle aus Textzeilen uebernommen (Feldtrenner #$0F,
+  //#$10 markiert im Kommentar den Zeilenumbruch), danach folgen die
+  //Nachtabellen mrg/adop/ortv/quellv; zum Schluss werden Datei,
+  //Anzeige, Cursor und Menuepunkte zurueckgesetzt.
+  gvar_02536B64 := 1;
+  if DataModule2.Table1.RecordCount > 1 then
+    Datenlschen1.Click;
+
+  if gvar_02536B64 > 0 then
+  begin
+    line := '';
+    DataModule2.Table1.Open;
+    DataModule2.Table5.Open;
+    laufnummer := 0;
+    OpenDialog1.DefaultExt := 'hej';
+    OpenDialog1.Filter := 'Sicherungs-Dateien (*.hej)|*.hej';
+
+    if OpenDialog1.Execute then
+    begin
+      Screen.Cursor := crHourGlass;
+      Label18.Caption := '';
+      Label18.Refresh;
+      Label18.Visible := True;
+      Label19.Caption := 'Sich.einlesen';
+      Label19.Visible := True;
+      AssignFile(f, OpenDialog1.FileName);
+      Reset(f);
+      Form1.Refresh;
+      DataModule2.Table1.DisableControls;
+      DataModule2.Table5.DisableControls;
+      alt := 0;
+
+      // Personensaetze
+      while line <> 'mrg' do
+      begin
+        Inc(laufnummer);
+        Label18.Caption := IntToStr(laufnummer);
+        Label18.Refresh;
+        ReadLn(f, line);
+        if Trim(line) = 'mrg' then Break;
+        if laufnummer = 1 then DataModule2.Table1.Edit
+        else DataModule2.Table1.Append;
+
+        DataModule2.Table1Nummer.AsInteger := StrToInt(Copy(line, 1, Pos(#$0F, line) - 1));
+        if DataModule2.Table1Nummer.AsInteger > alt + 1 then
+          for i := alt + 1 to DataModule2.Table1Nummer.AsInteger - 1 do
+          begin
+            DataModule2.Table4.Append;
+            DataModule2.Table4Num.AsInteger := i;
+            DataModule2.Table4.Post;
+          end;
+        alt := DataModule2.Table1Nummer.AsInteger;
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+
+        if Trim(Copy(line, 1, Pos(#$0F, line) - 1)) <> '' then
+          DataModule2.Table1Vater.AsInteger := StrToInt(Copy(line, 1, Pos(#$0F, line) - 1));
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        if Trim(Copy(line, 1, Pos(#$0F, line) - 1)) <> '' then
+          DataModule2.Table1Mutter.AsInteger := StrToInt(Copy(line, 1, Pos(#$0F, line) - 1));
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+
+        DataModule2.Table1Name.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Vornamen.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Geschlecht.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Religion.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Beruf.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Gebtag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Gebmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Gebjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Gebort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Tauftag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Taufmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Taufjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Taufort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Taufpat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Lebensort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Sttag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Stmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Stjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Stort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Todesurs.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Begtag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Begmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Begjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Begort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Quelleg.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Quellet.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Quelles.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Quelleb.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+
+        if Pos(#$10, line) > 0 then
+        begin
+          line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+          s1 := '';
+          s2 := Trim(Copy(line, 1, Pos(#$0F, line) - 1));
+          while Pos(#$10, s2) > 0 do
+          begin
+            if Copy(s2, 1, 1) = #$10 then
+              s1 := s1 + #13#10
+            else
+              s1 := s1 + Copy(s2, 1, Pos(#$10, s2) - 1) + #13#10;
+            s2 := Copy(s2, Pos(#$10, s2) + 1, Length(s2));
+          end;
+          DataModule2.Table1Kommentar.AsString := s1 + s2;
+        end;
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+
+        DataModule2.Table1Lebt.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Namex.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1IDNR.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Kistat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Hausname.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Adr1.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Adr2.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1PLZ.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Ort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Adrzus.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Indj.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Indm.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Indt.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Alter.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Tel.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Ema.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table1Ur.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+
+        if Pos(#$0F, line) > 0 then
+        begin
+          DataModule2.Table1Quelle.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+          line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+          DataModule2.Table1Rufname.AsString := line;
+        end
+        else
+          DataModule2.Table1Quelle.AsString := line;
+        DataModule2.Table1.Post;
+      end;
+
+      // Eheschliessungen (mrg)
+      while not Eof(f) do
+      begin
+        Inc(laufnummer);
+        Label18.Caption := IntToStr(laufnummer);
+        Label18.Refresh;
+        ReadLn(f, line);
+        if Eof(f) then Break;
+        if Pos('adop', line) > 0 then Break;
+        if Pos('ortv', line) > 0 then Break;
+        if Pos('quellv', line) > 0 then Break;
+        DataModule2.Table5.Append;
+        DataModule2.Table5Nummer.AsInteger := StrToInt(Copy(line, 1, Pos(#$0F, line) - 1));
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Epnum.AsInteger := StrToInt(Copy(line, 1, Pos(#$0F, line) - 1));
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Htag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Hmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Hjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Hort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Trauz.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Satag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Samonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Sajahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Saort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Satrauz.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Verbind.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Schtag.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Schmonat.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Schjahr.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Schort.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Hqu.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Saqu.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        DataModule2.Table5Schqu.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        line := Copy(line, Pos(#$0F, line) + 1, Length(line));
+        // Quirk des Originals: Indj (460) wird uebersprungen, Indm
+        // uebernimmt dessen Token; das letzte Token entfaellt.
+        DataModule2.Table5Indm.AsString := Copy(line, 1, Pos(#$0F, line) - 1);
+        DataModule2.Table5.Post;
+      end;
+
+      trenn := #$0F;
+
+      // Adoptionen (adop)
+      if Trim(line) = 'adop' then
+      begin
+        DataModule2.Table31.Open;
+        ReadLn(f, line);
+        while (Trim(line) <> 'ortv') and (Trim(line) <> 'quellv') do
+        begin
+          Inc(laufnummer);
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          DataModule2.Table31.Append;
+          DataModule2.Table31Nummer.AsInteger := StrToInt(Copy(line, 1, Pos(trenn, line) - 1));
+          line := Trim(Copy(line, Pos(trenn, line) + 1, Length(line)));
+          DataModule2.Table31Av.AsInteger := StrToInt(Copy(line, 1, Pos(trenn, line) - 1));
+          line := Trim(Copy(line, Pos(trenn, line) + 1, Length(line)));
+          DataModule2.Table31Am.AsInteger := StrToInt(line);
+          DataModule2.Table31.Post;
+          if Eof(f) then Break;
+          ReadLn(f, line);
+        end;
+      end;
+
+      // Orte (ortv)
+      if Trim(line) = 'ortv' then
+      begin
+        DataModule2.Table13.Open;
+        DataModule2.Table13.IndexName := 'ort_';
+        ReadLn(f, line);
+        ReadLn(f, line);
+        while Trim(line) <> 'quellv' do
+        begin
+          Inc(laufnummer);
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          DataModule2.Table13.Append;
+          puffer := '';
+          idx := 0;
+          for i := 1 to Length(line) do
+            if Copy(line, i, 1) = trenn then
+            begin
+              DataModule2.Table13.Fields[idx].AsString := puffer;
+              Inc(idx);
+              puffer := '';
+            end
+            else
+              puffer := puffer + Copy(line, i, 1);
+          DataModule2.Table13.Fields[idx].AsString := puffer;
+          DataModule2.Table13.Post;
+          if Eof(f) then Break;
+          ReadLn(f, line);
+        end;
+      end;
+
+      // Quellen (quellv)
+      if Trim(line) = 'quellv' then
+      begin
+        DataModule2.Table38.Open;
+        DataModule2.Table38.IndexName := 'tit';
+        ReadLn(f, line);
+        while True do
+        begin
+          Inc(laufnummer);
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          DataModule2.Table38.Append;
+          puffer := '';
+          idx := 1;
+          for i := 1 to Length(line) do
+            if Copy(line, i, 1) = trenn then
+            begin
+              DataModule2.Table38.Fields[idx].AsString := puffer;
+              Inc(idx);
+              puffer := '';
+            end
+            else
+              puffer := puffer + Copy(line, i, 1);
+          DataModule2.Table38.Fields[idx].AsString := puffer;
+          DataModule2.Table38.Post;
+          if Eof(f) then Break;
+          ReadLn(f, line);
+        end;
+      end;
+
+      CloseFile(f);
+      Label18.Visible := False;
+      DataModule2.Table1.EnableControls;
+      DataModule2.Table5.EnableControls;
+      DataModule2.Table1.IndexName := '';
+      DataModule2.Table1.First;
+      Screen.Cursor := crDefault;
+      listen_akt;
+      Label19.Visible := False;
+    end;
+  end;
+
+  if DataModule2.Table1Nummer.AsInteger > 0 then
+  begin
+    neu1.Enabled := True;
+    schen1.Enabled := True;
+  end;
 end;
 
 procedure TForm1.tabdisab;
@@ -7242,8 +8437,275 @@ begin
 end;
 
 procedure TForm1.datsich;
+var
+  nummer, laufnummer, i: Integer;
+  f: TextFile;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005DCD54: Datensicherung: Die Personentabelle und die Nachtabellen
+  //mrg/adop/ortv/quellv werden als Textzeilen in eine .hej-Datei
+  //geschrieben (Feldtrenner #$0F), danach wird die Anzeige auf den
+  //Ausgangsdatensatz zurueckgesetzt.
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  SaveDialog1.FileName := '';
+  if MessageDlg('Datensicherung ?', mtCustom, [mbYes, mbNo], 0) <> mrYes then
+  begin
+    anzeigen;
+    Exit;
+  end;
+
+  SaveDialog1.DefaultExt := 'hej';
+  SaveDialog1.Filter := 'Sicherungs-Dateien (*.hej)|*.hej';
+  SaveDialog1.Options := [ofHideReadOnly];
+  if not SaveDialog1.Execute then Exit;
+
+  if Trim(SaveDialog1.FileName) > '.hej' then
+  begin
+    AssignFile(f, SaveDialog1.FileName);
+    Rewrite(f);
+    if IOResult <> 0 then Exit;
+
+    Form1.Refresh;
+    tabdisab;
+    DBText1.Color := $C0C0C0;
+    DataModule2.Table1.Filtered := False;
+    DataModule2.Table7.Filtered := False;
+    DataModule2.Table8.Filtered := False;
+    DataModule2.Table9.Filtered := False;
+    DataModule2.Table17.Filtered := False;
+    gvar_02536BA0 := 0;
+    if Pos('Datenschutz', Form1.Caption) > 0 then
+      Form1.Caption := Copy(Form1.Caption, 1, Length(Form1.Caption) - 22);
+    DataModule2.Table1.IndexName := '';
+    DataModule2.Table1.First;
+    Screen.Cursor := crHourGlass;
+    try
+      Label19.Caption := 'Sich. schreiben';
+      lab18ein;
+      laufnummer := 0;
+
+      // Schleife ueber alle Personensaetze
+      while not DataModule2.Table1.Eof do
+      begin
+        if DataModule2.Table1Nummer.AsInteger > 0 then
+        begin
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          Write(f, IntToStr(DataModule2.Table1Nummer.AsInteger));
+          Write(f, #$0F + IntToStr(DataModule2.Table1Vater.AsInteger));
+          Write(f, #$0F + IntToStr(DataModule2.Table1Mutter.AsInteger));
+          Write(f, #$0F + DataModule2.Table1Name.AsString);
+          Write(f, #$0F + DataModule2.Table1Vornamen.AsString);
+          Write(f, #$0F + DataModule2.Table1Geschlecht.AsString);
+          Write(f, #$0F + DataModule2.Table1Religion.AsString);
+          Write(f, #$0F + DataModule2.Table1Beruf.AsString);
+          Write(f, #$0F + DataModule2.Table1Gebtag.AsString);
+          Write(f, #$0F + DataModule2.Table1Gebmonat.AsString);
+          Write(f, #$0F + DataModule2.Table1Gebjahr.AsString);
+          Write(f, #$0F + DataModule2.Table1Gebort.AsString);
+          Write(f, #$0F + DataModule2.Table1Tauftag.AsString);
+          Write(f, #$0F + DataModule2.Table1Taufmonat.AsString);
+          Write(f, #$0F + DataModule2.Table1Taufjahr.AsString);
+          Write(f, #$0F + DataModule2.Table1Taufort.AsString);
+          Write(f, #$0F + DataModule2.Table1Taufpat.AsString);
+          Write(f, #$0F + DataModule2.Table1Lebensort.AsString);
+          Write(f, #$0F + DataModule2.Table1Sttag.AsString);
+          Write(f, #$0F + DataModule2.Table1Stmonat.AsString);
+          Write(f, #$0F + DataModule2.Table1Stjahr.AsString);
+          Write(f, #$0F + DataModule2.Table1Stort.AsString);
+          Write(f, #$0F + DataModule2.Table1Todesurs.AsString);
+          Write(f, #$0F + DataModule2.Table1Begtag.AsString);
+          Write(f, #$0F + DataModule2.Table1Begmonat.AsString);
+          Write(f, #$0F + DataModule2.Table1Begjahr.AsString);
+          Write(f, #$0F + DataModule2.Table1Begort.AsString);
+          if Trim(DataModule2.Table1Quelleg.AsString) = '' then
+            Write(f, #$0F)
+          else
+            Write(f, #$0F + DataModule2.Table1Quelleg.AsString);
+          if Trim(DataModule2.Table1Quellet.AsString) = '' then
+            Write(f, #$0F)
+          else
+            Write(f, #$0F + DataModule2.Table1Quellet.AsString);
+          if Trim(DataModule2.Table1Quelles.AsString) = '' then
+            Write(f, #$0F)
+          else
+            Write(f, #$0F + DataModule2.Table1Quelles.AsString);
+          if Trim(DataModule2.Table1Quelleb.AsString) = '' then
+            Write(f, #$0F)
+          else
+            Write(f, #$0F + DataModule2.Table1Quelleb.AsString);
+          Memo1.Width := DBMemo1.Width;
+          if Trim(DataModule2.Table1Kommentar.AsString) <> '' then
+          begin
+            Write(f, #$0F#$10);
+            Memo1.Clear;
+            Memo1.Lines.Assign(DataModule2.Table1Kommentar);
+            for i := 0 to Memo1.Lines.Count - 1 do
+              Write(f, Memo1.Lines[i] + #$10);
+          end;
+          Write(f, #$0F + DataModule2.Table1Lebt.AsString);
+          Write(f, #$0F + DataModule2.Table1Namex.AsString);
+          Write(f, #$0F + DataModule2.Table1IDNR.AsString);
+          Write(f, #$0F + DataModule2.Table1Kistat.AsString);
+          Write(f, #$0F + DataModule2.Table1Hausname.AsString);
+          Write(f, #$0F + DataModule2.Table1Adr1.AsString);
+          Write(f, #$0F + DataModule2.Table1Adr2.AsString);
+          Write(f, #$0F + DataModule2.Table1PLZ.AsString);
+          Write(f, #$0F + DataModule2.Table1Ort.AsString);
+          Write(f, #$0F + DataModule2.Table1Adrzus.AsString);
+          Write(f, #$0F + DataModule2.Table1Indj.AsString);
+          Write(f, #$0F + DataModule2.Table1Indm.AsString);
+          Write(f, #$0F + DataModule2.Table1Indt.AsString);
+          Write(f, #$0F + DataModule2.Table1Alter.AsString);
+          Write(f, #$0F + DataModule2.Table1Tel.AsString);
+          Write(f, #$0F + DataModule2.Table1Ema.AsString);
+          Write(f, #$0F + DataModule2.Table1Ur.AsString);
+          Write(f, #$0F + DataModule2.Table1Quelle.AsString);
+          if Trim(DataModule2.Table1Rufname.AsString) = '' then
+            WriteLn(f, #$0F)
+          else
+            WriteLn(f, #$0F + DataModule2.Table1Rufname.AsString);
+        end;
+        DataModule2.Table1.Next;
+        Inc(laufnummer);
+      end;
+
+      // Eheschliessungen (mrg)
+      DataModule2.Table18.Open;
+      DataModule2.Table18.IndexName := 'num';
+      DataModule2.Table18.First;
+      WriteLn(f, 'mrg');
+      while not DataModule2.Table18.Eof do
+      begin
+        Label18.Caption := IntToStr(laufnummer);
+        Label18.Refresh;
+        Write(f, IntToStr(DataModule2.Table18Nummer.AsInteger));
+        Write(f, #$0F + IntToStr(DataModule2.Table18Epnum.AsInteger));
+        Write(f, #$0F + DataModule2.Table18Htag.AsString);
+        Write(f, #$0F + DataModule2.Table18Hmonat.AsString);
+        Write(f, #$0F + DataModule2.Table18Hjahr.AsString);
+        Write(f, #$0F + DataModule2.Table18Hort.AsString);
+        Write(f, #$0F + DataModule2.Table18Trauz.AsString);
+        Write(f, #$0F + DataModule2.Table18Satag.AsString);
+        Write(f, #$0F + DataModule2.Table18Samonat.AsString);
+        Write(f, #$0F + DataModule2.Table18Sajahr.AsString);
+        Write(f, #$0F + DataModule2.Table18Saort.AsString);
+        Write(f, #$0F + DataModule2.Table18Satrauz.AsString);
+        if DataModule2.Table18Verbind.AsString = 'Eheschlie' + #223 + 'ung' then
+          Write(f, #$0F + 'Eheschliessung')
+        else
+          Write(f, #$0F + DataModule2.Table18Verbind.AsString);
+        Write(f, #$0F + DataModule2.Table18Schtag.AsString);
+        Write(f, #$0F + DataModule2.Table18Schmonat.AsString);
+        Write(f, #$0F + DataModule2.Table18Schjahr.AsString);
+        Write(f, #$0F + DataModule2.Table18Schort.AsString);
+        if Trim(DataModule2.Table18Hqu.AsString) = '' then
+          Write(f, #$0F)
+        else
+          Write(f, #$0F + DataModule2.Table18Hqu.AsString);
+        if Trim(DataModule2.Table18Saqu.AsString) = '' then
+          Write(f, #$0F)
+        else
+          Write(f, #$0F + DataModule2.Table18Saqu.AsString);
+        if Trim(DataModule2.Table18Schqu.AsString) = '' then
+          Write(f, #$0F)
+        else
+          Write(f, #$0F + DataModule2.Table18Schqu.AsString);
+        Write(f, #$0F + DataModule2.Table18Indj.AsString);
+        WriteLn(f, #$0F + DataModule2.Table18Indm.AsString);
+        DataModule2.Table18.Next;
+        if DataModule2.Table18.Eof then Break;
+        Inc(laufnummer);
+      end;
+
+      // Adoptionen (adop)
+      DataModule2.Table31.Open;
+      WriteLn(f, 'adop');
+      if DataModule2.Table31.RecordCount > 0 then
+      begin
+        DataModule2.Table31.IndexName := '';
+        DataModule2.Table31.First;
+        while not DataModule2.Table31.Eof do
+        begin
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          Write(f, IntToStr(DataModule2.Table31Nummer.AsInteger));
+          Write(f, #$0F + IntToStr(DataModule2.Table31Av.AsInteger));
+          WriteLn(f, #$0F + IntToStr(DataModule2.Table31Am.AsInteger));
+          DataModule2.Table31.Next;
+          Inc(laufnummer);
+        end;
+      end;
+
+      // Orte (ortv)
+      DataModule2.Table13.Open;
+      WriteLn(f, 'ortv');
+      if DataModule2.Table13.RecordCount > 0 then
+      begin
+        DataModule2.Table13.IndexName := '';
+        DataModule2.Table13.First;
+        while not DataModule2.Table13.Eof do
+        begin
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          Write(f, DataModule2.Table13Ort.AsString);
+          Write(f, #$0F + DataModule2.Table13PLZ.AsString);
+          Write(f, #$0F + DataModule2.Table13Land.AsString);
+          Write(f, #$0F + DataModule2.Table13RegBez.AsString);
+          Write(f, #$0F + DataModule2.Table13Gov.AsString);
+          Write(f, #$0F + DataModule2.Table13Bland.AsString);
+          Write(f, #$0F + DataModule2.Table13Gde.AsString);
+          Write(f, #$0F + DataModule2.Table13Pfr.AsString);
+          Write(f, #$0F + DataModule2.Table13Lkr.AsString);
+          Write(f, #$0F + DataModule2.Table13Abk.AsString);
+          Write(f, #$0F + DataModule2.Table13Lg.AsString);
+          Write(f, #$0F + DataModule2.Table13Bg.AsString);
+          WriteLn(f, #$0F + DataModule2.Table13Maid.AsString);
+          DataModule2.Table13.Next;
+          Inc(laufnummer);
+        end;
+      end;
+
+      // Quellen (quellv)
+      DataModule2.Table38.Open;
+      WriteLn(f, 'quellv');
+      if DataModule2.Table38.RecordCount > 0 then
+      begin
+        DataModule2.Table38.IndexName := '';
+        DataModule2.Table38.First;
+        while not DataModule2.Table38.Eof do
+        begin
+          Label18.Caption := IntToStr(laufnummer);
+          Label18.Refresh;
+          Write(f, DataModule2.Table38Titel.AsString);
+          Write(f, #$0F + DataModule2.Table38Abk.AsString);
+          Write(f, #$0F + DataModule2.Table38Ereig.AsString);
+          Write(f, #$0F + DataModule2.Table38Von.AsString);
+          Write(f, #$0F + DataModule2.Table38Bis.AsString);
+          Write(f, #$0F + DataModule2.Table38Standort.AsString);
+          Write(f, #$0F + DataModule2.Table38Publ.AsString);
+          Write(f, #$0F + DataModule2.Table38Rep.AsString);
+          Write(f, #$0F + DataModule2.Table38Bem.AsString);
+          Write(f, #$0F + DataModule2.Table38Bestand.AsString);
+          WriteLn(f, #$0F + DataModule2.Table38Med.AsString);
+          DataModule2.Table38.Next;
+          Inc(laufnummer);
+        end;
+      end;
+    finally
+      Screen.Cursor := crDefault;
+    end;
+  end;
+
+  CloseFile(f);
+  Label18.Visible := False;
+  Label19.Visible := False;
+  tabenab;
+  DataModule2.Table1.Open;
+  DataModule2.Table1.First;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.FindKey([nummer]);
+  DataModule2.Table18.IndexName := 'num';
+  anzeigen;
 end;
 
 procedure TForm1.Datensichern1Click(Sender: TObject);
