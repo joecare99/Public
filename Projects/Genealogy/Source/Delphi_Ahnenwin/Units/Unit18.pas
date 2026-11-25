@@ -524,73 +524,84 @@ procedure TForm18.suchen;
 @}
 const
   {*
-    KriteriumMap @00546C27-00546F21: 45 fixe Fragment-Puffer a je 81 Byte ab
-    [ebp-1090], initialisiert aus rodata 54BC24-54BE10. Auslesen je Zeile:
+    KriteriumMap @00546C27-00546F21: C2 ist KEINE Schleife, sondern eine
+    ungerollte Folge von 46 festen Kopien (movs dword/word/byte) aus den
+    rodata-ShortStrings 54BC24..54BE19 nach [ebp-1090 + i*81] (i=0..45,
+    Schrittweite 81 = string[80]; Endpuffer i=45 liegt auf [ebp-253]).
+    Auslesen je Zeile:
     lea eax,[ebp+eax*81-1090]; mov ecx,14; mov edx,3; call @Copy
     (Index*81 adressiert den Puffer, Copy ab Offset 3, Laenge 14).
-    Abweichung (Restplan.md): Rohtext der Fragmente nicht rekonstruierbar
-    (Chunk-Dump leer); Platzhalter '' – muessen spaeter ergaenzt werden.
+    Index 46 ('Partner-Name') besitzt im Original KEINEN Puffer: der Slot
+    [ebp-202] liegt im Prolog-Nullbereich und ist dort leer, daher ''.
+    Inhalte aus dem Original-Binary (AHNWIN51.exe vom 12.08.2014) gelesen.
   *}
   KriteriumMap: array[0..46] of AnsiString = (
-    '',      //0  Name
-    '',      //1  and.Namensschreibw.
-    '',      //2  Vornamen
-    '',      //3  Rufname
-    '',      //4  Geschlecht
-    '',      //5  lebt
-    '',      //6  Bekenntnis
-    '',      //7  Beruf
-    '',      //8  Hofname
-    '',      //9  ID-Nr.
-    '',      //10 Geburt: Tag
-    '',      //11 Geburt: Monat
-    '',      //12 Geburt: Jahr
-    '',      //13 Geburtsort
-    '',      //14 Taufe: Tag
-    '',      //15 Taufe: Monat
-    '',      //16 Taufe: Jahr
-    '',      //17 Taufort
-    '',      //18 Taufpate
-    '',      //19 Lebensort
-    '',      //20 Tod: Tag
-    '',      //21 Tod: Monat
-    '',      //22 Tod: Jahr
-    '',      //23 Sterbeort
-    '',      //24 Todesursache
-    '',      //25 Bestattung: Tag
-    '',      //26 Bestattung: Monat
-    '',      //27 Bestattung: Jahr
-    '',      //28 Bestattungsort
-    '',      //29 Text
-    '',      //30 Verbindung  — Textzone beginnt (30..44)
-    '',      //31 K.Heirat: Tag
-    '',      //32 K.Heirat: Monat
-    '',      //33 K.Heirat: Jahr
-    '',      //34 K.Heiratsort
-    '',      //35 K.Trauzeuge
-    '',      //36 S.Heirat: Tag
-    '',      //37 S.Heirat: Monat
-    '',      //38 S.Heirat: Jahr
-    '',      //39 S.Heiratsort
-    '',      //40 S.Trauzeuge
-    '',      //41 Scheidung: Tag
-    '',      //42 Scheidung: Monat
-    '',      //43 Scheidung: Jahr
-    '',      //44 Scheidungsort
-    '',      //45 Datensatz-Nr.
-    ''       //46 Partner-Name
+    'a.name',       //0  Name
+    'a.namex',      //1  and.Namensschreibw.
+    'a.vornamen',   //2  Vornamen
+    'a.rufname',    //3  Rufname
+    'a.geschlecht', //4  Geschlecht
+    'a.lebt',       //5  lebt
+    'a.religion',   //6  Bekenntnis
+    'a.beruf',      //7  Beruf
+    'a.hausname',   //8  Hofname
+    'a.IDNR',       //9  ID-Nr.
+    'a.gebtag',     //10 Geburt: Tag
+    'a.gebmonat',   //11 Geburt: Monat
+    'a.gebjahr',    //12 Geburt: Jahr
+    'a.gebort',     //13 Geburtsort
+    'a.tauftag',    //14 Taufe: Tag
+    'a.taufmonat',  //15 Taufe: Monat
+    'a.taufjahr',   //16 Taufe: Jahr
+    'a.taufort',    //17 Taufort
+    'a.taufpat',    //18 Taufpate
+    'a.lebensort',  //19 Lebensort
+    'a.sttag',      //20 Tod: Tag
+    'a.stmonat',    //21 Tod: Monat
+    'a.stjahr',     //22 Tod: Jahr
+    'a.stort',      //23 Sterbeort
+    'a.todesurs',   //24 Todesursache
+    'a.begtag',     //25 Bestattung: Tag
+    'a.begmonat',   //26 Bestattung: Monat
+    'a.begjahr',    //27 Bestattung: Jahr
+    'a.begort',     //28 Bestattungsort
+    'a.kommentar',  //29 Text
+    'b.verbind',    //30 Verbindung  - Textzone beginnt (30..44)
+    'b.htag',       //31 K.Heirat: Tag
+    'b.hmonat',     //32 K.Heirat: Monat
+    'b.hjahr',      //33 K.Heirat: Jahr
+    'b.hort',       //34 K.Heiratsort
+    'b.trauz',      //35 K.Trauzeuge
+    'b.satag',      //36 S.Heirat: Tag
+    'b.samonat',    //37 S.Heirat: Monat
+    'b.sajahr',     //38 S.Heirat: Jahr
+    'b.saort',      //39 S.Heiratsort
+    'b.satrauz',    //40 S.Trauzeuge
+    'b.schtag',     //41 Scheidung: Tag
+    'b.schmonat',   //42 Scheidung: Monat
+    'b.schjahr',    //43 Scheidung: Jahr
+    'b.schort',     //44 Scheidungsort
+    'a.nummer',     //45 Datensatz-Nr.
+    ''              //46 Partner-Name (im Original ohne Puffer)
   );
 var
   i: Integer;
+  j: Integer;        //Zaehler der inneren Count-Loop in C1 (getrennt von i,
+                     //im Original eigener Register-/Stackplatz)
   cb: TComboBox;
   textzone: Boolean;   //esi-Flag: Kriterium aus Textzone (ItemIndex 30..44)
   crit: AnsiString;    //[ebp-0C]  WHERE-Kriterium
   frag: AnsiString;    //[ebp-1204] Fragment-Cache
   teil: AnsiString;    //[ebp-12C0/12D0] Zeilen-Baustein
   pname: AnsiString;   //[ebp-14] Partner-Name-Text des Zeilenpaars
+  k: string[3];        //[ebp-18] Ehe-Kennung 'o-o'/'oo' (+'K'/'S') in D3
+                       //(Original: 4-Byte ShortString; @PStrNCat mit cl=3 begrenzt,
+                       //'o-o'+'K' bleibt 'o-o', 'oo'+'K' ergibt 'ooK' - Quirk)
   pcond: AnsiString;   //[ebp-1C] Combo-Text des Zeilenpaars
   letzteNummer: Integer; //[ebx] nummer des zuletzt uebernommenen Datensatzes
   treffer: Integer;      //[esi] Partner-Treffer-Flag (0/1) im Fuell-Block
+  spalte: Integer;       //[esi] Spalten-Basis der Ergebniszeile (Chunk E, bleibt 0)
+  zeile: Integer;        //[ebx] Ergebnis-Zeilenindex (Chunk E, ab 2)
 begin
   //@005464A7: aeusserer Exception-Frame (Handler 54BC10 -> jmp @HandleFinally)
   try
@@ -615,22 +626,24 @@ begin
       end;
       if Trim(cb.Text) <> '' then
       begin
-        for i := 0 to cb.Items.Count - 1 do
-          if Trim(cb.Items[i]) = Trim(cb.Text) then
+        for j := 0 to cb.Items.Count - 1 do
+          if Trim(cb.Items[j]) = Trim(cb.Text) then
           begin
-            cb.ItemIndex := i;
+            cb.ItemIndex := j;
             Break;
           end;
       end;
     end;
     //@00546C27-00546F21: C2 – Fragment-Puffer aus rodata initialisieren.
     //In der Rekonstruktion uebernimmt das der lokale const KriteriumMap oben
-    //(Inhalte = Platzhalter, s.o.).
+    //(Inhalt aus dem Original-Binary gelesen, s.o.).
 
+    //=== C3: Cursor, Knopf, SQL-Freigabe @00546F22-00546FA3 =====================
+    Screen.Cursor := crHourGlass;                  //@00546F22
     //@00546F32: innerer Exception-Frame (Handler 54AE56 -> jmp @HandleFinally)
+    //Quirk: im Original liegt der SetCursor @00546F22 VOR dem Frame-Hook
+    //@00546F32 - der try beginnt daher erst nach der Cursor-Zuweisung.
     try
-      //=== C3: Cursor, Knopf, SQL-Freigabe @00546F22-00546FA3 =====================
-      Screen.Cursor := crHourGlass;                //@00546F22
       Button1.Enabled := True;                     //@00546F40
       Button7.Enabled := True;                     //@00546F50
       crit := '';                                  //@00546F60: [ebp-0C] freigeben
@@ -1006,25 +1019,25 @@ begin
       //@00546FFF -> 'Ort = '+Edit23: edx=Const, ecx=Var-Zeichenkette).
       if textzone then                                        //@0054998F/547991
       begin                                                   //Textzonen-Pfad:
-        Query1.SQL.Add('select a.nummer as nummer, ' +
-          'a.geschlecht as geschlecht, b.epnum as PNr, a.name'@54C054);
-        //  54C054-Rohtext ist im Dump an dieser Stelle verkuerzt
-        //  (Setzt nach 'a.name' [sic] fort – Rest s. Restplan.md).
-        Query1.SQL.Add('from awd a, mrg b'@54C0E0);           //@005499A9-5479B2
+        Query1.SQL.Add('select a.nummer as nummer, a.geschlecht as ' +
+          'geschlecht, b.epnum as PNr, a.name, a.vornamen, a.gebjahr, ' +
+          'a.taufjahr, b.hjahr, b.sajahr');                   //@00549999 (54C054, len 131)
+        Query1.SQL.Add('from awd a, mrg b');                  //@005499A9-5499B2 (54C0E0)
         //WoKriterium wird immer anhaengt, auch wenn crit leer ist:
-        Query1.SQL.Add('where b.nummer=a.nummer and ' + crit);   //@005499B3/54C0FC
+        Query1.SQL.Add('where b.nummer=a.nummer and ' + crit); //@005499B3/54C0FC
       end
       else                                                     //Standard-Pfad:
       begin                                                   //@005499E9-549A1D
-        Query1.SQL.Add('select a.nummer as nummer, ' +
-          'a.geschlecht as geschlecht, b.epnum as PNr, a.name'@54C054);
-        Query1.SQL.Add('from awd a left outer join mrg b'@54C174); //@005499FF-549A0E
-        Query1.SQL.Add('on a.nummer=b.nummer'@54C1A0);         //@00549A10-549A18
+        Query1.SQL.Add('select a.nummer as nummer, a.geschlecht as ' +
+          'geschlecht, b.epnum as PNr, a.name, a.vornamen, a.gebjahr, ' +
+          'a.taufjahr, b.hjahr, b.sajahr');                   //@005499EF (54C054)
+        Query1.SQL.Add('from awd a left outer join mrg b');   //@005499FF-549A0E (54C174)
+        Query1.SQL.Add('on a.nummer=b.nummer');               //@00549A10-549A18 (54C1A0)
         if crit <> '' then                                    //@00549A19-549A1D
           Query1.SQL.Add('where ' + crit);                    //@00549A25/54C1C0
       end;
       Query1.SQL.Add('order by a.name, a.vornamen, a.gebjahr, ' +
-        'a.taufjahr, b.hjahr, b.sajahr'@54C124);             //@00549A43-549A51
+        'a.taufjahr, b.hjahr, b.sajahr');                     //@00549A43-549A51 (54C124)
 
       //=== CHUNK C: Tabellen oeffnen / Partner-Name-Scan / Zeitfilter ==========
       //@00549A53-00549AD6: Tabellen und Query oeffnen, Indizes zuruecksetzen.
@@ -1137,9 +1150,282 @@ begin
         end;
 
         //@0054A06D-54A0A7: T9 erneut auf die Person zuruecksetzen (Rueckgabe
-        //wird wieder verworfen – Quirk); ab hier folgt die Anhaeng-Entscheidung.
+        //wird wieder verworfen - Quirk); ab hier folgt die Anhaeng-Entscheidung.
         DataModule2.Table9.FindKey([Query1.FieldByName('nummer').AsInteger]);
 
+        //@0054A0AC-54A0E4: Anhaengen nur, wenn kein Partner-Name gesetzt wurde
+        //oder der Partner-Test treffer=1 gesetzt hat. Quirk: Trim(pname) wird
+        //doppelt ausgewertet (der zweite Test @0054A0C3 ist unerreichbar, wenn
+        //der erste durchlaeuft); das Original prueft hier mit dec esi/jne und
+        //veraendert treffer dabei (irrelevant, es wird neu initialisiert).
+        if (Trim(pname) = '') or ((Trim(pname) <> '') and (treffer = 1)) then
+        begin
+          DataModule2.Table16.Append;                         //@0054A0E5-54A0F2
+          //@0054A0F7-54A111: Quirk - der Dedup-Test steht erst NACH dem Append,
+          //eine doppelte nummer erzeugt damit eine leere Ergebniszeile.
+          if Query1.FieldByName('nummer').AsInteger <> letzteNummer then
+          begin
+            DataModule2.Table16Nummer.AsInteger :=
+              DataModule2.Table9Nummer.AsInteger;             //@0054A117-54A13A
+            DataModule2.Table16Geschlecht.AsString :=
+              DataModule2.Table9Geschlecht.AsString;          //@0054A140-54A16D
+            DataModule2.Table16Name.AsString :=
+              DataModule2.Table9Name.AsString + ' ' +
+              DataModule2.Table9Vornamen.AsString;            //@0054A173-54A1D9 (@LStrCatN 3)
+            letzteNummer := Query1.FieldByName('nummer').AsInteger; //@0054A1DF-54A1F7 (ebx)
+
+            //@0054A1F9-54A725: Datumsfelder mit Marker-Zeichen nach Table16
+            //uebernehmen. Geburt ('*'), sonst Taufe ('~') in die Geb-Felder;
+            //Tod ('+'), sonst Beerdigung ('#') in die St-Felder. jeweils nur,
+            //wenn Jahr oder Ort des jeweiligen Abschnitts gefuellt ist.
+            if (Trim(DataModule2.Table9Gebjahr.AsString) <> '') or
+              (Trim(DataModule2.Table9Gebort.AsString) <> '') then
+            begin
+              DataModule2.Table16Gebtag.AsString :=
+                '*' + DataModule2.Table9Gebtag.AsString;      //@0054A261-54A2A4 (@LStrCat3)
+              DataModule2.Table16Gebmonat.AsString :=
+                DataModule2.Table9Gebmonat.AsString;          //@0054A2AA-54A2D7
+              DataModule2.Table16Gebjahr.AsString :=
+                DataModule2.Table9Gebjahr.AsString;           //@0054A2DD-54A30A
+              DataModule2.Table16Gebort.AsString :=
+                DataModule2.Table9Gebort.AsString;            //@0054A310-54A33D
+            end
+            else if (Trim(DataModule2.Table9Taufjahr.AsString) <> '') or
+              (Trim(DataModule2.Table9Taufort.AsString) <> '') then
+            begin
+              DataModule2.Table16Gebtag.AsString :=
+                '~' + DataModule2.Table9Tauftag.AsString;     //@0054A3B0-54A3F3 (@LStrCat3)
+              DataModule2.Table16Gebmonat.AsString :=
+                DataModule2.Table9Taufmonat.AsString;         //@0054A3F9-54A426
+              DataModule2.Table16Gebjahr.AsString :=
+                DataModule2.Table9Taufjahr.AsString;          //@0054A42C-54A459
+              DataModule2.Table16Gebort.AsString :=
+                DataModule2.Table9Taufort.AsString;           //@0054A45F-54A48C
+            end;
+
+            if (Trim(DataModule2.Table9Stjahr.AsString) <> '') or
+              (Trim(DataModule2.Table9Stort.AsString) <> '') then
+            begin
+              DataModule2.Table16Sttag.AsString :=
+                '+' + DataModule2.Table9Sttag.AsString;       //@0054A4FA-54A53D (@LStrCat3)
+              DataModule2.Table16Stmonat.AsString :=
+                DataModule2.Table9Stmonat.AsString;           //@0054A543-54A570
+              DataModule2.Table16Stjahr.AsString :=
+                DataModule2.Table9Stjahr.AsString;            //@0054A576-54A5A3
+              DataModule2.Table16Stort.AsString :=
+                DataModule2.Table9Stort.AsString;             //@0054A5A9-54A5D6
+            end
+            else if (Trim(DataModule2.Table9Begjahr.AsString) <> '') or
+              (Trim(DataModule2.Table9Begort.AsString) <> '') then
+            begin
+              DataModule2.Table16Sttag.AsString :=
+                '#' + DataModule2.Table9Begtag.AsString;      //@0054A649-54A68C (@LStrCat3)
+              DataModule2.Table16Stmonat.AsString :=
+                DataModule2.Table9Begmonat.AsString;          //@0054A692-54A6BF
+              DataModule2.Table16Stjahr.AsString :=
+                DataModule2.Table9Begjahr.AsString;           //@0054A6C5-54A6F2
+              DataModule2.Table16Stort.AsString :=
+                DataModule2.Table9Begort.AsString;            //@0054A6F8-54A725
+            end;
+            //@0054A72B-54AE04: CHUNK D3 - Ehepartner-Fuell-Block (T15 -> T16).
+            //Der Block liegt vollstaendig im Dedup-Zweig: ein gleiches nummer
+            //(je 54A111) ueberspringt auch ihn, ein FindKey-Fehler ebenfalls
+            //(je 54AE04 -> Query1.Next).
+            treffer := 0;                                   //@0054A72B (xor esi,esi)
+            if DataModule2.Table15.FindKey(                 //@0054A72D-54A76E (je 54AE04)
+              [Query1.FieldByName('nummer').AsInteger]) then
+              //@0054A774 -> 54ADD0: die Schleifenbedingung wird zuerst geprueft
+              while Query1.FieldByName('nummer').AsInteger =
+                DataModule2.Table15Nummer.AsInteger do      //@0054ADD0-54ADFE (je 54A779)
+              begin
+                //@0054A779-54A78D: leere Epnum -> sofort zum Join (jle 54AD81)
+                if DataModule2.Table15Epnum.AsInteger > 0 then
+                begin
+                  //@0054A793-54A7B0: die erste T15-Zeile fuellt die von D2
+                  //angehaengte Ergebniszeile, jede weitere haengt eine neue an.
+                  if treffer > 0 then
+                    DataModule2.Table16.Append              //@0054A797-54A7A4
+                  else
+                    treffer := 1;                           //@0054A7AB (mov esi,1)
+                  k := 'o-o';                               //@0054A7B0 (6F2D6F03)
+                  if Pos('Ehes', DataModule2.Table15Verbind.AsString) > 0 then
+                    k := 'oo';                              //@0054A7B7-54A7EF (@LStrPos)
+                  //@0054A7F0-54A852: Trau-Daten (Hort oder Hjahr gefuellt)
+                  if (Trim(DataModule2.Table15Hort.AsString) <> '') or
+                    (Trim(DataModule2.Table15Hjahr.AsString) <> '') then
+                  begin
+                    k := k + 'K';                           //@0054A858-54A862 (@PStrNCat cl=3)
+                    DataModule2.Table16Htag.AsString :=
+                      k + ' ' + DataModule2.Table15Htag.AsString; //@0054A867-54A8D8
+                    DataModule2.Table16Hmonat.AsString :=
+                      DataModule2.Table15Hmonat.AsString;   //@0054A8DE-54A90B
+                    DataModule2.Table16Hjahr.AsString :=
+                      DataModule2.Table15Hjahr.AsString;    //@0054A911-54A93E
+                    DataModule2.Table16Hort.AsString :=
+                      DataModule2.Table15Hort.AsString;     //@0054A944-54A971
+                    //@0054A977-54A9AB: Quirk - das FindKey-Ergebnis wird hier
+                    //verworfen (im Else-Zweig dagegen wird es getestet).
+                    DataModule2.Table9.FindKey(
+                      [DataModule2.Table15Epnum.AsInteger]);
+                    DataModule2.Table16Hname.AsString :=
+                      DataModule2.Table9Name.AsString + ' ' +
+                      DataModule2.Table9Vornamen.AsString;  //@0054A9B0-54AA16 (@LStrCatN 3)
+                  end
+                  //@0054AA21-54AA83: Sauf-/Tauf-Daten (Saort oder Sajahr gefuellt)
+                  else if (Trim(DataModule2.Table15Saort.AsString) <> '') or
+                    (Trim(DataModule2.Table15Sajahr.AsString) <> '') then
+                  begin
+                    k := k + 'S';                           //@0054AA89-54AA93 (@PStrNCat cl=3)
+                    //@0054AA98-54AB09: Quirk - Satag wandert in das Htag-Feld
+                    DataModule2.Table16Htag.AsString :=
+                      k + ' ' + DataModule2.Table15Satag.AsString;
+                    DataModule2.Table16Hmonat.AsString :=
+                      DataModule2.Table15Samonat.AsString;  //@0054AB0F-54AB3C
+                    DataModule2.Table16Hjahr.AsString :=
+                      DataModule2.Table15Sajahr.AsString;   //@0054AB42-54AB6F
+                    DataModule2.Table16Hort.AsString :=
+                      DataModule2.Table15Saort.AsString;    //@0054AB75-54ABA2
+                    //@0054ABA8-54ABDC: Quirk - Ergebnis wird verworfen
+                    DataModule2.Table9.FindKey(
+                      [DataModule2.Table15Epnum.AsInteger]);
+                    DataModule2.Table16Hname.AsString :=
+                      DataModule2.Table9Name.AsString + ' ' +
+                      DataModule2.Table9Vornamen.AsString;  //@0054ABE1-54AC47 (@LStrCatN 3)
+                  end
+                  else
+                  begin
+                    //@0054AC52-54AC8D: ohne Treffer wird nichts gefuellt
+                    if DataModule2.Table9.FindKey(
+                      [DataModule2.Table15Epnum.AsInteger]) then
+                      //@0054AC93-54ACF5: Vornamen oder Name muessen gefuellt sein
+                      if (Trim(DataModule2.Table9Vornamen.AsString) <> '') or
+                        (Trim(DataModule2.Table9Name.AsString) <> '') then
+                      begin
+                        DataModule2.Table16Htag.AsString := 'oo'; //@0054ACFB-54AD0F (54C288)
+                        DataModule2.Table16Hname.AsString :=
+                          DataModule2.Table9Name.AsString + ' ' +
+                          DataModule2.Table9Vornamen.AsString;    //@0054AD15-54AD7B (@LStrCatN 3)
+                      end;
+                  end;
+                end;
+                //@0054AD81-54ADB5: Join - Zeile schliessen, T15 weiterzaehlen.
+                DataModule2.Table16.Post;                   //@0054AD81-54AD90 (vtbl+248)
+                DataModule2.Table16.Edit;                   //@0054AD96-54ADA3
+                DataModule2.Table15.Next;                   //@0054ADA8-54ADB5
+                if DataModule2.Table15.EOF then             //@0054ADBA-54ADCE (jne 54AE04)
+                  Break;
+              end;
+          end;                                              //@0054A111: Dedup-Zweig
+        end;                                                //@0054A0AC: Anhaeng-Zweig
+        Query1.Next;                                        //@0054AE04
+      end;                                                  //@0054AE24: Fuell-Schleife
+    finally                                                 //@0054AE3A: Frame2 abbauen
+      //@0054AE3A-54AE3F: Frame-Abbau (xor eax,eax / pop edx / pop ecx / pop
+      //ecx / mov fs:[eax],edx). @0054AE42-54AE55: Finally-Koerper mit
+      //push 54AE5D als Resume-Adresse; ab @0054AE5D laeuft der Ablauf nach
+      //dem finally weiter.
+      Screen.Cursor := crDefault;                           //@0054AE47-54AE50 (xor edx,edx)
+    end;                                                    //@0054AE55 (ret) -> 54AE5D
+
+    //=== CHUNK E: Trefferliste nach Form1.StringGrid5 uebernehmen ============
+    //@0054AE5D-54B4F1: Auswertung von DataModule2.Table16 (Suchergebnis).
+    //@0054AE5D-54AE80: Post nur im dsEdit/dsInsert - die Folge add dl,FE /
+    //sub dl,2 / jae testet modular (State-2) < 2, also genau Zustand 2..3.
+    if DataModule2.Table16.State in [dsEdit, dsInsert] then  //@0054AE5D-54AE76
+      DataModule2.Table16.Post;                             //@0054AE78-54AE80 (vtbl+248)
+    DataModule2.Table16.First;                              //@0054AE86-54AE93
+    if DataModule2.Table16.RecordCount > 0 then             //@0054AE98-54AEAF (vtbl+14C, jle 54B4AD)
+    begin
+      //@0054AEB5-54AF59: alte Inhalte leeren. Quirk: die Schleife laeuft
+      //einschliesslich RowCount - der Bound wird einmalig aus [grid+24C]
+      //(FRowCount) gelesen, der Zaehler esi laeuft von 0 aufwaerts, waehrend
+      //ebx mit Bound+1 runterzaehlt; es wird also eine Zeile mehr geleert,
+      //als RowCount angibt.
+      for i := 0 to Form1.StringGrid5.RowCount do
+      begin
+        Form1.StringGrid5.Cells[0, i] := '';                 //@0054AED3-54AEE6
+        Form1.StringGrid5.Cells[1, i] := '';                 //@0054AEEB-54AF01
+        Form1.StringGrid5.Cells[2, i] := '';                 //@0054AF06-54AF1C
+        Form1.StringGrid5.Cells[3, i] := '';                 //@0054AF21-54AF37
+        Form1.StringGrid5.Cells[4, i] := '';                 //@0054AF3C-54AF52
+      end;                                                   //@0054AF57-54AF59 (inc esi / dec ebx)
+      //@0054AF5F-54AF94: Kopfzeile anlegen - Spaltenbasis 0, ab Zeile 2.
+      spalte := 0;                                           //@0054AF5F (xor esi,esi)
+      zeile := 2;                                            //@0054AF61 (mov ebx,2)
+      Form1.StringGrid5.RowCount := zeile + 1;               //@0054AF66-54AF76 (lea edx,[ebx+1])
+      Form1.StringGrid5.Cells[1, 0] := 'Globale Suche';      //@0054AF7B-54AF94
+      //@0054AF99-54B057: Ortsangabe ueberschreibt Titelzelle und Report-Titel.
+      //Getrimmt wird nur fuer die Bedingung, geschrieben wird der ungetrimmte
+      //Edit-Text (fuer jede der beiden Zuweisungen frisch konkatiniert).
+      if Trim(Edit23.Text) <> '' then                        //@0054AF99-54AFC5 (jbe 54B43D)
+      begin
+        Form1.StringGrid5.Cells[1, 0] := 'Ort = ' + Edit23.Text; //@0054AFCB-54B010 (@LStrCat3)
+        Form15.QRLabel3.Caption := 'Ort = ' + Edit23.Text;   //@0054B015-54B052 (@LStrCat3)
+      end;
+      //@0054B43D-54B451: Schleifenkopf (FEOF-Test, springt je 54B05C in den
+      //Koerper; der Rueckweg testet unter 54B427 ein zweites Mal).
+      while not DataModule2.Table16.EOF do
+      begin
+        //@0054B05C-54B070: Datensaetze ohne Nummer werden uebersprungen
+        //(AsInteger <= 0 -> jle 54B415 = Next, ohne Zeilenzuschlag).
+        if DataModule2.Table16Nummer.AsInteger > 0 then      //@0054B05C-54B070 (vtbl+58)
+        begin
+          Form1.StringGrid5.Cells[spalte, zeile] :=
+            IntToStr(DataModule2.Table16Nummer.AsInteger);   //@0054B076-54B0AB
+          Form1.StringGrid5.Cells[spalte + 1, zeile] :=
+            DataModule2.Table16Name.AsString;                //@0054B0B0-54B0E1 (vtbl+60)
+          //@0054B0E6-54B209: Geburtsjahr mit Kennbuchstabe aus Gebtag.
+          if Trim(DataModule2.Table16Gebjahr.AsString) <> '' then //@0054B0E6-54B116
+          begin
+            if Pos('*', DataModule2.Table16Gebtag.AsString) > 0 then //@0054B11C-54B146
+              Form1.StringGrid5.Cells[spalte + 2, zeile] :=
+                '* ' + DataModule2.Table16Gebjahr.AsString   //@0054B148-54B18F
+            else if Pos('~', DataModule2.Table16Gebtag.AsString) > 0 then //@0054B196-54B1C0
+              Form1.StringGrid5.Cells[spalte + 2, zeile] :=
+                '~ ' + DataModule2.Table16Gebjahr.AsString;  //@0054B1C2-54B209
+          end;
+          //@0054B20E-54B3FA: Heirats- bzw. Sterbejahr in Spalte 3.
+          if Trim(DataModule2.Table16Hjahr.AsString) <> '' then //@0054B20E-54B23E
+            Form1.StringGrid5.Cells[spalte + 3, zeile] :=
+              Trim(Copy(DataModule2.Table16Htag.AsString, 1, 3)) +
+              DataModule2.Table16Hjahr.AsString              //@0054B244-54B2CD (@LStrCopy / @LStrCat)
+          else if Trim(DataModule2.Table16Stjahr.AsString) <> '' then //@0054B2D7-54B307
+          begin
+            if Pos('+', DataModule2.Table16Sttag.AsString) > 0 then //@0054B30D-54B337
+              Form1.StringGrid5.Cells[spalte + 3, zeile] :=
+                '+ ' + DataModule2.Table16Stjahr.AsString    //@0054B339-54B380
+            else if Pos('#', DataModule2.Table16Sttag.AsString) > 0 then //@0054B387-54B3B1
+              Form1.StringGrid5.Cells[spalte + 3, zeile] :=
+                '# ' + DataModule2.Table16Stjahr.AsString;   //@0054B3B3-54B3FA
+          end;
+          //@0054B3FF-54B410: Zeilenzuschlag nur fuer uebernommene Datensaetze,
+          //RowCount der Ergebnisliste mitfuehren.
+          Inc(zeile);                                        //@0054B3FF (inc ebx)
+          Form1.StringGrid5.RowCount := zeile + 1;           //@0054B400-54B410 (lea edx,[ebx+1])
+        end;
+        DataModule2.Table16.Next;                            //@0054B415-54B422
+      end;                                                   //@0054B427/54B43D (FEOF-Tests)
+      //@0054B457-54B4A8: Ergebnisliste sichtbar schalten, Menuepunkt
+      //einblenden, HelpContext 22 setzen (Disasm fuehrt das als $16).
+      Form1.StringGrid5.Visible := True;                     //@0054B457-54B466 (vtbl+34 SetVisible)
+      Form1.MainMenu1.Items[3].Items[5].Visible := True;     //@0054B46B-54B491 (GetItem 3 / GetItem 5)
+      Form1.StringGrid5.HelpContext := 22;                   //@0054B496-54B4A8 (mov edx,$16)
+    end;                                                     //@0054B4AD: Join (jle von 54AEAF)
+    //@0054B4AD-54B4F1: Aufraeumen - Filter/Indizes zuruecksetzen, Flag loeschen.
+    DataModule2.Table9.Filtered := False;                    //@0054B4AD-54B4BE (vtbl+190)
+    DataModule2.Table9.IndexName := '';                      //@0054B4C4-54B4D3 (SetIndexName)
+    DataModule2.Table15.IndexName := '';                     //@0054B4D8-54B4E7
+    gvar_0061EFE0 := '';                                     //@0054B4EC-54B4F1 (@LStrClr)
+  finally
+    //@0054B4F6-54B4FB: aeusserer Frame abbauen (xor eax,eax / pop edx / pop
+    //ecx / pop ecx / mov fs:[eax],edx), Resume-Adresse push 54BC1A.
+    //Der Finally-Koerper des Originals enthaelt ausschliesslich die
+    //compilergenerierte Raeumung der verwalteten Lokalen
+    //@0054B503-54BC0F (@LStrArrayClr / @LStrClr); der Exception-Pfad laeuft
+    //@0054BC10 -> @HandleFinally -> jmp 0054B503 ueber denselben Block.
+    //@0054BC1A: Epilog (pop edi / pop esi / pop ebx / mov esp,ebp / pop ebp).
+  end;
+end;
 
 procedure TForm18.FormShow(Sender: TObject);
 begin
