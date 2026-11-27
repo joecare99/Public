@@ -304,11 +304,83 @@ begin
 end;
 
 procedure TForm16.SpeedButton6Click(Sender: TObject);
+var
+  F: TextFile;
 begin
-  { (0055DCC4) Alle bersichtsseiten als HTML-Datei speichern: der Dialog
-    und der HTML-Koerper bis zur "<OL>"-Liste der Orte. Der restliche
-    Teil (je Ort die Personenliste) gehrt zum zweiten Haeppchen. }
-  { TODO: Listing fehlt noch - uebriger Teil ab 0055DECE. }
+  { (0055DCC4) Alle bersichtsseiten als HTML-Datei speichern: nur im
+    OFB-Modus wird der Speichern-Dialog angeboten, danach schreibt die
+    Methode eine HTML-Datei (DOCTYPE, ofb.css-Verweis, Ueberschrift aus
+    gvar_02536438, Ortsliste "<OL>" aus Table14 mit je einer
+    "<li>"-Zeile pro Ort und "<br>"-Umbruch fuer die Personenzeile)
+    und haengt Datum + "AHNENWIN 5.1" als Fuss an. }
+  //0055DCDA-0055DCE3: Exception-Frame (push ebp / push 55E0D6 / push
+  //fs:[eax] / mov fs:[eax],esp; Handler 55E0D6 -> jmp @HandleFinally,
+  //Resume 55E0DD); das Original hatte hier keinen Quelltext-try.
+  try
+    //0055DCE6-0055DCF7: nur im OFB-Modus exportieren (jne 55E09D).
+    if gvar_0253692C = 'OFB' then
+    begin
+      //0055DCFD-0055DD22: Dialog konfigurieren - FilterIndex 2, Endung
+      //"htm", Options ofOverwritePrompt (Rodata-Konstante 2 @0055E0FC).
+      SaveDialog1.FilterIndex := 2;
+      SaveDialog1.DefaultExt := 'htm';
+      SaveDialog1.Options := [ofOverwritePrompt];
+      if SaveDialog1.Execute then //0055DD25-DD2E (je 55E09D)
+      begin
+        //0055DD34-0055DD5D: leeren Dateinamen ausschliessen (jbe 55E09D).
+        if Trim(SaveDialog1.FileName) <> '' then
+        begin
+          AssignFile(F, SaveDialog1.FileName);     //0055DD63-DD80
+          Rewrite(F);                              //0055DD85-DD90
+          Writeln(F, '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN//">'); //0055DD95-DDAA
+          Writeln(F, '<link rel="stylesheet" href="ofb.css" type="text/css">'); //0055DDAF-DDC4
+          Writeln(F, '<!--Converted from AHNENWIN 5.1 (2013) by Heribert Reitmeier-->'); //0055DDC9-DDDE
+          Writeln(F, '<HTML>');                    //0055DDE3-DDF8
+          //0055DDFD-0055DE07: globaler Einrueck-String auf 14 Leerzeichen.
+          gvar_0061F034 := '              ';
+          Writeln(F, '<BODY>');                    //0055DE0C-DE21
+          Writeln(F, '<B>' + gvar_02536438 + '</B><HR>'); //0055DE26-DE5D (@LStrCatN 3)
+          DataModule2.Table14.Open;                //0055DE62-DE6F
+          DataModule2.Table14.First;               //0055DE74-DE81
+          Writeln(F, '<OL>');                      //0055DE86-DE9B
+          //0055DEA0: Schleifenkopf - der FEOF-Test steht doppelt (der
+          //Rueckweg prueft @0055DFAD und springt bei EOF nach 55DFDD in
+          //die Folge, die Bedingung @0055DFC3 springt bei nicht-EOF in
+          //den Koerper 55DEA5); identisch zur Table16-Schleife in Unit18.
+          while not DataModule2.Table14.EOF do
+          begin
+            //0055DEA5-0055DED5: Ortsnamen-Teil nur bei nicht leerem
+            //Table14Nm (jbe 55DEF1), sonst ohne "<li>"-Start.
+            if Trim(DataModule2.Table14Nm.AsString) <> '' then
+              Writeln(F, '<p></p><li>');           //0055DED7-DEEC
+            //0055DEF1-0055DF21: Personenzeile mit "<br>"-Umbruch, wenn
+            //Table14Zeile Text enthaelt; der else-Zweig @0055DF68
+            //schreibt dieselbe Zeile ohne Anhaengsel.
+            if Trim(DataModule2.Table14Zeile.AsString) <> '' then
+              Writeln(F, DataModule2.Table14Zeile.AsString + '<br>') //0055DF23-DF66
+            else
+              Writeln(F, DataModule2.Table14Zeile.AsString);         //0055DF68-DF96
+            DataModule2.Table14.Next;               //0055DF9B-DFA8
+          end;
+          Writeln(F, '</li></OL>');                 //0055DFDD-DFF2
+          Writeln(F, '<HR>');                       //0055DFF7-E00C
+          Writeln(F, 'AHNENWIN 5.1 / ' + DateToStr(Now)); //0055E011-E054 (@LStrCat3)
+          Writeln(F, '</BODY>');                    //0055E059-E06E
+          Writeln(F, '</HTML>');                    //0055E073-E088
+          CloseFile(F);                             //0055E08D-E098
+        end;
+      end;
+    end;
+  finally
+    //0055E09D-E0D5: Frame abbauen (xor eax / pop edx / pop ecx /
+    //pop ecx / mov fs:[eax],edx), Resume-Adresse push 55E0DD. Der
+    //Finally-Koerper enthaelt ausschliesslich die compilergenerierte
+    //Raeumung der zwoelf verwalteten Lokale (@LStrArrayClr([ebp-1FC],9)
+    //+ @LStrArrayClr([ebp-1D8],2) + @LStrClr([ebp-1D0]) = die
+    //AsString-/Trim-/Cat-Temps 1D0..1FC); Exception-Pfad 55E0D6 ->
+    //@HandleFinally -> jmp 55E0AA ueber denselben Block.
+    //Epilog 0055E0DD-0055E0E2 (pop esi / pop ebx / mov esp,ebp / pop ebp).
+  end;
 end;
 
 procedure TForm16.Beenden1Click(Sender: TObject);

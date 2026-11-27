@@ -558,7 +558,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit16
 
-- methods: 25, reconstructed: 23, open: 2
+- methods: 25, reconstructed: 24, open: 1
 
   - done `showpagenumber`  @`0055B940`
   - done `showprev`  @`0055B9F0`
@@ -580,7 +580,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `Button9Click`  @`0055D7D0`
   - done `Button5Click`  @`0055DA68`
   - done `FormClose`  @`0055DC1C`
-  - open `SpeedButton6Click`  @`0055DCC4`
+  - done `SpeedButton6Click`  @`0055DCC4`
   - done `Beenden1Click`  @`0055E2AC`
   - done `Quickreport1NeedData`  @`0055E2C0`
   - done `SpeedButton4Click`  @`0055E2E8`
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 640, open: 19
+- methods: 659, reconstructed: 641, open: 18
