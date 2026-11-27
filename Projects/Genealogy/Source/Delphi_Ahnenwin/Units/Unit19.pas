@@ -218,7 +218,13 @@ end;
 
 procedure TForm19.namgv;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0055748C: Leere Routine (Kopf ohne Inhalt), wie voralph/vorf.
+    Die 36 Bytes bestehen nur aus Prolog, SEH-Frame (Aufbau 0055748F..
+    0055749A, sofortiger Abbau 0055749D..005574A2 ohne Raeumung),
+    Finally-Paar (push 005574B2 / ret = Normalpfad; Handler 005574AB ->
+    @HandleFinally, Fortsetzung 005574B0 -> 005574AA) und Epilog.
+    Aufgerufen wird sie an fuenf Stellen (005528F7, 00553189, 00554A14,
+    00555466, 00556F45) - im Original tut sie nichts (toter Code). }
 end;
 
 procedure TForm19.CheckBox15Click(Sender: TObject);

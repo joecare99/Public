@@ -98,6 +98,9 @@ var
 
 implementation
 
+uses
+  Unit2;
+
 {$R ..\Forms\Form24.DFM}
 
 
@@ -301,7 +304,64 @@ end;
 
 procedure TForm24.listanz;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //0055EC64: Alle sechs Listen werden geleert und aus drei Tabellen neu
+  //befuellt: Table12 (Namen) -> ListBox1, Table13 (Orte) -> ListBox2,
+  //Table37 (Hofnamen) -> ListBox5; leere Feldwerte bleiben draussen.
+  //0055EC79: Exception-Frame (Handler 55EE52 -> jmp @HandleFinally,
+  //Resume 55EE59); das Original hatte hier keinen Quelltext-try.
+  try
+    //0055EC87-55ECDA: ListBox1..6 leeren (vtbl+0D4 = Clear).
+    ListBox1.Clear;
+    ListBox2.Clear;
+    ListBox3.Clear;
+    ListBox4.Clear;
+    ListBox5.Clear;
+    ListBox6.Clear;
+
+    //0055ECDB-55ED4D: Schleife ueber Table12, fuellt ListBox1.
+    DataModule2.Table12.Open;                               //0055ECDB
+    DataModule2.Table12.First;                              //0055ECE8
+    //0055ECF5: jmp zum Schleifen-Test 0055ED3E-55ED4D (FEOF).
+    while not DataModule2.Table12.EOF do
+    begin
+      //0055ECF7-55ED0B: AsString frisch holen, leer -> jbe 55ED31
+      //ueberspringt das Add; der Einfueg-Aufruf holt den Wert ein zweites
+      //Mal (zwei GetAsString-Temps [ebp-4]/[ebp-8]).
+      if DataModule2.Table12Name.AsString <> '' then       //0055ECF7-55ED0B
+        ListBox1.Items.Add(DataModule2.Table12Name.AsString); //0055ED0D-55ED30
+      DataModule2.Table12.Next;                             //0055ED31
+    end;
+
+    //0055ED4F-55EDC1: Schleife ueber Table13, fuellt ListBox2.
+    DataModule2.Table13.Open;                               //0055ED4F
+    DataModule2.Table13.First;                              //0055ED5C
+    //0055ED69: jmp zum Schleifen-Test 0055EDB2-55EDC1 (FEOF).
+    while not DataModule2.Table13.EOF do
+    begin
+      if DataModule2.Table13Ort.AsString <> '' then        //0055ED6B-55ED7F
+        ListBox2.Items.Add(DataModule2.Table13Ort.AsString); //0055ED81-55EDA4
+      DataModule2.Table13.Next;                             //0055EDA5
+    end;
+
+    //0055EDC3-55EE35: Schleife ueber Table37, fuellt ListBox5.
+    DataModule2.Table37.Open;                               //0055EDC3
+    DataModule2.Table37.First;                              //0055EDD0
+    //0055EDDD: jmp zum Schleifen-Test 0055EE26-55EE35 (FEOF).
+    while not DataModule2.Table37.EOF do
+    begin
+      if DataModule2.Table37Hofname.AsString <> '' then    //0055EDDF-55EDF3
+        ListBox5.Items.Add(DataModule2.Table37Hofname.AsString); //0055EDF5-55EE18
+      DataModule2.Table37.Next;                             //0055EE19
+    end;
+  finally
+    //0055EE37-55EE43: Frame abbauen (xor eax / pop edx / pop ecx /
+    //pop ecx / mov fs:[eax],edx), Resume-Adresse push 55EE59. Der
+    //Finally-Koerper enthaelt ausschliesslich die compilergenerierte
+    //Raeumung der sechs verwalteten AsString-Temps
+    //(@LStrArrayClr([ebp-18],6), 0055EE44-55EE51); Exception-Pfad
+    //55EE52 -> @HandleFinally -> jmp 55EE44 ueber denselben Block.
+    //Epilog 0055EE59-55EE5F (pop esi / pop ebx / mov esp,ebp / pop ebp).
+  end;
 end;
 
 procedure TForm24.ListBox1DblClick(Sender: TObject);

@@ -637,6 +637,11 @@ begin
     //@00546C27-00546F21: C2 – Fragment-Puffer aus rodata initialisieren.
     //In der Rekonstruktion uebernimmt das der lokale const KriteriumMap oben
     //(Inhalt aus dem Original-Binary gelesen, s.o.).
+    //@00546C27: Der Einstieg in C2 beginnt mit xor esi,esi und traegt damit
+    //das Textzone-Flag (esi) auf False. Die Kopierfolge sichert/restauriert
+    //esi ueber push/pop (letzter pop @00546F21), danach bleibt esi=0 bis zum
+    //ersten mov esi,1 @00547322 - dort steht das Flag auf True.
+    textzone := False;                                      //@00546C27 (xor esi,esi)
 
     //=== C3: Cursor, Knopf, SQL-Freigabe @00546F22-00546FA3 =====================
     Screen.Cursor := crHourGlass;                  //@00546F22

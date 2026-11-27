@@ -5,7 +5,6 @@ program is listed with the address it had in the AHNENWIN 5.1 binary
 and with its reconstruction state.
 
 Legend: **done** = the body was reconstructed from the listing, 
-**in Arbeit** = partially reconstructed (work in progress), 
 **open** = the body is still a placeholder.
 
 ## Unit1
@@ -303,7 +302,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit3
 
-- methods: 72, reconstructed: 69, in Arbeit: 1, open: 2
+- methods: 72, reconstructed: 72, open: 0
 
   - done `sub_00576EB0`  @`00576EB0`
   - done `sub_00576F54`  @`00576F54`
@@ -604,14 +603,14 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit18
 
-- methods: 29, reconstructed: 28, open: 1
+- methods: 29, reconstructed: 29, open: 0
 
   - done `sub_00545A0C`  @`00545A0C`
   - done `BitBtn2Click`  @`00545CF8`
   - done `Button5Click`  @`00545D20`
   - done `speichern`  @`00545F08`
   - done `Button7Click`  @`00546448`
-  - open `suchen`  @`00546490`
+  - done `suchen`  @`00546490`
   - done `SpeedButton1Click`  @`0054C2BC`
   - done `FormShow`  @`0054C998`
   - done `Button1Click`  @`0054C9C4`
@@ -638,7 +637,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit19
 
-- methods: 23, reconstructed: 18, open: 5
+- methods: 23, reconstructed: 19, open: 4
 
   - done `sub_00550AB8`  @`00550AB8`
   - done `sub_00550B5C`  @`00550B5C`
@@ -651,7 +650,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done `Button2Click`  @`0055137C`
   - open `Namgeb`  @`005513EC`
   - open `Nachliste`  @`00552034`
-  - open `namgv`  @`0055748C`
+  - done `namgv`  @`0055748C`
   - done `vorchron`  @`005574B4`
   - done `voralph`  @`005574EC`
   - open `alphlist`  @`00557514`
@@ -697,9 +696,9 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit24
 
-- methods: 24, reconstructed: 23, open: 1
+- methods: 24, reconstructed: 24, open: 0
 
-  - open `listanz`  @`0055EC64`
+  - done `listanz`  @`0055EC64`
   - done `Button9Click`  @`0055EE60`
   - done `FormShow`  @`0055EE78`
   - done `Button2Click`  @`0055EEAC`
@@ -869,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 659, reconstructed: 632, in Arbeit: 1, open: 26
+- methods: 659, reconstructed: 640, open: 19
